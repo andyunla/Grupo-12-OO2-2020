@@ -1,1 +1,1 @@
-# Sistema-de-democratizaci-n-de-stock
+# Sistema-de-democratizacion-de-stock
