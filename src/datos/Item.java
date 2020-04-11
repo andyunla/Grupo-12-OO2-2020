@@ -20,7 +20,6 @@ public class Item {
 		this.idItem = idItem;
 	}
 
-
 	public int getCantidad() {
 		return cantidad;
 	}
@@ -28,10 +27,10 @@ public class Item {
 		this.cantidad = cantidad;
 	}
 
-
 	public Producto getProducto() {
 		return producto;
 	}
+	
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
