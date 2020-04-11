@@ -890,8 +890,9 @@ public class Funciones {
 			if (digito == cuil[10]){
 				verifica = true;
 			}else{
-				throw new Exception("El Cuil NO es valido");
-			} // end_else
+				throw new Exception("El CUIL NO es valido");
+			}
+		}
 		return verifica;
 	}
 
