@@ -8,8 +8,7 @@ public class PedidoStock {
 	private boolean aceptado;
 	private Empleado oferente;
 
-	public PedidoStock(int idPedido, Producto producto, int cantidad, Empleado solicitante, boolean aceptado,
-			Empleado oferente) {
+	public PedidoStock(int idPedido, Producto producto, int cantidad, Empleado solicitante, boolean aceptado, Empleado oferente) {
 		this.idPedido = idPedido;
 		this.producto = producto;
 		this.cantidad = cantidad;
