@@ -27,7 +27,6 @@ public class PedidoStock {
 		this.idPedido = idPedido;
 	}
 
-
 	public Producto getProducto() {
 		return producto;
 	}
