@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="datos.Item" table="item">
+    <id column="idItem" name="idItem">
+      <generator class="foreign">
+        <param name="property">chango</param>
+        <param name="property">producto</param>
+      </generator>
+    </id>
+    <property column="cantidad" name="cantidad" type="int"/>
+    <one-to-one name="producto" class="datos.Producto"></one-to-one>
+    <one-to-one name="chango" class="datos.Chango"></one-to-one>
+  </class>
+</hibernate-mapping>

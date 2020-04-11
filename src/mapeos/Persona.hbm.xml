@@ -9,7 +9,7 @@
     <property column="apellido" name="apellido" type="string"/>
     <property column="dni" name="dni" type="int"/>
     <property column="fechaDeNacimiento" name="fechaDeNacimiento" type="LocalDate"/>
-    
+
     <joined-subclass name="datos.Cliente" table="cliente" >
       <key column="idCliente"/>
       <property column="email" name="email" type="string"/>
@@ -20,6 +20,6 @@
       <property column="horarioDesde" name="horarioDesde" type="LocalTime"/>
       <property column="horarioHasta" name="horarioHasta" type="LocalTime"/>
       <property column="sueldoBasico" name="sueldoBasico" type="double"/>
-    </joined-subclass >
+    </joined-subclass>
   </class>
 </hibernate-mapping>
