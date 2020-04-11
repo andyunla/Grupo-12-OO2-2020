@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>Servidor</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>cliente.html</welcome-file>
+  </welcome-file-list>
+
+  <servlet>
+	<servlet-name>TestServletDemo</servlet-name>
+    <servlet-class>controladores.TestServletDemo</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>TestServletDemo</servlet-name>
+	<url-pattern>/index</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 
+  <servlet>
+    <servlet-name>ControladorMostrarCliente</servlet-name>
+    <servlet-class>controladores.ControladorMostrarCliente</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ControladorMostrarCliente</servlet-name>
+    <url-pattern>/MostrarCliente</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ControladorMostrarClienteJSP</servlet-name>
+    <servlet-class>controladores.ControladorMostrarClienteJSP</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ControladorMostrarClienteJSP</servlet-name>
+    <url-pattern>/MostrarClienteJSP </url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ControladorListaCliente</servlet-name>
+    <servlet-class>controladores.ControladorListaCliente</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ControladorListaCliente</servlet-name>
+    <url-pattern>/ListarClientes</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ControladorReporte1</servlet-name>
+    <servlet-class>controladores.ControladorReporte1</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ControladorReporte1</servlet-name>
+    <url-pattern>/ConsumosEntreFechas</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ControladorReporte2</servlet-name>
+    <servlet-class>controladores.ControladorReporte2</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ControladorReporte2</servlet-name>
+    <url-pattern>/FacturasEntreFechas</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>ControladorReporte2</servlet-name>
+    <url-pattern>/FacturasEntreFechas</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ControladorAgregarCliente</servlet-name>
+    <servlet-class>controladores.ControladorAgregarCliente</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ControladorAgregarCliente</servlet-name>
+    <url-pattern>/AgregarCliente</url-pattern>
+  </servlet-mapping>
+   -->
+</web-app>
