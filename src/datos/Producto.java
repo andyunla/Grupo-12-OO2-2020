@@ -68,7 +68,7 @@ public class Producto {
 	}
 
 	public Lote getLote() {
-		return item;
+		return lote;
 	}
 
 	public void setLote(Lote lote) {
