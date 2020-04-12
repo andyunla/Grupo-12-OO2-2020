@@ -13,5 +13,7 @@
     <property column="talle" name="talle" type="int"/>
     
     <one-to-one name="item" class="datos.Item"></one-to-one>
+    <one-to-one name="lote" class="datos.Lote"></one-to-one>
+    <one-to-one name="pedidostock" class="datos.PedidoStock"></one-to-one>
   </class>
 </hibernate-mapping>

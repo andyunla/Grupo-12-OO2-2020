@@ -11,5 +11,6 @@
     <one-to-one name="producto" class="datos.Producto"></one-to-one>
     <one-to-one name="solicitante" class="datos.Empleado"></one-to-one>
     <one-to-one name="oferente" class="datos.Empleado"></one-to-one>
+    <one-to-one name="chango" class="datos.Chango"></one-to-one>
   </class>
 </hibernate-mapping>

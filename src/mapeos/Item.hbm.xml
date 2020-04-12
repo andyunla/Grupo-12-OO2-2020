@@ -3,10 +3,7 @@
 <hibernate-mapping>
 <class name="datos.Item" table="item">
     <id column="idItem" name="idItem">
-      <generator class="foreign">
-        <param name="property">chango</param>
-        <param name="property">producto</param>
-      </generator>
+        <generator class="identity"/>
     </id>
     <property column="cantidad" name="cantidad" type="int"/>
     <one-to-one name="producto" class="datos.Producto"></one-to-one>

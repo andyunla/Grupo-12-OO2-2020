@@ -3,15 +3,16 @@
 <hibernate-mapping>
 <class name="datos.Chango" table="chango">
     <id column="idChango" name="idChango">
-      <generator class="foreign">
-        <param name="property">factura</param>
-      </generator>
+        <generator class="identity"/>
     </id>
-    <one-to-one name="pedidostock" class="datos.PedidoStock"></one-to-one>
-	<set name="listaItems" table="item" order-by="idItem asc" inverse="true" lazy="true" fetch="select">
+    <set name="listaItems" table="item" order-by="idItem asc" inverse="true" lazy="true" fetch="select">
       <key column="idChango" not-null="true"/>
       <one-to-many class="datos.Item"/>
     </set>
+
     <one-to-one name="factura" class="datos.Factura"></one-to-one>
+    <one-to-one name="pedidostock" class="datos.PedidoStock"></one-to-one>
+
+    <many-to-one name="local" class="datos.Local" column="idLocal" not-null="true"/>
   </class>
 </hibernate-mapping>
