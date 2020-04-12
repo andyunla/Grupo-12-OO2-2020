@@ -39,9 +39,7 @@ git push -u origin NOMBRE-RAMA  # Cambiar NOMBRE-RAMA por el nombre del actual b
 ### 6to - Los cambios estarán en la sección de _PULL REQUESTS_:
 Una vez allí solo queda fusionarla con master.
 
-<a href="https://imgur.com/5iZ2hhq.png">
-  <img src="https://imgur.com/5iZ2hhq.png" />
-</a>
+<img src="https://imgur.com/MepGlwJl.png" />
 
 <br><hr>
 <div align="center">
