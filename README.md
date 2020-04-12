@@ -36,7 +36,14 @@ git status                  # OPCIONAL: es para saber si lo que agregamos anteri
 git push -u origin NOMBRE-RAMA  # Cambiar NOMBRE-RAMA por el nombre del actual branch. Ej: git push origin agregar-sql
 ```
 
-<<br><hr>
+### 6to - Los cambios estarán en la sección de _PULL REQUESTS_:
+Una vez allí solo queda fusionarla con master.
+
+<a href="https://imgur.com/5iZ2hhq.png">
+  <img src="https://imgur.com/5iZ2hhq.png" />
+</a>
+
+<br><hr>
 <div align="center">
   <h2>REALIZAR SIEMPRE UNA ACTUALIZACIÓN DE LOS DATOS</h1>
   <h3>Se debe traer los cambios que están en master ya que es la rama que se actualiza a cada momento.</h3>
