@@ -20,6 +20,11 @@ ___Nota:___ Los pasos anteriores son solo al principio. Para clonar el repositor
 
 ### 3ro - Crear una nueva rama o branch basada en master cada vez que se hace un nuevo trabajo
 ```bash
+git branch NOMBRE-RAMA    # El nombre del branch tiene que tener relación a los que se hace. Ej: agregar-sql
+git checkout NOMBRE-RAMA  # Nos cambiamos a la nueva rama.
+```
+O la forma más rápida que realiza los 2 pasos a la vez:
+```bash
 git checkout -b NOMBRE-RAMA  # El nombre del branch tiene que tener relación a los que se hace. Ej: agregar-sql
 ```
 ___Nota:___ Todos las modificaciones se están realizando en la nueva rama. Así no trabajamos sobre master directamente. Una vez que la rama se usó no se debe usar más. Crear otra nueva por cada nuevo cambio que se desea agregar.
