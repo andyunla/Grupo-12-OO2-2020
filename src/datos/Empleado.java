@@ -8,10 +8,11 @@ public class Empleado extends Persona {
 	private LocalTime horaHasta;
 	private double sueldoBasico;
 	private int idLocal;
+	private Factura factura;
+	private Local local;
 	
-	//constructor
 	public Empleado(String nombre, String apellido, int dni, LocalDate fechaNacimiento, int legajo, 
-			        LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, int idLocal) {
+					LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, int idLocal) {
 		super(nombre, apellido, dni, fechaNacimiento);
 		this.legajo = legajo;
 		this.horaDesde = horaDesde;
@@ -20,6 +21,7 @@ public class Empleado extends Persona {
 		this.idLocal = idLocal;
 	}
 
+	//Getters y Setters
 	public int getIdLocal() {
 		return idLocal;
 	}
@@ -28,7 +30,6 @@ public class Empleado extends Persona {
 		this.idLocal = idLocal;
 	}
 
-	//Getters y Setters
 	public int getLegajo() {
 		return legajo;
 	}
@@ -60,13 +61,29 @@ public class Empleado extends Persona {
 		this.sueldoBasico = sueldoBasico;
 	}
 
-	@Override
-	public String toString() {
-		return "\n\nNombre: "+ this.nombre +"\nApellido: "+this.apellido +"\nDNI: "+ this.dni +"\nLegajo: " + legajo + "\nHoraDesde: " + horaDesde + "\nHoraHasta: " + horaHasta
-				+ "\nSueldoBasico: " + sueldoBasico  ;
+	public Factura getFactura() {
+		return factura;
+	}
+
+	public void setFactura(Factura factura) {
+		this.factura = factura;
+	}
+
+	public Local getLocal() {
+		return local;
+	}
+
+	public void setLocal(Local local) {
+		this.local = local;
 	}
 
 	public boolean equals(Empleado empleado) {
 		return this.dni == empleado.getDni();
+	}
+
+	@Override
+	public String toString() {
+		return "\n\nNombre: "+ this.nombre +"\nApellido: "+this.apellido +"\nDNI: "+ this.dni +"\nLegajo: " + legajo + "\nHoraDesde: " + horaDesde + "\nHoraHasta: " + horaHasta
+				+ "\nSueldoBasico: " + sueldoBasico  ;
 	}
 }

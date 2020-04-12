@@ -7,6 +7,7 @@ public class PedidoStock {
 	private Empleado solicitante;
 	private boolean aceptado;
 	private Empleado oferente;
+	private Chango chango;
 
 	public PedidoStock(int idPedido, Producto producto, int cantidad, Empleado solicitante, boolean aceptado, Empleado oferente) {
 		this.idPedido = idPedido;
@@ -64,6 +65,14 @@ public class PedidoStock {
 
 	public void setOferente(Empleado oferente) {
 		this.oferente = oferente;
+	}
+
+	public Chango getChango() {
+		return chango;
+	}
+
+	public void setChango(Chango chango) {
+		this.chango = chango;
 	}
 
 	@Override

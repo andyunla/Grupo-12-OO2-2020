@@ -4,6 +4,7 @@ public class Item {
 	private int idItem;
 	private int cantidad;
 	private Producto producto;
+	private Chango chango;
 	
 	public Item(int idItem, int cantidad, Producto producto) {
 		this.idItem = idItem;
@@ -33,6 +34,14 @@ public class Item {
 	
 	public void setProducto(Producto producto) {
 		this.producto = producto;
+	}
+
+	public Chango getChango() {
+		return chango;
+	}
+	
+	public void setChango(Chango chango) {
+		this.chango = chango;
 	}
 
 	@Override

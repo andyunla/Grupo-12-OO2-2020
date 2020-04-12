@@ -6,6 +6,8 @@ public class Chango {
 	private int idChango;
 	private List<Item> listaItems;
 	private PedidoStock pedidostock;
+	private Factura factura;
+	private Local local;
 
 	public Chango(int idChango, PedidoStock pedidostock) {
 		super();
@@ -35,18 +37,34 @@ public class Chango {
 		this.pedidostock = pedidostock;
 	}
 
+	public Factura getFactura() {
+		return factura;
+	}
+
+	public void setFactura(Factura factura) {
+		this.factura = factura;
+	}
+
+	public Local getLocal() {
+		return local;
+	}
+
+	public void setLocal(Local local) {
+		this.local = local;
+	}
+	
+	public boolean equals (Chango chango){
+		return chango.getIdChango()==this.getIdChango();
+	}
+	
 	@Override
 	public String toString() {
 		return "\n\nCHANGO: " + idChango + listaItems.toString();
 		//return "Chango [idChango=" + idChango + ", pedidostock=" + pedidostock + "]";
 	}
 
-	public boolean equals (Chango chango){
-		return chango.getIdChango()==this.getIdChango();
-	}
-	
 	/*****************************************************************************************************************/
-	//Metodos
+	// Métodos
 	public List<Item> traerItem() {
 		return listaItems;
 	}	
@@ -60,7 +78,7 @@ public class Chango {
 		return obj;
 	}
 
-	public Item traerItem( int idItem){
+	public Item traerItem(int idItem){
 		Item obj = null;		
 		int i = 0;
 		while(obj == null && i<listaItems.size() ){			
@@ -73,11 +91,10 @@ public class Chango {
 	public boolean crearItem (int cantidad, Producto producto) {		
 		if(traerItem(producto) != null) {
 			traerItem(producto).setCantidad(traerItem(producto).getCantidad() + cantidad);			
-			}
-			else{
-				int idItem = 1;
-				if(!this.listaItems.isEmpty() ) idItem = listaItems.get(listaItems.size()-1).getIdItem()+1;		
-				listaItems.add(new Item(idItem, cantidad, producto) );
+		} else {
+			int idItem = 1;
+			if(!this.listaItems.isEmpty() ) idItem = listaItems.get(listaItems.size()-1).getIdItem()+1;		
+			listaItems.add(new Item(idItem, cantidad, producto) );
 		}
 		return true;
 	}

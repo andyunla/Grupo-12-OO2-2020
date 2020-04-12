@@ -9,6 +9,7 @@ public class Lote {
 	private LocalDate fechaIngreso;
 	private Producto producto;
 	private boolean activo;
+	private Local local;
 
 	public Lote(int idLote, int cantidadInicial, int cantidadActual, LocalDate fechaIngreso, Producto producto) {
 		this.idLote = idLote;
@@ -65,6 +66,14 @@ public class Lote {
 
 	public void setActivo(boolean activo) {
 		this.activo = activo;
+	}
+
+	public Local getLocal() {
+		return local;
+	}
+
+	public void setLocal(Local local) {
+		this.local = local;
 	}
 
 	@Override

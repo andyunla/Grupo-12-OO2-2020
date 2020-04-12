@@ -9,6 +9,7 @@ public class Factura {
 	private LocalDate fechaFactura;
 	private double costeTotal;
 	private Empleado empleado;
+	private Local local;
 	
 	public Factura(int idFactura, Cliente cliente, Chango chango, LocalDate fechaFactura, double costeTotal,
 			Empleado empleado) {
@@ -69,6 +70,14 @@ public class Factura {
 		this.empleado = empleado;
 	}
 
+	public Local getLocal() {
+		return local;
+	}
+
+	public void setLocal(Local local) {
+		this.local = local;
+	}
+	
 	@Override
 	public String toString() {
 		return "Factura [idFactura=" + idFactura + ", cliente=" + cliente + ", chango=" + chango + ", fechaFactura="

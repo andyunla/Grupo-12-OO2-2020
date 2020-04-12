@@ -6,6 +6,9 @@ public class Producto {
 	private String descripcion;
 	private double precio;
 	private int talle;
+	private Item item;
+	private Lote lote;
+	private PedidoStock pedidoStock;
 
 	public Producto(int idProducto, String nombre, String descripcion, double precio, int talle) {
 		this.idProducto = idProducto;
@@ -55,7 +58,31 @@ public class Producto {
 	public void setTalle(int talle) {
 		this.talle = talle;
 	}
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
+	public Lote getLote() {
+		return item;
+	}
+
+	public void setLote(Lote lote) {
+		this.lote = lote;
+	}
 	
+	public PedidoStock getPedidoStock() {
+		return pedidoStock;
+	}
+
+	public void setLote(PedidoStock pedidoStock) {
+		this.pedidoStock = pedidoStock;
+	}
+
 	public boolean equals(Producto producto) {
 		return this.idProducto == producto.getIdProducto();
 	}

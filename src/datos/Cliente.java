@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public class Cliente extends Persona {
 	private String email;
+	private Factura factura;
 
 	public Cliente(String nombre, String apellido, int dni, LocalDate fechaNacimiento, String email) {
 		super(nombre, apellido, dni, fechaNacimiento);
@@ -17,6 +18,14 @@ public class Cliente extends Persona {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Factura getFactura() {
+		return factura;
+	}
+
+	public void setFactura(Factura factura) {
+		this.factura = factura;
 	}
 
 	@Override
