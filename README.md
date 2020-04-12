@@ -16,7 +16,6 @@ git config user.email "tu_direccion@email.com"
 ```
 ___Nota:___ Los pasos anteriores son solo al principio. Para clonar el repositorio y configurarlo
 
-<br>
 <hr>
 
 ### 3ro - Crear una nueva rama o branch basada en master cada vez que se hace un nuevo trabajo
