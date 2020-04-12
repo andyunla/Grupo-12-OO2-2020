@@ -49,7 +49,7 @@ Una vez allí solo queda fusionarla con master.
   <h3>Se debe traer los cambios que están en master ya que es la rama que se actualiza a cada momento.</h3>
 </div>
 
-___Nota:___ Esto realizarlo cada vez que tienen que realizar cambios nuevos. Así tienen lo más actualizado y pueden ya modificar.
+___Nota:___ Realizar esto cada vez que tienen que hacer cambios nuevos. Así tienen lo más actualizado y pueden ya modificar.
 ```bash
 git pull origin master  # Trae los nuevos cambios que están en master
 ```
