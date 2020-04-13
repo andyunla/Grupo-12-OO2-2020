@@ -9,8 +9,14 @@ public class Persona {
 	protected int dni;
 	protected LocalDate fechaNacimiento;
 
-	public Persona(String nombre, String apellido, int dni, LocalDate fechaNacimiento) {
+	public Persona(long idPersona) {
 		super();
+		this.idPersona = idPersona;
+	}
+
+	public Persona(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento) {
+		super();
+		this.idPersona = idPersona;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.dni = dni;

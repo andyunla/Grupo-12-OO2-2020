@@ -8,8 +8,8 @@ public class Cliente extends Persona {
 	private int nroCliente;
 	private Factura factura;
 
-	public Cliente(String nombre, String apellido, int dni, LocalDate fechaNacimiento, String email, int nroCliente) {
-		super(nombre, apellido, dni, fechaNacimiento);
+	public Cliente(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, String email, int nroCliente) {
+		super(idPersona, nombre, apellido, dni, fechaNacimiento);
 		this.nroCliente = nroCliente;
 		this.email = email;
 	}

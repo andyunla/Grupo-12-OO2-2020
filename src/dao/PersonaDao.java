@@ -143,7 +143,7 @@ public class PersonaDao {
     }
 
     /** ACTUALIZAR **/
-    public void actualizar(Empleado objeto) throws HibernateException {
+    public void actualizar(Persona objeto) throws HibernateException {
         try {
             iniciaOperacion();
             session.update(objeto);
@@ -157,7 +157,7 @@ public class PersonaDao {
     }
 
     /** ELIMINAR **/
-    public void eliminar(Empleado objeto) throws HibernateException {
+    public void eliminar(Persona objeto) throws HibernateException {
         try {
             iniciaOperacion();
             session.delete(objeto);

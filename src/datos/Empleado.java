@@ -12,9 +12,9 @@ public class Empleado extends Persona {
 	private Factura factura;
 	private Local local;
 	
-	public Empleado(String nombre, String apellido, int dni, LocalDate fechaNacimiento, int legajo, 
+	public Empleado(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, int legajo, 
 					LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, long idLocal) {
-		super(nombre, apellido, dni, fechaNacimiento);
+		super(idPersona, nombre, apellido, dni, fechaNacimiento);
 		this.legajo = legajo;
 		this.horaDesde = horaDesde;
 		this.horaHasta = horaHasta;
