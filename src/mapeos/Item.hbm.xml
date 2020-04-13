@@ -6,6 +6,7 @@
         <generator class="identity"/>
     </id>
     <property column="cantidad" name="cantidad" type="int"/>
+    
     <one-to-one name="producto" class="datos.Producto"></one-to-one>
     <one-to-one name="chango" class="datos.Chango"></one-to-one>
   </class>

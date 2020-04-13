@@ -13,6 +13,8 @@
     <joined-subclass name="datos.Cliente" table="cliente" >
       <key column="idCliente"/>
       <property column="email" name="email" type="string"/>
+
+      <one-to-one name="factura" class="datos.Factura"></one-to-one>
     </joined-subclass >
     <joined-subclass name="datos.Empleado" table="empleado" >
       <key column="idEmpleado"/>
@@ -20,6 +22,13 @@
       <property column="horarioDesde" name="horarioDesde" type="LocalTime"/>
       <property column="horarioHasta" name="horarioHasta" type="LocalTime"/>
       <property column="sueldoBasico" name="sueldoBasico" type="double"/>
+      
+      <!-- Representa al gerente -->
+      <one-to-one name="local" class="datos.Local"></one-to-one>
+      <one-to-one name="factura" class="datos.Factura"></one-to-one>
+      
+      <!-- Representa la lista de empleados-->
+      <many-to-one name="local" class="datos.Local" column="idLocal" not-null="true"/>
     </joined-subclass>
   </class>
 </hibernate-mapping>
