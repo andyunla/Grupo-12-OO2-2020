@@ -11,10 +11,10 @@ git clone https://github.com/andyunla/sistema-de-democratizacion-de-stock.git
 ### 2do - Realizar configuraciones
 ```bash
 cd sistema-de-democratizacion-de-stock         # Es para ingresar a la carpeta del proyecto descargada
-git config user.name "nombre_usuario"          # Esto, al igual que el email hacerlo una vez. Luego no harán falta
+git config user.name "nombre_usuario"          # Esto, al igual que el email, hacerlo una vez.
 git config user.email "tu_direccion@email.com"
 ```
-___Nota:___ Los pasos anteriores son solo al principio. Para clonar el repositorio y configurarlo
+___Nota:___ Los pasos anteriores son solo al principio; luego no harán falta. Para clonar el repositorio y configurarlo
 
 <hr>
 
@@ -38,7 +38,7 @@ git status                  # OPCIONAL: es para saber si lo que agregamos anteri
 
 ### 5to - Subimos los cambios
 ```bash
-git push -u origin NOMBRE-RAMA  # Cambiar NOMBRE-RAMA por el nombre del actual branch. Ej: git push origin agregar-sql
+git push origin NOMBRE-RAMA  # Cambiar NOMBRE-RAMA por el nombre del actual branch. Ej: git push origin agregar-sql
 ```
 
 ### 6to - Los cambios estarán en la sección de _PULL REQUESTS_:
