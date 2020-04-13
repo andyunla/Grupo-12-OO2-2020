@@ -38,7 +38,7 @@ public class PersonaDao {
     /******************************************************************************/
 
     /** Traer Persona **/
-    public Persona traer(int idPersona) {
+    public Persona traer(long idPersona) {
         Persona objeto = null;
         try {
             iniciaOperacion();
@@ -49,13 +49,25 @@ public class PersonaDao {
         return objeto;
     }
 
-    /** Traer Cliente **/
-    public Persona traer(String email) {
+    /** Traer Persona **/
+    public Persona traer(int dni) {
         Persona objeto = null;
         try {
             iniciaOperacion();
-            Query query = session.createQuery("from Cliente c where c.email = :email");
-            query.setParameter("email", email);
+            objeto = (Persona) session.createQuery("from Persona p where p.dni = " + dni).uniqueResult();
+        } finally {
+            session.close();
+        }
+        return objeto;
+    }
+
+    /** Traer Cliente **/
+    public Persona traerCliente(int nroCliente) {
+        Persona objeto = null;
+        try {
+            iniciaOperacion();
+            Query query = session.createQuery("from Cliente c where c.nroCliente = :nroCliente");
+            query.setParameter("nroCliente", nroCliente);
             objeto = (Persona) query.uniqueResult();
         } finally {
             session.close();
@@ -64,7 +76,7 @@ public class PersonaDao {
     }
 
     /** Traer Empleado **/
-    public Persona traer(int legajo) {
+    public Persona traerEmpleado(int legajo) {
         Persona objeto = null;
         try {
             iniciaOperacion();
@@ -90,7 +102,7 @@ public class PersonaDao {
 
     /** Traer lista de Clientes **/
     @SuppressWarnings("unchecked")
-    public List<Cliente> traer() throws HibernateException {
+    public List<Cliente> traerClientes() throws HibernateException {
         List<Cliente> lista = null;
         try {
             iniciaOperacion();
@@ -103,7 +115,7 @@ public class PersonaDao {
 
     /** Traer lista de Empleados **/
     @SuppressWarnings("unchecked")
-    public List<Empleado> traer() throws HibernateException {
+    public List<Empleado> traerEmpleados() throws HibernateException {
         List<Empleado> lista = null;
         try {
             iniciaOperacion();
