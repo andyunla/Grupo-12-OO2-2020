@@ -14,7 +14,8 @@ cd sistema-de-democratizacion-de-stock         # Es para ingresar a la carpeta d
 git config user.name "nombre_usuario"          # Esto, al igual que el email, hacerlo una vez.
 git config user.email "tu_direccion@email.com"
 ```
-___Nota:___ Los pasos anteriores son solo al principio; luego no harán falta. Para clonar el repositorio y configurarlo
+___Nota:___ Los pasos anteriores son solo al principio; luego no harán falta. <br>
+Son para clonar el repositorio y configurarlo
 
 <hr>
 
