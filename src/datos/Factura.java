@@ -3,7 +3,7 @@ package datos;
 import java.time.*;
 
 public class Factura {
-	private int idFactura;
+	private long idFactura;
 	private Cliente cliente;
 	private Chango chango;
 	private LocalDate fechaFactura;
@@ -11,7 +11,7 @@ public class Factura {
 	private Empleado empleado;
 	private Local local;
 	
-	public Factura(int idFactura, Cliente cliente, Chango chango, LocalDate fechaFactura, double costeTotal,
+	public Factura(long idFactura, Cliente cliente, Chango chango, LocalDate fechaFactura, double costeTotal,
 			Empleado empleado) {
 
 		this.idFactura = idFactura;
@@ -23,10 +23,10 @@ public class Factura {
 	}
 
 	//Getters y Setters
-	public int getIdFactura() {
+	public long getIdFactura() {
 		return idFactura;
 	}
-	public void setIdFactura(int idFactura) {
+	public void setIdFactura(long idFactura) {
 		this.idFactura = idFactura;
 	}
 

@@ -1,7 +1,7 @@
 package datos;
 
 public class Producto {
-	private int idProducto;
+	private long idProducto;
 	private String nombre;
 	private String descripcion;
 	private double precio;
@@ -10,7 +10,7 @@ public class Producto {
 	private Lote lote;
 	private PedidoStock pedidoStock;
 
-	public Producto(int idProducto, String nombre, String descripcion, double precio, int talle) {
+	public Producto(long idProducto, String nombre, String descripcion, double precio, int talle) {
 		this.idProducto = idProducto;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -19,11 +19,11 @@ public class Producto {
 	}
 
 	//Getters y Setters
-	public int getIdProducto() {
+	public long getIdProducto() {
 		return idProducto;
 	}
 
-	public void setIdProducto(int idProducto) {
+	public void setIdProducto(long idProducto) {
 		this.idProducto = idProducto;
 	}
 	

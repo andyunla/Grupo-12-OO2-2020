@@ -1,7 +1,7 @@
 package datos;
 
 public class PedidoStock {
-	private int idPedido;
+	private long idPedido;
 	private Producto producto;
 	private int cantidad;
 	private Empleado solicitante;
@@ -9,7 +9,7 @@ public class PedidoStock {
 	private Empleado oferente;
 	private Chango chango;
 
-	public PedidoStock(int idPedido, Producto producto, int cantidad, Empleado solicitante, boolean aceptado, Empleado oferente) {
+	public PedidoStock(long idPedido, Producto producto, int cantidad, Empleado solicitante, boolean aceptado, Empleado oferente) {
 		this.idPedido = idPedido;
 		this.producto = producto;
 		this.cantidad = cantidad;
@@ -19,11 +19,11 @@ public class PedidoStock {
 	}
 
 	//Getters y Setters
-	public int getIdPedido() {
+	public long getIdPedido() {
 		return idPedido;
 	}
 
-	public void setIdPedido(int idPedido) {
+	public void setIdPedido(long idPedido) {
 		this.idPedido = idPedido;
 	}
 

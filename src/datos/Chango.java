@@ -3,13 +3,13 @@ package datos;
 import java.util.*;
 
 public class Chango {
-	private int idChango;
+	private long idChango;
 	private List<Item> listaItems;
 	private PedidoStock pedidostock;
 	private Factura factura;
 	private Local local;
 
-	public Chango(int idChango, PedidoStock pedidostock) {
+	public Chango(long idChango, PedidoStock pedidostock) {
 		super();
 		this.idChango = idChango;
 		this.listaItems = new ArrayList<Item>();
@@ -17,11 +17,11 @@ public class Chango {
 	}
 
 	//Getters y Setters
-	public int getIdChango() {
+	public long getIdChango() {
 		return idChango;
 	}
 
-	public void setIdChango(int idChango) {
+	public void setIdChango(long idChango) {
 		this.idChango = idChango;
 	}
 

@@ -3,7 +3,7 @@ package datos;
 import java.time.*;
 
 public class Lote {
-	private int idLote;
+	private long idLote;
 	private int cantidadInicial;
 	private int cantidadActual;
 	private LocalDate fechaIngreso;
@@ -11,7 +11,7 @@ public class Lote {
 	private boolean activo;
 	private Local local;
 
-	public Lote(int idLote, int cantidadInicial, int cantidadActual, LocalDate fechaIngreso, Producto producto) {
+	public Lote(long idLote, int cantidadInicial, int cantidadActual, LocalDate fechaIngreso, Producto producto) {
 		this.idLote = idLote;
 		this.cantidadInicial = cantidadInicial;
 		this.cantidadActual = cantidadActual;
@@ -21,11 +21,11 @@ public class Lote {
 	}
 
 	//Getters y Setters
-	public int getIdLote() {
+	public long getIdLote() {
 		return idLote;
 	}
 
-	public void setIdLote(int idLote) {
+	public void setIdLote(long idLote) {
 		this.idLote = idLote;
 	}
 

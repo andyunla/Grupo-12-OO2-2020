@@ -3,16 +3,17 @@ package datos;
 import java.time.*;
 
 public class Empleado extends Persona {
+	private long idEmpleado;
 	private int legajo;
 	private LocalTime horaDesde;
 	private LocalTime horaHasta;
 	private double sueldoBasico;
-	private int idLocal;
+	private long idLocal;
 	private Factura factura;
 	private Local local;
 	
 	public Empleado(String nombre, String apellido, int dni, LocalDate fechaNacimiento, int legajo, 
-					LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, int idLocal) {
+					LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, long idLocal) {
 		super(nombre, apellido, dni, fechaNacimiento);
 		this.legajo = legajo;
 		this.horaDesde = horaDesde;
@@ -22,15 +23,23 @@ public class Empleado extends Persona {
 	}
 
 	//Getters y Setters
-	public int getIdLocal() {
+	public long getIdEmpleado() {
+		return idEmpleado;
+	}
+
+	public void setIdEmpleado(long idEmpleado) {
+		this.idEmpleado = idEmpleado;
+	}
+
+	public long getIdLocal() {
 		return idLocal;
 	}
 
-	public void setIdLocal(int idLocal) {
+	public void setIdLocal(long idLocal) {
 		this.idLocal = idLocal;
 	}
 
-	public int getLegajo() {
+	public long getLegajo() {
 		return legajo;
 	}
 

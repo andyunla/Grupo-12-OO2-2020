@@ -3,6 +3,7 @@ package datos;
 import java.time.*;
 
 public class Persona {
+	protected long idPersona;
 	protected String nombre;
 	protected String apellido;
 	protected int dni;
@@ -17,6 +18,14 @@ public class Persona {
 	}
 
 	//Getters y Setters
+	public long getIdPersona() {
+		return idPersona;
+	}
+
+	public void setIdPersona(long idPersona) {
+		this.idPersona = idPersona;
+	}
+
 	public String getNombre() {
 		return nombre;
 	}

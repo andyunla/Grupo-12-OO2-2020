@@ -3,21 +3,40 @@ package datos;
 import java.time.LocalDate;
 
 public class Cliente extends Persona {
+	private long idCliente;
 	private String email;
+	private int nroCliente;
 	private Factura factura;
 
-	public Cliente(String nombre, String apellido, int dni, LocalDate fechaNacimiento, String email) {
+	public Cliente(String nombre, String apellido, int dni, LocalDate fechaNacimiento, String email, int nroCliente) {
 		super(nombre, apellido, dni, fechaNacimiento);
+		this.nroCliente = nroCliente;
 		this.email = email;
 	}
 
 	//Getters y Setters
+	public long getIdCliente() {
+		return idCliente;
+	}
+
+	public void setIdCliente(long idCliente) {
+		this.idCliente = idCliente;
+	}
+
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public int getNroCliente() {
+		return nroCliente;
+	}
+
+	public void setNroCliente(int nroCliente) {
+		this.nroCliente = nroCliente;
 	}
 
 	public Factura getFactura() {

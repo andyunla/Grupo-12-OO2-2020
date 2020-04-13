@@ -1,23 +1,23 @@
 package datos;
 
 public class Item {
-	private int idItem;
+	private long idItem;
 	private int cantidad;
 	private Producto producto;
 	private Chango chango;
 	
-	public Item(int idItem, int cantidad, Producto producto) {
+	public Item(long idItem, int cantidad, Producto producto) {
 		this.idItem = idItem;
 		this.cantidad = cantidad;
 		this.producto = producto;
 	}
 
 	//Getters y Setters
-	public int getIdItem() {
+	public long getIdItem() {
 		return idItem;
 	}
 	
-	public void setIdItem(int idItem) {
+	public void setIdItem(long idItem) {
 		this.idItem = idItem;
 	}
 

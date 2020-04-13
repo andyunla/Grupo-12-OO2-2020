@@ -4,7 +4,7 @@ import java.util.*;
 import java.time.*;
 
 public class Local {
-	private int idLocal;
+	private long idLocal;
 	private String nombreLocal;
 	private double latitud;
 	private double longitud;
@@ -16,7 +16,7 @@ public class Local {
 	private List<Chango> listaChangos;
 	private List<Factura> listaFacturas;
 	
-	public Local(int idLocal, String nombreLocal, double latitud, double longitud, String direccion, int telefono) {
+	public Local(long idLocal, String nombreLocal, double latitud, double longitud, String direccion, int telefono) {
 		this.idLocal = idLocal;
 		this.nombreLocal = nombreLocal;
 		this.latitud = latitud;
@@ -31,8 +31,12 @@ public class Local {
 	}
 	
 	//Getters y Setters
-	public int getIdLocal() {
+	public long getIdLocal() {
 		return idLocal;
+	}
+
+	public void setIdLocal(long idLocal) {
+		this.idLocal = idLocal;
 	}
 
 	public Empleado getGerente() {
