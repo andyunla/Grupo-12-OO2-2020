@@ -5,14 +5,12 @@ import java.util.*;
 public class Chango {
 	private long idChango;
 	private List<Item> listaItems;
+	private Set<Factura> facturas;
 	private PedidoStock pedidostock;
-	private Factura factura;
 	private Local local;
 
-	public Chango(long idChango, PedidoStock pedidostock) {
+	public Chango(PedidoStock pedidostock, Local local) {
 		super();
-		this.idChango = idChango;
-		this.listaItems = new ArrayList<Item>();
 		this.pedidostock = pedidostock;
 	}
 
@@ -27,6 +25,10 @@ public class Chango {
 
 	public List<Item> getListaItems() {
 		return listaItems;
+	}
+
+	public void setListaItems(List<Item> listaItems) {
+		this.listaItems = listaItems;
 	}
 
 	public PedidoStock getPedidostock() {
@@ -52,6 +54,14 @@ public class Chango {
 	public void setLocal(Local local) {
 		this.local = local;
 	}
+
+	public Set<Factura> getFacturas() {
+		return facturas;
+	}
+
+	public void setFacturas(Set<Factura> facturas) {
+		this.facturas = facturas;
+	}
 	
 	public boolean equals (Chango chango){
 		return chango.getIdChango()==this.getIdChango();
@@ -67,7 +77,8 @@ public class Chango {
 	// Métodos
 	public List<Item> traerItem() {
 		return listaItems;
-	}	
+	}
+
 	public Item traerItem(Producto producto){
 		Item obj = null;		
 		int i = 0;
