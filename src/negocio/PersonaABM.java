@@ -94,13 +94,14 @@ public class PersonaABM {
     
     /****   MODIFICAR   ****/
     public void modificar(Persona obj) throws Exception {
-        if(traer(Persona.getIdPersona()) == null) {
+        if(traer(obj.getIdPersona()) == null) {
             throw new Exception("No se puede modificar a la persona porque no existe.");
         }
+        dao.actualizar(obj);
     }
     
     /****   ELIMINAR   ****/
-    public void eliminar(long idPersona) throws  Exception {
+    public void eliminar(long idPersona) throws Exception {
         Persona obj = dao.traer(idPersona);
         if(obj == null) {
             throw new Exception("No existe el cliente a eliminar");

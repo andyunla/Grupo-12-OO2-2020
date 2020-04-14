@@ -127,7 +127,7 @@ public class PersonaDao {
     }
 
     /** AGREGAR **/
-    public int agregar(Persona objeto) {
+    public int agregar(Persona objeto) throws HibernateException {
         int id = 0;
         try {
             iniciaOperacion();

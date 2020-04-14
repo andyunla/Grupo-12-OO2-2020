@@ -88,7 +88,7 @@ public class FacturaDao {
     }
 
     /** AGREGAR **/
-    public int agregar(Factura objeto) {
+    public int agregar(Factura objeto) throws HibernateException {
         int id = 0;
         try {
             iniciaOperacion();
