@@ -11,21 +11,21 @@ public class Factura {
 	private Empleado empleado;
 	private Local local;
 	
-	public Factura(long idFactura, Cliente cliente, Chango chango, LocalDate fechaFactura, double costeTotal,
-			Empleado empleado) {
-
+	public Factura(Cliente cliente, Chango chango, LocalDate fechaFactura, double costeTotal, Empleado empleado, Local local) {
 		this.idFactura = idFactura;
 		this.cliente = cliente;
 		this.chango = chango;
 		this.fechaFactura = fechaFactura;
 		this.costeTotal = costeTotal;
 		this.empleado = empleado;
+		this.local = local;
 	}
 
 	//Getters y Setters
 	public long getIdFactura() {
 		return idFactura;
 	}
+
 	public void setIdFactura(long idFactura) {
 		this.idFactura = idFactura;
 	}
@@ -81,6 +81,6 @@ public class Factura {
 	@Override
 	public String toString() {
 		return "Factura [idFactura=" + idFactura + ", cliente=" + cliente + ", chango=" + chango + ", fechaFactura="
-				+ fechaFactura + ", costeTotal=" + costeTotal + ", empleado=" + empleado + "]";
+				+ fechaFactura + ", costeTotal=" + costeTotal + ", empleado=" + empleado + ", local=" + local + "]";
 	}
 }

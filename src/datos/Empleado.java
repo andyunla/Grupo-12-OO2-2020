@@ -1,6 +1,7 @@
 package datos;
 
 import java.time.*;
+import java.util.Set;
 
 public class Empleado extends Persona {
 	private long idEmpleado;
@@ -8,18 +9,17 @@ public class Empleado extends Persona {
 	private LocalTime horaDesde;
 	private LocalTime horaHasta;
 	private double sueldoBasico;
-	private long idLocal;
-	private Factura factura;
 	private Local local;
+	private Set<Factura> facturas;
 	
 	public Empleado(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, int legajo, 
-					LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, long idLocal) {
+					LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, Local local) {
 		super(idPersona, nombre, apellido, dni, fechaNacimiento);
 		this.legajo = legajo;
 		this.horaDesde = horaDesde;
 		this.horaHasta = horaHasta;
 		this.sueldoBasico = sueldoBasico;
-		this.idLocal = idLocal;
+		this.local = local;
 	}
 
 	//Getters y Setters
@@ -30,15 +30,7 @@ public class Empleado extends Persona {
 	public void setIdEmpleado(long idEmpleado) {
 		this.idEmpleado = idEmpleado;
 	}
-
-	public long getIdLocal() {
-		return idLocal;
-	}
-
-	public void setIdLocal(long idLocal) {
-		this.idLocal = idLocal;
-	}
-
+	
 	public long getLegajo() {
 		return legajo;
 	}
@@ -70,12 +62,12 @@ public class Empleado extends Persona {
 		this.sueldoBasico = sueldoBasico;
 	}
 
-	public Factura getFactura() {
-		return factura;
+	public Set<Factura> getFacturas() {
+		return facturas;
 	}
 
-	public void setFactura(Factura factura) {
-		this.factura = factura;
+	public void setFacturas(Set<Factura> facturas) {
+		this.facturas = facturas;
 	}
 
 	public Local getLocal() {
