@@ -35,7 +35,7 @@ public class Local {
 		return idLocal;
 	}
 
-	public void setIdLocal(long idLocal) {
+	protected void setIdLocal(long idLocal) {
 		this.idLocal = idLocal;
 	}
 
@@ -47,7 +47,7 @@ public class Local {
 		this.gerente = gerente;
 	}
 
-	public void setIdLocal(int idLocal) {
+	protected void setIdLocal(int idLocal) {
 		this.idLocal = idLocal;
 	}
 

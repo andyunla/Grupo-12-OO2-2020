@@ -26,7 +26,7 @@ public class Factura {
 		return idFactura;
 	}
 
-	public void setIdFactura(long idFactura) {
+	protected void setIdFactura(long idFactura) {
 		this.idFactura = idFactura;
 	}
 

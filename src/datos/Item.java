@@ -17,7 +17,7 @@ public class Item {
 		return idItem;
 	}
 	
-	public void setIdItem(long idItem) {
+	protected void setIdItem(long idItem) {
 		this.idItem = idItem;
 	}
 

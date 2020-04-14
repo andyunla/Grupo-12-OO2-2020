@@ -27,7 +27,7 @@ public class Empleado extends Persona {
 		return idEmpleado;
 	}
 
-	public void setIdEmpleado(long idEmpleado) {
+	protected void setIdEmpleado(long idEmpleado) {
 		this.idEmpleado = idEmpleado;
 	}
 	

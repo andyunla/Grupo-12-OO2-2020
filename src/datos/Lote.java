@@ -25,7 +25,7 @@ public class Lote {
 		return idLote;
 	}
 
-	public void setIdLote(long idLote) {
+	protected void setIdLote(long idLote) {
 		this.idLote = idLote;
 	}
 

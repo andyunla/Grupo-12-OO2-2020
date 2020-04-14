@@ -21,7 +21,7 @@ public class Chango {
 		return idChango;
 	}
 
-	public void setIdChango(long idChango) {
+	protected void setIdChango(long idChango) {
 		this.idChango = idChango;
 	}
 

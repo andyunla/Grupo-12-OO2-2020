@@ -23,7 +23,7 @@ public class PedidoStock {
 		return idPedido;
 	}
 
-	public void setIdPedido(long idPedido) {
+	protected void setIdPedido(long idPedido) {
 		this.idPedido = idPedido;
 	}
 

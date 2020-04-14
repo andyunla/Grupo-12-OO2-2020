@@ -23,7 +23,7 @@ public class Producto {
 		return idProducto;
 	}
 
-	public void setIdProducto(long idProducto) {
+	protected void setIdProducto(long idProducto) {
 		this.idProducto = idProducto;
 	}
 	
