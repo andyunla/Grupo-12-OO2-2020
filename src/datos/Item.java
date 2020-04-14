@@ -6,10 +6,10 @@ public class Item {
 	private Producto producto;
 	private Chango chango;
 	
-	public Item(long idItem, int cantidad, Producto producto) {
-		this.idItem = idItem;
+	public Item(int cantidad, Producto producto, Chango chango) {
 		this.cantidad = cantidad;
 		this.producto = producto;
+		this.chango = chango;
 	}
 
 	//Getters y Setters

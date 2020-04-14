@@ -1,5 +1,7 @@
 package datos;
 
+import java.util.Set;
+
 public class Producto {
 	private long idProducto;
 	private String nombre;
@@ -9,6 +11,7 @@ public class Producto {
 	private Item item;
 	private Lote lote;
 	private PedidoStock pedidoStock;
+	private Set<Item> listaItems;
 
 	public Producto(long idProducto, String nombre, String descripcion, double precio, int talle) {
 		this.idProducto = idProducto;
@@ -79,8 +82,16 @@ public class Producto {
 		return pedidoStock;
 	}
 
-	public void setLote(PedidoStock pedidoStock) {
+	public void setPedidoStock(PedidoStock pedidoStock) {
 		this.pedidoStock = pedidoStock;
+	}
+
+	public Set<Item> getListaItems() {
+		return pedidoStock;
+	}
+
+	public void setListaItems(Set<Item> listaItems) {
+		this.listaItems = listaItems;
 	}
 
 	public boolean equals(Producto producto) {
