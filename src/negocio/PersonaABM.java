@@ -52,7 +52,7 @@ public class PersonaABM {
     }
     
     /****   Agregar Persona   ****/
-    public long agregar(long idPersona) {
+    public long agregar(long idPersona) throws Exception {
         if(traer(idPersona) != null) {
             throw new Exception("Ya existe una persona con este ID");
         }
