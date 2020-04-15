@@ -10,8 +10,7 @@
     <property column="fechaIngreso" name="fechaIngreso" type="LocalDate"/>
     <property column="activo" name="activo" type="boolean"/>
 
-    <one-to-one name="producto" class="datos.Producto"></one-to-one>
-
     <many-to-one name="local" class="datos.Local" column="idLocal" not-null="true"/>
+    <many-to-one name="producto" class="datos.Producto" column="idProducto" not-null="true"/>
   </class>
 </hibernate-mapping>

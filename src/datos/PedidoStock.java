@@ -1,16 +1,18 @@
 package datos;
 
+import java.util.Set;
+
 public class PedidoStock {
-	private long idPedido;
+	private long idPedidoStock;
 	private Producto producto;
 	private int cantidad;
 	private Empleado solicitante;
 	private boolean aceptado;
 	private Empleado oferente;
-	private Chango chango;
+	private Set<Chango> listaChangos;
 
-	public PedidoStock(long idPedido, Producto producto, int cantidad, Empleado solicitante, boolean aceptado, Empleado oferente) {
-		this.idPedido = idPedido;
+	public PedidoStock(Producto producto, int cantidad, Empleado solicitante, boolean aceptado, Empleado oferente) {
+		this.idPedidoStock = idPedidoStock;
 		this.producto = producto;
 		this.cantidad = cantidad;
 		this.solicitante = solicitante;
@@ -19,12 +21,12 @@ public class PedidoStock {
 	}
 
 	//Getters y Setters
-	public long getIdPedido() {
-		return idPedido;
+	public long getIdPedidoStock() {
+		return idPedidoStock;
 	}
 
-	protected void setIdPedido(long idPedido) {
-		this.idPedido = idPedido;
+	protected void setIdPedidoStock(long idPedidoStock) {
+		this.idPedidoStock = idPedidoStock;
 	}
 
 	public Producto getProducto() {
@@ -67,17 +69,17 @@ public class PedidoStock {
 		this.oferente = oferente;
 	}
 
-	public Chango getChango() {
-		return chango;
+	public Set<Chango> getListaChangos() {
+		return listaChangos;
 	}
 
-	public void setChango(Chango chango) {
-		this.chango = chango;
+	public void setListaChangos(Set<Chango> listaChangos) {
+		this.listaChangos = listaChangos;
 	}
 
 	@Override
 	public String toString() {
-		return "PedidoStock [idPedido=" + idPedido + ", producto=" + producto + ", cantidad=" + cantidad
+		return "PedidoStock [idPedidoStock=" + idPedidoStock + ", producto=" + producto + ", cantidad=" + cantidad
 				+ ", solicitante=" + solicitante + ", aceptado=" + aceptado + ", oferente=" + oferente + "]";
 	}
 }

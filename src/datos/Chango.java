@@ -5,7 +5,7 @@ import java.util.*;
 public class Chango {
 	private long idChango;
 	private List<Item> listaItems;
-	private Set<Factura> facturas;
+	private Set<Factura> listaFacturas;
 	private PedidoStock pedidostock;
 	private Local local;
 
@@ -39,12 +39,12 @@ public class Chango {
 		this.pedidostock = pedidostock;
 	}
 
-	public Factura getFactura() {
-		return factura;
+	public Set<Factura> getListaFacturas() {
+		return listaFacturas;
 	}
 
-	public void setFactura(Factura factura) {
-		this.factura = factura;
+	public void setListaFacturas(Set<Factura> listaFacturas) {
+		this.listaFacturas = listaFacturas;
 	}
 
 	public Local getLocal() {
@@ -53,14 +53,6 @@ public class Chango {
 
 	public void setLocal(Local local) {
 		this.local = local;
-	}
-
-	public Set<Factura> getFacturas() {
-		return facturas;
-	}
-
-	public void setFacturas(Set<Factura> facturas) {
-		this.facturas = facturas;
 	}
 	
 	public boolean equals (Chango chango){

@@ -10,7 +10,8 @@ public class Empleado extends Persona {
 	private LocalTime horaHasta;
 	private double sueldoBasico;
 	private Local local;
-	private Set<Factura> facturas;
+	private Set<Factura> listaFacturas;
+	private Set<PedidoStock> listaPedidoStock;
 	
 	public Empleado(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, int legajo, 
 					LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, Local local) {
@@ -62,12 +63,20 @@ public class Empleado extends Persona {
 		this.sueldoBasico = sueldoBasico;
 	}
 
-	public Set<Factura> getFacturas() {
-		return facturas;
+	public Set<Factura> getListaFacturas() {
+		return listaFacturas;
 	}
 
-	public void setFacturas(Set<Factura> facturas) {
-		this.facturas = facturas;
+	public void setListaFacturas(Set<Factura> listaFacturas) {
+		this.listaFacturas = listaFacturas;
+	}
+
+	public Set<PedidoStock> getListaPedidoStock() {
+		return listaPedidoStock;
+	}
+
+	public void setListaPedidoStock(Set<PedidoStock> listaPedidoStock) {
+		this.listaPedidoStock = listaPedidoStock;
 	}
 
 	public Local getLocal() {

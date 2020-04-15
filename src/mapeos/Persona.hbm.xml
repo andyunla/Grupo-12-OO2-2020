@@ -12,9 +12,13 @@
 
     <joined-subclass name="datos.Cliente" table="cliente" >
       <key column="idCliente"/>
-      <property column="email" name="email" type="string"/>
+      <property column="email" name="email" type="string" />
+      <property column="nroCliente" name="nroCliente" type="int" />
 
-      <one-to-one name="factura" class="datos.Factura"></one-to-one>
+      <set name="facturas" cascade="save-update" table="factura" order-by="idFactura asc" inverse="true" lazy="true" fetch="select">
+        <key column="idFactura" not-null="true" />
+        <one-to-many class="datos.Factura" />
+      </set>
     </joined-subclass >
     <joined-subclass name="datos.Empleado" table="empleado" >
       <key column="idEmpleado"/>
@@ -23,9 +27,14 @@
       <property column="horarioHasta" name="horarioHasta" type="LocalTime"/>
       <property column="sueldoBasico" name="sueldoBasico" type="double"/>
       
-      <!-- Representa al gerente -->
-      <one-to-one name="local" class="datos.Local"></one-to-one>
-      <one-to-one name="factura" class="datos.Factura"></one-to-one>
+      <set name="facturas" cascade="save-update" table="factura" order-by="idFactura asc" inverse="true" lazy="true" fetch="select">
+        <key column="idFactura" not-null="true" />
+        <one-to-many class="datos.Factura" />
+      </set>
+      <set name="listaPedidoStock" cascade="save-update" table="pedidostock" order-by="idPedidoStock asc" inverse="true" lazy="true" fetch="select">
+        <key column="idPedidoStock" not-null="true" />
+        <one-to-many class="datos.PedidoStock" />
+      </set>
       
       <!-- Representa la lista de empleados-->
       <many-to-one name="local" class="datos.Local" column="idLocal" not-null="true"/>

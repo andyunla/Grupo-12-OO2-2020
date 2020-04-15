@@ -8,10 +8,8 @@
     <property column="fechaFactura" name="fechaFactura" type="LocalDate"/>
     <property column="costeTotal" name="costeTotal" type="double"/>
 
-    <one-to-one name="cliente" class="datos.Cliente"></one-to-one>
-    <one-to-one name="chango" class="datos.Chango"></one-to-one>
-    <one-to-one name="empleado" class="datos.Empleado"></one-to-one>
-    
-    <many-to-one name="local" class="datos.Local" column="idLocal" not-null="true"/>
+    <many-to-one name="chango" class="datos.Chango" column="idChango" not-null="true" />
+    <many-to-one name="cliente" class="datos.Cliente" column="idCliente" not-null="true" />
+    <many-to-one name="empleado" class="datos.Empleado" column="idEmpleado" not-null="true" />
   </class>
 </hibernate-mapping>

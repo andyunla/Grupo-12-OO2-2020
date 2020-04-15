@@ -32,6 +32,7 @@ public class Lote {
 	public int getCantidadInicial() {
 		return cantidadInicial;
 	}
+	
 	public void setCantidadInicial(int cantidadInicial) {
 		this.cantidadInicial = cantidadInicial;
 	}

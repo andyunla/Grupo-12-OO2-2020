@@ -7,7 +7,7 @@ public class Cliente extends Persona {
 	private long idCliente;
 	private String email;
 	private int nroCliente;
-	private Set<Factura> facturas;
+	private Set<Factura> listaFacturas;
 
 	public Cliente(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, String email, int nroCliente) {
 		super(idPersona, nombre, apellido, dni, fechaNacimiento);
@@ -40,12 +40,12 @@ public class Cliente extends Persona {
 		this.nroCliente = nroCliente;
 	}
 
-	public Set<Factura> getFacturas() {
-		return facturas;
+	public Set<Factura> getListaFacturas() {
+		return listaFacturas;
 	}
 
-	public void setFacturas(Set<Factura> facturas) {
-		this.facturas = facturas;
+	public void setListaFacturas(Set<Factura> listaFacturas) {
+		this.listaFacturas = listaFacturas;
 	}
 
 	@Override

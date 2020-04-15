@@ -12,8 +12,17 @@
     <property column="precio" name="precio" type="double"/>
     <property column="talle" name="talle" type="int"/>
     
-    <one-to-one name="item" class="datos.Item"></one-to-one>
-    <one-to-one name="lote" class="datos.Lote"></one-to-one>
-    <one-to-one name="pedidostock" class="datos.PedidoStock"></one-to-one>
+    <set name="listaItems" cascade="save-update" table="item" order-by="idItem asc" inverse="true" lazy="true" fetch="select">
+        <key column="idItem" not-null="true" />
+        <one-to-many class="datos.Item" />
+    </set>
+    <set name="listaLotes" cascade="save-update" table="lote" order-by="idLote asc" inverse="true" lazy="true" fetch="select">
+        <key column="idLote" not-null="true" />
+        <one-to-many class="datos.Lote" />
+    </set>
+    <set name="listaPedidoStock" cascade="save-update" table="pedidostock" order-by="idPedidoStock asc" inverse="true" lazy="true" fetch="select">
+        <key column="idPedidoStock" not-null="true" />
+        <one-to-many class="datos.PedidoStock" />
+    </set>
   </class>
 </hibernate-mapping>

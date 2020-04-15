@@ -8,10 +8,9 @@ public class Producto {
 	private String descripcion;
 	private double precio;
 	private int talle;
-	private Item item;
-	private Lote lote;
-	private PedidoStock pedidoStock;
 	private Set<Item> listaItems;
+	private Set<Lote> listaLotes;
+	private Set<PedidoStock> listaPedidoStock;
 
 	public Producto(long idProducto, String nombre, String descripcion, double precio, int talle) {
 		this.idProducto = idProducto;
@@ -62,32 +61,32 @@ public class Producto {
 		this.talle = talle;
 	}
 
-	public Item getItem() {
-		return item;
+	public Set<Item> getListaItems() {
+		return listaItems;
 	}
 
-	public void setItem(Item item) {
-		this.item = item;
+	public void setListaItems(Set<Item> listaItems) {
+		this.listaItems = listaItems;
 	}
 
-	public Lote getLote() {
-		return lote;
+	public Set<Lote> getListaLotes() {
+		return listaLotes;
 	}
 
-	public void setLote(Lote lote) {
-		this.lote = lote;
+	public void setListaLotes(Set<Lote> listaLotes) {
+		this.listaLotes = listaLotes;
 	}
 	
-	public PedidoStock getPedidoStock() {
-		return pedidoStock;
+	public Set<PedidoStock> getListaPedidoStock() {
+		return listaPedidoStock;
 	}
 
-	public void setPedidoStock(PedidoStock pedidoStock) {
-		this.pedidoStock = pedidoStock;
+	public void setListaPedidoStock(Set<PedidoStock> listaPedidoStock) {
+		this.listaPedidoStock = listaPedidoStock;
 	}
 
 	public Set<Item> getListaItems() {
-		return pedidoStock;
+		return listaItems;
 	}
 
 	public void setListaItems(Set<Item> listaItems) {
