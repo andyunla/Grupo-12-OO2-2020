@@ -122,13 +122,13 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `bd-sistema-de-democratizacion-de-stock`.`pedidostock` ;
 
 CREATE TABLE IF NOT EXISTS `bd-sistema-de-democratizacion-de-stock`.`pedidostock` (
-  `idPedidostock` INT(11) NOT NULL AUTO_INCREMENT,
+  `idPedidoStock` INT(11) NOT NULL AUTO_INCREMENT,
   `cantidad` INT NOT NULL,
   `aceptado` TINYINT(1) NOT NULL,
   `solicitante_idEmpleado` INT(11) NOT NULL,
   `oferente_idEmpleado` INT(11) NOT NULL,
   `idProducto` INT(11) NOT NULL,
-  PRIMARY KEY (`idPedidostock`),
+  PRIMARY KEY (`idPedidoStock`),
   INDEX `fk_pedidostock_empleado1_idx` (`solicitante_idEmpleado` ASC),
   INDEX `fk_pedidostock_empleado2_idx` (`oferente_idEmpleado` ASC),
   INDEX `fk_pedidostock_producto1_idx` (`idProducto` ASC),
@@ -164,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `bd-sistema-de-democratizacion-de-stock`.`chango` (
   INDEX `fk_chango_local1_idx` (`idLocal` ASC),
   CONSTRAINT `fk_chango_pedidostock1`
     FOREIGN KEY (`idPedidoStock`)
-    REFERENCES `bd-sistema-de-democratizacion-de-stock`.`pedidostock` (`idPedidostock`)
+    REFERENCES `bd-sistema-de-democratizacion-de-stock`.`pedidostock` (`idPedidoStock`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_chango_local1`
