@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `bd-sistema-de-democratizacion-de-stock`.`local` (
   `longitud` DOUBLE NULL,
   `direccion` DOUBLE NULL,
   `telefono` INT NULL,
-  `gerente_idEmpleado` INT(11) NOT NULL,
+  `gerente_idEmpleado` INT(11),
   PRIMARY KEY (`idLocal`),
   INDEX `fk_local_empleado1_idx` (`gerente_idEmpleado` ASC),
   CONSTRAINT `fk_local_empleado1`
