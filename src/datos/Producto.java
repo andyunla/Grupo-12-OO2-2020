@@ -12,6 +12,8 @@ public class Producto {
 	private Set<Lote> listaLotes;
 	private Set<PedidoStock> listaPedidoStock;
 
+	public Producto() {}
+
 	public Producto(long idProducto, String nombre, String descripcion, double precio, int talle) {
 		this.idProducto = idProducto;
 		this.nombre = nombre;

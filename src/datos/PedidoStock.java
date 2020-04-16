@@ -11,6 +11,8 @@ public class PedidoStock {
 	private Empleado oferente;
 	private Set<Chango> listaChangos;
 
+	public PedidoStock() {}
+
 	public PedidoStock(Producto producto, int cantidad, Empleado solicitante, boolean aceptado, Empleado oferente) {
 		this.idPedidoStock = idPedidoStock;
 		this.producto = producto;

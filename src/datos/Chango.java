@@ -9,6 +9,8 @@ public class Chango {
 	private PedidoStock pedidostock;
 	private Local local;
 
+	public Chango() {}
+	
 	public Chango(PedidoStock pedidostock, Local local) {
 		super();
 		this.pedidostock = pedidostock;

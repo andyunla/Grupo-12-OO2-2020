@@ -13,6 +13,8 @@ public class Empleado extends Persona {
 	private Set<Factura> listaFacturas;
 	private Set<PedidoStock> listaPedidoStock;
 	
+	public Cliente() {}
+
 	public Empleado(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, int legajo, 
 					LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, Local local) {
 		super(idPersona, nombre, apellido, dni, fechaNacimiento);

@@ -16,6 +16,8 @@ public class Local {
 	private List<Chango> listaChangos;
 	private List<Factura> listaFacturas;
 	
+	public Local() {}
+
 	public Local(long idLocal, String nombreLocal, double latitud, double longitud, String direccion, int telefono) {
 		this.idLocal = idLocal;
 		this.nombreLocal = nombreLocal;

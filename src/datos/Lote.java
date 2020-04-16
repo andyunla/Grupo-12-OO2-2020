@@ -11,6 +11,8 @@ public class Lote {
 	private boolean activo;
 	private Local local;
 
+	public Local() {}
+
 	public Lote(long idLote, int cantidadInicial, int cantidadActual, LocalDate fechaIngreso, Producto producto) {
 		this.idLote = idLote;
 		this.cantidadInicial = cantidadInicial;

@@ -9,6 +9,8 @@ public class Persona {
 	protected int dni;
 	protected LocalDate fechaNacimiento;
 
+	public Persona() {}
+
 	public Persona(long idPersona) {
 		super();
 		this.idPersona = idPersona;
