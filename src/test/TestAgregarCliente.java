@@ -20,7 +20,7 @@ public class TestAgregarCliente {
 			int nroCliente = 1;
 
 			System.out.println("Agregar un nuevo cliente \n\n");
-			long ultimoIdCliente = abm.agregar(apellido, nombre, dni, fechaDeNacimiento);
+			long ultimoIdCliente = abm.agregar(idPersona, apellido, nombre, dni, fechaDeNacimiento, email, nroCliente);
 			System.out.println("Agregado satisfactoriamente. ID: " + Long.toString(ultimoIdCliente));
 		} catch(Exception e) {
 			System.out.println(e.getMessage());

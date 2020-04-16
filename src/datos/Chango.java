@@ -95,9 +95,9 @@ public class Chango {
 		if(traerItem(producto) != null) {
 			traerItem(producto).setCantidad(traerItem(producto).getCantidad() + cantidad);			
 		} else {
-			int idItem = 1;
+			long idItem = 1;
 			if(!this.listaItems.isEmpty() ) idItem = listaItems.get(listaItems.size()-1).getIdItem()+1;		
-			listaItems.add(new Item(idItem, cantidad, producto) );
+			listaItems.add(new Item(cantidad, producto, this));
 		}
 		return true;
 	}

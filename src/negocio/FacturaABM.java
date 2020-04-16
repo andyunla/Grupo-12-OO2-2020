@@ -1,9 +1,14 @@
 package negocio;
 
+import java.time.LocalDate;
 import java.util.List;
+
 import dao.FacturaDao;
+import datos.Chango;
 import datos.Cliente;
 import datos.Empleado;
+import datos.Factura;
+import datos.Local;
 
 public class FacturaABM {
     FacturaDao dao = FacturaDao.getInstance();
@@ -54,7 +59,7 @@ public class FacturaABM {
     
     /****   ELIMINAR   ****/
     public void eliminar(long idPersona) throws Exception {
-        Persona obj = dao.traer(idPersona);
+        Factura obj = dao.traer(idPersona);
         if(obj == null) {
             throw new Exception("No existe el cliente a eliminar");
         }

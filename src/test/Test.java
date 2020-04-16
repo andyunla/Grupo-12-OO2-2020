@@ -8,7 +8,6 @@ import datos.*;
 public class Test {
 
 	public static void main(String[] args) {
-		
 				// TODO Auto-generated method stub
 				SistemaDemocratizacionStock sistema1 = new SistemaDemocratizacionStock();
 				//ALTA DE LOCALES
@@ -150,13 +149,13 @@ public class Test {
 				
 				//CARGA DE CLIENTES
 				try { //Nombre, apellido, dni, fechadenacimiento, email
-					sistema1.crearCliente("Luis", "Sera", 99991111, LocalDate.of(2004, 6, 27), "Luis@hotmail.com");
-					sistema1.crearCliente("Ashley", "Graham", 99992222, LocalDate.of(2005, 2, 14), "Ashley@hotmail.com");
-					sistema1.crearCliente("Lion", "Kennedy", 99993333, LocalDate.of(2003, 8, 2), "Lion@gmail.com");
-					sistema1.crearCliente("Ada", "Wong", 99994444, LocalDate.of(2001, 2, 28), "Ada@gmail.com");
-					sistema1.crearCliente("Christ", "Adam", 99995555, LocalDate.of(2002, 12, 11), "Christ@gmail.com");
-					sistema1.crearCliente("Alan", "Wesker", 99996666, LocalDate.of(1998, 10, 25), "Alan@hotmail.com");
-					sistema1.crearCliente("SER�", "BORRADO", 99997777, LocalDate.of(1998, 10, 25), "Alan@hotmail.com");	
+					sistema1.crearCliente("Luis", "Sera", 99991111, LocalDate.of(2004, 6, 27), "Luis@hotmail.com", 1);
+					sistema1.crearCliente("Ashley", "Graham", 99992222, LocalDate.of(2005, 2, 14), "Ashley@hotmail.com", 2);
+					sistema1.crearCliente("Lion", "Kennedy", 99993333, LocalDate.of(2003, 8, 2), "Lion@gmail.com", 3);
+					sistema1.crearCliente("Ada", "Wong", 99994444, LocalDate.of(2001, 2, 28), "Ada@gmail.com", 4);
+					sistema1.crearCliente("Christ", "Adam", 99995555, LocalDate.of(2002, 12, 11), "Christ@gmail.com", 5);
+					sistema1.crearCliente("Alan", "Wesker", 99996666, LocalDate.of(1998, 10, 25), "Alan@hotmail.com", 7);
+					sistema1.crearCliente("SER�", "BORRADO", 99997777, LocalDate.of(1998, 10, 25), "Alan@hotmail.com", 8);	
 					
 				}catch(Exception e) {
 					System.out.println(e.getMessage() );
@@ -352,7 +351,7 @@ public class Test {
 				
 				System.out.println("PEDIDOS STOCK");
 				for(PedidoStock pe: sistema1.traerPedidoStock() ) {
-					System.out.println("ID: " + pe.getIdPedido() );
+					System.out.println("ID: " + pe.getIdPedidoStock() );
 					System.out.println("Producto: " + pe.getProducto().getNombre() );
 					System.out.println("Cantidad: " + pe.getCantidad() );
 					System.out.println("Solicitante: " + pe.getSolicitante().getNombre() + " " + pe.getSolicitante().getApellido() );

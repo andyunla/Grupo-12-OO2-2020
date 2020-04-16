@@ -40,7 +40,7 @@ public class SistemaDemocratizacionStock {
 	public List<Local> traerLocal(){
 			return listaLocales;
 		}
-	public Local traerLocal(int idLocal){
+	public Local traerLocal(long idLocal){
 		int x = 0;
 		Local local = null;
 		while(local == null && x < listaLocales.size()) {
@@ -64,7 +64,7 @@ public class SistemaDemocratizacionStock {
 	public boolean crearLocal(String nombreLocal, double latitud, double longitud, String direccion, int telefono) throws Exception{
 		if(traerLocal(latitud, longitud)!=null) throw new Exception ("El local ya existe");
 		
-		int id = 1;
+		long id = 1;
 		if (!this.listaLocales.isEmpty() ) id = listaLocales.get(listaLocales.size()-1).getIdLocal()+1;
 		
 		return listaLocales.add(new Local(id, nombreLocal, latitud, longitud, direccion, telefono));
@@ -104,9 +104,10 @@ public class SistemaDemocratizacionStock {
 		return cliente;
 	}
 
-	public boolean crearCliente(String nombre, String apellido, int dni, LocalDate fechaNacimiento, String email) throws Exception{
+	public boolean crearCliente(String nombre, String apellido, int dni, LocalDate fechaNacimiento, String email, int nroCliente) throws Exception{
 		if(traerCliente(dni) != null) throw new Exception ("Error el cliente con dni " + dni + " ya existe");		
-		return listaClientes.add(new Cliente(nombre, apellido, dni, fechaNacimiento, email));
+		long idPersona = 1; // DEBUG
+		return listaClientes.add(new Cliente(idPersona, nombre, apellido, dni, fechaNacimiento, email, nroCliente));
 	}
 
 	public boolean modificarCliente(String nombre, String apellido, int dni, LocalDate fechaNacimiento, String email) throws Exception{
@@ -155,7 +156,7 @@ public class SistemaDemocratizacionStock {
 	public boolean crearProducto(String nombre, String descripcion, double precio, int talle) throws Exception {
 		if (traerProducto(nombre) != null) throw new Exception ("El producto "+nombre+" ya existe.");
 		
-		int id = 1;
+		long id = 1;
 		if (!this.listaProductos.isEmpty() ) id = listaProductos.get(listaProductos.size()-1).getIdProducto()+1;
 		
 		return listaProductos.add(new Producto(id, nombre, descripcion,  precio, talle));		 
@@ -201,9 +202,9 @@ public class SistemaDemocratizacionStock {
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
 	public boolean crearPedidoStock(Producto producto, int cantidad, Empleado solicitante){	
-		int id = 1;
-		if(!this.listaPedidosStock.isEmpty() ) id = listaPedidosStock.get(listaPedidosStock.size()-1).getIdPedido() + 1;	
-		return listaPedidosStock.add(new PedidoStock(id, producto, cantidad, solicitante, false, null) );
+		long id = 1;
+		if(!this.listaPedidosStock.isEmpty() ) id = listaPedidosStock.get(listaPedidosStock.size()-1).getIdPedidoStock() + 1;	
+		return listaPedidosStock.add(new PedidoStock(producto, cantidad, solicitante, false, null) );
 	}
 	/****************************************************************************************************/
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -216,7 +217,7 @@ public class SistemaDemocratizacionStock {
 		traerPedidoStock(idPedidoStock).setOferente(oferente);
 		
 		if (traerPedidoStock(idPedidoStock).isAceptado()) {
-			traerLocal(oferente.getIdLocal()).restarLote(traerPedidoStock(idPedidoStock).getProducto(),traerPedidoStock(idPedidoStock).getCantidad());
+			traerLocal(oferente.getLocal().getIdLocal()).restarLote(traerPedidoStock(idPedidoStock).getProducto(),traerPedidoStock(idPedidoStock).getCantidad());
 		}
 		else { 
 			eliminarPedidoStock( idPedidoStock);		
@@ -230,9 +231,9 @@ public class SistemaDemocratizacionStock {
 		PedidoStock obj = null;		
 		int i = 0;
 		while(obj == null && i<listaPedidosStock.size() ) {			
-			if(idPedidoStock == listaPedidosStock.get(i).getIdPedido() ) {
+			if(idPedidoStock == listaPedidosStock.get(i).getIdPedidoStock() ) {
 				obj = listaPedidosStock.get(i);
-			}			
+			}
 			i++;
 		}		
 		return obj;

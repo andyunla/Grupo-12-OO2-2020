@@ -128,8 +128,8 @@ public class Local {
 								 int legajo, LocalTime horarioDesde, LocalTime horarioHasta, double sueldoBasico) throws Exception {
 		
 		if(traerEmpleado(legajo) != null) throw new Exception ("Error el legajo " + legajo + " ya existe");
-		
-		return listaEmpleados.add(new Empleado(nombre, apellido, dni, fechaNacimiento, legajo, horarioDesde, horarioHasta, sueldoBasico, this.idLocal) );
+		long idPersona = 1; // DEBUG Arreglar
+		return listaEmpleados.add(new Empleado(idPersona, nombre, apellido, dni, fechaNacimiento, legajo, horarioDesde, horarioHasta, sueldoBasico, this) );
 	}		
 	public boolean modificarEmpleado(String nombre, String apellido, int dni, LocalDate fechaNacimiento, 
 									 int legajo, LocalTime horarioDesde, LocalTime horarioHasta, double sueldoBasico) throws Exception{
@@ -179,7 +179,7 @@ public class Local {
 	}
 
 	public boolean crearLote(int cantidadInicial, LocalDate fechaIngreso, Producto producto){
-		int id = 1;
+		long id = 1;
 		if(!this.listaLotes.isEmpty() ) id = listaLotes.get(listaLotes.size()-1).getIdLote()+1;		
 		return listaLotes.add(new Lote(id, cantidadInicial, cantidadInicial, fechaIngreso, producto) );
 	}
@@ -275,10 +275,10 @@ public class Local {
 	}	
 
 	public boolean crearFactura(Cliente cliente, Chango chango,LocalDate fecha, double costeTotal, Empleado empleado) {		
-		int id = 1;
+		long id = 1;
 		if(!this.listaFacturas.isEmpty() ) id = listaFacturas.get(listaFacturas.size()-1).getIdFactura()+1;
 		if (chango.getPedidostock()==null)restarChango(chango);
-		return listaFacturas.add(new Factura(id, cliente, chango, fecha, costeTotal, empleado) );
+		return listaFacturas.add(new Factura(cliente, chango, fecha, costeTotal, empleado, this) );
 	}
 	
 	public void restarChango(Chango chango) {
@@ -313,10 +313,10 @@ public class Local {
 	}
 
 	public boolean crearChango() {		
-		int id = 1;
+		long id = 1;
 		if (!this.listaChangos.isEmpty() )id = listaChangos.get(listaChangos.size()-1).getIdChango()+1;		
 		PedidoStock pedido=null;
-		return listaChangos.add(new Chango(id, pedido) );
+		return listaChangos.add(new Chango(pedido, this) );
 	}
 
 //	public boolean crearChango(PedidoStock pedido) {		

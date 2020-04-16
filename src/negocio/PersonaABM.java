@@ -1,10 +1,15 @@
 package negocio;
 
 import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import dao.PersonaDao;
 import datos.Cliente;
 import datos.Empleado;
+import datos.Local;
 import datos.Persona;
+
 
 public class PersonaABM {
     PersonaDao dao = PersonaDao.getInstance();
@@ -31,12 +36,12 @@ public class PersonaABM {
 
     /****   Traer Cliente   ****/
     public Cliente traerCliente(int nroCliente) {
-        return dao.traerCliente(nroCliente);
+        return (Cliente) dao.traerCliente(nroCliente);
     }
     
     /****   Traer Empleado  ****/
     public Empleado traerEmpleado(int legajo){
-        return dao.traerEmpleado(legajo);
+        return (Empleado) dao.traerEmpleado(legajo);
     }
 
     public List<Persona> traer(){
@@ -78,7 +83,7 @@ public class PersonaABM {
     
     /****   Agregar Empleado   ****/
     public int agregar(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, 
-                       int legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, long idLocal) throws Exception {
+                       int legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, Local local) throws Exception {
         if(traerEmpleado(legajo) != null) {
             throw new Exception("Ya existe un empleado con este número de legajo: " + legajo);
         }
@@ -88,7 +93,7 @@ public class PersonaABM {
         if(traer(dni) != null){
             throw new Exception("Ya existe una persona con este DNI: " + dni);
         }
-        Empleado obj = new Empleado(idPersona, nombre, apellido, dni, fechaNacimiento, legajo, horaDesde, horaHasta, sueldoBasico, idLocal);
+        Empleado obj = new Empleado(idPersona, nombre, apellido, dni, fechaNacimiento, legajo, horaDesde, horaHasta, sueldoBasico, local);
         return dao.agregar(obj);
     }
     

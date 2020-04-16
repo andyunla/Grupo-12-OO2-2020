@@ -85,14 +85,6 @@ public class Producto {
 		this.listaPedidoStock = listaPedidoStock;
 	}
 
-	public Set<Item> getListaItems() {
-		return listaItems;
-	}
-
-	public void setListaItems(Set<Item> listaItems) {
-		this.listaItems = listaItems;
-	}
-
 	public boolean equals(Producto producto) {
 		return this.idProducto == producto.getIdProducto();
 	}
