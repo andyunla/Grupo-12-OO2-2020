@@ -15,7 +15,7 @@
       <property column="email" name="email" type="string" />
       <property column="nroCliente" name="nroCliente" type="int" />
 
-      <set name="facturas" cascade="save-update" table="factura" order-by="idFactura asc" inverse="true" lazy="true" fetch="select">
+      <set name="listaFacturas" cascade="save-update" table="factura" order-by="idFactura asc" inverse="true" lazy="true" fetch="select">
         <key column="idFactura" not-null="true" />
         <one-to-many class="datos.Factura" />
       </set>
@@ -27,7 +27,7 @@
       <property column="horarioHasta" name="horarioHasta" type="LocalTime"/>
       <property column="sueldoBasico" name="sueldoBasico" type="double"/>
       
-      <set name="facturas" cascade="save-update" table="factura" order-by="idFactura asc" inverse="true" lazy="true" fetch="select">
+      <set name="listaFacturas" cascade="save-update" table="factura" order-by="idFactura asc" inverse="true" lazy="true" fetch="select">
         <key column="idFactura" not-null="true" />
         <one-to-many class="datos.Factura" />
       </set>
