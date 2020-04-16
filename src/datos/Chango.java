@@ -14,6 +14,7 @@ public class Chango {
 	public Chango(PedidoStock pedidostock, Local local) {
 		super();
 		this.pedidostock = pedidostock;
+		this.local = local;
 	}
 
 	//Getters y Setters

@@ -54,5 +54,5 @@ public class Cliente extends Persona {
 	public String toString() {
 		return "\n\nNombre: " + nombre + "\nApellido: " + apellido + "\nDNI: " + dni
 				+ "\nFechaNacimiento: " + fechaNacimiento + "\nE-mail: " + email;
-	}	
+	}
 }

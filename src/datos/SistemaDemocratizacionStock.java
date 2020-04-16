@@ -67,7 +67,7 @@ public class SistemaDemocratizacionStock {
 		long id = 1;
 		if (!this.listaLocales.isEmpty() ) id = listaLocales.get(listaLocales.size()-1).getIdLocal()+1;
 		
-		return listaLocales.add(new Local(id, nombreLocal, latitud, longitud, direccion, telefono));
+		return listaLocales.add(new Local(nombreLocal, latitud, longitud, direccion, telefono));
 	}
 
 	
@@ -159,7 +159,7 @@ public class SistemaDemocratizacionStock {
 		long id = 1;
 		if (!this.listaProductos.isEmpty() ) id = listaProductos.get(listaProductos.size()-1).getIdProducto()+1;
 		
-		return listaProductos.add(new Producto(id, nombre, descripcion,  precio, talle));		 
+		return listaProductos.add(new Producto(nombre, descripcion,  precio, talle));		 
 	}
 	
 	public boolean modificarProducto(int idProducto, String nombre, String descripcion, double precio, int talle) throws Exception {

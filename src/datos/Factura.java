@@ -14,7 +14,6 @@ public class Factura {
 	public Factura() {}
 
 	public Factura(Cliente cliente, Chango chango, LocalDate fechaFactura, double costeTotal, Empleado empleado, Local local) {
-		this.idFactura = idFactura;
 		this.cliente = cliente;
 		this.chango = chango;
 		this.fechaFactura = fechaFactura;

@@ -18,14 +18,13 @@ public class Local {
 	
 	public Local() {}
 
-	public Local(long idLocal, String nombreLocal, double latitud, double longitud, String direccion, int telefono) {
-		this.idLocal = idLocal;
+	public Local(String nombreLocal, double latitud, double longitud, String direccion, int telefono) {
 		this.nombreLocal = nombreLocal;
 		this.latitud = latitud;
 		this.longitud = longitud;
 		this.direccion = direccion;
 		this.telefono = telefono;
-		this.gerente=null;
+		this.gerente = null;
 	}
 	
 	//Getters y Setters
@@ -43,10 +42,6 @@ public class Local {
 
 	public void setGerente(Empleado gerente) {
 		this.gerente = gerente;
-	}
-
-	protected void setIdLocal(int idLocal) {
-		this.idLocal = idLocal;
 	}
 
 	public String getNombreLocal() {
@@ -132,7 +127,7 @@ public class Local {
 		while(obj == null && i<listaEmpleados.size() ) {			
 			if(legajo == listaEmpleados.get(i).getLegajo() ) {
 				obj = listaEmpleados.get(i);
-			}			
+			}
 			i++;
 		}
 		return obj;
@@ -178,7 +173,7 @@ public class Local {
 		while(obj == null && i<listaLotes.size() ) {			
 			if(id == listaLotes.get(i).getIdLote() ) {
 				obj = listaLotes.get(i);
-			}			
+			}
 			i++;
 		}		
 		return obj;
@@ -188,14 +183,14 @@ public class Local {
 		List<Lote> lista= new ArrayList<Lote>();		
 		for (Lote l : listaLotes) {
 			if (l.getProducto().equals(producto) && l.isActivo()) lista.add(l);
-		}		
+		}
 		return lista;
 	}
 
 	public boolean crearLote(int cantidadInicial, LocalDate fechaIngreso, Producto producto){
 		long id = 1;
-		if(!this.listaLotes.isEmpty() ) id = listaLotes.get(listaLotes.size()-1).getIdLote()+1;		
-		return listaLotes.add(new Lote(id, cantidadInicial, cantidadInicial, fechaIngreso, producto) );
+		if(!this.listaLotes.isEmpty() ) id = listaLotes.get(listaLotes.size()-1).getIdLote()+1;
+		return listaLotes.add(new Lote(cantidadInicial, cantidadInicial, fechaIngreso, producto) );
 	}
 
 	public boolean restarLote(Producto producto, int cantidad) {

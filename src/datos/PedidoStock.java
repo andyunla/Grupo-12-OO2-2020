@@ -14,7 +14,6 @@ public class PedidoStock {
 	public PedidoStock() {}
 
 	public PedidoStock(Producto producto, int cantidad, Empleado solicitante, boolean aceptado, Empleado oferente) {
-		this.idPedidoStock = idPedidoStock;
 		this.producto = producto;
 		this.cantidad = cantidad;
 		this.solicitante = solicitante;
