@@ -24,10 +24,6 @@ public class Local {
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.gerente=null;
-		this.listaLotes = new ArrayList<Lote>();
-		this.listaEmpleados = new ArrayList<Empleado>();
-		this.listaChangos = new ArrayList<Chango>();
-		this.listaFacturas = new ArrayList<Factura>();
 	}
 	
 	//Getters y Setters
@@ -95,16 +91,32 @@ public class Local {
 		return listaLotes;
 	}
 
+	public void setListaLotes(List<Lote> listaLotes) {
+		this.listaLotes = listaLotes;
+	}
+
 	public List<Empleado> getListaEmpleados() {
 		return listaEmpleados;
 	}
 	
+	public void setListaEmpleados(List<Empleado> listaEmpleados) {
+		this.listaEmpleados = listaEmpleados;
+	}
+
 	public List<Chango> getListaChangos() {
 		return listaChangos;
+	}
+
+	public void setListaChangos(List<Chango> listaChangos) {
+		this.listaChangos = listaChangos;
 	}
 	
 	public List<Factura> getListaFacturas(){
 		return listaFacturas;
+	}
+
+	public void setListaFacturas(List<Factura> listaFacturas) {
+		this.listaFacturas = listaFacturas;
 	}
 
 	/****************************************************************************************************/
