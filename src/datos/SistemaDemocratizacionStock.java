@@ -268,6 +268,7 @@ public class SistemaDemocratizacionStock {
 	public List<Factura> traerFacturaMesPasado () {
 		List<Factura> list = new ArrayList<Factura>();
 		LocalDate fecha = LocalDate.now().minusMonths(1).withDayOfMonth(1);
+		/* DEBUG
 		for (Local lo : listaLocales) {
 			int i= lo.getListaFacturas().size()-1;
 			while (i>=0 && (lo.getListaFacturas().get(i).getFechaFactura().isAfter(fecha) ) ) {
@@ -275,6 +276,7 @@ public class SistemaDemocratizacionStock {
 				i--;
 			}
 		}
+		*/
 		return list;
 	}
 	/****************************************************************************************************/
