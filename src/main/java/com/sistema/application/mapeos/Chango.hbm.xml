@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="datos.Chango" table="chango">
+    <id column="idChango" name="idChango">
+        <generator class="identity"/>
+    </id>
+    <set name="listaItems" table="item" order-by="idItem asc" inverse="true" lazy="true" fetch="select">
+      <key column="idChango" not-null="true"/>
+      <one-to-many class="datos.Item"/>
+    </set>
+    <set name="listaFacturas" table="factura" order-by="idFactura asc" inverse="true" lazy="true" fetch="select">
+      <key column="idFactura" not-null="true"/>
+      <one-to-many class="datos.Factura"/>
+    </set>
+
+    <many-to-one name="pedidostock" class="datos.PedidoStock" column="idPedidoStock" not-null="true"/>
+    <many-to-one name="local" class="datos.Local" column="idLocal" not-null="true"/>
+  </class>
+</hibernate-mapping>

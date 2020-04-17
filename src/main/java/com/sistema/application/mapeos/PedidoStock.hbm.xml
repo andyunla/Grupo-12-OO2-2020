@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="datos.PedidoStock" table="pedidostock">
+    <id column="idPedidoStock" name="idPedidoStock" >
+        <generator class="identity"/>
+    </id>
+    <property column="cantidad" name="cantidad" type="int"/>
+    <property column="aceptado" name="aceptado" type="boolean"/>
+    
+    <set name="listaChangos" table="chango" order-by="idChango asc" inverse="true" lazy="true" fetch="select">
+      <key column="idChango" not-null="true"/>
+      <one-to-many class="datos.Chango"/>
+    </set>
+
+    <many-to-one name="producto" class="datos.Producto" column="idProducto" not-null="true"/>
+    <many-to-one name="solicitante" class="datos.Empleado" column="idEmpleado" not-null="true" insert="false" update="false" />
+    <many-to-one name="oferente" class="datos.Empleado" column="idEmpleado" not-null="true" insert="false" update="false" />
+  </class>
+</hibernate-mapping>

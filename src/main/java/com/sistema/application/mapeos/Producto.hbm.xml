@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="datos.Producto" table="producto">
+    <id column="idProducto" name="idProducto">
+      <generator class="foreign">
+        <param name="property">item</param>
+      </generator>
+    </id>
+    <property column="nombre" name="nombre" type="string"/>
+    <property column="descripcion" name="descripcion" type="string"/>
+    <property column="precio" name="precio" type="double"/>
+    <property column="talle" name="talle" type="int"/>
+    
+    <set name="listaItems" cascade="save-update" table="item" order-by="idItem asc" inverse="true" lazy="true" fetch="select">
+        <key column="idItem" not-null="true" />
+        <one-to-many class="datos.Item" />
+    </set>
+    <set name="listaLotes" cascade="save-update" table="lote" order-by="idLote asc" inverse="true" lazy="true" fetch="select">
+        <key column="idLote" not-null="true" />
+        <one-to-many class="datos.Lote" />
+    </set>
+    <set name="listaPedidoStock" cascade="save-update" table="pedidostock" order-by="idPedidoStock asc" inverse="true" lazy="true" fetch="select">
+        <key column="idPedidoStock" not-null="true" />
+        <one-to-many class="datos.PedidoStock" />
+    </set>
+  </class>
+</hibernate-mapping>

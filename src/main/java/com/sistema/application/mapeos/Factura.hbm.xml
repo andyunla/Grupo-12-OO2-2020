@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="datos.Factura" table="factura">
+    <id column="idFactura" name="idFactura">
+        <generator class="identity"/>
+    </id>
+    <property column="fechaFactura" name="fechaFactura" type="LocalDate"/>
+    <property column="costeTotal" name="costeTotal" type="double"/>
+
+    <many-to-one name="chango" class="datos.Chango" column="idChango" not-null="true" />
+    <many-to-one name="cliente" class="datos.Cliente" column="idCliente" not-null="true" />
+    <many-to-one name="empleado" class="datos.Empleado" column="idEmpleado" not-null="true" />
+  </class>
+</hibernate-mapping>
