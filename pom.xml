@@ -11,7 +11,7 @@
 	<groupId>com.sistema</groupId>
 	<artifactId>sis_demo_stock</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>sis_demo_stock</name>
 	<description>Sistema de democratizacion de stock</description>
 
