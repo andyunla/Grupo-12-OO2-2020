@@ -14,7 +14,7 @@
     </set>
 
     <many-to-one name="producto" class="datos.Producto" column="idProducto" not-null="true"/>
-  <many-to-one name="solicitante" class="datos.Empleado" column="idEmpleado" not-null="true" insert="false" update="false" />
-  <many-to-one name="oferente" class="datos.Empleado" column="idEmpleado" not-null="true" insert="false" update="false" />
+    <many-to-one name="solicitante" class="datos.Empleado" column="idEmpleado" not-null="true" insert="false" update="false" />
+    <many-to-one name="oferente" class="datos.Empleado" column="idEmpleado" not-null="true" insert="false" update="false" />
   </class>
 </hibernate-mapping>

@@ -3,7 +3,9 @@
 <hibernate-mapping>
 <class name="datos.Local" table="local">
     <id column="idLocal" name="idLocal" >
-        <generator class="identity"/>
+        <generator class="foreign">
+        <param name="property">gerente</param>
+      </generator>
     </id>
     <property column="nombreLocal" name="nombreLocal" type="string"/>
     <property column="latitud" name="latitud" type="double"/>
@@ -11,7 +13,7 @@
     <property column="direccion" name="direccion" type="string"/>
     <property column="telefono" name="telefono" type="int"/>
 
-    <one-to-one name="gerente" class="datos.Empleado"></one-to-one>
+    <one-to-one name="gerente" class="datos.Empleado" cascade="save-update"></one-to-one>
 
     <set name="listaLotes" cascade="save-update" table="lote" order-by="idLote asc" 
          inverse="true" lazy="true" fetch="select">
