@@ -1,14 +1,14 @@
-package negocio;
+package com.sistema.application.negocio;
 
 import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import dao.PersonaDao;
-import datos.Cliente;
-import datos.Empleado;
-import datos.Local;
-import datos.Persona;
+import com.sistema.application.dao.PersonaDao;
+import com.sistema.application.datos.Cliente;
+import com.sistema.application.datos.Empleado;
+import com.sistema.application.datos.Local;
+import com.sistema.application.datos.Persona;
 
 
 public class PersonaABM {

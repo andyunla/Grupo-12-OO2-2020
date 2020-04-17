@@ -1,14 +1,14 @@
-package negocio;
+package com.sistema.application.negocio;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import dao.FacturaDao;
-import datos.Chango;
-import datos.Cliente;
-import datos.Empleado;
-import datos.Factura;
-import datos.Local;
+import com.sistema.application.dao.FacturaDao;
+import com.sistema.application.datos.Chango;
+import com.sistema.application.datos.Cliente;
+import com.sistema.application.datos.Empleado;
+import com.sistema.application.datos.Factura;
+import com.sistema.application.datos.Local;
 
 public class FacturaABM {
     FacturaDao dao = FacturaDao.getInstance();

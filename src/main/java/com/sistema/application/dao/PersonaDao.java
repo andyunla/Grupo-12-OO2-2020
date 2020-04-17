@@ -1,4 +1,4 @@
-package dao;
+package com.sistema.application.dao;
 
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -6,9 +6,9 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import datos.Cliente;
-import datos.Empleado;
-import datos.Persona;
+import com.sistema.application.datos.Cliente;
+import com.sistema.application.datos.Empleado;
+import com.sistema.application.datos.Persona;
 
 public class PersonaDao {
     private static Session session;

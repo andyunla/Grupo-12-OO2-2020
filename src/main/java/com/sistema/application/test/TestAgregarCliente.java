@@ -1,7 +1,7 @@
-package test;
+package com.sistema.application.test;
 import java.time.LocalDate;
 
-import negocio.PersonaABM;
+import com.sistema.application.negocio.PersonaABM;
 
 /*
  * Test para agregar un nuevo cliente

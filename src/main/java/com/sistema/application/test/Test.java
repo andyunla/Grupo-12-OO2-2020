@@ -1,9 +1,9 @@
-package test;
+package com.sistema.application.test;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import datos.*;
+import com.sistema.application.datos.*;
 
 public class Test {
 

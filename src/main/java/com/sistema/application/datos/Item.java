@@ -1,4 +1,4 @@
-package datos;
+package com.sistema.application.datos;
 
 public class Item {
 	private long idItem;

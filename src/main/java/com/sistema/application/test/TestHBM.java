@@ -1,6 +1,6 @@
-package test;
+package com.sistema.application.test;
 import org.hibernate.Session;
-import dao.HibernateUtil;
+import com.sistema.application.dao.HibernateUtil;
 
 public class TestHBM {
 	public static void main(String[] args) {
