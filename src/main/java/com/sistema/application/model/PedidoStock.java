@@ -1,4 +1,4 @@
-package com.sistema.application.datos;
+package com.sistema.application.model;
 
 import java.util.Set;
 
