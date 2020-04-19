@@ -156,7 +156,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `bd-sistema-de-democratizacion-de-stock`.`chango` ;
 
 CREATE TABLE IF NOT EXISTS `bd-sistema-de-democratizacion-de-stock`.`chango` (
-  `idChango` INT(11) NOT NULL,
+  `idChango` INT(11) NOT NULL AUTO_INCREMENT,
   `idPedidoStock` INT(11) NOT NULL,
   `idLocal` INT(11) NOT NULL,
   PRIMARY KEY (`idChango`),
