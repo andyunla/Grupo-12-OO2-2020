@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/bd-sistema-de-democratizacion-de-stock?autoReconnect=true&useSSL=false
+    username: root
+    password: root
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        strategy: org.hibernate.cfg.ImprovedNaming.Strategy
+    properties:
+      dialect: org.hibernate.dialect.MySQL5Dialect
+  thymeleaf:
+    cache: false
