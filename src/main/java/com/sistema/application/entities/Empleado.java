@@ -1,16 +1,50 @@
-package com.sistema.application.model;
+package com.sistema.application.entities;
 
-import java.time.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+@Entity
+@Table(name="empleado")
 public class Empleado extends Persona {
+	@Id
+	@Column(name="idEmpleado")
 	private long idEmpleado;
+
+	@Column(name="legajo")
 	private int legajo;
+
+	@Column(name="horaDesde")
 	private LocalTime horaDesde;
+
+	@Column(name="horaHasta")
 	private LocalTime horaHasta;
+
+	@Column(name="sueldoBasico")
 	private double sueldoBasico;
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idLocal", nullable=false)
 	private Local local;
+
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="empleado")
 	private Set<Factura> listaFacturas;
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="empleado")
 	private Set<PedidoStock> listaPedidoStock;
 	
 	public Empleado() {}

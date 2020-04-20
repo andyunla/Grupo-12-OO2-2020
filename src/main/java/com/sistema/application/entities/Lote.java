@@ -1,14 +1,48 @@
-package com.sistema.application.model;
+package com.sistema.application.entities;
 
-import java.time.*;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+@Entity
+@Table(name="lote")
 public class Lote {
+	@Id
+	@GeneratedValue
+	@Column(name="idLote")
 	private long idLote;
+
+	@Column(name="cantidadInicial", nullable=false)
 	private int cantidadInicial;
+
+	@Column(name="cantidadActual", nullable=false)
 	private int cantidadActual;
+
+	@Column(name="fechaIngreso", nullable=false)
 	private LocalDate fechaIngreso;
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idProducto", nullable=false)
 	private Producto producto;
+
+	@Column(name="activo", nullable=false)
 	private boolean activo;
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idLocal", nullable=false)
 	private Local local;
 
 	public Lote() {}

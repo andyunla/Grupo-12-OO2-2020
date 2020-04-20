@@ -1,15 +1,47 @@
-package com.sistema.application.model;
+package com.sistema.application.entities;
 
+import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+@Entity
+@Table(name="producto")
 public class Producto {
+	@Id
+	@GeneratedValue
+	@Column(name="idProducto")
 	private long idProducto;
+
+	@Column(name="nombre", nullable=false)
 	private String nombre;
+
+	@Column(name="descripcion", nullable=false)
 	private String descripcion;
+
+	@Column(name="precio", nullable=false)
 	private double precio;
+
+	@Column(name="talle", nullable=false)
 	private int talle;
+
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="producto")
 	private Set<Item> listaItems;
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="producto")
 	private Set<Lote> listaLotes;
+
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="producto")
 	private Set<PedidoStock> listaPedidoStock;
 
 	public Producto() {}

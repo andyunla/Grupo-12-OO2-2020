@@ -1,9 +1,40 @@
-package com.sistema.application.model;
+package com.sistema.application.entities;
 
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+
+@Entity
+@Table(name="item")
 public class Item {
+	@Id
+	@GeneratedValue
+	@Column(name="idItem")
 	private long idItem;
+
+	@Column(name="cantidad", nullable=false)
 	private int cantidad;
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idProducto", nullable=false)
 	private Producto producto;
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idChango", nullable=false)
 	private Chango chango;
 	
 	public Item() {}

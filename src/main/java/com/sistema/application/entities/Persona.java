@@ -1,12 +1,38 @@
-package com.sistema.application.model;
+package com.sistema.application.entities;
 
-import java.time.*;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+@Entity
+@Table(name="persona")
 public class Persona {
+	@Id
+	@GeneratedValue
+	@Column(name="idPersona")
 	protected long idPersona;
+
+	@Column(name="nombre", nullable=false, length=20)
 	protected String nombre;
+
+	@Column(name="apellido", nullable=false, length=30)
 	protected String apellido;
+
+	@Column(name="dni", nullable=false)
 	protected int dni;
+
+	@Column(name="fechaNacimiento", nullable=false)
 	protected LocalDate fechaNacimiento;
 
 	public Persona() {}

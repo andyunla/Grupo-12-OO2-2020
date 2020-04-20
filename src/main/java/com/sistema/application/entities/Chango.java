@@ -1,12 +1,41 @@
-package com.sistema.application.model;
+package com.sistema.application.entities;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+@Entity
+@Table(name="chango")
 public class Chango {
+	@Id
+	@GeneratedValue
+	@Column(name="idChango")
 	private long idChango;
-	private List<Item> listaItems;
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="chango")
+	private Set<Item> listaItems;
+
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="chango")
 	private Set<Factura> listaFacturas;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idPedidoStock", nullable=false)
 	private PedidoStock pedidostock;
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idLocal")
 	private Local local;
 
 	public Chango() {}
@@ -26,11 +55,11 @@ public class Chango {
 		this.idChango = idChango;
 	}
 
-	public List<Item> getListaItems() {
+	public Set<Item> getListaItems() {
 		return listaItems;
 	}
 
-	public void setListaItems(List<Item> listaItems) {
+	public void setListaItems(Set<Item> listaItems) {
 		this.listaItems = listaItems;
 	}
 
@@ -66,58 +95,5 @@ public class Chango {
 	public String toString() {
 		return "\n\nCHANGO: " + idChango + listaItems.toString();
 		//return "Chango [idChango=" + idChango + ", pedidostock=" + pedidostock + "]";
-	}
-
-	/*****************************************************************************************************************/
-	// Métodos
-	public List<Item> traerItem() {
-		return listaItems;
-	}
-
-	public Item traerItem(Producto producto){
-		Item obj = null;		
-		int i = 0;
-		while(obj == null && i<listaItems.size() ){			
-			if(listaItems.get(i).getProducto().equals(producto) ) obj = listaItems.get(i);						
-			i++;
-		}	
-		return obj;
-	}
-
-	public Item traerItem(int idItem){
-		Item obj = null;		
-		int i = 0;
-		while(obj == null && i<listaItems.size() ){			
-			if(listaItems.get(i).getIdItem() == idItem ) obj = listaItems.get(i);						
-			i++;
-		}	
-		return obj;
-	}
-
-	public boolean crearItem (int cantidad, Producto producto) {		
-		if(traerItem(producto) != null) {
-			traerItem(producto).setCantidad(traerItem(producto).getCantidad() + cantidad);			
-		} else {
-			long idItem = 1;
-			if(!this.listaItems.isEmpty() ) idItem = listaItems.get(listaItems.size()-1).getIdItem()+1;		
-			listaItems.add(new Item(cantidad, producto, this));
-		}
-		return true;
-	}
-
-	public boolean eliminarItem (int cantidad, Producto producto) throws Exception{
-		if(traerItem(producto) == null) throw new Exception ("El producto " + producto.getNombre() + " no existe");		
-		if(traerItem(producto).getCantidad()-cantidad <= 0) listaItems.remove(traerItem(producto) );
-		else traerItem(producto).setCantidad(traerItem(producto).getCantidad()-cantidad);		
-		return true;
-	}
-	
-	/*****************************************************************************************************************/
-	public double calcularTotalChango() {		
-		double total = 0;
-		for(Item it: listaItems) {
-			total = total + (it.getProducto().getPrecio()*it.getCantidad() );
-		}		
-		return total;
 	}
 }

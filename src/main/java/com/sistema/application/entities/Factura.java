@@ -1,14 +1,50 @@
-package com.sistema.application.model;
+package com.sistema.application.entities;
 
-import java.time.*;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+@Entity
+@Table(name="factura")
 public class Factura {
+	@Id
+	@GeneratedValue
+	@Column(name="idFactura")
 	private long idFactura;
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idCliente", nullable=false)
 	private Cliente cliente;
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idChango", nullable=false)
 	private Chango chango;
+
+	@Column(name="fechaFactura", nullable=false)
 	private LocalDate fechaFactura;
+
+	@Column(name="costeTotal", nullable=false)
 	private double costeTotal;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idEmpleado", nullable=false)
 	private Empleado empleado;
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idLocal", nullable=false)
 	private Local local;
 	
 	public Factura() {}
