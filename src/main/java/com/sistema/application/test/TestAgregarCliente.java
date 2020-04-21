@@ -1,14 +1,16 @@
 package com.sistema.application.test;
 import java.time.LocalDate;
 
-import com.sistema.application.negocio.PersonaABM;
+// import com.sistema.application.negocio.PersonaABM;
 
 /*
  * Test para agregar un nuevo cliente
  */
 public class TestAgregarCliente {
 	public static void main(String[] args) {
+		/*
 		PersonaABM abm = PersonaABM.getInstance();
+		
 		long idPersona = 1;
 		try {
 			System.out.println("\n\n\nENTRAMOOOOOS!!!");
@@ -26,5 +28,6 @@ public class TestAgregarCliente {
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
+		*/
 	}
 }
