@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `bd-sistema-de-democratizacion-de-stock`.`pedidostock
   `cantidad` INT NOT NULL,
   `aceptado` TINYINT(1) NOT NULL,
   `solicitante_idEmpleado` INT(11) NOT NULL,
-  `oferente_idEmpleado` INT(11) NOT NULL,
+  `oferente_idEmpleado` INT(11),
   `idProducto` INT(11) NOT NULL,
   PRIMARY KEY (`idPedidoStock`),
   INDEX `fk_pedidostock_empleado1_idx` (`solicitante_idEmpleado` ASC),
