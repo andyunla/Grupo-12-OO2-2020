@@ -52,8 +52,10 @@ public class Empleado extends Persona {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="solicitante")
 	private Set<PedidoStock> listaPedidoSolicitante;
 	
-	@OneToOne(fetch=FetchType.LAZY, mappedBy="gerente")
-    private Local localOwner; // Para determinar cuál es el local que dirige; si es null es un empleado normal
+	
+	@OneToOne(fetch = FetchType.LAZY, optional=true)
+	@JoinColumn(name = "gerente_idLocal", nullable=true)
+	private Local localOwner; // Para determinar cuál es el local que dirige; si es null es un empleado normal
 
 	public Empleado() {}
 
