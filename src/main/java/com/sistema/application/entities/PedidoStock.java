@@ -32,14 +32,14 @@ public class PedidoStock {
 	private int cantidad;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="solicitante_idEmpleado", nullable=false)
+	@JoinColumn(name="solicitante_idEmpleado", nullable=true)
 	private Empleado solicitante;
 	
 	@Column(name="aceptado", nullable=false)
 	private boolean aceptado;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="oferente_idEmpleado", nullable=true)
+	@JoinColumn(name="oferente_idEmpleado", nullable=false)
 	private Empleado oferente;
 
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="pedidostock")
