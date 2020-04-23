@@ -40,8 +40,8 @@ public class Local {
 	@Column(name="telefono", nullable=false)
 	private int telefono;
 
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="gerente_idEmpleado", nullable=false)
+	@OneToOne(fetch = FetchType.LAZY, optional=false)
+    @JoinColumn(name = "gerente_idEmpleado", nullable=true)
 	private Empleado gerente;
 
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="local")

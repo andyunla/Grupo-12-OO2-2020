@@ -44,19 +44,28 @@ public class Empleado extends Persona {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="empleado")
 	private Set<Factura> listaFacturas;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="empleado")
-	private Set<PedidoStock> listaPedidoStock;
+	// Lista en las que el empleado aparece como oferente
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="oferente")
+	private Set<PedidoStock> listaPedidoOferente;
+
+	// Lista en las que el empleado aparece como solicitante
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="solicitante")
+	private Set<PedidoStock> listaPedidoSolicitante;
 	
+	@OneToOne(fetch=FetchType.LAZY, mappedBy="gerente")
+    private Local localOwner; // Para determinar cuál es el local que dirige; si es null es un empleado normal
+
 	public Empleado() {}
 
 	public Empleado(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, int legajo, 
-					LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, Local local) {
+					LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, Local local, Local localOwner) {
 		super(idPersona, nombre, apellido, dni, fechaNacimiento);
 		this.legajo = legajo;
 		this.horaDesde = horaDesde;
 		this.horaHasta = horaHasta;
 		this.sueldoBasico = sueldoBasico;
 		this.local = local;
+		this.localOwner = localOwner;
 	}
 
 	//Getters y Setters
@@ -107,16 +116,32 @@ public class Empleado extends Persona {
 		this.listaFacturas = listaFacturas;
 	}
 
-	public Set<PedidoStock> getListaPedidoStock() {
-		return listaPedidoStock;
+	public Set<PedidoStock> getListaPedidoSolicitante() {
+		return listaPedidoSolicitante;
 	}
 
-	public void setListaPedidoStock(Set<PedidoStock> listaPedidoStock) {
-		this.listaPedidoStock = listaPedidoStock;
+	public void setListaPedidoSolicitante(Set<PedidoStock> listaPedidoSolicitante) {
+		this.listaPedidoSolicitante = listaPedidoSolicitante;
+	}
+
+	public Set<PedidoStock> getListaPedidoOferente() {
+		return listaPedidoOferente;
+	}
+
+	public void setListaPedidoOferente(Set<PedidoStock> listaPedidoOferente) {
+		this.listaPedidoOferente = listaPedidoOferente;
 	}
 
 	public Local getLocal() {
 		return local;
+	}
+
+	public void setLocalOwner(Local localOwner) {
+		this.localOwner = localOwner;
+	}
+
+	public Local getLocalOwner() {
+		return localOwner;
 	}
 
 	public void setLocal(Local local) {
