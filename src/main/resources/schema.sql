@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `bd-sistema-de-democratizacion-de-stock`.`local` (
   `nombreLocal` VARCHAR(45) NULL,
   `latitud` DOUBLE NULL,
   `longitud` DOUBLE NULL,
-  `direccion` DOUBLE NULL,
+  `direccion` VARCHAR(45) NULL,
   `telefono` INT NULL,
   `gerente_idEmpleado` INT(11) NULL DEFAULT 0,
   PRIMARY KEY (`idLocal`),
