@@ -5,7 +5,7 @@
 
 ### 1ro - Clonar el repositorio del proyecto
 ```bash
-git clone https://github.com/andyunla/sistema-de-democratizacion-de-stock.git
+git clone https://github.com/andyunla/Grupo-12-OO2-2020.git
 ```
 
 ### 2do - Realizar configuraciones
