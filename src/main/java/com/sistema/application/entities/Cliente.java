@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -19,6 +20,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Table(name="cliente")
 public class Cliente extends Persona {
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idCliente")
 	private long idCliente;
 
@@ -29,7 +31,7 @@ public class Cliente extends Persona {
 	private int nroCliente;
 
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="cliente")
-	private Set<Factura> listaFacturas;
+	private Set<Factura> listaFacturas = new HashSet<Factura>();
 
 	public Cliente() {}
 
