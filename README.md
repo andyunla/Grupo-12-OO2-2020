@@ -10,7 +10,7 @@ git clone https://github.com/andyunla/Grupo-12-OO2-2020.git
 
 ### 2do - Realizar configuraciones
 ```bash
-cd sistema-de-democratizacion-de-stock         # Es para ingresar a la carpeta del proyecto descargada
+cd Grupo-12-OO2-2020                           # Es para ingresar a la carpeta del proyecto descargada
 git config user.name "nombre_usuario"          # Esto, al igual que el email, hacerlo una vez.
 git config user.email "tu_direccion@email.com"
 ```
