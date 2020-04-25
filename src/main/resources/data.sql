@@ -1,4 +1,4 @@
-USE `bd-sistema-de-democratizacion-de-stock`;
+USE `Grupo-12-OO2-2020`;
 
 -- PERSONAS:
 INSERT INTO persona 
