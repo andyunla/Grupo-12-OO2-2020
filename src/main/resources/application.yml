@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/bd-sistema-de-democratizacion-de-stock?autoReconnect=true&useSSL=false
+    url: jdbc:mysql://localhost:3306/Grupo-12-OO2-2020?autoReconnect=true&useSSL=false
     username: root
     password: root
   jpa:
