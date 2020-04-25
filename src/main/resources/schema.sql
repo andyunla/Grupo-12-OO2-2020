@@ -159,7 +159,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `bd-sistema-de-democratizacion-de-stock`.`chango` ;
 
 CREATE TABLE IF NOT EXISTS `bd-sistema-de-democratizacion-de-stock`.`chango` (
-  `idChango` INT(11) NOT NULL AUTO_INCREMENT,
+  sadas`idChango` INT(11) NOT NULL AUTO_INCREMENT,
   `idPedidoStock` INT(11) NOT NULL,
   `idLocal` INT(11) NOT NULL,
   PRIMARY KEY (`idChango`),
@@ -189,10 +189,10 @@ CREATE TABLE IF NOT EXISTS `bd-sistema-de-democratizacion-de-stock`.`factura` (
   `costeTotal` DOUBLE NOT NULL,
   `idLocal` INT(11) NOT NULL,
   `idEmpleado` INT(11) NOT NULL,
-  `idCliente` INT(11) NOT NULL,
+  `fk_idCliente` INT(11) NOT NULL,
   `idChango` INT(11) NOT NULL,
   INDEX `fk_factura_local1_idx` (`idLocal` ASC),
-  INDEX `fk_factura_cliente1_idx` (`idCliente` ASC),
+  INDEX `fk_factura_cliente1_idx` (`fk_idCliente` ASC),
   INDEX `fk_factura_empleado1_idx` (`idEmpleado` ASC),
   PRIMARY KEY (`idFactura`),
   INDEX `fk_factura_chango1_idx` (`idChango` ASC),
@@ -202,7 +202,7 @@ CREATE TABLE IF NOT EXISTS `bd-sistema-de-democratizacion-de-stock`.`factura` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_factura_cliente1`
-    FOREIGN KEY (`idCliente`)
+    FOREIGN KEY (`fk_idCliente`)
     REFERENCES `bd-sistema-de-democratizacion-de-stock`.`cliente` (`idCliente`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
