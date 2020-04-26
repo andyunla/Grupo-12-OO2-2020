@@ -8,22 +8,22 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema Grupo-12-OO2-2020
+-- Schema Grupo-12-BDD-OO2-2020
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `Grupo-12-OO2-2020` ;
+DROP SCHEMA IF EXISTS `Grupo-12-BDD-OO2-2020` ;
 
 -- -----------------------------------------------------
--- Schema Grupo-12-OO2-2020
+-- Schema Grupo-12-BDD-OO2-2020
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `Grupo-12-OO2-2020` DEFAULT CHARACTER SET utf8 ;
-USE `Grupo-12-OO2-2020` ;
+CREATE SCHEMA IF NOT EXISTS `Grupo-12-BDD-OO2-2020` DEFAULT CHARACTER SET utf8 ;
+USE `Grupo-12-BDD-OO2-2020` ;
 
 -- -----------------------------------------------------
--- Table `Grupo-12-OO2-2020`.`persona`
+-- Table `Grupo-12-BDD-OO2-2020`.`persona`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Grupo-12-OO2-2020`.`persona` ;
+DROP TABLE IF EXISTS `Grupo-12-BDD-OO2-2020`.`persona` ;
 
-CREATE TABLE IF NOT EXISTS `Grupo-12-OO2-2020`.`persona` (
+CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`persona` (
   `idPersona` INT(11) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL,
   `apellido` VARCHAR(45) NULL,
@@ -34,11 +34,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Grupo-12-OO2-2020`.`empleado`
+-- Table `Grupo-12-BDD-OO2-2020`.`empleado`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Grupo-12-OO2-2020`.`empleado` ;
+DROP TABLE IF EXISTS `Grupo-12-BDD-OO2-2020`.`empleado` ;
 
-CREATE TABLE IF NOT EXISTS `Grupo-12-OO2-2020`.`empleado` (
+CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`empleado` (
   `idEmpleado` INT(11) NOT NULL,
   `legajo` INT NULL,
   `horarioDesde` TIME NULL,
@@ -51,23 +51,23 @@ CREATE TABLE IF NOT EXISTS `Grupo-12-OO2-2020`.`empleado` (
   UNIQUE INDEX `gerente_idLocal_UNIQUE` (`gerente_idLocal` ASC),
   CONSTRAINT `fk_empleado_local1`
     FOREIGN KEY (`idLocal`)
-    REFERENCES `Grupo-12-OO2-2020`.`local` (`idLocal`)
+    REFERENCES `Grupo-12-BDD-OO2-2020`.`local` (`idLocal`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_empleado_persona1`
     FOREIGN KEY (`idEmpleado`)
-    REFERENCES `Grupo-12-OO2-2020`.`persona` (`idPersona`)
+    REFERENCES `Grupo-12-BDD-OO2-2020`.`persona` (`idPersona`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Grupo-12-OO2-2020`.`local`
+-- Table `Grupo-12-BDD-OO2-2020`.`local`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Grupo-12-OO2-2020`.`local` ;
+DROP TABLE IF EXISTS `Grupo-12-BDD-OO2-2020`.`local` ;
 
-CREATE TABLE IF NOT EXISTS `Grupo-12-OO2-2020`.`local` (
+CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`local` (
   `idLocal` INT(11) NOT NULL AUTO_INCREMENT,
   `nombreLocal` VARCHAR(45) NULL,
   `latitud` DOUBLE NULL,
@@ -80,36 +80,36 @@ CREATE TABLE IF NOT EXISTS `Grupo-12-OO2-2020`.`local` (
   UNIQUE INDEX `gerente_idEmpleado_UNIQUE` (`gerente_idEmpleado` ASC),
   CONSTRAINT `fk_local_empleado1`
     FOREIGN KEY (`gerente_idEmpleado`)
-    REFERENCES `Grupo-12-OO2-2020`.`empleado` (`gerente_idLocal`)
+    REFERENCES `Grupo-12-BDD-OO2-2020`.`empleado` (`gerente_idLocal`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Grupo-12-OO2-2020`.`cliente`
+-- Table `Grupo-12-BDD-OO2-2020`.`cliente`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Grupo-12-OO2-2020`.`cliente` ;
+DROP TABLE IF EXISTS `Grupo-12-BDD-OO2-2020`.`cliente` ;
 
-CREATE TABLE IF NOT EXISTS `Grupo-12-OO2-2020`.`cliente` (
+CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`cliente` (
   `idCliente` INT(11) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `nroCliente` INT NOT NULL,
   PRIMARY KEY (`idCliente`),
   CONSTRAINT `fk_cliente_persona1`
     FOREIGN KEY (`idCliente`)
-    REFERENCES `Grupo-12-OO2-2020`.`persona` (`idPersona`)
+    REFERENCES `Grupo-12-BDD-OO2-2020`.`persona` (`idPersona`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Grupo-12-OO2-2020`.`producto`
+-- Table `Grupo-12-BDD-OO2-2020`.`producto`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Grupo-12-OO2-2020`.`producto` ;
+DROP TABLE IF EXISTS `Grupo-12-BDD-OO2-2020`.`producto` ;
 
-CREATE TABLE IF NOT EXISTS `Grupo-12-OO2-2020`.`producto` (
+CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`producto` (
   `idProducto` INT(11) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   `descripcion` VARCHAR(45) NOT NULL,
@@ -120,11 +120,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Grupo-12-OO2-2020`.`pedidostock`
+-- Table `Grupo-12-BDD-OO2-2020`.`pedidostock`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Grupo-12-OO2-2020`.`pedidostock` ;
+DROP TABLE IF EXISTS `Grupo-12-BDD-OO2-2020`.`pedidostock` ;
 
-CREATE TABLE IF NOT EXISTS `Grupo-12-OO2-2020`.`pedidostock` (
+CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`pedidostock` (
   `idPedidoStock` INT(11) NOT NULL AUTO_INCREMENT,
   `cantidad` INT NOT NULL,
   `aceptado` TINYINT(1) NOT NULL,
@@ -137,28 +137,28 @@ CREATE TABLE IF NOT EXISTS `Grupo-12-OO2-2020`.`pedidostock` (
   INDEX `fk_pedidostock_producto1_idx` (`idProducto` ASC),
   CONSTRAINT `fk_pedidostock_empleado1`
     FOREIGN KEY (`solicitante_idEmpleado`)
-    REFERENCES `Grupo-12-OO2-2020`.`empleado` (`idEmpleado`)
+    REFERENCES `Grupo-12-BDD-OO2-2020`.`empleado` (`idEmpleado`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_pedidostock_empleado2`
     FOREIGN KEY (`oferente_idEmpleado`)
-    REFERENCES `Grupo-12-OO2-2020`.`empleado` (`idEmpleado`)
+    REFERENCES `Grupo-12-BDD-OO2-2020`.`empleado` (`idEmpleado`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_pedidostock_producto1`
     FOREIGN KEY (`idProducto`)
-    REFERENCES `Grupo-12-OO2-2020`.`producto` (`idProducto`)
+    REFERENCES `Grupo-12-BDD-OO2-2020`.`producto` (`idProducto`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Grupo-12-OO2-2020`.`chango`
+-- Table `Grupo-12-BDD-OO2-2020`.`chango`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Grupo-12-OO2-2020`.`chango` ;
+DROP TABLE IF EXISTS `Grupo-12-BDD-OO2-2020`.`chango` ;
 
-CREATE TABLE IF NOT EXISTS `Grupo-12-OO2-2020`.`chango` (
+CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`chango` (
   `idChango` INT(11) NOT NULL AUTO_INCREMENT,
   `idPedidoStock` INT(11) NOT NULL,
   `idLocal` INT(11) NOT NULL,
@@ -167,23 +167,23 @@ CREATE TABLE IF NOT EXISTS `Grupo-12-OO2-2020`.`chango` (
   INDEX `fk_chango_local1_idx` (`idLocal` ASC),
   CONSTRAINT `fk_chango_pedidostock1`
     FOREIGN KEY (`idPedidoStock`)
-    REFERENCES `Grupo-12-OO2-2020`.`pedidostock` (`idPedidoStock`)
+    REFERENCES `Grupo-12-BDD-OO2-2020`.`pedidostock` (`idPedidoStock`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_chango_local1`
     FOREIGN KEY (`idLocal`)
-    REFERENCES `Grupo-12-OO2-2020`.`local` (`idLocal`)
+    REFERENCES `Grupo-12-BDD-OO2-2020`.`local` (`idLocal`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Grupo-12-OO2-2020`.`factura`
+-- Table `Grupo-12-BDD-OO2-2020`.`factura`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Grupo-12-OO2-2020`.`factura` ;
+DROP TABLE IF EXISTS `Grupo-12-BDD-OO2-2020`.`factura` ;
 
-CREATE TABLE IF NOT EXISTS `Grupo-12-OO2-2020`.`factura` (
+CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`factura` (
   `idFactura` INT(11) NOT NULL AUTO_INCREMENT,
   `fechaFactura` DATE NOT NULL,
   `costeTotal` DOUBLE NOT NULL,
@@ -198,33 +198,33 @@ CREATE TABLE IF NOT EXISTS `Grupo-12-OO2-2020`.`factura` (
   INDEX `fk_factura_chango1_idx` (`idChango` ASC),
   CONSTRAINT `fk_factura_local1`
     FOREIGN KEY (`idLocal`)
-    REFERENCES `Grupo-12-OO2-2020`.`local` (`idLocal`)
+    REFERENCES `Grupo-12-BDD-OO2-2020`.`local` (`idLocal`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_factura_cliente1`
     FOREIGN KEY (`idCliente`)
-    REFERENCES `Grupo-12-OO2-2020`.`cliente` (`idCliente`)
+    REFERENCES `Grupo-12-BDD-OO2-2020`.`cliente` (`idCliente`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_factura_empleado1`
     FOREIGN KEY (`idEmpleado`)
-    REFERENCES `Grupo-12-OO2-2020`.`empleado` (`idEmpleado`)
+    REFERENCES `Grupo-12-BDD-OO2-2020`.`empleado` (`idEmpleado`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_factura_chango1`
     FOREIGN KEY (`idChango`)
-    REFERENCES `Grupo-12-OO2-2020`.`chango` (`idChango`)
+    REFERENCES `Grupo-12-BDD-OO2-2020`.`chango` (`idChango`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Grupo-12-OO2-2020`.`lote`
+-- Table `Grupo-12-BDD-OO2-2020`.`lote`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Grupo-12-OO2-2020`.`lote` ;
+DROP TABLE IF EXISTS `Grupo-12-BDD-OO2-2020`.`lote` ;
 
-CREATE TABLE IF NOT EXISTS `Grupo-12-OO2-2020`.`lote` (
+CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`lote` (
   `idLote` INT(11) NOT NULL AUTO_INCREMENT,
   `cantidadInicial` INT NOT NULL,
   `cantidadActual` INT NOT NULL,
@@ -237,23 +237,23 @@ CREATE TABLE IF NOT EXISTS `Grupo-12-OO2-2020`.`lote` (
   INDEX `fk_lote_local1_idx` (`idLocal` ASC),
   CONSTRAINT `fk_lote_producto1`
     FOREIGN KEY (`idProducto`)
-    REFERENCES `Grupo-12-OO2-2020`.`producto` (`idProducto`)
+    REFERENCES `Grupo-12-BDD-OO2-2020`.`producto` (`idProducto`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_lote_local1`
     FOREIGN KEY (`idLocal`)
-    REFERENCES `Grupo-12-OO2-2020`.`local` (`idLocal`)
+    REFERENCES `Grupo-12-BDD-OO2-2020`.`local` (`idLocal`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Grupo-12-OO2-2020`.`item`
+-- Table `Grupo-12-BDD-OO2-2020`.`item`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Grupo-12-OO2-2020`.`item` ;
+DROP TABLE IF EXISTS `Grupo-12-BDD-OO2-2020`.`item` ;
 
-CREATE TABLE IF NOT EXISTS `Grupo-12-OO2-2020`.`item` (
+CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`item` (
   `idItem` INT(11) NOT NULL AUTO_INCREMENT,
   `cantidad` INT NOT NULL,
   `idChango` INT(11) NOT NULL,
@@ -263,12 +263,12 @@ CREATE TABLE IF NOT EXISTS `Grupo-12-OO2-2020`.`item` (
   INDEX `fk_item_producto1_idx` (`idProducto` ASC),
   CONSTRAINT `fk_item_chango1`
     FOREIGN KEY (`idChango`)
-    REFERENCES `Grupo-12-OO2-2020`.`chango` (`idChango`)
+    REFERENCES `Grupo-12-BDD-OO2-2020`.`chango` (`idChango`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_item_producto1`
     FOREIGN KEY (`idProducto`)
-    REFERENCES `Grupo-12-OO2-2020`.`producto` (`idProducto`)
+    REFERENCES `Grupo-12-BDD-OO2-2020`.`producto` (`idProducto`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
