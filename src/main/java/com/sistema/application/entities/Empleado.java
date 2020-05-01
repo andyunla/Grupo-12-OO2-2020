@@ -1,5 +1,6 @@
 package com.sistema.application.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashSet;
@@ -9,10 +10,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -20,10 +23,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name="empleado")
-public class Empleado extends Persona {
-	@Id
-	@Column(name="idEmpleado")
-	private long idEmpleado;
+public class Empleado extends Persona implements Serializable {
 
 	@Column(name="legajo")
 	private int legajo;
@@ -56,7 +56,9 @@ public class Empleado extends Persona {
 	@JoinColumn(name = "gerente_idLocal", nullable=true)
 	private Local localOwner; // Para determinar cuál es el local que dirige; si es null es un empleado normal
 
-	public Empleado() {}
+	public Empleado() {
+		super();
+	}
 
 	public Empleado(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, int legajo, 
 					LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, Local local, Local localOwner) {
@@ -70,14 +72,6 @@ public class Empleado extends Persona {
 	}
 
 	//Getters y Setters
-	public long getIdEmpleado() {
-		return idEmpleado;
-	}
-
-	protected void setIdEmpleado(long idEmpleado) {
-		this.idEmpleado = idEmpleado;
-	}
-	
 	public long getLegajo() {
 		return legajo;
 	}
