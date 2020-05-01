@@ -26,7 +26,7 @@ VALUES
 	(3, 'cliente3@email.com', 3);
 	
 -- LOCAL (Los gerentes_id_empleado se definen luego de cargar empleados)
-INSERT INTO local
+INSERT INTO locales
 	(nombre_local, latitud, longitud, direccion, telefono, gerente_id_empleado)
 VALUES 	
 	('Local 1', 100, 100, "Av. Local 1", 41111111, null),
@@ -48,9 +48,9 @@ VALUES
 	(12, 9, '10:00:00', '18:00:00', 80000, 3, 3);
 
 -- Definir gerentes de locales
-UPDATE local SET gerente_id_empleado = 1 WHERE id_local = 1;
-UPDATE local SET gerente_id_empleado = 2 WHERE id_local = 2;
-UPDATE local SET gerente_id_empleado = 3 WHERE id_local = 3;
+UPDATE locales SET gerente_id_empleado = 1 WHERE id_local = 1;
+UPDATE locales SET gerente_id_empleado = 2 WHERE id_local = 2;
+UPDATE locales SET gerente_id_empleado = 3 WHERE id_local = 3;
 
 -- PRODUCTO
 INSERT INTO producto
@@ -71,7 +71,7 @@ VALUES
 	(1, 1, '2020-01-01', 1, 1, 3);	
 	
 -- PEDIDO STOCK
-INSERT INTO pedidostock
+INSERT INTO pedido_stock
 	(cantidad, aceptado, solicitante_id_empleado, oferente_id_empleado, id_producto)
 VALUES
 	( 2, 1, 8, 4, 1),
