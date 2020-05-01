@@ -2,7 +2,7 @@ USE `Grupo-12-BDD-OO2-2020`;
 
 -- PERSONAS:
 INSERT INTO persona 
-	(nombre, apellido, dni, fechaNacimiento)
+	(nombre, apellido, dni, fecha_nacimiento)
 VALUES
 	('Carlos', 'Carrizo', 10000001, '1990-01-01'),	-- Clientes (3)
 	('Casimiro', 'Camaño', 10000002, '1990-01-01'),
@@ -19,7 +19,7 @@ VALUES
 
 -- CLIENTES:
 INSERT INTO cliente 
-	(idCliente, email, nroCliente)
+	(id, email, nro_cliente)
 VALUES
 	(1, 'cliente1@email.com', 1),
 	(2, 'cliente2@email.com', 2),
@@ -27,7 +27,7 @@ VALUES
 	
 -- LOCAL (Los gerentes_idEmpleado se definen luego de cargar empleados)
 INSERT INTO local
-	(nombreLocal, latitud, longitud, direccion, telefono, gerente_idEmpleado)
+	(nombre_local, latitud, longitud, direccion, telefono, gerente_id_empleado)
 VALUES 	
 	('Local 1', 100, 100, "Av. Local 1", 41111111, null),
 	('Local 2', 100, 200, "Av. Local 2", 42222222, null),
@@ -35,7 +35,7 @@ VALUES
 		
 -- EMPLEADOS:
 INSERT INTO empleado 
-	(idEmpleado, legajo, horarioDesde, horarioHasta, sueldoBasico, idLocal, gerente_idLocal)
+	(id, legajo, horario_desde, horario_hasta, sueldo_basico, id_local, gerente_id_local)
 VALUES
 	(4, 1, '08:00:00', '16:00:00', 30000, 1, null),	-- Empleados
 	(5, 2, '16:00:00', '20:00:00', 30000, 1, null),
@@ -48,9 +48,9 @@ VALUES
 	(12, 9, '10:00:00', '18:00:00', 80000, 3, 3);
 
 -- Definir gerentes de locales
-UPDATE local SET gerente_idEmpleado = 1 WHERE idLocal = 1;
-UPDATE local SET gerente_idEmpleado = 2 WHERE idLocal = 2;
-UPDATE local SET gerente_idEmpleado = 3 WHERE idLocal = 3;
+UPDATE local SET gerente_id_empleado = 1 WHERE id = 1;
+UPDATE local SET gerente_id_empleado = 2 WHERE id = 2;
+UPDATE local SET gerente_id_empleado = 3 WHERE id = 3;
 
 -- PRODUCTO
 INSERT INTO producto
@@ -63,7 +63,7 @@ VALUES
 	
 -- LOTE
 INSERT INTO lote 
-	(cantidadInicial, cantidadActual, fechaIngreso, activo, idProducto, idLocal)
+	(cantidad_inicial, cantidad_actual, fecha_ingreso, activo, id_producto, id_local)
 VALUES
 	(10, 8, '2020-01-01', 1, 1, 1),	
 	(10, 5, '2020-01-01', 1, 2, 1),	
@@ -72,28 +72,28 @@ VALUES
 	
 -- PEDIDO STOCK
 INSERT INTO pedidostock
-	(cantidad, aceptado, solicitante_idEmpleado, oferente_idEmpleado, idProducto)
+	(cantidad, aceptado, solicitante_id_empleado, oferente_id_empleado, id_producto)
 VALUES
 	( 2, 1, 8, 4, 1),
 	( 5, 1, 9, 4, 2);	
 
 -- CHANGO
 INSERT INTO chango 
-	(idPedidoStock, idLocal)
+	(id_pedido_stock, id_local)
 VALUES 
 	(1, 3),	
 	(2, 3);	
 	
 -- ITEM
 INSERT INTO item 
-	(cantidad, idChango, idProducto)
+	(cantidad, id_chango, id_producto)
 VALUES
 	(2, 1, 1),	
 	(5, 2, 2);	
 	
 -- FACTURA
 INSERT INTO factura 
-	(fechaFactura, costeTotal, idLocal, idEmpleado, idCliente, idChango)
+	(fecha_factura, coste_total, id_local, id_empleado, id_cliente, id_chango)
 VALUES
-	('2020-01-30', 200, 3, 8, 1, 1),	
+	('2020-01-30', 200, 3, 8, 1, 1),
 	('2020-01-31', 1000, 3, 9, 2, 2);
