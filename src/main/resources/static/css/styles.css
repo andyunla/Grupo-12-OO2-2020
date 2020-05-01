@@ -1,0 +1,22 @@
+.list-icon{
+    width: 1.2em;
+    height: auto;
+    padding: 0.1em;
+    border-radius: 25%;
+}
+.edit-icon{
+    background-color: rgb(187, 217, 245);
+}
+.delete-icon{
+    background-color: rgb(247, 183, 183);
+}
+.edit-icon:hover{
+    background-color: rgb(151, 205, 255);
+}
+.delete-icon:hover{
+    background-color: rgb(245, 140, 140);
+}
+.delete-button{
+	border-width: 0;
+	background-color: rgba(0, 0, 0, 0.0);
+}
