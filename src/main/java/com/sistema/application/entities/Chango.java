@@ -1,5 +1,6 @@
 package com.sistema.application.entities;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,10 +20,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name="chango")
-public class Chango {
+public class Chango implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue
-	@Column(name="idChango")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id_chango")
 	private long idChango;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="chango")
@@ -31,11 +35,11 @@ public class Chango {
 	private Set<Factura> listaFacturas;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idPedidoStock", nullable=false)
+	@JoinColumn(name="id_pedido_stock", nullable=false)
 	private PedidoStock pedidostock;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idLocal")
+	@JoinColumn(name="id_local")
 	private Local local;
 
 	public Chango() {}

@@ -1,5 +1,6 @@
 package com.sistema.application.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,19 +9,23 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name="persona")
-public class Persona {
+@Inheritance(strategy = InheritanceType.JOINED) 
+public class Persona implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue
-	@Column(name="idPersona")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id_persona")
 	protected long idPersona;
 
 	@Column(name="nombre", nullable=false, length=20)
@@ -32,7 +37,7 @@ public class Persona {
 	@Column(name="dni", nullable=false)
 	protected int dni;
 
-	@Column(name="fechaNacimiento", nullable=false)
+	@Column(name="fecha_nacimiento", nullable=false)
 	protected LocalDate fechaNacimiento;
 
 	public Persona() {}

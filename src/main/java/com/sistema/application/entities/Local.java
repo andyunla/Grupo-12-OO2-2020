@@ -1,5 +1,6 @@
 package com.sistema.application.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,24 +9,28 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name="local")
-public class Local {
+@Table(name="locales")
+public class Local implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue
-	@Column(name="idLocal")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id_local")
 	private long idLocal;
 
-	@Column(name="nombreLocal", nullable=false, length=50)
+	@Column(name="nombre_local", nullable=false, length=50)
 	private String nombreLocal;
 
 	@Column(name="latitud", nullable=false)

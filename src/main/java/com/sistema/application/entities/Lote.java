@@ -1,5 +1,6 @@
 package com.sistema.application.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,30 +21,32 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name="lote")
-public class Lote {
+public class Lote implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue
-	@Column(name="idLote")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id_lote")
 	private long idLote;
 
-	@Column(name="cantidadInicial", nullable=false)
+	@Column(name="cantidad_inicial", nullable=false)
 	private int cantidadInicial;
 
-	@Column(name="cantidadActual", nullable=false)
+	@Column(name="cantidad_actual", nullable=false)
 	private int cantidadActual;
 
-	@Column(name="fechaIngreso", nullable=false)
+	@Column(name="fecha_ingreso", nullable=false)
 	private LocalDate fechaIngreso;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idProducto", nullable=false)
+	@JoinColumn(name="id_producto", nullable=false)
 	private Producto producto;
 
 	@Column(name="activo", nullable=false)
 	private boolean activo;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idLocal", nullable=false)
+	@JoinColumn(name="id_local", nullable=false)
 	private Local local;
 
 	public Lote() {}

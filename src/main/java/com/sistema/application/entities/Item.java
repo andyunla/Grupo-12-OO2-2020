@@ -1,5 +1,6 @@
 package com.sistema.application.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,21 +22,23 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name="item")
-public class Item {
+public class Item implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue
-	@Column(name="idItem")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id_item")
 	private long idItem;
 
 	@Column(name="cantidad", nullable=false)
 	private int cantidad;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idProducto", nullable=false)
+	@JoinColumn(name="id_producto", nullable=false)
 	private Producto producto;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idChango", nullable=false)
+	@JoinColumn(name="id_chango", nullable=false)
 	private Chango chango;
 	
 	public Item() {}

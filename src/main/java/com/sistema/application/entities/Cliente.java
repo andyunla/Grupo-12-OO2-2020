@@ -1,5 +1,6 @@
 package com.sistema.application.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,21 +18,21 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name="cliente")
-public class Cliente extends Persona {
-	@Id
-	@Column(name="idCliente")
-	private long idCliente;
+public class Cliente extends Persona implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Column(name="email", nullable=false, length=50)
 	private String email;
 
-	@Column(name="nroCliente", nullable=false)
+	@Column(name="nro_cliente", nullable=false)
 	private int nroCliente;
 
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="cliente")
 	private Set<Factura> listaFacturas;
 
-	public Cliente() {}
+	public Cliente() {
+		super();
+	}
 
 	public Cliente(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, String email, int nroCliente) {
 		super(idPersona, nombre, apellido, dni, fechaNacimiento);
@@ -40,14 +41,6 @@ public class Cliente extends Persona {
 	}
 
 	//Getters y Setters
-	public long getIdCliente() {
-		return idCliente;
-	}
-
-	protected void setIdCliente(long idCliente) {
-		this.idCliente = idCliente;
-	}
-
 	public String getEmail() {
 		return email;
 	}
