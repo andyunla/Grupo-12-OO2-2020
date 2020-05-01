@@ -28,17 +28,17 @@ public class Empleado extends Persona implements Serializable {
 	@Column(name="legajo")
 	private int legajo;
 
-	@Column(name="horaDesde")
+	@Column(name="hora_desde")
 	private LocalTime horaDesde;
 
-	@Column(name="horaHasta")
+	@Column(name="hora_hasta")
 	private LocalTime horaHasta;
 
-	@Column(name="sueldoBasico")
+	@Column(name="sueldo_basico")
 	private double sueldoBasico;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idLocal", nullable=false)
+	@JoinColumn(name="id_local", nullable=false)
 	private Local local;
 
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="empleado")
@@ -53,7 +53,7 @@ public class Empleado extends Persona implements Serializable {
 	private Set<PedidoStock> listaPedidoSolicitante;
 	
 	@OneToOne(fetch = FetchType.LAZY, optional=true)
-	@JoinColumn(name = "gerente_idLocal", nullable=true)
+	@JoinColumn(name = "gerente_id_local", nullable=true)
 	private Local localOwner; // Para determinar cuál es el local que dirige; si es null es un empleado normal
 
 	public Empleado() {

@@ -24,7 +24,7 @@ public class Cliente extends Persona implements Serializable {
 	@Column(name="email", nullable=false, length=50)
 	private String email;
 
-	@Column(name="nroCliente", nullable=false)
+	@Column(name="nro_cliente", nullable=false)
 	private int nroCliente;
 
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="cliente")

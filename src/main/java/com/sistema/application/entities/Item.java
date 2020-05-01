@@ -27,18 +27,18 @@ public class Item implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idItem")
+	@Column(name="id_item")
 	private long idItem;
 
 	@Column(name="cantidad", nullable=false)
 	private int cantidad;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idProducto", nullable=false)
+	@JoinColumn(name="id_producto", nullable=false)
 	private Producto producto;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idChango", nullable=false)
+	@JoinColumn(name="id_chango", nullable=false)
 	private Chango chango;
 	
 	public Item() {}

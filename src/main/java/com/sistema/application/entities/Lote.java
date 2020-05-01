@@ -26,27 +26,27 @@ public class Lote implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idLote")
+	@Column(name="id_lote")
 	private long idLote;
 
-	@Column(name="cantidadInicial", nullable=false)
+	@Column(name="cantidad_inicial", nullable=false)
 	private int cantidadInicial;
 
-	@Column(name="cantidadActual", nullable=false)
+	@Column(name="cantidad_actual", nullable=false)
 	private int cantidadActual;
 
-	@Column(name="fechaIngreso", nullable=false)
+	@Column(name="fecha_ingreso", nullable=false)
 	private LocalDate fechaIngreso;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idProducto", nullable=false)
+	@JoinColumn(name="id_producto", nullable=false)
 	private Producto producto;
 
 	@Column(name="activo", nullable=false)
 	private boolean activo;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idLocal", nullable=false)
+	@JoinColumn(name="id_local", nullable=false)
 	private Local local;
 
 	public Lote() {}

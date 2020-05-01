@@ -21,16 +21,16 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name="local")
+@Table(name="locales")
 public class Local implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idLocal")
+	@Column(name="id_local")
 	private long idLocal;
 
-	@Column(name="nombreLocal", nullable=false, length=50)
+	@Column(name="nombre_local", nullable=false, length=50)
 	private String nombreLocal;
 
 	@Column(name="latitud", nullable=false)

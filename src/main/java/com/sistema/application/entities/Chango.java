@@ -25,7 +25,7 @@ public class Chango implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idChango")
+	@Column(name="id_chango")
 	private long idChango;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="chango")
@@ -35,11 +35,11 @@ public class Chango implements Serializable {
 	private Set<Factura> listaFacturas;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idPedidoStock", nullable=false)
+	@JoinColumn(name="id_pedido_stock", nullable=false)
 	private PedidoStock pedidostock;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idLocal")
+	@JoinColumn(name="id_local")
 	private Local local;
 
 	public Chango() {}

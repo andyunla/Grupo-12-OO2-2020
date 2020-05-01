@@ -19,31 +19,31 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name="pedidostock")
+@Table(name="pedido_stock")
 public class PedidoStock implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idPedidoStock")
+	@Column(name="id_pedido_stock")
 	private long idPedidoStock;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idProducto", nullable=false)
+	@JoinColumn(name="id_producto", nullable=false)
 	private Producto producto;
 
 	@Column(name="cantidad", nullable=false)
 	private int cantidad;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="solicitante_idEmpleado", nullable=true)
+	@JoinColumn(name="solicitante_id_empleado", nullable=true)
 	private Empleado solicitante;
 	
 	@Column(name="aceptado", nullable=false)
 	private boolean aceptado;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="oferente_idEmpleado", nullable=false)
+	@JoinColumn(name="oferente_id_empleado", nullable=false)
 	private Empleado oferente;
 
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="pedidostock")

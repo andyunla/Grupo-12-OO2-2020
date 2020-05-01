@@ -25,7 +25,7 @@ public class Persona implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idPersona")
+	@Column(name="id_persona")
 	protected long idPersona;
 
 	@Column(name="nombre", nullable=false, length=20)
@@ -37,7 +37,7 @@ public class Persona implements Serializable {
 	@Column(name="dni", nullable=false)
 	protected int dni;
 
-	@Column(name="fechaNacimiento", nullable=false)
+	@Column(name="fecha_nacimiento", nullable=false)
 	protected LocalDate fechaNacimiento;
 
 	public Persona() {}

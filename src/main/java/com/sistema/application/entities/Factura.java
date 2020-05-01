@@ -26,29 +26,29 @@ public class Factura implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idFactura")
+	@Column(name="id_factura")
 	private long idFactura;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idCliente", nullable=false)
+	@JoinColumn(name="id_cliente", nullable=false)
 	private Cliente cliente;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idChango", nullable=false)
+	@JoinColumn(name="id_chango", nullable=false)
 	private Chango chango;
 
-	@Column(name="fechaFactura", nullable=false)
+	@Column(name="fecha_factura", nullable=false)
 	private LocalDate fechaFactura;
 
-	@Column(name="costeTotal", nullable=false)
+	@Column(name="coste_total", nullable=false)
 	private double costeTotal;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idEmpleado", nullable=false)
+	@JoinColumn(name="id_empleado", nullable=false)
 	private Empleado empleado;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idLocal", nullable=false)
+	@JoinColumn(name="id_local", nullable=false)
 	private Local local;
 	
 	public Factura() {}
