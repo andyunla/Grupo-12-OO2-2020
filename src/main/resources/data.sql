@@ -19,23 +19,23 @@ VALUES
 
 -- CLIENTES:
 INSERT INTO cliente 
-	(id, email, nro_cliente)
+	(id_cliente, email, nro_cliente)
 VALUES
 	(1, 'cliente1@email.com', 1),
 	(2, 'cliente2@email.com', 2),
 	(3, 'cliente3@email.com', 3);
 	
--- LOCAL (Los gerentes_idEmpleado se definen luego de cargar empleados)
+-- LOCAL (Los gerentes_id_empleado se definen luego de cargar empleados)
 INSERT INTO local
 	(nombre_local, latitud, longitud, direccion, telefono, gerente_id_empleado)
 VALUES 	
 	('Local 1', 100, 100, "Av. Local 1", 41111111, null),
 	('Local 2', 100, 200, "Av. Local 2", 42222222, null),
 	('Local 3', 100, 250, "Av. Local 3", 43333333, null);
-		
+
 -- EMPLEADOS:
 INSERT INTO empleado 
-	(id, legajo, horario_desde, horario_hasta, sueldo_basico, id_local, gerente_id_local)
+	(id_empleado, legajo, horario_desde, horario_hasta, sueldo_basico, id_local, gerente_id_local)
 VALUES
 	(4, 1, '08:00:00', '16:00:00', 30000, 1, null),	-- Empleados
 	(5, 2, '16:00:00', '20:00:00', 30000, 1, null),
@@ -48,9 +48,9 @@ VALUES
 	(12, 9, '10:00:00', '18:00:00', 80000, 3, 3);
 
 -- Definir gerentes de locales
-UPDATE local SET gerente_id_empleado = 1 WHERE id = 1;
-UPDATE local SET gerente_id_empleado = 2 WHERE id = 2;
-UPDATE local SET gerente_id_empleado = 3 WHERE id = 3;
+UPDATE local SET gerente_id_empleado = 1 WHERE id_local = 1;
+UPDATE local SET gerente_id_empleado = 2 WHERE id_local = 2;
+UPDATE local SET gerente_id_empleado = 3 WHERE id_local = 3;
 
 -- PRODUCTO
 INSERT INTO producto
