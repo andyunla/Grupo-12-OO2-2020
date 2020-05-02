@@ -1,7 +1,7 @@
 package com.sistema.application.models;
 
 public class ProductoModel {
-	private int id;
+	private long id;
 	private String nombre;
 	private String descripcion;
 	private double precio;
@@ -17,7 +17,7 @@ public class ProductoModel {
 		this.talle = talle;
 	}
 	
-	public ProductoModel(int id, String nombre, String descripcion, double precio, String talle) {
+	public ProductoModel(long id, String nombre, String descripcion, double precio, String talle) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -26,10 +26,10 @@ public class ProductoModel {
 		this.talle = talle;
 	}
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getNombre() {
