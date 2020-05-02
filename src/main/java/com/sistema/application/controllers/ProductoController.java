@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.sistema.application.models.ProductoModel;
 
 @Controller
-@RequestMapping("productos")
-public class ProductosController {
+@RequestMapping("producto")
+public class ProductoController {
 	
 	//Lista de productos que simula los datos en la base de datos
 	private List <ProductoModel> productos = new ArrayList <ProductoModel>( Arrays.asList(
@@ -37,7 +37,7 @@ public class ProductosController {
 		lastId++;
 		nuevoProducto.setId(lastId);
 		productos.add(nuevoProducto);
-        return "redirect:/productos";
+        return "redirect:/producto";
 	}
 	
 	@PostMapping("modificar")
@@ -51,7 +51,7 @@ public class ProductosController {
 		if(encontrado) {
 			productos.set(i-1, productoModificado);
 		}	// En caso de no encontrarlo implementar otra cosa
-        return "redirect:/productos";
+        return "redirect:/producto";
 	}
 	
 	@PostMapping("eliminar/{idProducto}")
@@ -65,6 +65,6 @@ public class ProductosController {
 		if(encontrado) {
 			productos.remove(i-1);
 		}	// En caso de no encontrarlo implementar otra cosa
-        return "redirect:/productos";
+        return "redirect:/producto";
 	}	
 }

@@ -9,7 +9,7 @@ public interface IClienteService {
 
 	public List<Cliente> getAll();
 	
-	public ClienteModel findById(int id);
+	//public ClienteModel findById(long id);
 	
 	public ClienteModel findByNroCliente(int nroCliente);
 	
