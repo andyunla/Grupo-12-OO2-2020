@@ -9,7 +9,7 @@ public class ProductoModel {
 	
 	public ProductoModel() {};
 	
-	public ProductoModel( String nombre, String descripcion, double precio, String talle) {
+	public ProductoModel(String nombre, String descripcion, double precio, String talle) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
