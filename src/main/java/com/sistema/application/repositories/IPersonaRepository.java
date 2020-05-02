@@ -12,7 +12,7 @@ import com.sistema.application.entities.Persona;
 
 @Repository("personaRepository")
 public interface IPersonaRepository extends JpaRepository<Persona, Serializable>{
-	public abstract Persona findById(long id);
+	public abstract Persona findByIdPersona(long id);
 	public abstract Persona findByDni(int dni);
 	public abstract Persona findByNombreAndApellido(String nombre, String apellido);
 	public abstract Persona findByFechaNacimiento(LocalDate fechaNacimiento);
