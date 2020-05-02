@@ -17,6 +17,7 @@ DROP SCHEMA IF EXISTS `Grupo-12-BDD-OO2-2020` ;
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `Grupo-12-BDD-OO2-2020` DEFAULT CHARACTER SET utf8 ;
 USE `Grupo-12-BDD-OO2-2020` ;
+SET GLOBAL time_zone = '-3:00';
 
 -- -----------------------------------------------------
 -- Table `Grupo-12-BDD-OO2-2020`.`persona`
