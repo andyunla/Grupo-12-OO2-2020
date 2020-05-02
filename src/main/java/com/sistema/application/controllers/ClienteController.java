@@ -30,7 +30,9 @@ public class ClienteController {
 	//Lista de clientes que simula los datos en la base de datos
 	private List <ClienteModel> clientes = new ArrayList <ClienteModel>( Arrays.asList(
 			new ClienteModel("Pepe", "Gonzales", LocalDate.of(2000, 1, 10), "pepe@mail.com", 1),
-			new ClienteModel("Juan", "Gomez", LocalDate.of(2001, 2, 20), "juan@mail.com", 2))
+			new ClienteModel("Juan", "Gomez", LocalDate.of(2001, 2, 20), "juan@mail.com", 2),
+			new ClienteModel("Juan", "Gomez", LocalDate.of(2001, 2, 20), "juan@mail.com", 3),
+			new ClienteModel("Juan", "Gomez", LocalDate.of(2001, 2, 20), "juan@mail.com", 4))
 			);
 	private int ultimoNroCliente = 2;
 	
