@@ -10,6 +10,12 @@ public class ClienteModel extends PersonaModel {
 	
 	public ClienteModel() {}
 	
+	public ClienteModel(long id, String nombre, String apellido, int dni, LocalDate fechaNacimiento, String email, int nroCliente) {
+		super(id, nombre, apellido, dni, fechaNacimiento);
+		this.email = email;
+		this.nroCliente = nroCliente;
+	}
+
 	public ClienteModel(String nombre, String apellido, int dni, LocalDate fechaNacimiento, String email, int nroCliente) {
 		super(nombre, apellido, dni, fechaNacimiento);
 		this.email = email;

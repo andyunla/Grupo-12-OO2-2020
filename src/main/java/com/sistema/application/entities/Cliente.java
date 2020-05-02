@@ -40,6 +40,12 @@ public class Cliente extends Persona implements Serializable {
 		this.email = email;
 	}
 
+	public Cliente(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, String email, int nroCliente) {
+		super(idPersona, nombre, apellido, dni, fechaNacimiento);
+		this.nroCliente = nroCliente;
+		this.email = email;
+	}
+
 	//Getters y Setters
 	public String getEmail() {
 		return email;

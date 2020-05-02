@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class PersonaModel {
+	private long id;
 	private String nombre;
 	private String apellido;
 	private int dni;
@@ -12,7 +13,16 @@ public class PersonaModel {
 	private LocalDate fechaNacimiento;
 	
 	public PersonaModel() {}
-	
+
+	public PersonaModel(long id, String nombre, String apellido, int dni, LocalDate fechaNacimiento) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.dni = dni;
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
 	public PersonaModel(String nombre, String apellido, int dni, LocalDate fechaNacimiento) {
 		super();
 		this.nombre = nombre;
@@ -28,6 +38,12 @@ public class PersonaModel {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 	
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 	public int getDni() {
 		return dni;
 	}
