@@ -7,15 +7,15 @@ import com.sistema.application.models.ClienteModel;
 
 public interface IClienteService {
 
-	public List<Person> getAll();
+	public List<Cliente> getAll();
 	
-	public PersonModel findById(int id);
+	public ClienteModel findById(int id);
 	
-	public PersonModel findByName(String name);
+	public ClienteModel findByNroCliente(int nroCliente);
 	
-	public PersonModel insertOrUpdate(PersonModel personModel);
+	public ClienteModel insertOrUpdate(ClienteModel clienteModel);
 	
 	public boolean remove(int id);
 	
-	public List<PersonModel> findByDegreeName(String degreeName);
+	public List<ClienteModel> findByNombreAndApellido(String nombre, String apellido);
 }

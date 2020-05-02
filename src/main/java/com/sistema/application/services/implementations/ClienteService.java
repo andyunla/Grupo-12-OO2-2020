@@ -1,4 +1,4 @@
-package com.sistema.application.services.implementation;
+package com.sistema.application.services.implementations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,14 +52,14 @@ public class ClienteService implements IClienteService {
 	}
 
 	@Override
-	public ClienteModel findByName(String name) {
-		return clienteConverter.entityToModel(clienteRepository.findByName(name));
+	public ClienteModel findByNroCliente(int nroCliente) {
+		return clienteConverter.entityToModel(clienteRepository.findByNroCliente(nroCliente));
 	}
 	
 	@Override
-	public List<ClienteModel> findByDegreeName(String degreeName) {
+	public List<ClienteModel> findByNombreAndApellido(String nombre, String apellido) {
 		List<ClienteModel> models = new ArrayList<ClienteModel>();
-		for (Cliente cliente : clienteRepository.findByDegreeName(degreeName)) {
+		for (Cliente cliente : clienteRepository.findByNombreAndApellido(nombre, apellido)) {
 			models.add(clienteConverter.entityToModel(cliente));
 		}
 		return models;
