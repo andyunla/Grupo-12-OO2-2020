@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ClienteModel;
 
 @Controller
@@ -29,7 +30,7 @@ public class ClientesController {
 		public String clientes(Model modelo) {
 			modelo.addAttribute("clientes", clientes);
 			modelo.addAttribute("cliente", new ClienteModel());
-			return "abm/clientes";
+			return ViewRouteHelper.CLIENTES;
 		}
 		
 		@PostMapping("agregar")

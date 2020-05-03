@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ProductoModel;
 
 @Controller
@@ -29,7 +30,7 @@ public class ProductosController {
 	public String productos(Model modelo) {
 		modelo.addAttribute("productos", productos);
 		modelo.addAttribute("producto", new ProductoModel());
-		return "abm/productos";
+		return ViewRouteHelper.PRODUCTOS;
 	}
 	
 	@PostMapping("agregar")
