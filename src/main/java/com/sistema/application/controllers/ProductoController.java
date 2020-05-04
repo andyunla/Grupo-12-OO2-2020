@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import services.IProductoService;
-
+import com.sistema.application.services.IProductoService;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ProductoModel;
 
 @Controller
 @RequestMapping("productos")
-public class ProductosController {
+public class ProductoController {
 	
 	@Autowired
 	@Qualifier("productoService")
@@ -27,6 +27,13 @@ public class ProductosController {
 	public String productos(Model modelo) {
 		modelo.addAttribute("productos", productoService.getAll());
 		modelo.addAttribute("producto", new ProductoModel());
+		/*
+		if(modelo.containsAttribute("operacionExitosa")) {
+			System.out.println(modelo.getAttribute("operacionExitosa"));
+		}else{
+			modelo.addAttribute("operacionExitosa", true);
+		}
+		*/
 		return ViewRouteHelper.PRODUCTOS;
 	}
 	
@@ -43,8 +50,9 @@ public class ProductosController {
 	}
 	
 	@PostMapping("eliminar/{idProducto}")
-	public String eliminarProducto(@PathVariable("idProducto") long idProducto) {
-		productoService.remove(idProducto);
+	public String eliminarProducto(@PathVariable("idProducto") long idProducto, RedirectAttributes redirectAttributes) {
+		boolean eliminado = productoService.remove(idProducto);
+		redirectAttributes.addFlashAttribute("productoEliminado", eliminado);
 		return "redirect:/productos";
 	}	
 }

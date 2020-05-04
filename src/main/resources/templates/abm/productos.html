@@ -63,12 +63,12 @@
                </div>
                <div class="form-group row">
                     <label for="precioNuevoProducto" class="col-md-2 col-3">Precio</label>
-                    <input type="number" step="0.01" class="form-control col-md-9 col-8" id="precioNuevoProducto"
+                    <input type="number" min="0" step="0.01" class="form-control col-md-9 col-8" id="precioNuevoProducto"
                          th:field="*{precio}" />
                </div>
                <div class="form-group row">
                     <label for="talleNuevoProducto" class="col-md-2 col-3">Talle</label>
-                    <input type="text" class="form-control col-sm-4 col-5" id="talleNuevoProducto"
+                    <input type="number" min="0" class="form-control col-sm-4 col-5" id="talleNuevoProducto"
                          th:field="*{talle}" />
                </div>
                <div class="text-center">
@@ -92,7 +92,7 @@
                     </thead>
                     <tbody>
                          <tr th:each="producto :${productos}">
-                              <td th:text="${producto.id}"></td>
+                              <td th:text="${producto.idProducto}"></td>
                               <td th:text="${producto.nombre}"></td>
                               <td th:text="${producto.descripcion}"></td>
                               <td th:text="${producto.precio}"></td>
@@ -105,7 +105,7 @@
                                                   th:attr="data-index=${productoStat.index}" />
                                         </a>
                                    </div>
-                                   <form th:action="@{/productos/eliminar/{idProducto}(idProducto = ${producto.id})}"
+                                   <form th:action="@{/productos/eliminar/{idProducto}(idProducto = ${producto.idProducto})}"
                                         method="POST" data-toggle="tooltip" data-placement="top" title="Eliminar">
                                         <button type="submit" class="delete-button">
                                              <img th:src="@{/images/trashcan.png}" alt=""
@@ -130,7 +130,7 @@
                          <div class="modal-body">
                               <form class="col-12 m-1 p-2 mx-auto bg-light rounded" action="#"
                                    th:action="@{/productos/modificar}" th:object="${producto}" method="post">
-                                   <input type="number" class="d-none" id="idModificarProducto" th:field="*{id}" />
+                                   <input type="number" class="d-none" id="idModificarProducto" th:field="*{idProducto}" />
                                    <div class="form-group row">
                                         <label for="nombreModificarProducto" class="col-sm-3 col-4">Nombre</label>
                                         <input type="text" class="form-control col-md-8  col-7"
@@ -144,12 +144,12 @@
                                    </div>
                                    <div class="form-group row">
                                         <label for="precioModificarProducto" class="col-sm-3 col-4">Precio</label>
-                                        <input type="number" step="0.01" class="form-control col-md-8 col-7"
+                                        <input type="number" step="0.01" min="0" class="form-control col-md-8 col-7"
                                              id="precioModificarProducto" th:field="*{precio}" />
                                    </div>
                                    <div class="form-group row">
                                         <label for="talleModificarProducto" class="col-sm-3 col-4">Talle</label>
-                                        <input type="text" class="form-control col-5" id="talleModificarProducto"
+                                        <input type="number" min="0" class="form-control col-5" id="talleModificarProducto"
                                              th:field="*{talle}" />
                                    </div>
                                    <div class="text-center">
@@ -164,13 +164,17 @@
      <script th:inline="javascript">
           /*<![CDATA[*/
           var products = /*[[${productos}]]*/'default';
+          var productoEliminado = /*[[${productoEliminado}]]*/ 'default';
           /*]]>*/
-          //Listener to modal's modify client
+          if(productoEliminado != null && !productoEliminado){
+               setTimeout(() => { alert("No se pudo eliminar producto"); }, 300);
+          }
+          //Listener to modal modify client
           let modifyButtons = document.querySelectorAll('.modifyButton');
           modifyButtons.forEach(button => button.addEventListener('click', event => {
                let productIndex = event.target.dataset.index;
-               document.getElementById('tituloModificarProducto').innerText = "Modificar Producto #" + products[productIndex].id;
-               document.getElementById("idModificarProducto").value = products[productIndex].id;
+               document.getElementById('tituloModificarProducto').innerText = "Modificar Producto #" + products[productIndex].idProducto;
+               document.getElementById("idModificarProducto").value = products[productIndex].idProducto;
                document.getElementById("nombreModificarProducto").value = products[productIndex].nombre;
                document.getElementById("descripcionModificarProducto").value = products[productIndex].descripcion;
                document.getElementById("precioModificarProducto").value = products[productIndex].precio;
