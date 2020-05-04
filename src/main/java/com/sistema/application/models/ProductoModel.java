@@ -1,36 +1,27 @@
 package com.sistema.application.models;
 
 public class ProductoModel {
-	private int id;
+	private long idProducto;
 	private String nombre;
 	private String descripcion;
 	private double precio;
-	private String talle;
+	private int talle;
 	
 	public ProductoModel() {};
 	
-	public ProductoModel( String nombre, String descripcion, double precio, String talle) {
-		super();
+	public ProductoModel(long idProducto, String nombre, String descripcion, double precio, int talle) {
+		this.idProducto = idProducto;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.precio = precio;
 		this.talle = talle;
 	}
 	
-	public ProductoModel(int id, String nombre, String descripcion, double precio, String talle) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.descripcion = descripcion;
-		this.precio = precio;
-		this.talle = talle;
+	public long getIdProducto() {
+		return idProducto;
 	}
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
+	public void setIdProducto(long idProducto) {
+		this.idProducto = idProducto;
 	}
 	public String getNombre() {
 		return nombre;
@@ -50,16 +41,16 @@ public class ProductoModel {
 	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
-	public String getTalle() {
+	public int getTalle() {
 		return talle;
 	}
-	public void setTalle(String talle) {
+	public void setTalle(int talle) {
 		this.talle = talle;
 	}
 
 	@Override
 	public String toString() {
-		return "ProductoModel [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precio=" + precio
+		return "ProductoModel [id=" + idProducto + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precio=" + precio
 				+ ", talle=" + talle + "]";
 	}
 	
