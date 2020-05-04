@@ -32,10 +32,10 @@
                               ABMs
                          </a>
                          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <a class="dropdown-item" th:href="@{/productos}">Productos</a>
+                              <a class="dropdown-item" th:href="@{/producto}">Productos</a>
                               <a class="dropdown-item" href="#">Locales</a>
                               <a class="dropdown-item" href="#">Empleados</a>
-                              <a class="dropdown-item" th:href="@{/clientes}">Clientes</a>
+                              <a class="dropdown-item" th:href="@{/cliente}">Clientes</a>
                          </div>
                     </li>
                </ul>
@@ -50,7 +50,7 @@
                Agregrar
           </button>
           <form class="col-11 col-sm-8 col-md-7 m-1 p-2 mx-auto bg-light rounded collapse" id="collapseForm" action="#"
-               th:action="@{/productos/agregar}" th:object="${producto}" method="post">
+               th:action="@{/producto/agregar}" th:object="${producto}" method="post">
                <div class="form-group row">
                     <label for="nombreNuevoProducto" class="col-md-2 col-3">Nombre</label>
                     <input type="text" class="form-control col-md-9 col-8" id="nombreNuevoProducto"
@@ -105,7 +105,7 @@
                                                   th:attr="data-index=${productoStat.index}" />
                                         </a>
                                    </div>
-                                   <form th:action="@{/productos/eliminar/{idProducto}(idProducto = ${producto.idProducto})}"
+                                   <form th:action="@{/producto/eliminar/{idProducto}(idProducto = ${producto.idProducto})}"
                                         method="POST" data-toggle="tooltip" data-placement="top" title="Eliminar">
                                         <button type="submit" class="delete-button">
                                              <img th:src="@{/images/trashcan.png}" alt=""
@@ -129,7 +129,7 @@
                          </div>
                          <div class="modal-body">
                               <form class="col-12 m-1 p-2 mx-auto bg-light rounded" action="#"
-                                   th:action="@{/productos/modificar}" th:object="${producto}" method="post">
+                                   th:action="@{/producto/modificar}" th:object="${producto}" method="post">
                                    <input type="number" class="d-none" id="idModificarProducto" th:field="*{idProducto}" />
                                    <div class="form-group row">
                                         <label for="nombreModificarProducto" class="col-sm-3 col-4">Nombre</label>

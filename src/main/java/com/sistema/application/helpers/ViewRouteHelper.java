@@ -4,9 +4,8 @@ public class ViewRouteHelper {
 	/**** Views ****/
 	//HOME
 	public final static String INDEX = "index";
-	// Products
-	public final static String PRODUCTOS = "abm/productos";
-	// Clients
-	public final static String CLIENTES = "abm/clientes";
+	//ABM
+	public final static String PRODUCTOS = "abm/producto";
+	public final static String CLIENTES = "abm/cliente";
 
 }

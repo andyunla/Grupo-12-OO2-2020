@@ -16,7 +16,7 @@ import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ProductoModel;
 
 @Controller
-@RequestMapping("productos")
+@RequestMapping("producto")
 public class ProductoController {
 	
 	@Autowired
@@ -40,19 +40,19 @@ public class ProductoController {
 	@PostMapping("agregar")
 	public String agregarProducto(@ModelAttribute("producto") ProductoModel nuevoProducto) {
 		productoService.insertOrUpdate(nuevoProducto);
-		return "redirect:/productos";
+		return "redirect:/producto";
 	}
 	
 	@PostMapping("modificar")
 	public String modificarProducto(@ModelAttribute("producto") ProductoModel productoModificado) {
 		productoService.insertOrUpdate(productoModificado);
-		return "redirect:/productos";
+		return "redirect:/producto";
 	}
 	
 	@PostMapping("eliminar/{idProducto}")
 	public String eliminarProducto(@PathVariable("idProducto") long idProducto, RedirectAttributes redirectAttributes) {
 		boolean eliminado = productoService.remove(idProducto);
 		redirectAttributes.addFlashAttribute("productoEliminado", eliminado);
-		return "redirect:/productos";
+		return "redirect:/producto";
 	}	
 }
