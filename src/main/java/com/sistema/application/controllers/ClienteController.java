@@ -17,8 +17,8 @@ import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ClienteModel;
 
 @Controller
-@RequestMapping("clientes")
-public class ClientesController {
+@RequestMapping("cliente")
+public class ClienteController {
 	//Lista de clientes que simula los datos en la base de datos
 		private List <ClienteModel> clientes = new ArrayList <ClienteModel>( Arrays.asList(
 				new ClienteModel(1234, "Pepe", "Gonzales", LocalDate.of(2000, 1, 10), "pepe@mail.com", 1),
@@ -38,12 +38,11 @@ public class ClientesController {
 			ultimoNroCliente++;
 			nuevoCliente.setNroCliente(ultimoNroCliente);
 			clientes.add(nuevoCliente);
-	        return "redirect:/clientes";
+	        return "redirect:/cliente";
 		}
 		
 		@PostMapping("modificar")
 		public String modificar(@ModelAttribute("cliente") ClienteModel clienteModificado) {
-			System.out.println("hola");
 			int i=0;
 			boolean encontrado = false;
 			while(i < clientes.size() && !encontrado) {
@@ -53,7 +52,7 @@ public class ClientesController {
 			if(encontrado) {
 				clientes.set(i-1, clienteModificado);
 			}	// En caso de no encontrarlo implementar otra cosa
-	        return "redirect:/clientes";
+	        return "redirect:/cliente";
 		}
 		
 		@PostMapping("eliminar/{nroCliente}")
@@ -67,6 +66,6 @@ public class ClientesController {
 			if(encontrado) {
 				clientes.remove(i-1);
 			}	// En caso de no poder implementar otra cosa
-	        return "redirect:/clientes";
+	        return "redirect:/cliente";
 		}
 }

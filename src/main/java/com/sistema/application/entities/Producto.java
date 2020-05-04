@@ -57,6 +57,15 @@ public class Producto implements Serializable {
 		this.talle = talle;
 	}
 
+	//Constructor usado por el converter
+	public Producto(long idProducto, String nombre, String descripcion, double precio, int talle) {
+		this.idProducto = idProducto;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.talle = talle;
+	}
+
 	//Getters y Setters
 	public long getIdProducto() {
 		return idProducto;
