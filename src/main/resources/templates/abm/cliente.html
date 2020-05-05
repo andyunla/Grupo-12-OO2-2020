@@ -175,7 +175,10 @@
 		/*]]>*/
 			//Listener to modal's modify client
 			let modifyButtons = document.querySelectorAll('.modifyButton');
+               console.log("se cargo hasta aca");
 			modifyButtons.forEach(button => button.addEventListener('click', event => {
+                    console.log("click");
+
                     let clientIndex = event.target.dataset.index;
                     document.getElementById('tituloModificarCliente').innerText = "Modificar Cliente #" + clients[clientIndex].nroCliente;
 				document.getElementById("nroClienteModificar").value = clients[clientIndex].nroCliente;
