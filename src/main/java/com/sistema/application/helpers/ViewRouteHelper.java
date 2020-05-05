@@ -3,7 +3,7 @@ package com.sistema.application.helpers;
 public class ViewRouteHelper {
 	/**** Views ****/
 	// HOME
-	public final static String INDEX = "home/index";
+	public final static String INDEX = "index";
 
 	// ABMs
 	public final static String CLIENTE_ABM = "abm/clientes";

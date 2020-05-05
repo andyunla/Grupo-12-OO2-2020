@@ -13,7 +13,7 @@
 
 <body class="container-fluid m-0 p-0">
      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-          <a class="navbar-brand" href="#">
+          <a class="navbar-brand" th:href="@{/}">
                <img th:src="@{/images/unla.png}" width="35" height="35" class="d-inline-block align-top" alt="" />
                UNLa Stock
           </a>
@@ -50,7 +50,7 @@
                Agregrar
           </button>
           <form class="col-11 col-sm-8 col-md-7 m-1 p-2 mx-auto bg-light rounded collapse" id="collapseForm" action="#"
-               th:action="@{/clientes/agregar}" th:object="${cliente}" method="post">
+               th:action="@{/cliente/agregar}" th:object="${cliente}" method="post">
                <div class="form-group row">
                     <label for="nombreNuevoCliente" class="col-md-2 col-3">Nombre</label>
                     <input type="text" class="form-control col-md-9 col-8" id="nombreNuevoCliente"
@@ -108,7 +108,7 @@
                                    </a>
                               </td>
                               <td>
-                                   <form th:action="@{/clientes/eliminar/{nroCliente}(nroCliente = ${cliente.nroCliente})}" method="POST" 
+                                   <form th:action="@{/cliente/eliminar/{nroCliente}(nroCliente = ${cliente.nroCliente})}" method="POST" 
                                    		data-toggle="tooltip" data-placement="top" title="Eliminar">
                                         <button type="submit" class="delete-button">
                                         	<img th:src="@{/images/trashcan.png}" alt="" class="list-icon delete-icon" />
@@ -131,7 +131,7 @@
                          </div>
                          <div class="modal-body">
                               <form class="col-12 m-1 p-2 mx-auto bg-light rounded" action="#"
-                                   th:action="@{/clientes/modificar}" th:object="${cliente}" method="post">
+                                   th:action="@{/cliente/modificar}" th:object="${cliente}" method="post">
                                    <input type="number" class="d-none" id="nroClienteModificar" th:field="*{nroCliente}" />
                                    <div class="form-group row">
                                         <label for="nombreModificarCliente" class="col-sm-3 col-4">Nombre</label>

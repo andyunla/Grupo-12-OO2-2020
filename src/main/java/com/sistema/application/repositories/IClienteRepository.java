@@ -15,4 +15,5 @@ public interface IClienteRepository extends JpaRepository<Cliente, Serializable>
 	//public abstract Cliente findById(long id);
 	public abstract Cliente findByNroCliente(int nroCliente);
 	public abstract List<Cliente> findByNombreAndApellido(String nombre, String apellido);
+	public abstract Cliente findByEmail(String email);
 }

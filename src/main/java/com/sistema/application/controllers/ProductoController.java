@@ -66,5 +66,5 @@ public class ProductoController {
 			productos.remove(i-1);
 		}	// En caso de no encontrarlo implementar otra cosa
         return "redirect:/producto";
-	}	
+	}
 }
