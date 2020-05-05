@@ -20,8 +20,8 @@ public class ProductoController {
 	
 	//Lista de productos que simula los datos en la base de datos
 	private List <ProductoModel> productos = new ArrayList <ProductoModel>( Arrays.asList(
-			new ProductoModel(1, "Zapato", "De cuero", 1500, "40"),
-			new ProductoModel(2, "Otro Zapato", "Zafa", 900, "42"))
+			new ProductoModel(1, "Zapato", "De cuero", 1500, 40),
+			new ProductoModel(2, "Otro Zapato", "Zafa", 900, 42))
 			);
 	private int lastId = 2;
 	
@@ -35,7 +35,7 @@ public class ProductoController {
 	@PostMapping("agregar")
 	public String agregarProducto(@ModelAttribute("producto") ProductoModel nuevoProducto) {
 		lastId++;
-		nuevoProducto.setId(lastId);
+		nuevoProducto.setIdProducto(lastId);
 		productos.add(nuevoProducto);
         return "redirect:/producto";
 	}
@@ -45,7 +45,7 @@ public class ProductoController {
 		int i=0;
 		boolean encontrado = false;
 		while(i < productos.size() && !encontrado) {
-			encontrado = productos.get(i).getId() == productoModificado.getId();
+			encontrado = productos.get(i).getIdProducto() == productoModificado.getIdProducto();
 			i++;
 		}
 		if(encontrado) {
@@ -59,7 +59,7 @@ public class ProductoController {
 		int i=0;
 		boolean encontrado = false;
 		while(i < productos.size() && !encontrado) {
-			encontrado = productos.get(i).getId() == idProducto;
+			encontrado = productos.get(i).getIdProducto() == idProducto;
 			i++;
 		}
 		if(encontrado) {

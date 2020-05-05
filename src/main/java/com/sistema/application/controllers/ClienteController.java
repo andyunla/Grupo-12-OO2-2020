@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ClienteModel;
+import com.sistema.application.services.IClienteService;
 
 @Controller
 @RequestMapping("cliente")
@@ -25,8 +28,8 @@ public class ClienteController {
 
 	//Lista de clientes que simula los datos en la base de datos
 	private List <ClienteModel> clientes = new ArrayList <ClienteModel>( Arrays.asList(
-			new ClienteModel(1234, "Pepe", "Gonzales", LocalDate.of(2000, 1, 10), "pepe@mail.com", 1),
-			new ClienteModel(1235, "Juan", "Gomez", LocalDate.of(2001, 2, 20), "juan@mail.com", 2))
+			new ClienteModel("Pepe", "Gonzales", 11111111, LocalDate.of(2000, 1, 10), "pepe@mail.com", 1),
+			new ClienteModel("Juan", "Gomez", 22222222, LocalDate.of(2001, 2, 20), "juan@mail.com", 2))
 			);
 	private int ultimoNroCliente = 2;
 	
@@ -34,7 +37,7 @@ public class ClienteController {
 	public String clientes(Model modelo) {
 		modelo.addAttribute("clientes", clienteService.getAll());
 		modelo.addAttribute("cliente", new ClienteModel());
-		return ViewRouteHelper.CLIENTES;
+		return ViewRouteHelper.CLIENTE_ABM;
 	}
 	
 	@PostMapping("agregar")
