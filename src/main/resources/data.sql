@@ -19,7 +19,7 @@ VALUES
 
 -- CLIENTES:
 INSERT INTO cliente 
-	(id_cliente, email, nro_cliente)
+	(id_persona, email, nro_cliente)
 VALUES
 	(1, 'cliente1@email.com', 1),
 	(2, 'cliente2@email.com', 2),
@@ -34,8 +34,8 @@ VALUES
 	('Local 3', 100, 250, "Av. Local 3", 43333333, null);
 
 -- EMPLEADOS:
-INSERT INTO empleado 
-	(id_empleado, legajo, horario_desde, horario_hasta, sueldo_basico, id_local, gerente_id_local)
+INSERT INTO empleado
+	(id_persona, legajo, horario_desde, horario_hasta, sueldo_basico, id_local, gerente_id_local)
 VALUES
 	(4, 1, '08:00:00', '16:00:00', 30000, 1, null),	-- Empleados
 	(5, 2, '16:00:00', '20:00:00', 30000, 1, null),
