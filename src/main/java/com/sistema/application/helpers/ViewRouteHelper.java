@@ -6,9 +6,9 @@ public class ViewRouteHelper {
 	public final static String INDEX = "index";
 
 	// ABMs
-	public final static String CLIENTE_ABM = "abm/clientes";
-	public final static String EMPLEADO_ABM = "abm/empleados";
-	public final static String PRODUCTO_ABM = "abm/productos";
+	public final static String CLIENTE_ABM = "abm/cliente";
+	public final static String EMPLEADO_ABM = "abm/empleado";
+	public final static String PRODUCTO_ABM = "abm/producto";
 
 	/**** Redirects ****/
 	public final static String HOME_ROOT = "index";
