@@ -26,8 +26,13 @@ public class ClienteService implements IClienteService {
 	private ClienteConverter clienteConverter;
 	
 	@Override
-	public List<Cliente> getAll() {
-		return clienteRepository.findAll();
+	public List<ClienteModel> getAll() {
+		List <ClienteModel> clientes = new ArrayList <ClienteModel>();
+		for(Cliente c: clienteRepository.findAll()){
+			ClienteModel cm = clienteConverter.entityToModel(c);
+			clientes.add(cm);
+		}
+		return clientes;
 	}
 
 	@Override

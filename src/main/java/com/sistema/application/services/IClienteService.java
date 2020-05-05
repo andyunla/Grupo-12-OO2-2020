@@ -7,7 +7,7 @@ import com.sistema.application.models.ClienteModel;
 
 public interface IClienteService {
 
-	public List<Cliente> getAll();
+	public List<ClienteModel> getAll();
 	
 	//public ClienteModel findById(long id);
 	

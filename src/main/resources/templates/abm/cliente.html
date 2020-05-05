@@ -91,7 +91,6 @@
                               <th scope="col">Email</th>
                               <th scope="col">Nro. Cliente</th>
                               <th scope="col"></th>
-                              <th scope="col"></th>
                          </tr>
                     </thead>
                     <tbody>
@@ -102,14 +101,15 @@
                               <td th:text="${cliente.fechaNacimiento}"></td>
                               <td th:text="${cliente.email}"></td>
                               <td th:text="${cliente.nroCliente}"></td>
-                              <td data-toggle="tooltip" data-placement="top" title="Modificar">
-                                   <a href="#" data-toggle="modal" data-target="#modifyClient" class="modifyButton">
-                                        <img th:src="@{/images/pencil.png}" alt="" class="list-icon edit-icon"
-                                             th:attr="data-index=${clienteStat.index}" />
-                                   </a>
-                              </td>
-                              <td>
-                                   <form th:action="@{/cliente/eliminar/{nroCliente}(nroCliente = ${cliente.nroCliente})}"
+                              <td class="d-flex justify-content-around">
+                                   <div data-toggle="tooltip" data-placement="top" title="Modificar">
+                                        <a href="#" data-toggle="modal" data-target="#modifyProduct"
+                                             class="modifyButton">
+                                             <img th:src="@{/images/pencil.png}" alt="" class="list-icon edit-icon"
+                                                  th:attr="data-index=${clienteStat.index}" />
+                                        </a>
+                                   </div>
+                                   <form th:action="@{/producto/eliminar/{nroCliente}(nroCliente = ${cliente.nroCliente})}"
                                         method="POST" data-toggle="tooltip" data-placement="top" title="Eliminar">
                                         <button type="submit" class="delete-button">
                                              <img th:src="@{/images/trashcan.png}" alt=""
@@ -172,15 +172,12 @@
           </div>
      </main>
      <script th:inline="javascript">
-          console.log("se cargo hasta aca 1");
           /*<![CDATA[*/
           var clients = /*[[${clientes}]]*/'default';
           /*]]>*/
           //Listener to modal's modify client
           let modifyButtons = document.querySelectorAll('.modifyButton');
-          console.log("se cargo hasta aca");
           modifyButtons.forEach(button => button.addEventListener('click', event => {
-               console.log("click");
                let clientIndex = event.target.dataset.index;
                document.getElementById('tituloModificarCliente').innerText = "Modificar Cliente #" + clients[clientIndex].nroCliente;
                document.getElementById("nroClienteModificar").value = clients[clientIndex].nroCliente;
