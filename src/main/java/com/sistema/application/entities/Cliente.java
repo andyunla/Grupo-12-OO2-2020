@@ -39,7 +39,7 @@ public class Cliente extends Persona implements Serializable {
 		this.nroCliente = nroCliente;
 		this.email = email;
 	}
-
+	
 	//Getters y Setters
 	public String getEmail() {
 		return email;

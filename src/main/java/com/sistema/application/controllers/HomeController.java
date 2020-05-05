@@ -17,8 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.sistema.application.helpers.ViewRouteHelper;
-// import com.sistema.application.models.DegreeModel;
-
 
 @Controller
 @RequestMapping("/")
@@ -26,7 +24,7 @@ public class HomeController {
 
 	@GetMapping("/")
 	public RedirectView redirectToHomeIndex() {
-		return new RedirectView(ViewRouteHelper.INDEX);
+		return new RedirectView(ViewRouteHelper.HOME_ROOT);
 	}
 
 	//GET Example: SERVER/index

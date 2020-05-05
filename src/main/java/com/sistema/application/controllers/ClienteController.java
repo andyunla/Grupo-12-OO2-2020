@@ -19,53 +19,57 @@ import com.sistema.application.models.ClienteModel;
 @Controller
 @RequestMapping("cliente")
 public class ClienteController {
+	@Autowired
+	@Qualifier("clienteService")
+	private IClienteService clienteService;
+
 	//Lista de clientes que simula los datos en la base de datos
-		private List <ClienteModel> clientes = new ArrayList <ClienteModel>( Arrays.asList(
-				new ClienteModel(1234, "Pepe", "Gonzales", LocalDate.of(2000, 1, 10), "pepe@mail.com", 1),
-				new ClienteModel(1235, "Juan", "Gomez", LocalDate.of(2001, 2, 20), "juan@mail.com", 2))
-				);
-		private int ultimoNroCliente = 2;
-		
-		@GetMapping("")
-		public String clientes(Model modelo) {
-			modelo.addAttribute("clientes", clientes);
-			modelo.addAttribute("cliente", new ClienteModel());
-			return ViewRouteHelper.CLIENTES;
+	private List <ClienteModel> clientes = new ArrayList <ClienteModel>( Arrays.asList(
+			new ClienteModel(1234, "Pepe", "Gonzales", LocalDate.of(2000, 1, 10), "pepe@mail.com", 1),
+			new ClienteModel(1235, "Juan", "Gomez", LocalDate.of(2001, 2, 20), "juan@mail.com", 2))
+			);
+	private int ultimoNroCliente = 2;
+	
+	@GetMapping("")
+	public String clientes(Model modelo) {
+		modelo.addAttribute("clientes", clienteService.getAll());
+		modelo.addAttribute("cliente", new ClienteModel());
+		return ViewRouteHelper.CLIENTES;
+	}
+	
+	@PostMapping("agregar")
+	public String agregar(@ModelAttribute("cliente") ClienteModel nuevoCliente) {
+		ultimoNroCliente++;
+		nuevoCliente.setNroCliente(ultimoNroCliente);
+		clientes.add(nuevoCliente);
+		return "redirect:/cliente";
+	}
+	
+	@PostMapping("modificar")
+	public String modificar(@ModelAttribute("cliente") ClienteModel clienteModificado) {
+		int i=0;
+		boolean encontrado = false;
+		while(i < clientes.size() && !encontrado) {
+			encontrado = clientes.get(i).getNroCliente() == clienteModificado.getNroCliente();
+			i++;
 		}
-		
-		@PostMapping("agregar")
-		public String agregar(@ModelAttribute("cliente") ClienteModel nuevoCliente) {
-			ultimoNroCliente++;
-			nuevoCliente.setNroCliente(ultimoNroCliente);
-			clientes.add(nuevoCliente);
-	        return "redirect:/cliente";
+		if(encontrado) {
+			clientes.set(i-1, clienteModificado);
+		}	// En caso de no encontrarlo implementar otra cosa
+		return "redirect:/cliente";
+	}
+	
+	@PostMapping("eliminar/{nroCliente}")
+	public String eliminar(@PathVariable("nroCliente") int nroCliente) {
+		int i=0;
+		boolean encontrado = false;
+		while(i < clientes.size() && !encontrado) {
+			encontrado = clientes.get(i).getNroCliente() == nroCliente;
+			i++;
 		}
-		
-		@PostMapping("modificar")
-		public String modificar(@ModelAttribute("cliente") ClienteModel clienteModificado) {
-			int i=0;
-			boolean encontrado = false;
-			while(i < clientes.size() && !encontrado) {
-				encontrado = clientes.get(i).getNroCliente() == clienteModificado.getNroCliente();
-				i++;
-			}
-			if(encontrado) {
-				clientes.set(i-1, clienteModificado);
-			}	// En caso de no encontrarlo implementar otra cosa
-	        return "redirect:/cliente";
-		}
-		
-		@PostMapping("eliminar/{nroCliente}")
-		public String eliminar(@PathVariable("nroCliente") int nroCliente) {
-			int i=0;
-			boolean encontrado = false;
-			while(i < clientes.size() && !encontrado) {
-				encontrado = clientes.get(i).getNroCliente() == nroCliente;
-				i++;
-			}
-			if(encontrado) {
-				clientes.remove(i-1);
-			}	// En caso de no poder implementar otra cosa
-	        return "redirect:/cliente";
-		}
+		if(encontrado) {
+			clientes.remove(i-1);
+		}	// En caso de no poder implementar otra cosa
+		return "redirect:/cliente";
+	}
 }

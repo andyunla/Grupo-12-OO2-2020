@@ -1,7 +1,9 @@
 package com.sistema.application.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,50 +11,60 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.sistema.application.services.IProductoService;
-import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ProductoModel;
 
 @Controller
 @RequestMapping("producto")
 public class ProductoController {
 	
-	@Autowired
-	@Qualifier("productoService")
-	private IProductoService productoService;
-
+	//Lista de productos que simula los datos en la base de datos
+	private List <ProductoModel> productos = new ArrayList <ProductoModel>( Arrays.asList(
+			new ProductoModel(1, "Zapato", "De cuero", 1500, "40"),
+			new ProductoModel(2, "Otro Zapato", "Zafa", 900, "42"))
+			);
+	private int lastId = 2;
+	
 	@GetMapping("")
 	public String productos(Model modelo) {
-		modelo.addAttribute("productos", productoService.getAll());
+		modelo.addAttribute("productos", productos);
 		modelo.addAttribute("producto", new ProductoModel());
-		/*
-		if(modelo.containsAttribute("operacionExitosa")) {
-			System.out.println(modelo.getAttribute("operacionExitosa"));
-		}else{
-			modelo.addAttribute("operacionExitosa", true);
-		}
-		*/
-		return ViewRouteHelper.PRODUCTOS;
+		return "abm/productos";
 	}
 	
 	@PostMapping("agregar")
 	public String agregarProducto(@ModelAttribute("producto") ProductoModel nuevoProducto) {
-		productoService.insertOrUpdate(nuevoProducto);
-		return "redirect:/producto";
+		lastId++;
+		nuevoProducto.setId(lastId);
+		productos.add(nuevoProducto);
+        return "redirect:/producto";
 	}
 	
 	@PostMapping("modificar")
 	public String modificarProducto(@ModelAttribute("producto") ProductoModel productoModificado) {
-		productoService.insertOrUpdate(productoModificado);
-		return "redirect:/producto";
+		int i=0;
+		boolean encontrado = false;
+		while(i < productos.size() && !encontrado) {
+			encontrado = productos.get(i).getId() == productoModificado.getId();
+			i++;
+		}
+		if(encontrado) {
+			productos.set(i-1, productoModificado);
+		}	// En caso de no encontrarlo implementar otra cosa
+        return "redirect:/producto";
 	}
 	
 	@PostMapping("eliminar/{idProducto}")
-	public String eliminarProducto(@PathVariable("idProducto") long idProducto, RedirectAttributes redirectAttributes) {
-		boolean eliminado = productoService.remove(idProducto);
-		redirectAttributes.addFlashAttribute("productoEliminado", eliminado);
-		return "redirect:/producto";
-	}	
+	public String eliminarProducto(@PathVariable("idProducto") int idProducto) {
+		int i=0;
+		boolean encontrado = false;
+		while(i < productos.size() && !encontrado) {
+			encontrado = productos.get(i).getId() == idProducto;
+			i++;
+		}
+		if(encontrado) {
+			productos.remove(i-1);
+		}	// En caso de no encontrarlo implementar otra cosa
+        return "redirect:/producto";
+	}
 }

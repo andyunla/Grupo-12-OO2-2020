@@ -8,7 +8,7 @@ public class ProductoModel {
 	private int talle;
 	
 	public ProductoModel() {};
-	
+
 	public ProductoModel(long idProducto, String nombre, String descripcion, double precio, int talle) {
 		this.idProducto = idProducto;
 		this.nombre = nombre;
@@ -17,6 +17,15 @@ public class ProductoModel {
 		this.talle = talle;
 	}
 	
+	public ProductoModel(long id, String nombre, String descripcion, double precio, String talle) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.talle = talle;
+	}
+
 	public long getIdProducto() {
 		return idProducto;
 	}
