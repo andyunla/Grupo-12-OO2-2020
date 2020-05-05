@@ -68,7 +68,7 @@
                </div>
                <div class="form-group row">
                     <label for="dniNuevoCliente" class="col-md-2 col-3">DNI</label>
-                    <input type="text" class="form-control col-sm-4 col-5" id="dniNuevoCliente" th:field="*{dni}" />
+                    <input type="number" class="form-control col-sm-4 col-5" id="dniNuevoCliente" th:field="*{dni}" />
                </div>
                <div class="form-group row">
                     <label for="fechaNacNuevoCliente" class="col-md-2 col-3">Fecha de Nac.</label>
@@ -104,14 +104,16 @@
                               <td th:text="${cliente.nroCliente}"></td>
                               <td data-toggle="tooltip" data-placement="top" title="Modificar">
                                    <a href="#" data-toggle="modal" data-target="#modifyClient" class="modifyButton">
-                                        <img th:src="@{/images/pencil.png}" alt="" class="list-icon edit-icon" th:attr="data-index=${clienteStat.index}" />
+                                        <img th:src="@{/images/pencil.png}" alt="" class="list-icon edit-icon"
+                                             th:attr="data-index=${clienteStat.index}" />
                                    </a>
                               </td>
                               <td>
-                                   <form th:action="@{/cliente/eliminar/{nroCliente}(nroCliente = ${cliente.nroCliente})}" method="POST" 
-                                   		data-toggle="tooltip" data-placement="top" title="Eliminar">
+                                   <form th:action="@{/cliente/eliminar/{nroCliente}(nroCliente = ${cliente.nroCliente})}"
+                                        method="POST" data-toggle="tooltip" data-placement="top" title="Eliminar">
                                         <button type="submit" class="delete-button">
-                                        	<img th:src="@{/images/trashcan.png}" alt="" class="list-icon delete-icon" />
+                                             <img th:src="@{/images/trashcan.png}" alt=""
+                                                  class="list-icon delete-icon" />
                                         </button>
                                    </form>
                               </td>
@@ -132,7 +134,8 @@
                          <div class="modal-body">
                               <form class="col-12 m-1 p-2 mx-auto bg-light rounded" action="#"
                                    th:action="@{/cliente/modificar}" th:object="${cliente}" method="post">
-                                   <input type="number" class="d-none" id="nroClienteModificar" th:field="*{nroCliente}" />
+                                   <input type="number" class="d-none" id="nroClienteModificar"
+                                        th:field="*{nroCliente}" />
                                    <div class="form-group row">
                                         <label for="nombreModificarCliente" class="col-sm-3 col-4">Nombre</label>
                                         <input type="text" class="form-control col-md-8  col-7"
@@ -150,14 +153,14 @@
                                    </div>
                                    <div class="form-group row">
                                         <label for="dnimodificarCliente" class="col-sm-3 col-4">DNI</label>
-                                        <input type="text" class="form-control col-5" id="dnimodificarCliente"
+                                        <input type="number" class="form-control col-5" id="dnimodificarCliente"
                                              th:field="*{dni}" />
                                    </div>
                                    <div class="form-group row">
                                         <label for="fechaDeNacmodificarCliente" class="col-sm-3 col-4">Fecha de
                                              Nac.</label>
-                                        <input type="date" class="form-control col-5"
-                                             id="fechaDeNacmodificarCliente" th:field="*{fechaNacimiento}" />
+                                        <input type="date" class="form-control col-5" id="fechaDeNacmodificarCliente"
+                                             th:field="*{fechaNacimiento}" />
                                    </div>
                                    <div class="text-center">
                                         <button type="submit" class="btn btn-primary">Guardar</button>
@@ -168,27 +171,26 @@
                </div>
           </div>
      </main>
-     <!-- BOOTSTRAP Scripts -->
      <script th:inline="javascript">
-		/*<![CDATA[*/
-			var clients = /*[[${clientes}]]*/'default';
-		/*]]>*/
-			//Listener to modal's modify client
-			let modifyButtons = document.querySelectorAll('.modifyButton');
-               console.log("se cargo hasta aca");
-			modifyButtons.forEach(button => button.addEventListener('click', event => {
-                    console.log("click");
-
-                    let clientIndex = event.target.dataset.index;
-                    document.getElementById('tituloModificarCliente').innerText = "Modificar Cliente #" + clients[clientIndex].nroCliente;
-				document.getElementById("nroClienteModificar").value = clients[clientIndex].nroCliente;
-				document.getElementById("nombreModificarCliente").value = clients[clientIndex].nombre;
-				document.getElementById("apellidomodificarCliente").value = clients[clientIndex].apellido;
-				document.getElementById("emailmodificarCliente").value = clients[clientIndex].email;
-				document.getElementById("dnimodificarCliente").value = clients[clientIndex].dni;
-				document.getElementById("fechaDeNacmodificarCliente").value = clients[clientIndex].fechaNacimiento;
-			}));
-	</script>
+          console.log("se cargo hasta aca 1");
+          /*<![CDATA[*/
+          var clients = /*[[${clientes}]]*/'default';
+          /*]]>*/
+          //Listener to modal's modify client
+          let modifyButtons = document.querySelectorAll('.modifyButton');
+          console.log("se cargo hasta aca");
+          modifyButtons.forEach(button => button.addEventListener('click', event => {
+               console.log("click");
+               let clientIndex = event.target.dataset.index;
+               document.getElementById('tituloModificarCliente').innerText = "Modificar Cliente #" + clients[clientIndex].nroCliente;
+               document.getElementById("nroClienteModificar").value = clients[clientIndex].nroCliente;
+               document.getElementById("nombreModificarCliente").value = clients[clientIndex].nombre;
+               document.getElementById("apellidomodificarCliente").value = clients[clientIndex].apellido;
+               document.getElementById("emailmodificarCliente").value = clients[clientIndex].email;
+               document.getElementById("dnimodificarCliente").value = clients[clientIndex].dni;
+               document.getElementById("fechaDeNacmodificarCliente").value = clients[clientIndex].fechaNacimiento;
+          }));
+     </script>
      <script th:src="@{/js/abm.js}"></script>
      <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
           integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
