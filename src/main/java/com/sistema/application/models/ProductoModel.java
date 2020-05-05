@@ -17,15 +17,6 @@ public class ProductoModel {
 		this.talle = talle;
 	}
 	
-	public ProductoModel(long id, String nombre, String descripcion, double precio, String talle) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.descripcion = descripcion;
-		this.precio = precio;
-		this.talle = talle;
-	}
-
 	public long getIdProducto() {
 		return idProducto;
 	}
