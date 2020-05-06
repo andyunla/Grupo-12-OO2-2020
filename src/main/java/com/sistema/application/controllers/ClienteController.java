@@ -51,15 +51,7 @@ public class ClienteController {
 	
 	@PostMapping("modificar")
 	public String modificar(@ModelAttribute("cliente") ClienteModel clienteModificado) {
-		int i=0;
-		boolean encontrado = false;
-		while(i < clientes.size() && !encontrado) {
-			encontrado = clientes.get(i).getNroCliente() == clienteModificado.getNroCliente();
-			i++;
-		}
-		if(encontrado) {
-			clientes.set(i-1, clienteModificado);
-		}	// En caso de no encontrarlo implementar otra cosa
+		clienteService.insertOrUpdate(clienteModificado);
 		return "redirect:/cliente";
 	}
 	
