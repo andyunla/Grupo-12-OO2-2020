@@ -43,9 +43,9 @@ public class ClienteController {
 	
 	@PostMapping("agregar")
 	public String agregar(@ModelAttribute("cliente") ClienteModel nuevoCliente) {
-		ultimoNroCliente++;
+		ultimoNroCliente++; // DEBUG: Cambiar lógica apropiada
 		nuevoCliente.setNroCliente(ultimoNroCliente);
-		clientes.add(nuevoCliente);
+		clienteService.insertOrUpdate(nuevoCliente);
 		return "redirect:/cliente";
 	}
 	
