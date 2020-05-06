@@ -84,6 +84,7 @@
                <table class="table w-100 shadow mb-3 bg-white rounded">
                     <thead class="thead-dark">
                          <tr>
+                              <th scope="col">ID</th>
                               <th scope="col">DNI</th>
                               <th scope="col">Nombre</th>
                               <th scope="col">Apellido</th>
@@ -95,6 +96,7 @@
                     </thead>
                     <tbody>
                          <tr th:each="cliente :${clientes}">
+                              <td th:text="${cliente.id}"></td>
                               <td th:text="${cliente.dni}"></td>
                               <td th:text="${cliente.nombre}"></td>
                               <td th:text="${cliente.apellido}"></td>
@@ -109,7 +111,7 @@
                                                   th:attr="data-index=${clienteStat.index}" />
                                         </a>
                                    </div>
-                                   <form th:action="@{/cliente/eliminar/{nroCliente}(nroCliente = ${cliente.nroCliente})}"
+                                   <form th:action="@{/cliente/eliminar/{id}(id = ${cliente.id})}"
                                         method="POST" data-toggle="tooltip" data-placement="top" title="Eliminar">
                                         <button type="submit" class="delete-button">
                                              <img th:src="@{/images/trashcan.png}" alt=""

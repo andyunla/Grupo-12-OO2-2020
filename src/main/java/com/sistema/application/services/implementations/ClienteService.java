@@ -44,9 +44,18 @@ public class ClienteService implements IClienteService {
 	@Override
 	public boolean remove(int id) {
 		try {
-			clienteRepository.deleteById(id);
+			List<Cliente> clientes = clienteRepository.findAll();
+			Cliente cliente = null;
+			int i = 0;
+			while(cliente == null && i < clientes.size()) {
+				if(clientes.get(i).getIdPersona() == id) {
+					cliente = clientes.get(i);
+				}
+				i++;
+			}
+			clienteRepository.delete(cliente);
 			return true;
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}
