@@ -109,7 +109,7 @@
                                                   th:attr="data-index=${clienteStat.index}" />
                                         </a>
                                    </div>
-                                   <form th:action="@{/producto/eliminar/{nroCliente}(nroCliente = ${cliente.nroCliente})}"
+                                   <form th:action="@{/cliente/eliminar/{nroCliente}(nroCliente = ${cliente.nroCliente})}"
                                         method="POST" data-toggle="tooltip" data-placement="top" title="Eliminar">
                                         <button type="submit" class="delete-button">
                                              <img th:src="@{/images/trashcan.png}" alt=""
