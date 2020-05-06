@@ -176,6 +176,11 @@
      <script th:inline="javascript">
           /*<![CDATA[*/
           var clients = /*[[${clientes}]]*/'default';
+          var clienteEliminado = /*[[${clienteEliminado}]]*/ 'default';
+          /*]]>*/
+          if(clienteEliminado != null && !clienteEliminado){
+               setTimeout(() => { alert("No se pudo eliminar el cliente"); }, 300);
+          }
           /*]]>*/
           //Listener to modal's modify client
           let modifyButtons = document.querySelectorAll('.modifyButton');
