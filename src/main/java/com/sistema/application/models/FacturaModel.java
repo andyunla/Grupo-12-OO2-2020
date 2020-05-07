@@ -11,27 +11,28 @@ public class FacturaModel {
 	//Atributos
 	private long idFactura;
 	private ClienteModel cliente;
-	private ChangoModel chango;
+	private long idChango;
 	private LocalDate fechaFactura;
 	private double costeTotal;
-	private EmpleadoModel empleado;
+	private long idEmpleado;
 	
 	
 	//Constructores
-	public FacturaModel() {};
-	
-	public FacturaModel(long idFactura, ClienteModel cliente, ChangoModel chango, LocalDate fechaFactura,
-			double costeTotal, EmpleadoModel empleado) {
+	public FacturaModel() {}
+
+
+	public FacturaModel(long idFactura, ClienteModel cliente, long idChango, LocalDate fechaFactura, double costeTotal,
+			long idEmpleado) {
 		super();
 		this.idFactura = idFactura;
 		this.cliente = cliente;
-		this.chango = chango;
+		this.idChango = idChango;
 		this.fechaFactura = fechaFactura;
 		this.costeTotal = costeTotal;
-		this.empleado = empleado;
+		this.idEmpleado = idEmpleado;
 	}
 
-	
+
 	//Getters y Setters
 	public long getIdFactura() {
 		return idFactura;
@@ -40,6 +41,7 @@ public class FacturaModel {
 		this.idFactura = idFactura;
 	}
 
+
 	public ClienteModel getCliente() {
 		return cliente;
 	}
@@ -47,12 +49,14 @@ public class FacturaModel {
 		this.cliente = cliente;
 	}
 
-	public ChangoModel getChango() {
-		return chango;
+
+	public long getIdChango() {
+		return idChango;
 	}
-	public void setChango(ChangoModel chango) {
-		this.chango = chango;
+	public void setIdChango(long idChango) {
+		this.idChango = idChango;
 	}
+
 
 	public LocalDate getFechaFactura() {
 		return fechaFactura;
@@ -61,6 +65,7 @@ public class FacturaModel {
 		this.fechaFactura = fechaFactura;
 	}
 
+
 	public double getCosteTotal() {
 		return costeTotal;
 	}
@@ -68,19 +73,20 @@ public class FacturaModel {
 		this.costeTotal = costeTotal;
 	}
 
-	public EmpleadoModel getEmpleado() {
-		return empleado;
+
+	public long getIdEmpleado() {
+		return idEmpleado;
 	}
-	public void setEmpleado(EmpleadoModel empleado) {
-		this.empleado = empleado;
+	public void setIdEmpleado(long idEmpleado) {
+		this.idEmpleado = idEmpleado;
 	}
 
-	
+
 	//toString
 	@Override
 	public String toString() {
-		return "FacturaModel [idFactura=" + idFactura + ", cliente=" + cliente + ", chango=" + chango
-				+ ", fechaFactura=" + fechaFactura + ", costeTotal=" + costeTotal + ", empleado=" + empleado + "]";
-	}	
+		return "FacturaModel [idFactura=" + idFactura + ", cliente=" + cliente + ", idChango=" + idChango
+				+ ", fechaFactura=" + fechaFactura + ", costeTotal=" + costeTotal + ", idEmpleado=" + idEmpleado + "]";
+	};
 	
 }

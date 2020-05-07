@@ -2,8 +2,6 @@ package com.sistema.application.models;
 
 import java.time.LocalDate;
 
-import com.sistema.application.entities.Producto;
-
 public class LoteModel {
 
 	//Atributos
@@ -11,19 +9,20 @@ public class LoteModel {
 	private int cantidadInicial;
 	private int cantidadActual;
 	private LocalDate fechaIngreso;
-	private Producto producto;
+	private long idProducto;
 	private boolean activo;
 	
 	//Constructores
-	public LoteModel() {};
-	
-	public LoteModel(long idLote, int cantidadInicial, int cantidadActual, LocalDate fechaIngreso, Producto producto,
+	public LoteModel() {}
+
+	public LoteModel(long idLote, int cantidadInicial, int cantidadActual, LocalDate fechaIngreso, long idProducto,
 			boolean activo) {
+		super();
 		this.idLote = idLote;
 		this.cantidadInicial = cantidadInicial;
 		this.cantidadActual = cantidadActual;
 		this.fechaIngreso = fechaIngreso;
-		this.producto = producto;
+		this.idProducto = idProducto;
 		this.activo = activo;
 	}
 
@@ -57,11 +56,11 @@ public class LoteModel {
 		this.fechaIngreso = fechaIngreso;
 	}
 
-	public Producto getProducto() {
-		return producto;
+	public long getIdProducto() {
+		return idProducto;
 	}
-	public void setProducto(Producto producto) {
-		this.producto = producto;
+	public void setIdProducto(long idProducto) {
+		this.idProducto = idProducto;
 	}
 
 	public boolean isActivo() {
@@ -76,8 +75,8 @@ public class LoteModel {
 	@Override
 	public String toString() {
 		return "LoteModel [idLote=" + idLote + ", cantidadInicial=" + cantidadInicial + ", cantidadActual="
-				+ cantidadActual + ", fechaIngreso=" + fechaIngreso + ", producto=" + producto + ", activo=" + activo
-				+ "]";
-	}
+				+ cantidadActual + ", fechaIngreso=" + fechaIngreso + ", idProducto=" + idProducto + ", activo="
+				+ activo + "]";
+	};
 	
 }

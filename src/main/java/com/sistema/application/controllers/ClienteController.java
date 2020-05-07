@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ClienteModel;
@@ -26,11 +27,6 @@ public class ClienteController {
 	@Qualifier("clienteService")
 	private IClienteService clienteService;
 
-	//Lista de clientes que simula los datos en la base de datos
-	private List <ClienteModel> clientes = new ArrayList <ClienteModel>( Arrays.asList(
-			new ClienteModel("Pepe", "Gonzales", 11111111, LocalDate.of(2000, 1, 10), "pepe@mail.com", 1),
-			new ClienteModel("Juan", "Gomez", 22222222, LocalDate.of(2001, 2, 20), "juan@mail.com", 2))
-			);
 	private int ultimoNroCliente = 2;
 	
 	@GetMapping("")
@@ -42,37 +38,22 @@ public class ClienteController {
 	
 	@PostMapping("agregar")
 	public String agregar(@ModelAttribute("cliente") ClienteModel nuevoCliente) {
-		ultimoNroCliente++;
+		ultimoNroCliente++; // DEBUG: Cambiar lógica apropiada
 		nuevoCliente.setNroCliente(ultimoNroCliente);
-		clientes.add(nuevoCliente);
-		return "redirect:/cliente";
+		clienteService.insertOrUpdate(nuevoCliente);
+		return "redirect:/" + ViewRouteHelper.CLIENTE_ROOT;
 	}
 	
 	@PostMapping("modificar")
 	public String modificar(@ModelAttribute("cliente") ClienteModel clienteModificado) {
-		int i=0;
-		boolean encontrado = false;
-		while(i < clientes.size() && !encontrado) {
-			encontrado = clientes.get(i).getNroCliente() == clienteModificado.getNroCliente();
-			i++;
-		}
-		if(encontrado) {
-			clientes.set(i-1, clienteModificado);
-		}	// En caso de no encontrarlo implementar otra cosa
-		return "redirect:/cliente";
+		clienteService.insertOrUpdate(clienteModificado);
+		return "redirect:/" + ViewRouteHelper.CLIENTE_ROOT;
 	}
 	
-	@PostMapping("eliminar/{nroCliente}")
-	public String eliminar(@PathVariable("nroCliente") int nroCliente) {
-		int i=0;
-		boolean encontrado = false;
-		while(i < clientes.size() && !encontrado) {
-			encontrado = clientes.get(i).getNroCliente() == nroCliente;
-			i++;
-		}
-		if(encontrado) {
-			clientes.remove(i-1);
-		}	// En caso de no poder implementar otra cosa
-		return "redirect:/cliente";
+	@PostMapping("eliminar/{id}")
+	public String eliminar(@PathVariable("id") int id, RedirectAttributes redirectAttributes) {
+		boolean eliminado = clienteService.remove(id);
+		redirectAttributes.addFlashAttribute("clienteEliminado", eliminado);
+		return "redirect:/" + ViewRouteHelper.CLIENTE_ROOT;
 	}
 }

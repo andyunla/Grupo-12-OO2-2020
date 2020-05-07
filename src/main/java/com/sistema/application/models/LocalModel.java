@@ -16,7 +16,7 @@ public class LocalModel {
 	private double longitud;
 	private String direccion;
 	private int telefono;
-	private EmpleadoModel gerente;
+	private long idGerente;
 	private Set<LoteModel> listaLotes;
 	private Set<EmpleadoModel> listaEmpleados;
 	private Set<ChangoModel> listaChangos;
@@ -24,11 +24,12 @@ public class LocalModel {
 	
 	
 	//Constructores
-	public LocalModel() {};
-	
+	public LocalModel() {}
+
+
 	public LocalModel(long idLote, String nombreLocal, double latitud, double longitud, String direccion, int telefono,
-			EmpleadoModel gerente, Set<LoteModel> listaLotes, Set<EmpleadoModel> listaEmpleados,
-			Set<ChangoModel> listaChangos, Set<FacturaModel> listaFacturas) {
+			long idGerente, Set<LoteModel> listaLotes, Set<EmpleadoModel> listaEmpleados, Set<ChangoModel> listaChangos,
+			Set<FacturaModel> listaFacturas) {
 		super();
 		this.idLote = idLote;
 		this.nombreLocal = nombreLocal;
@@ -36,14 +37,14 @@ public class LocalModel {
 		this.longitud = longitud;
 		this.direccion = direccion;
 		this.telefono = telefono;
-		this.gerente = gerente;
+		this.idGerente = idGerente;
 		this.listaLotes = listaLotes;
 		this.listaEmpleados = listaEmpleados;
 		this.listaChangos = listaChangos;
 		this.listaFacturas = listaFacturas;
 	}
 
-	
+
 	//Getters y Setters
 	public long getIdLote() {
 		return idLote;
@@ -52,12 +53,14 @@ public class LocalModel {
 		this.idLote = idLote;
 	}
 
+
 	public String getNombreLocal() {
 		return nombreLocal;
 	}
 	public void setNombreLocal(String nombreLocal) {
 		this.nombreLocal = nombreLocal;
 	}
+
 
 	public double getLatitud() {
 		return latitud;
@@ -66,12 +69,14 @@ public class LocalModel {
 		this.latitud = latitud;
 	}
 
+
 	public double getLongitud() {
 		return longitud;
 	}
 	public void setLongitud(double longitud) {
 		this.longitud = longitud;
 	}
+
 
 	public String getDireccion() {
 		return direccion;
@@ -80,6 +85,7 @@ public class LocalModel {
 		this.direccion = direccion;
 	}
 
+
 	public int getTelefono() {
 		return telefono;
 	}
@@ -87,12 +93,14 @@ public class LocalModel {
 		this.telefono = telefono;
 	}
 
-	public EmpleadoModel getGerente() {
-		return gerente;
+
+	public long getIdGerente() {
+		return idGerente;
 	}
-	public void setGerente(EmpleadoModel gerente) {
-		this.gerente = gerente;
+	public void setIdGerente(long idGerente) {
+		this.idGerente = idGerente;
 	}
+
 
 	public Set<LoteModel> getListaLotes() {
 		return listaLotes;
@@ -101,12 +109,14 @@ public class LocalModel {
 		this.listaLotes = listaLotes;
 	}
 
+
 	public Set<EmpleadoModel> getListaEmpleados() {
 		return listaEmpleados;
 	}
 	public void setListaEmpleados(Set<EmpleadoModel> listaEmpleados) {
 		this.listaEmpleados = listaEmpleados;
 	}
+
 
 	public Set<ChangoModel> getListaChangos() {
 		return listaChangos;
@@ -115,6 +125,7 @@ public class LocalModel {
 		this.listaChangos = listaChangos;
 	}
 
+
 	public Set<FacturaModel> getListaFacturas() {
 		return listaFacturas;
 	}
@@ -122,14 +133,14 @@ public class LocalModel {
 		this.listaFacturas = listaFacturas;
 	}
 
-	
+
 	//toString
 	@Override
 	public String toString() {
 		return "LocalModel [idLote=" + idLote + ", nombreLocal=" + nombreLocal + ", latitud=" + latitud + ", longitud="
-				+ longitud + ", direccion=" + direccion + ", telefono=" + telefono + ", gerente=" + gerente
+				+ longitud + ", direccion=" + direccion + ", telefono=" + telefono + ", idGerente=" + idGerente
 				+ ", listaLotes=" + listaLotes + ", listaEmpleados=" + listaEmpleados + ", listaChangos=" + listaChangos
 				+ ", listaFacturas=" + listaFacturas + "]";
-	}
-	
+	};
+
 }
