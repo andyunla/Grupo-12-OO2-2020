@@ -115,15 +115,13 @@
                               <td>
                                    <!-- Traer los empleados de la API REST por medio de la id del local
                                         Ejemplo: empleados/local/3434 -->
-                                   <a class="btn" data-toggle="collapse" href="#${local.idLocal}" role="button"
-                                        id="lista-empleados">
+                                   <a class="btn boton-ver-empleados text-primary" data-toggle="collapse" 
+                                        href="#${local.idLocal}" data-local="${local.idLocal}" role="button">
                                         Ver
                                    </a>
                                    <div class="collapse" id="${local.idLocal}">
                                         <ul style="list-style: none;">
-                                             <li>Empleado 1</li>
-                                             <li>Empleado 2</li>
-                                             <li>Empleado 3</li>
+                                             <li>Empleados..</li>
                                         </ul>
                                    </div>
                               </td>
@@ -206,12 +204,13 @@
      <script th:inline="javascript">
           /*<![CDATA[*/
           var locales = /*[[${locales}]]*/'default';
+          // Alert en caso de no poder eliminar local
           var localEliminado = /*[[${localEliminado}]]*/ 'default';
           /*]]>*/
           if (localEliminado != null && !localEliminado) {
                setTimeout(() => { alert("No se pudo eliminar local"); }, 300);
           }
-          //Listener to modal modify client
+          // Listener a los botones de modificar local
           let modifyButtons = document.querySelectorAll('.modifyButton');
           modifyButtons.forEach(button => button.addEventListener('click', event => {
                let localIndex = event.target.dataset.index;
@@ -223,6 +222,15 @@
                document.getElementById("direccionModificarLocal").value = locales[localIndex].direccion;
                document.getElementById("telefonoModificarLocal").value = locales[localIndex].telefono;
                document.getElementById("gerenteModificarLocal").value = locales[localIndex].idGerente;
+          }));
+          // Listener a los botones de ver empleados de cada local
+          let viewEmployeesButtons = document.querySelectorAll('.boton-ver-empleados');
+          viewEmployeesButtons.forEach( button => button.addEventListener('click', event => {
+               //fetch("http://localhost/").then()...
+               console.log("ver empleados");
+               let idLocal = event.target.dataset.local;
+               let listaEmpleados = document.getElementById(idLocal);
+               listaEmpleados.innerHTML = "<li></li>";
           }));
      </script>
      <script th:src="@{/js/abm.js}"></script>
