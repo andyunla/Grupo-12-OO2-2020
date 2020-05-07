@@ -33,19 +33,19 @@ public class ProductoController {
 	@PostMapping("agregar")
 	public String agregarProducto(@ModelAttribute("producto") ProductoModel nuevoProducto) {
 		productoService.insertOrUpdate(nuevoProducto);
-		return "redirect:/producto";
+		return "redirect:/" + ViewRouteHelper.PRODUCTO_ROOT;
 	}
 	
 	@PostMapping("modificar")
 	public String modificarProducto(@ModelAttribute("producto") ProductoModel productoModificado) {
 		productoService.insertOrUpdate(productoModificado);
-		return "redirect:/producto";
+		return "redirect:/" + ViewRouteHelper.PRODUCTO_ROOT;
 	}
 	
 	@PostMapping("eliminar/{idProducto}")
 	public String eliminarProducto(@PathVariable("idProducto") long idProducto, RedirectAttributes redirectAttributes) {
 		boolean eliminado = productoService.remove(idProducto);
 		redirectAttributes.addFlashAttribute("productoEliminado", eliminado);
-		return "redirect:/producto";
+		return "redirect:/" + ViewRouteHelper.PRODUCTO_ROOT;
 	}	
 }

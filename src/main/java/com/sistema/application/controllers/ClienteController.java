@@ -41,19 +41,19 @@ public class ClienteController {
 		ultimoNroCliente++; // DEBUG: Cambiar lógica apropiada
 		nuevoCliente.setNroCliente(ultimoNroCliente);
 		clienteService.insertOrUpdate(nuevoCliente);
-		return "redirect:/cliente";
+		return "redirect:/" + ViewRouteHelper.CLIENTE_ROOT;
 	}
 	
 	@PostMapping("modificar")
 	public String modificar(@ModelAttribute("cliente") ClienteModel clienteModificado) {
 		clienteService.insertOrUpdate(clienteModificado);
-		return "redirect:/cliente";
+		return "redirect:/" + ViewRouteHelper.CLIENTE_ROOT;
 	}
 	
 	@PostMapping("eliminar/{id}")
 	public String eliminar(@PathVariable("id") int id, RedirectAttributes redirectAttributes) {
 		boolean eliminado = clienteService.remove(id);
 		redirectAttributes.addFlashAttribute("clienteEliminado", eliminado);
-		return "redirect:/cliente";
+		return "redirect:/" + ViewRouteHelper.CLIENTE_ROOT;
 	}
 }
