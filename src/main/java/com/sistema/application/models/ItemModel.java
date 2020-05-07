@@ -1,22 +1,21 @@
 package com.sistema.application.models;
 
-import com.sistema.application.models.ProductoModel;
-
 public class ItemModel {
 
 	//Atributos
 	private long idItem;
 	private int cantidad;
-	private ProductoModel producto;
+	private long idProducto;
+	
 	
 	//Constructores
-	public ItemModel() {};
-	
-	public ItemModel(long idItem, int cantidad, ProductoModel producto) {
+	public ItemModel() {}
+
+	public ItemModel(long idItem, int cantidad, long idProducto) {
 		super();
 		this.idItem = idItem;
 		this.cantidad = cantidad;
-		this.producto = producto;
+		this.idProducto = idProducto;
 	}
 
 	
@@ -35,18 +34,18 @@ public class ItemModel {
 		this.cantidad = cantidad;
 	}
 
-	public ProductoModel getProductoModel() {
-		return producto;
+	public long getIdProducto() {
+		return idProducto;
 	}
-	public void setProductoModel(ProductoModel productoModel) {
-		this.producto = producto;
+	public void setIdProducto(long idProducto) {
+		this.idProducto = idProducto;
 	}
 
 	
 	//toString
 	@Override
 	public String toString() {
-		return "ItemModel [idItem=" + idItem + ", cantidad=" + cantidad + ", productoModel=" + producto + "]";
-	}
+		return "ItemModel [idItem=" + idItem + ", cantidad=" + cantidad + ", idProducto=" + idProducto + "]";
+	};
 	
 }

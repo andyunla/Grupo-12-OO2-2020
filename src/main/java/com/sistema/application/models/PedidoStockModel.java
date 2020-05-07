@@ -1,33 +1,30 @@
 package com.sistema.application.models;
 
-import com.sistema.application.models.EmpleadoModel;
-import com.sistema.application.models.ProductoModel;
-
 public class PedidoStockModel {
 
 	//Atributos
 	private long idPedidoStock;
-	private ProductoModel producto;
+	private long idProducto;
 	private int cantidad;
-	private EmpleadoModel solicitante;
+	private long idSolicitante;
 	private boolean aceptado;
-	private EmpleadoModel oferente;
+	private long idOferente;
 	
 	
 	//Constructores
-	public PedidoStockModel() {};
-	
-	public PedidoStockModel(long idPedidoStock, ProductoModel producto, int cantidad, EmpleadoModel solicitante,
-			boolean aceptado, EmpleadoModel oferente) {
+	public PedidoStockModel() {}
+
+	public PedidoStockModel(long idPedidoStock, long idProducto, int cantidad, long idSolicitante, boolean aceptado,
+			long idOferente) {
 		super();
 		this.idPedidoStock = idPedidoStock;
-		this.producto = producto;
+		this.idProducto = idProducto;
 		this.cantidad = cantidad;
-		this.solicitante = solicitante;
+		this.idSolicitante = idSolicitante;
 		this.aceptado = aceptado;
-		this.oferente = oferente;
+		this.idOferente = idOferente;
 	}
-	
+
 	
 	//Getters y Setters
 	public long getIdPedidoStock() {
@@ -37,11 +34,11 @@ public class PedidoStockModel {
 		this.idPedidoStock = idPedidoStock;
 	}
 
-	public ProductoModel getProducto() {
-		return producto;
+	public long getIdProducto() {
+		return idProducto;
 	}
-	public void setProducto(ProductoModel producto) {
-		this.producto = producto;
+	public void setIdProducto(long idProducto) {
+		this.idProducto = idProducto;
 	}
 
 	public int getCantidad() {
@@ -51,11 +48,11 @@ public class PedidoStockModel {
 		this.cantidad = cantidad;
 	}
 
-	public EmpleadoModel getSolicitante() {
-		return solicitante;
+	public long getIdSolicitante() {
+		return idSolicitante;
 	}
-	public void setSolicitante(EmpleadoModel solicitante) {
-		this.solicitante = solicitante;
+	public void setIdSolicitante(long idSolicitante) {
+		this.idSolicitante = idSolicitante;
 	}
 
 	public boolean isAceptado() {
@@ -65,19 +62,20 @@ public class PedidoStockModel {
 		this.aceptado = aceptado;
 	}
 
-	public EmpleadoModel getOferente() {
-		return oferente;
+	public long getIdOferente() {
+		return idOferente;
 	}
-	public void setOferente(EmpleadoModel oferente) {
-		this.oferente = oferente;
+	public void setIdOferente(long idOferente) {
+		this.idOferente = idOferente;
 	}
 
 	
 	//toString
 	@Override
 	public String toString() {
-		return "PedidoStockModel [idPedidoStock=" + idPedidoStock + ", producto=" + producto + ", cantidad=" + cantidad
-				+ ", solicitante=" + solicitante + ", aceptado=" + aceptado + ", oferente=" + oferente + "]";
-	}
+		return "PedidoStockModel [idPedidoStock=" + idPedidoStock + ", idProducto=" + idProducto + ", cantidad="
+				+ cantidad + ", idSolicitante=" + idSolicitante + ", aceptado=" + aceptado + ", idOferente="
+				+ idOferente + "]";
+	};
 	
 }
