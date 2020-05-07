@@ -15,17 +15,28 @@ public class EmpleadoModel extends PersonaModel {
 	@DateTimeFormat(pattern = "HH-mm-ss")
 	private LocalTime horaHasta;
 	private double sueldoBasico;
-	private int idLocal; // El id del local al cual pertenece
-	private int gerenteIdLocal; // El id del local el cual es el gerente; si es null no administra ningún local
+	private long idLocal; // El id del local al cual pertenece
+	private long gerenteIdLocal; // El id del local el cual es el gerente; si es null no administra ningún local
 	
 	public EmpleadoModel() {}
 	
+	public EmpleadoModel(long id, String nombre, String apellido, int dni, LocalDate fechaNacimiento, 
+						 int legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, long idLocal, long gerenteIdLocal) {
+		super(id, nombre, apellido, dni, fechaNacimiento);
+		this.legajo = legajo;
+		this.horaDesde = horaDesde;
+		this.horaHasta = horaHasta;
+		this.sueldoBasico = sueldoBasico;
+		this.idLocal = idLocal;
+		this.gerenteIdLocal = gerenteIdLocal;
+	}
+
 	/*
 	 * Para crear un empleado normal
 	 * La propiedad gerenteIdLocal se establece a 0
 	 */
 	public EmpleadoModel(String nombre, String apellido, int dni, LocalDate fechaNacimiento, 
-						 int legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, int idLocal) {
+						 int legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, long idLocal) {
 		super(nombre, apellido, dni, fechaNacimiento);
 		this.legajo = legajo;
 		this.horaDesde = horaDesde;
@@ -40,7 +51,7 @@ public class EmpleadoModel extends PersonaModel {
 	 * La propiedad gerenteIdLocal indica el id del local que administra
 	 */
 	public EmpleadoModel(String nombre, String apellido, int dni, LocalDate fechaNacimiento, 
-						 int legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, int idLocal, int gerenteIdLocal) {
+						 int legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, long idLocal, long gerenteIdLocal) {
 		super(nombre, apellido, dni, fechaNacimiento);
 		this.legajo = legajo;
 		this.horaDesde = horaDesde;
@@ -82,19 +93,19 @@ public class EmpleadoModel extends PersonaModel {
 		this.sueldoBasico = sueldoBasico;
 	}
 
-	public int getIdLocal() {
+	public long getIdLocal() {
 		return idLocal;
 	}
 
-	public void setIdLocal(int idLocal) {
+	public void setIdLocal(long idLocal) {
 		this.idLocal = idLocal;
 	}
 
-	public int getGerenteIdLocal() {
+	public long getGerenteIdLocal() {
 		return gerenteIdLocal;
 	}
 
-	public void setGerenteIdLocal(int gerenteIdLocal) {
+	public void setGerenteIdLocal(long gerenteIdLocal) {
 		this.gerenteIdLocal = gerenteIdLocal;
 	}
 	

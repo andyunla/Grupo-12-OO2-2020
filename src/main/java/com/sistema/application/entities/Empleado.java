@@ -71,8 +71,19 @@ public class Empleado extends Persona implements Serializable {
 		this.localOwner = localOwner;
 	}
 
+	public Empleado(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, int legajo, 
+					LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico) {
+		super(idPersona, nombre, apellido, dni, fechaNacimiento);
+		this.legajo = legajo;
+		this.horaDesde = horaDesde;
+		this.horaHasta = horaHasta;
+		this.sueldoBasico = sueldoBasico;
+		this.local = null;
+		this.localOwner = null;
+	}
+
 	//Getters y Setters
-	public long getLegajo() {
+	public int getLegajo() {
 		return legajo;
 	}
 
