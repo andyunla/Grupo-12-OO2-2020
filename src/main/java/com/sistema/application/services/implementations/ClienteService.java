@@ -26,8 +26,13 @@ public class ClienteService implements IClienteService {
 	private ClienteConverter clienteConverter;
 	
 	@Override
-	public List<Cliente> getAll() {
-		return clienteRepository.findAll();
+	public List<ClienteModel> getAll() {
+		List <ClienteModel> clientes = new ArrayList <ClienteModel>();
+		for(Cliente c: clienteRepository.findAll()){
+			ClienteModel cm = clienteConverter.entityToModel(c);
+			clientes.add(cm);
+		}
+		return clientes;
 	}
 
 	@Override
@@ -39,9 +44,18 @@ public class ClienteService implements IClienteService {
 	@Override
 	public boolean remove(int id) {
 		try {
-			clienteRepository.deleteById(id);
+			List<Cliente> clientes = clienteRepository.findAll();
+			Cliente cliente = null;
+			int i = 0;
+			while(cliente == null && i < clientes.size()) {
+				if(clientes.get(i).getIdPersona() == id) {
+					cliente = clientes.get(i);
+				}
+				i++;
+			}
+			clienteRepository.delete(cliente);
 			return true;
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}

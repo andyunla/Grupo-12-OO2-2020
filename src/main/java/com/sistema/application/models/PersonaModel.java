@@ -2,12 +2,20 @@ package com.sistema.application.models;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 
 public class PersonaModel {
 	private long id;
 	private String nombre;
 	private String apellido;
+	@NumberFormat(style = Style.NUMBER)
+	@Min(1000000)
+	@Max(99999999)
 	private int dni;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fechaNacimiento;
@@ -65,7 +73,7 @@ public class PersonaModel {
 	public LocalDate getFechaNacimiento() {
 		return fechaNacimiento;
 	}
-	public void setFechaNac(LocalDate fechaNacimiento) {
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 

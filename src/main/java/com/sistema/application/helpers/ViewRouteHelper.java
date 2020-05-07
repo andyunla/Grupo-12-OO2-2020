@@ -12,7 +12,7 @@ public class ViewRouteHelper {
 
 	/**** Redirects ****/
 	public final static String HOME_ROOT = "index";
-	public final static String CLIENTE_ROOT = "clientes";
-	public final static String EMPLEADO_ROOT = "empleados";
-	public final static String PRODUCTO_ROOT = "productos";
+	public final static String CLIENTE_ROOT = "cliente";
+	public final static String EMPLEADO_ROOT = "empleado";
+	public final static String PRODUCTO_ROOT = "producto";
 }
