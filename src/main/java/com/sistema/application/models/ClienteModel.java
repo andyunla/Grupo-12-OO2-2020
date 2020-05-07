@@ -3,9 +3,12 @@ package com.sistema.application.models;
 import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 
 public class ClienteModel extends PersonaModel {
 	private String email;
+	@NumberFormat(style = Style.NUMBER)
 	private int nroCliente;
 	
 	public ClienteModel() {}

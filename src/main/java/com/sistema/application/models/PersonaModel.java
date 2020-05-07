@@ -14,7 +14,7 @@ public class PersonaModel {
 	private String nombre;
 	private String apellido;
 	@NumberFormat(style = Style.NUMBER)
-	@Min(1)
+	@Min(1000000)
 	@Max(99999999)
 	private int dni;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")

@@ -136,8 +136,8 @@
                          <div class="modal-body">
                               <form class="col-12 m-1 p-2 mx-auto bg-light rounded" action="#"
                                    th:action="@{/cliente/modificar}" th:object="${cliente}" method="post">
-                                   <input type="number" class="d-none" id="nroClienteModificar"
-                                        th:field="*{nroCliente}" />
+                                   <input type="number" class="d-none" id="idClienteModificar"
+                                        th:field="*{id}" />
                                    <div class="form-group row">
                                         <label for="nombreModificarCliente" class="col-sm-3 col-4">Nombre</label>
                                         <input type="text" class="form-control col-md-8  col-7"
@@ -187,7 +187,7 @@
           modifyButtons.forEach(button => button.addEventListener('click', event => {
                let clientIndex = event.target.dataset.index;
                document.getElementById('tituloModificarCliente').innerText = "Modificar Cliente #" + clients[clientIndex].nroCliente;
-               document.getElementById("nroClienteModificar").value = clients[clientIndex].nroCliente;
+               document.getElementById("idClienteModificar").value = clients[clientIndex].id;
                document.getElementById("nombreModificarCliente").value = clients[clientIndex].nombre;
                document.getElementById("apellidomodificarCliente").value = clients[clientIndex].apellido;
                document.getElementById("emailmodificarCliente").value = clients[clientIndex].email;
