@@ -4,8 +4,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 
 public class EmpleadoModel extends PersonaModel {
+	@NumberFormat(style = Style.NUMBER)
 	private int legajo;
 	@DateTimeFormat(pattern = "HH-mm-ss")
 	private LocalTime horaDesde;
