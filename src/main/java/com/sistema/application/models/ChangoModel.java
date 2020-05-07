@@ -3,27 +3,26 @@ package com.sistema.application.models;
 import java.util.Set;
 
 import com.sistema.application.models.ItemModel;
-import com.sistema.application.models.PedidoStockModel;
 
 public class ChangoModel {
 	
 	//Atributos
 	private long idChango;
 	private Set<ItemModel> listaItems;
-	private PedidoStockModel pedidostock;
+	private long idPedidostock;
 	
 	//Constructores
-	public ChangoModel() {};
-	
-	public ChangoModel(long idChango, Set<ItemModel> listaItems, PedidoStockModel pedidostock) {
+	public ChangoModel() {}
+
+	public ChangoModel(long idChango, Set<ItemModel> listaItems, long idPedidostock) {
 		super();
 		this.idChango = idChango;
 		this.listaItems = listaItems;
-		this.pedidostock = pedidostock;
+		this.idPedidostock = idPedidostock;
 	}
 
 	
-	//Getter y Setters
+	//Getters y Setters
 	public long getIdChango() {
 		return idChango;
 	}
@@ -38,18 +37,15 @@ public class ChangoModel {
 		this.listaItems = listaItems;
 	}
 
-	public PedidoStockModel getPedidostock() {
-		return pedidostock;
+	public long getIdPedidostock() {
+		return idPedidostock;
 	}
-	public void setPedidostock(PedidoStockModel pedidostock) {
-		this.pedidostock = pedidostock;
-	}
-
-	//toString
-	@Override
-	public String toString() {
-		return "ChangoModel [idChango=" + idChango + ", listaItems=" + listaItems + ", pedidostock=" + pedidostock
-				+ "]";
-	}
+	public void setIdPedidostock(long idPedidostock) {
+		this.idPedidostock = idPedidostock;
+	};
+	
+	
+	
+	
 	
 }
