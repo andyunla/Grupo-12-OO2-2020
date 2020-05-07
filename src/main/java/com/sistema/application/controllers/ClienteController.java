@@ -27,11 +27,6 @@ public class ClienteController {
 	@Qualifier("clienteService")
 	private IClienteService clienteService;
 
-	//Lista de clientes que simula los datos en la base de datos
-	private List <ClienteModel> clientes = new ArrayList <ClienteModel>( Arrays.asList(
-			new ClienteModel("Pepe", "Gonzales", 11111111, LocalDate.of(2000, 1, 10), "pepe@mail.com", 1),
-			new ClienteModel("Juan", "Gomez", 22222222, LocalDate.of(2001, 2, 20), "juan@mail.com", 2))
-			);
 	private int ultimoNroCliente = 2;
 	
 	@GetMapping("")
