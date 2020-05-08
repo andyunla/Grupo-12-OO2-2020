@@ -27,7 +27,7 @@ public class EmpleadoController {
 	@Qualifier("empleadoService")
 	private IEmpleadoService empleadoService;
 
-	private int ultimoNroEmpleado = 2;
+	private int ultimoLegajo = 2;
 	
 	@GetMapping("")
 	public String empleados(Model modelo) {
@@ -38,7 +38,8 @@ public class EmpleadoController {
 	
 	@PostMapping("agregar")
 	public String agregar(@ModelAttribute("empleado") EmpleadoModel nuevoEmpleado) {
-		ultimoNroEmpleado++; // DEBUG: Cambiar lógica apropiada
+		ultimoLegajo++; // DEBUG: Cambiar lógica apropiada
+		nuevoEmpleado.setLegajo(ultimoLegajo);
 		empleadoService.insertOrUpdate(nuevoEmpleado);
 		return "redirect:/" + ViewRouteHelper.EMPLEADO_ROOT;
 	}
