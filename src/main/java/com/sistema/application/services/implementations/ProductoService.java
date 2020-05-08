@@ -1,4 +1,4 @@
-package com.sistema.application.services;
+package com.sistema.application.services.implementations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,7 @@ import com.sistema.application.converters.ProductoConverter;
 import com.sistema.application.entities.Producto;
 import com.sistema.application.models.ProductoModel;
 import com.sistema.application.repositories.IProductoRepository;
+import com.sistema.application.services.IProductoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
