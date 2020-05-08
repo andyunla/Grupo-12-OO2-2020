@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.sistema.application.entities.Empleado;
+import com.sistema.application.entities.Chango;
 
-public interface IEmpleadoRepository extends JpaRepository<Empleado, Serializable>{
-	public abstract Empleado findByLegajo(int legajo);
+public interface IChangoRepository extends JpaRepository<Chango, Serializable> {
+	public abstract Chango findByIdChango(long idChango);
 }
