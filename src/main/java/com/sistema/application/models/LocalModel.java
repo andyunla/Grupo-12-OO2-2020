@@ -10,7 +10,7 @@ import com.sistema.application.models.FacturaModel;
 public class LocalModel {
 
 	//Atributo
-	private long idLote;
+	private long idLocal;
 	private String nombreLocal;
 	private double latitud;
 	private double longitud;
@@ -27,11 +27,11 @@ public class LocalModel {
 	public LocalModel() {}
 
 
-	public LocalModel(long idLote, String nombreLocal, double latitud, double longitud, String direccion, int telefono,
+	public LocalModel(long idLocal, String nombreLocal, double latitud, double longitud, String direccion, int telefono,
 			long idGerente, Set<LoteModel> listaLotes, Set<EmpleadoModel> listaEmpleados, Set<ChangoModel> listaChangos,
 			Set<FacturaModel> listaFacturas) {
 		super();
-		this.idLote = idLote;
+		this.idLocal = idLocal;
 		this.nombreLocal = nombreLocal;
 		this.latitud = latitud;
 		this.longitud = longitud;
@@ -46,11 +46,11 @@ public class LocalModel {
 
 
 	//Getters y Setters
-	public long getIdLote() {
-		return idLote;
+	public long getIdLocal() {
+		return idLocal;
 	}
-	public void setIdLote(long idLote) {
-		this.idLote = idLote;
+	public void setIdLote(long idLocal) {
+		this.idLocal = idLocal;
 	}
 
 
@@ -137,10 +137,13 @@ public class LocalModel {
 	//toString
 	@Override
 	public String toString() {
-		return "LocalModel [idLote=" + idLote + ", nombreLocal=" + nombreLocal + ", latitud=" + latitud + ", longitud="
+		return "LocalModel [idLote=" + idLocal + ", nombreLocal=" + nombreLocal + ", latitud=" + latitud + ", longitud="
 				+ longitud + ", direccion=" + direccion + ", telefono=" + telefono + ", idGerente=" + idGerente
 				+ ", listaLotes=" + listaLotes + ", listaEmpleados=" + listaEmpleados + ", listaChangos=" + listaChangos
 				+ ", listaFacturas=" + listaFacturas + "]";
-	};
+	}
+
+
+	
 
 }
