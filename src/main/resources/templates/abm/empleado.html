@@ -62,11 +62,6 @@
                          th:field="*{apellido}" />
                </div>
                <div class="form-group row">
-                    <label for="emailNuevoEmpleado" class="col-md-2 col-3">Email</label>
-                    <input type="email" class="form-control col-md-9 col-8" id="emailNuevoEmpleado"
-                         th:field="*{email}" />
-               </div>
-               <div class="form-group row">
                     <label for="dniNuevoEmpleado" class="col-md-2 col-3">DNI</label>
                     <input type="number" class="form-control col-sm-4 col-5" id="dniNuevoEmpleado" th:field="*{dni}" />
                </div>
@@ -74,6 +69,32 @@
                     <label for="fechaNacNuevoEmpleado" class="col-md-2 col-3">Fecha de Nac.</label>
                     <input type="date" class="form-control col-sm-4 col-5" id="fechaNacNuevoEmpleado"
                          th:field="*{fechaNacimiento}" />
+               </div>
+               <div class="form-group row">
+                    <label for="horaDesdeNuevoEmpleado" class="col-md-2 col-3">Horario de llegada</label>
+                    <input type="date" class="form-control col-sm-4 col-5" id="horaDesdeNuevoEmpleado"
+                         th:field="*{horaDesde}" />
+               </div>
+               <div class="form-group row">
+                    <label for="horaHastaNuevoEmpleado" class="col-md-2 col-3">Horario de salida</label>
+                    <input type="date" class="form-control col-sm-4 col-5" id="horaHastaNuevoEmpleado"
+                         th:field="*{horaHasta}" />
+               </div>
+               <div class="form-group row">
+                    <label for="sueldoNuevoEmpleado" class="col-md-2 col-3">Sueldo básico</label>
+                    <input type="date" class="form-control col-sm-4 col-5" id="sueldoNuevoEmpleado"
+                         th:field="*{sueldoBasico}" />
+               </div>
+               <div class="form-group row">
+                    <label for="localNuevoEmpleado" class="col-md-2 col-3">Local donde trabaja</label>
+                    <div class="dropdown">
+                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                         Locales<span id="localNuevoEmpleado" class="selection">Seleccione local</span><span class="caret"></span>
+                         </button>
+                         <ul th:each="local :${locales}" class="dropdown-menu" role="menu">
+                              <li th:text="${local.nombreLocal}"></li>
+                         </ul>
+                    </div>
                </div>
                <div class="text-center">
                     <button type="submit" class="btn btn-primary">Guardar</button>
@@ -89,8 +110,9 @@
                               <th scope="col">Nombre</th>
                               <th scope="col">Apellido</th>
                               <th scope="col">fecha de Nac.</th>
-                              <th scope="col">Email</th>
-                              <th scope="col">Nro. Cliente</th>
+                              <th scope="col">Horario de entrada</th>
+                              <th scope="col">Horario de salida</th>
+                              <th scope="col">Sueldo básico</th>
                               <th scope="col"></th>
                          </tr>
                     </thead>
@@ -101,8 +123,9 @@
                               <td th:text="${empleado.nombre}"></td>
                               <td th:text="${empleado.apellido}"></td>
                               <td th:text="${empleado.fechaNacimiento}"></td>
-                              <td th:text="${empleado.email}"></td>
-                              <td th:text="${empleado.nroCliente}"></td>
+                              <td th:text="${empleado.horaDesde}"></td>
+                              <td th:text="${empleado.horaHasta}"></td>
+                              <td th:text="${empleado.sueldoBasico}"></td>
                               <td class="d-flex justify-content-around">
                                    <div data-toggle="tooltip" data-placement="top" title="Modificar">
                                         <a href="#" data-toggle="modal" data-target="#modifyEmpleado"
@@ -144,25 +167,46 @@
                                              id="nombreModificarEmpleado" th:field="*{nombre}" />
                                    </div>
                                    <div class="form-group row">
-                                        <label for="apellidomodificarEmpleado" class="col-sm-3 col-4">Apellido</label>
+                                        <label for="apellidoModificarEmpleado" class="col-sm-3 col-4">Apellido</label>
                                         <input type="text" class="form-control col-md-8 col-7"
-                                             id="apellidomodificarEmpleado" th:field="*{apellido}" />
+                                             id="apellidoModificarEmpleado" th:field="*{apellido}" />
                                    </div>
                                    <div class="form-group row">
-                                        <label for="emailmodificarEmpleado" class="col-sm-3 col-4">Email</label>
-                                        <input type="email" class="form-control col-md-8 col-7"
-                                             id="emailmodificarEmpleado" th:field="*{email}" />
-                                   </div>
-                                   <div class="form-group row">
-                                        <label for="dnimodificarEmpleado" class="col-sm-3 col-4">DNI</label>
-                                        <input type="number" class="form-control col-5" id="dnimodificarEmpleado"
+                                        <label for="dniModificarEmpleado" class="col-sm-3 col-4">DNI</label>
+                                        <input type="number" class="form-control col-5" id="dniModificarEmpleado"
                                              th:field="*{dni}" />
                                    </div>
                                    <div class="form-group row">
-                                        <label for="fechaDeNacmodificarEmpleado" class="col-sm-3 col-4">Fecha de
+                                        <label for="fechaDeNacModificarEmpleado" class="col-sm-3 col-4">Fecha de
                                              Nac.</label>
-                                        <input type="date" class="form-control col-5" id="fechaDeNacmodificarEmpleado"
+                                        <input type="date" class="form-control col-5" id="fechaDeNacModificarEmpleado"
                                              th:field="*{fechaNacimiento}" />
+                                   </div>
+                                   <div class="form-group row">
+                                        <label for="fechaDesdeModificarEmpleado" class="col-sm-3 col-4">Horario de entrada</label>
+                                        <input type="date" class="form-control col-5" id="fechaDesdeModificarEmpleado"
+                                             th:field="*{horaHasta}" />
+                                   </div>
+                                   <div class="form-group row">
+                                        <label for="fechaHastaModificarEmpleado" class="col-sm-3 col-4">Horario de salida</label>
+                                        <input type="date" class="form-control col-5" id="fechaHastaModificarEmpleado"
+                                             th:field="*{horaHasta}" />
+                                   </div>
+                                   <div class="form-group row">
+                                        <label for="sueldoModificarEmpleado" class="col-sm-3 col-4">Sueldo básico</label>
+                                        <input type="number" class="form-control col-5" id="sueldoModificarEmpleado"
+                                             th:field="*{sueldoBasico}" />
+                                   </div>
+                                   <div class="form-group row">
+                                        <label for="localModificarEmpleado" class="col-md-2 col-3">Local donde trabaja</label>
+                                        <div class="dropdown">
+                                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                             Locales<span id="localModificarEmpleado" class="selection">Seleccione local</span><span class="caret"></span>
+                                             </button>
+                                             <ul th:each="local :${locales}" class="dropdown-menu" role="menu">
+                                                  <li th:text="${local.nombreLocal}"></li>
+                                             </ul>
+                                        </div>
                                    </div>
                                    <div class="text-center">
                                         <button type="submit" class="btn btn-primary">Guardar</button>
@@ -186,13 +230,14 @@
           let modifyButtons = document.querySelectorAll('.modifyButton');
           modifyButtons.forEach(button => button.addEventListener('click', event => {
                let empleadoIndex = event.target.dataset.index;
-               document.getElementById('tituloModificarEmpleado').innerText = "Modificar Empleados #" + empleados[empleadoIndex].legajo;
+               document.getElementById('tituloModificarEmpleado').innerText = "Modificar Empleado #" + empleados[empleadoIndex].legajo;
                document.getElementById("idEmpleadoModificar").value = empleados[empleadoIndex].id;
                document.getElementById("nombreModificarEmpleado").value = empleados[empleadoIndex].nombre;
-               document.getElementById("apellidomodificarEmpleado").value = empleados[empleadoIndex].apellido;
-               document.getElementById("emailmodificarEmpleado").value = empleados[empleadoIndex].email;
-               document.getElementById("dnimodificarEmpleado").value = empleados[empleadoIndex].dni;
-               document.getElementById("fechaDeNacmodificarEmpleado").value = empleados[empleadoIndex].fechaNacimiento;
+               document.getElementById("apellidoModificarEmpleado").value = empleados[empleadoIndex].apellido;
+               document.getElementById("dniModificarEmpleado").value = empleados[empleadoIndex].dni;
+               document.getElementById("fechaDeNacModificarEmpleado").value = empleados[empleadoIndex].fechaNacimiento;
+               document.getElementById("fechaDesdeModificarEmpleado").value = empleados[empleadoIndex].fechaDesde;
+               document.getElementById("sueldoModificarEmpleado").value = empleados[empleadoIndex].sueldoBasico;
           }));
      </script>
      <script th:src="@{/js/abm.js}"></script>
@@ -205,6 +250,7 @@
      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
           integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
           crossorigin="anonymous"></script>
+     <script th:src="@{/js/code.js}"></script>
 </body>
 
 </html>
