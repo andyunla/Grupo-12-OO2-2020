@@ -86,15 +86,10 @@
                          th:field="*{sueldoBasico}" />
                </div>
                <div class="form-group row">
-                    <label for="localNuevoEmpleado" class="col-md-2 col-3">Local donde trabaja</label>
-                    <div class="dropdown">
-                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                         Locales<span id="localNuevoEmpleado" class="selection">Seleccione local</span><span class="caret"></span>
-                         </button>
-                         <ul th:each="local :${locales}" class="dropdown-menu" role="menu">
-                              <li th:text="${local.nombreLocal}"></li>
-                         </ul>
-                    </div>
+                    <label for="localModificarEmpleado">Local</label>
+                    <select placeholder="Local" th:field="*{local.idLocal}" class="form-control" id="localModificarEmpleado">
+                         <option th:each="l: ${locales}" th:value="${l.idLocal}" th:text="${l.nombreLocal}"></option>
+                    </select>
                </div>
                <div class="text-center">
                     <button type="submit" class="btn btn-primary">Guardar</button>
@@ -198,15 +193,10 @@
                                              th:field="*{sueldoBasico}" />
                                    </div>
                                    <div class="form-group row">
-                                        <label for="localModificarEmpleado" class="col-md-2 col-3">Local donde trabaja</label>
-                                        <div class="dropdown">
-                                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                             Locales<span id="localModificarEmpleado" class="selection">Seleccione local</span><span class="caret"></span>
-                                             </button>
-                                             <ul th:each="local :${locales}" class="dropdown-menu" role="menu">
-                                                  <li th:text="${local.nombreLocal}"></li>
-                                             </ul>
-                                        </div>
+                                        <label for="localModificarEmpleado">Local</label>
+                                        <select placeholder="Local" th:field="*{local.idLocal}" class="form-control" id="localModificarEmpleado">
+                                             <option th:each="l: ${locales}" th:value="${l.idLocal}" th:text="${l.nombreLocal}"></option>
+                                        </select>
                                    </div>
                                    <div class="text-center">
                                         <button type="submit" class="btn btn-primary">Guardar</button>
