@@ -7,6 +7,8 @@ import com.sistema.application.entities.Item;
 
 import com.sistema.application.converters.ProductoConverter;
 import com.sistema.application.models.ProductoModel;
+import com.sistema.application.repositories.IChangoRepository;
+import com.sistema.application.repositories.IProductoRepository;
 
 @Component("itemConverter")
 public class ItemConverter {
@@ -19,7 +21,11 @@ public class ItemConverter {
 	
 	//De modelo a entidad
 	public Item modelToEntity(ItemModel itemModel) {
-		return new Item(itemModel.getIdItem(), itemModel.getCantidad(), itemModel.getIdProducto() );
+		IProductoRepository iPR = null;
+		Producto prod = iPR.findByIdProducto(itemModel.getIdProducto());
+		IChangoRepository iCR = null;
+		Chango chango = iCR.findByIdChango(itemModel.);
+		return new Item(itemModel.getCantidad(), prod,  );
 	}
 	
 }

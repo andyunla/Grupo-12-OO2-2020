@@ -1,7 +1,9 @@
 package com.sistema.application.converters;
 
 import com.sistema.application.models.LoteModel;
+import com.sistema.application.repositories.IProductoRepository;
 import com.sistema.application.entities.Lote;
+import com.sistema.application.entities.Producto;
 
 public class LoteConverter {
 	
@@ -13,8 +15,10 @@ public class LoteConverter {
 	
 	//De modelo a entidad
 	public Lote modelToEntity(LoteModel loteModel) {
+		IProductoRepository ipr = null;
+		Producto prod = ipr.findByIdProducto(loteModel.getIdProducto());
 		return new Lote(loteModel.getCantidadInicial(), loteModel.getCantidadActual(), 
-				loteModel.getFechaIngreso(), "loteModel.getIdProducto()", loteModel.isActivo() );
+				loteModel.getFechaIngreso(), prod );
 	}
 	
 }
