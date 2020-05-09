@@ -126,7 +126,7 @@
                               <td th:text="${local.gerente.legajo}"></td>
                               <td>
                                    <!-- Traer los empleados de la API REST por medio de la id del local
-                                        Ejemplo: empleados/local/3434 -->
+                                        Ejemplo: empleados/local/3434 ? -->
                                    <a class="btn boton-ver-empleados text-primary" data-toggle="collapse"
                                         href="#${local.idLocal}" data-local="${local.idLocal}" role="button">
                                         Ver
@@ -197,6 +197,7 @@
                                         <input type="number" class="form-control col-5" id="telefonoModificarLocal"
                                              th:field="*{telefono}" />
                                    </div>
+                                   <!-- PROVISORIAMENTE -->
                                    <div class="form-group row">
                                         <label for="gerenteModificarLocal" class="col-sm-3 col-4">Gerente</label>
                                         <input type="number" class="form-control col-5" id="gerenteModificarLocal"

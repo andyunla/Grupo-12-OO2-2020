@@ -11,7 +11,9 @@ import com.sistema.application.entities.Local;
 @Component("localConverter")
 public class LocalConverter {
 
-	// NECESITA EL CONVERTER DE EMPLEADO IMPLEMENTADO
+	/* PENDIENTE:
+	 	NECESITA EL CONVERTER DE EMPLEADO IMPLEMENTADO
+	 */
 	@Autowired
 	@Qualifier("empleadoConverter")
 	private EmpleadoConverter empleadoConverter;

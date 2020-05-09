@@ -9,7 +9,7 @@ import com.sistema.application.models.FacturaModel;
 
 public class LocalModel {
 
-	//Atributo
+	//Atributos
 	private long idLocal;
 	private String nombreLocal;
 	private double latitud;
