@@ -16,12 +16,12 @@ public class EmpleadoConverter {
 	public EmpleadoModel entityToModel(Empleado empleado) {
 		return new EmpleadoModel(empleado.getIdPersona(), empleado.getNombre(), empleado.getApellido(), empleado.getDni(), empleado.getFechaNacimiento(),
 								 empleado.getLegajo(), empleado.getHoraDesde(), empleado.getHoraHasta(), empleado.getSueldoBasico(),
-								 localConverter.entityToModel(empleado.getLocal()), localConverter.entityToModel(empleado.isTipoEmpleado()));
+								 localConverter.entityToModel(empleado.getLocal()), empleado.isTipoEmpleado());
 	}
 	
 	public Empleado modelToEntity(EmpleadoModel empleadoModel) {
 		return new Empleado(empleadoModel.getId(), empleadoModel.getNombre(), empleadoModel.getApellido(), empleadoModel.getDni(), empleadoModel.getFechaNacimiento(),
 							empleadoModel.getLegajo(), empleadoModel.getHoraDesde(), empleadoModel.getHoraHasta(), empleadoModel.getSueldoBasico(),
-							localConverter.modelToEntity(empleadoModel.getLocal()), localConverter.modelToEntity(empleadoModel.isTipoEmpleado()));
+							localConverter.modelToEntity(empleadoModel.getLocal()), empleadoModel.isTipoEmpleado());
 	}
 }

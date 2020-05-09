@@ -2,9 +2,13 @@ package com.sistema.application.converters;
 
 import com.sistema.application.models.LoteModel;
 import com.sistema.application.repositories.IProductoRepository;
+
+import org.springframework.stereotype.Component;
+
 import com.sistema.application.entities.Lote;
 import com.sistema.application.entities.Producto;
 
+@Component("loteConverter")
 public class LoteConverter {
 	
 	//De entidad a modelo

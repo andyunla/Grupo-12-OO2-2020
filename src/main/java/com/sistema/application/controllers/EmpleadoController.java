@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.services.IEmpleadoService;
+import com.sistema.application.services.ILocalService;
 
 @Controller
 @RequestMapping("empleado")
@@ -26,6 +27,10 @@ public class EmpleadoController {
 	@Autowired
 	@Qualifier("empleadoService")
 	private IEmpleadoService empleadoService;
+	
+	@Autowired
+	@Qualifier("localService")
+	private ILocalService localService;
 
 	private int ultimoLegajo = 2;
 	
