@@ -1,26 +1,27 @@
 package com.sistema.application.converters;
 
-import com.sistema.application.models.EmpleadoModel;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import com.sistema.application.entities.Empleado;
-import com.sistema.application.entities.Local;
+import com.sistema.application.models.EmpleadoModel;
 
+@Component("empleadoConverter")
 public class EmpleadoConverter {
-
-	//De entidad a modelo
+	@Autowired
+	@Qualifier("localConverter")
+	private static LocalConverter localConverter;
+	
 	public EmpleadoModel entityToModel(Empleado empleado) {
-		// casteo (int)empleado.getLegajo(), (int)empleado.getLocal().getIdLocal()
-		return new EmpleadoModel(empleado.getNombre(), empleado.getApellido(), empleado.getDni(), empleado.getFechaNacimiento(), 
-				(int)empleado.getLegajo(), empleado.getHoraDesde(),empleado.getHoraHasta(), empleado.getSueldoBasico(), (int)empleado.getLocal().getIdLocal());
+		return new EmpleadoModel(empleado.getIdPersona(), empleado.getNombre(), empleado.getApellido(), empleado.getDni(), empleado.getFechaNacimiento(),
+								 empleado.getLegajo(), empleado.getHoraDesde(), empleado.getHoraHasta(), empleado.getSueldoBasico(),
+								 localConverter.entityToModel(empleado.getLocal()), localConverter.entityToModel(empleado.isTipoEmpleado()));
 	}
 	
-	//De modelo a entidad
 	public Empleado modelToEntity(EmpleadoModel empleadoModel) {
-		return new Empleado(long idPersona, empleadoModel.getNombre(), empleadoModel.getApellido(), empleadoModel.getDni(), empleadoModel.getFechaNacimiento(), empleadoModel.getLegajo(), 
-				empleadoModel.getHoraDesde(), empleadoModel.getHoraHasta(), empleadoModel.getSueldoBasico(), Local local, Local localOwner);
+		return new Empleado(empleadoModel.getId(), empleadoModel.getNombre(), empleadoModel.getApellido(), empleadoModel.getDni(), empleadoModel.getFechaNacimiento(),
+							empleadoModel.getLegajo(), empleadoModel.getHoraDesde(), empleadoModel.getHoraHasta(), empleadoModel.getSueldoBasico(),
+							localConverter.modelToEntity(empleadoModel.getLocal()), localConverter.modelToEntity(empleadoModel.isTipoEmpleado()));
 	}
-	
 }
