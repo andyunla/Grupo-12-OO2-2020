@@ -35,7 +35,7 @@ VALUES
 
 -- EMPLEADOS:
 INSERT INTO empleado
-	(id_persona, legajo, horario_desde, horario_hasta, sueldo_basico, id_local, tipo_gerente)
+	(id_persona, legajo, horario_desde, horario_hasta, sueldo_basico, id_local, tipo_empleado)
 VALUES
 	(4, 1, '08:00:00', '16:00:00', 30000, 1, 0),	-- Empleados
 	(5, 2, '16:00:00', '20:00:00', 30000, 1, 0),

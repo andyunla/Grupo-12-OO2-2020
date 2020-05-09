@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`empleado` (
   `horario_hasta` TIME NULL,
   `sueldo_basico` DOUBLE NULL,
   `id_local` INT(11) NOT NULL,
-  `tipo_gerente` TINYINT(1) NULL DEFAULT 0,
+  `tipo_empleado` TINYINT(1) NULL DEFAULT 0,
   INDEX `fk_empleado_local1_idx` (`id_local` ASC),
   PRIMARY KEY (`id_persona`),
   UNIQUE INDEX `legajo_UNIQUE` (`legajo` ASC),
