@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sistema.application.entities.Local;
 
+@Repository("localRepository")
 public interface ILocalRepository extends JpaRepository<Local, Serializable>{
 	public abstract Local findByIdLocal(long idLocal);
 	public abstract Local findByNombreLocal(String nombreLocal);

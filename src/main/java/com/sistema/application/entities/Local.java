@@ -70,6 +70,18 @@ public class Local implements Serializable {
 		this.telefono = telefono;
 		this.gerente = null;
 	}
+
+	// Constructor usado por el converter, ver sobre el gerente...
+	public Local(long idLocal, String nombreLocal, double latitud, double longitud, String direccion, 
+			int telefono, Empleado gerente) {
+		this.idLocal = idLocal;
+		this.nombreLocal = nombreLocal;
+		this.latitud = latitud;
+		this.longitud = longitud;
+		this.direccion = direccion;
+		this.telefono = telefono;
+		this.gerente = gerente;
+	}
 	
 	//Getters y Setters
 	public long getIdLocal() {

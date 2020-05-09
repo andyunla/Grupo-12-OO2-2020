@@ -1,12 +1,14 @@
 package com.sistema.application.converters;
 
+import java.util.Set;
+import org.springframework.stereotype.Component;
+
 import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.ItemModel;
 import com.sistema.application.entities.Chango;
 import com.sistema.application.entities.Item;
 
-import java.util.Set;
-
+@Component("changoConverter")
 public class ChangoConverter {
 	ItemConverter itemConverter = null;
 	//De entidad a modelo
@@ -23,7 +25,8 @@ public class ChangoConverter {
 	
 	//De modelo a entidad
 	public Chango modelToEntity(ChangoModel changoModel) {
-		return new Chango(changoModel.getIdPedidostock(), changoModel.getIdPedidostock());
+		//return new Chango(changoModel.getIdPedidostock(), changoModel.getIdPedidostock());
+		return new Chango();
 	}
 	
 }
