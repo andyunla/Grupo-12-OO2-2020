@@ -52,23 +52,22 @@ public class Empleado extends Persona implements Serializable {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="solicitante")
 	private Set<PedidoStock> listaPedidoSolicitante;
 	
-	@OneToOne(fetch = FetchType.LAZY, optional=true)
-	@JoinColumn(name = "gerente_id_local", nullable=true)
-	private Local localOwner; // Para determinar cuál es el local que dirige; si es null es un empleado normal
+	@Column(name="activo", nullable=false)
+	private boolean gerente; // Para determinar si es el que administra el local  -> true=gerente, false=empleado
 
 	public Empleado() {
 		super();
 	}
 
 	public Empleado(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, int legajo, 
-					LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, Local local, Local localOwner) {
+					LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, Local local, boolean gerente) {
 		super(idPersona, nombre, apellido, dni, fechaNacimiento);
 		this.legajo = legajo;
 		this.horaDesde = horaDesde;
 		this.horaHasta = horaHasta;
 		this.sueldoBasico = sueldoBasico;
 		this.local = local;
-		this.localOwner = localOwner;
+		this.gerente = gerente;
 	}
 
 	public Empleado(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, int legajo, 
@@ -79,7 +78,7 @@ public class Empleado extends Persona implements Serializable {
 		this.horaHasta = horaHasta;
 		this.sueldoBasico = sueldoBasico;
 		this.local = null;
-		this.localOwner = null;
+		this.gerente = false;
 	}
 
 	//Getters y Setters
@@ -143,12 +142,12 @@ public class Empleado extends Persona implements Serializable {
 		return local;
 	}
 
-	public void setLocalOwner(Local localOwner) {
-		this.localOwner = localOwner;
+	public void setGerente(boolean gerente) {
+		this.gerente = gerente;
 	}
 
-	public Local getLocalOwner() {
-		return localOwner;
+	public boolean isGerente() {
+		return gerente;
 	}
 
 	public void setLocal(Local local) {
@@ -162,6 +161,6 @@ public class Empleado extends Persona implements Serializable {
 	@Override
 	public String toString() {
 		return "\n\nNombre: "+ this.nombre +"\nApellido: "+this.apellido +"\nDNI: "+ this.dni +"\nLegajo: " + legajo + "\nHoraDesde: " + horaDesde + "\nHoraHasta: " + horaHasta
-				+ "\nSueldoBasico: " + sueldoBasico  ;
+				+ "\nSueldoBasico: " + sueldoBasico  + "\nEs gerente: " + isGerente();
 	}
 }

@@ -15,50 +15,50 @@ public class EmpleadoModel extends PersonaModel {
 	@DateTimeFormat(pattern = "HH-mm-ss")
 	private LocalTime horaHasta;
 	private double sueldoBasico;
-	private long idLocal; // El id del local al cual pertenece
-	private long gerenteIdLocal; // El id del local el cual es el gerente; si es null no administra ningún local
+	private LocalModel local; // El local donde trabaja
+	private boolean gerente; // Para determinar si administra el local; true=gerente
 	
 	public EmpleadoModel() {}
 	
 	public EmpleadoModel(long id, String nombre, String apellido, int dni, LocalDate fechaNacimiento, 
-						 int legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, long idLocal, long gerenteIdLocal) {
+						 int legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, LocalModel local, boolean gerente) {
 		super(id, nombre, apellido, dni, fechaNacimiento);
 		this.legajo = legajo;
 		this.horaDesde = horaDesde;
 		this.horaHasta = horaHasta;
 		this.sueldoBasico = sueldoBasico;
-		this.idLocal = idLocal;
-		this.gerenteIdLocal = gerenteIdLocal;
+		this.local = local;
+		this.gerente = gerente;
 	}
 
 	/*
 	 * Para crear un empleado normal
-	 * La propiedad gerenteIdLocal se establece a 0
+	 * La propiedad gerente se establece a false
 	 */
 	public EmpleadoModel(String nombre, String apellido, int dni, LocalDate fechaNacimiento, 
-						 int legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, long idLocal) {
+						 int legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, LocalModel local) {
 		super(nombre, apellido, dni, fechaNacimiento);
 		this.legajo = legajo;
 		this.horaDesde = horaDesde;
 		this.horaHasta = horaHasta;
 		this.sueldoBasico = sueldoBasico;
-		this.idLocal = idLocal;
-		this.gerenteIdLocal = 0;
+		this.local = local;
+		this.gerente = false;
 	}
 
 	/*
 	 * Para crear un gerente de un local
-	 * La propiedad gerenteIdLocal indica el id del local que administra
+	 * La propiedad gerente indica si el empleado administra el local
 	 */
 	public EmpleadoModel(String nombre, String apellido, int dni, LocalDate fechaNacimiento, 
-						 int legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, long idLocal, long gerenteIdLocal) {
+						 int legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, LocalModel local, boolean gerente) {
 		super(nombre, apellido, dni, fechaNacimiento);
 		this.legajo = legajo;
 		this.horaDesde = horaDesde;
 		this.horaHasta = horaHasta;
 		this.sueldoBasico = sueldoBasico;
-		this.idLocal = idLocal;
-		this.gerenteIdLocal = gerenteIdLocal;
+		this.local = local;
+		this.gerente = gerente;
 	}
 
 	public int getLegajo() {
@@ -93,26 +93,26 @@ public class EmpleadoModel extends PersonaModel {
 		this.sueldoBasico = sueldoBasico;
 	}
 
-	public long getIdLocal() {
-		return idLocal;
+	public LocalModel getLocal() {
+		return local;
 	}
 
-	public void setIdLocal(long idLocal) {
-		this.idLocal = idLocal;
+	public void setLocal(LocalModel local) {
+		this.local = local;
 	}
 
-	public long getGerenteIdLocal() {
-		return gerenteIdLocal;
+	public boolean isGerente() {
+		return gerente;
 	}
 
-	public void setGerenteIdLocal(long gerenteIdLocal) {
-		this.gerenteIdLocal = gerenteIdLocal;
+	public void setGerente(boolean gerente) {
+		this.gerente = gerente;
 	}
 	
 	@Override
 	public String toString() {
 		return "EmpleadoModel [legajo=" + legajo + ", horaDesde=" + horaDesde + ", horaHasta=" + horaHasta
-				+ ", sueldoBasico=" + sueldoBasico + ", idLocal=" + idLocal + ", gerenteIdLocal=" + gerenteIdLocal
+				+ ", sueldoBasico=" + sueldoBasico + ", local=" + local + ", es gerente=" + isGerente()
 				+ ", getDni()=" + getDni() + ", getNombre()=" + getNombre() + ", getApellido()=" + getApellido()
 				+ ", getFechaNacimiento()=" + getFechaNacimiento() + "]";
 	}
