@@ -3,10 +3,14 @@ package com.sistema.application.converters;
 import com.sistema.application.models.PedidoStockModel;
 import com.sistema.application.repositories.IEmpleadoRepository;
 import com.sistema.application.repositories.IProductoRepository;
+
+import org.springframework.stereotype.Component;
+
 import com.sistema.application.entities.Empleado;
 import com.sistema.application.entities.PedidoStock;
 import com.sistema.application.entities.Producto;
 
+@Component("pedidoStockConverter")
 public class PedidoStockConverter {
 
 	//De entidad a modelo
