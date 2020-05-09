@@ -32,6 +32,7 @@ public class EmpleadoController {
 	@GetMapping("")
 	public String empleados(Model modelo) {
 		modelo.addAttribute("empleados", empleadoService.getAll());
+		modelo.addAttribute("locales", localService.getAll());
 		modelo.addAttribute("empleado", new EmpleadoModel());
 		return ViewRouteHelper.EMPLEADO_ABM;
 	}
