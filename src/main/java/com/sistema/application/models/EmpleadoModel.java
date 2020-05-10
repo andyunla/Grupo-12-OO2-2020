@@ -9,7 +9,7 @@ import org.springframework.format.annotation.NumberFormat.Style;
 
 public class EmpleadoModel extends PersonaModel {
 	@NumberFormat(style = Style.NUMBER)
-	private int legajo;
+	private long legajo;
 	@DateTimeFormat(pattern = "HH-mm-ss")
 	private LocalTime horaDesde;
 	@DateTimeFormat(pattern = "HH-mm-ss")
@@ -19,9 +19,9 @@ public class EmpleadoModel extends PersonaModel {
 	private boolean tipoEmpleado; // Para determinar si administra el local; true=gerente
 	
 	public EmpleadoModel() {}
-	
+
 	public EmpleadoModel(long id, String nombre, String apellido, int dni, LocalDate fechaNacimiento, 
-						 int legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, LocalModel local, boolean tipoEmpleado) {
+						 long legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, LocalModel local, boolean tipoEmpleado) {
 		super(id, nombre, apellido, dni, fechaNacimiento);
 		this.legajo = legajo;
 		this.horaDesde = horaDesde;
@@ -36,7 +36,7 @@ public class EmpleadoModel extends PersonaModel {
 	 * La propiedad tipoEmpleado se establece a false
 	 */
 	public EmpleadoModel(String nombre, String apellido, int dni, LocalDate fechaNacimiento, 
-						 int legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, LocalModel local) {
+						 long legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, LocalModel local) {
 		super(nombre, apellido, dni, fechaNacimiento);
 		this.legajo = legajo;
 		this.horaDesde = horaDesde;
@@ -51,7 +51,7 @@ public class EmpleadoModel extends PersonaModel {
 	 * La propiedad tipoEmpleado indica si el empleado administra el local
 	 */
 	public EmpleadoModel(String nombre, String apellido, int dni, LocalDate fechaNacimiento, 
-						 int legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, LocalModel local, boolean tipoEmpleado) {
+						 long legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, LocalModel local, boolean tipoEmpleado) {
 		super(nombre, apellido, dni, fechaNacimiento);
 		this.legajo = legajo;
 		this.horaDesde = horaDesde;
@@ -61,11 +61,11 @@ public class EmpleadoModel extends PersonaModel {
 		this.tipoEmpleado = tipoEmpleado;
 	}
 
-	public int getLegajo() {
+	public long getLegajo() {
 		return legajo;
 	}
 
-	public void setLegajo(int legajo) {
+	public void setLegajo(long legajo) {
 		this.legajo = legajo;
 	}
 
