@@ -58,6 +58,15 @@ public class Lote implements Serializable {
 		this.producto = producto;
 		this.activo = true;
 	}
+	//constructor para Converter LEAN
+	public Lote(long idLote, int cantidadInicial, int cantidadActual, LocalDate fechaIngreso, Producto producto) {
+		this.idLote = idLote;
+		this.cantidadInicial = cantidadInicial;
+		this.cantidadActual = cantidadActual;
+		this.fechaIngreso = fechaIngreso;
+		this.producto = producto;
+		this.activo = true;
+	}
 
 	//Getters y Setters
 	public long getIdLote() {
