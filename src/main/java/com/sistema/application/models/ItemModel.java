@@ -5,20 +5,21 @@ public class ItemModel {
 	//Atributos
 	private long idItem;
 	private int cantidad;
-	private long idProducto;
+	private ProductoModel productoModel;
 	
 	
 	//Constructores
 	public ItemModel() {}
 
-	public ItemModel(long idItem, int cantidad, long idProducto) {
+	public ItemModel(long idItem, int cantidad, ProductoModel productoModel) {
 		super();
 		this.idItem = idItem;
 		this.cantidad = cantidad;
-		this.idProducto = idProducto;
+		this.productoModel = productoModel;
 	}
 
-	
+
+
 	//Getters y Setters
 	public long getIdItem() {
 		return idItem;
@@ -34,18 +35,19 @@ public class ItemModel {
 		this.cantidad = cantidad;
 	}
 
-	public long getIdProducto() {
-		return idProducto;
+	public ProductoModel getProductoModel() {
+		return productoModel;
 	}
-	public void setIdProducto(long idProducto) {
-		this.idProducto = idProducto;
+
+	public void setProductoModel(ProductoModel productoModel) {
+		this.productoModel = productoModel;
 	}
 
 	
 	//toString
 	@Override
 	public String toString() {
-		return "ItemModel [idItem=" + idItem + ", cantidad=" + cantidad + ", idProducto=" + idProducto + "]";
-	};
+		return "ItemModel [idItem=" + idItem + ", cantidad=" + cantidad + ", productoModel=" + productoModel + "]";
+	}
 	
 }

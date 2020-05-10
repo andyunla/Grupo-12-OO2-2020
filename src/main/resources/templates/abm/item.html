@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Item</title>
+</head>
+<body>
+	
+	<!-- Formulario -->
+	<form action="#" th:action="@{/item/agregar}" th:object=${item} method=post>
+	
+	<!-- action="#" tiene la url hacia donde va el formulario al enviarlo con el sumbit 
+	pero como usamos thymeleaf no se lo usa y se deja sólo el #-->
+	
+	<!-- th:action="@{item/agregar}" significa que llamamos al conjunto de métodos @RequestMapping("item")
+	               y de ese conjunto llamamos al método @PostMapping("agregar") -->
+	
+	<!-- th:object=${item} es la entidad (o modelo no se) con la que trabajamos --> 
+	
+	<!-- method=post significa que enviamos datos a la base de datos -->
+	
+		Cantidad:<input type="text" th:field="*{cantidad}"><br>
+	
+		<!-- th:field="*{cantidad}" significa que trabajamos con el atributo cantidad del th:object -->
+	
+		Producto:
+		<select placeholder="Producto" th:field="*{producto.id}">
+			<option th:each="pro: ${productos} " th:value="${pro.id}" th.text="${pro.descripcion}"></option>
+		</select>
+	
+		<!-- select crea una lista y nos permite seleccionar un elemento -->
+		<!-- placeholder especifica una pista breve que describe el valor esperado de un campo de entrada -->
+	
+		<!-- th:each="p : ${productos}" hace referencia a un listado de productos view model que tenes que mandar
+		 del controlador a la lista, para que en cada iteración de cada producto se cargue un nuevo option tag -->
+	
+		<!-- th:value="${p.idProducto}" el valor de cada id de p que se itera se pone como valor de cada option, 
+		así, si un usuario en el desplegable elije un option se manda el id como valor -->
+		
+		<!-- th:text="${p.descripcion}" esto es lo que se muestra al usuario -->
+		
+		
+		
+		<input type="submit">
+	
+	
+	</form>
+
+</body>
+</html>
