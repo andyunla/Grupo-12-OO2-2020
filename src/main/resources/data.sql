@@ -25,13 +25,13 @@ VALUES
 	(2, 'cliente2@email.com', 2),
 	(3, 'cliente3@email.com', 3);
 	
--- LOCAL (Los gerentes_id_empleado se definen luego de cargar empleados)
+-- LOCAL (Los gerentes_legajo se definen luego de cargar empleados)
 INSERT INTO locales
-	(nombre_local, latitud, longitud, direccion, telefono, gerente_id_empleado)
+	(nombre_local, latitud, longitud, direccion, telefono, gerente_legajo)
 VALUES 	
-	('Local 1', 100, 100, "Av. Local 1", 41111111, null),
-	('Local 2', 100, 200, "Av. Local 2", 42222222, null),
-	('Local 3', 100, 250, "Av. Local 3", 43333333, null);
+	('Local 1', 100, 100, "Av. Local 1", 41111111, 1),
+	('Local 2', 100, 200, "Av. Local 2", 42222222, 2),
+	('Local 3', 100, 250, "Av. Local 3", 43333333, 3);
 
 -- EMPLEADOS:
 INSERT INTO empleado
@@ -48,9 +48,9 @@ VALUES
 	(12, 9, '10:00:00', '18:00:00', 80000, 3, 1);
 
 -- Definir gerentes de locales
-UPDATE locales SET gerente_id_empleado = 1 WHERE id_local = 1;
-UPDATE locales SET gerente_id_empleado = 2 WHERE id_local = 2;
-UPDATE locales SET gerente_id_empleado = 3 WHERE id_local = 3;
+UPDATE locales SET gerente_legajo = 1 WHERE id_local = 1;
+UPDATE locales SET gerente_legajo = 2 WHERE id_local = 2;
+UPDATE locales SET gerente_legajo = 3 WHERE id_local = 3;
 
 -- PRODUCTO
 INSERT INTO producto
@@ -72,7 +72,7 @@ VALUES
 	
 -- PEDIDO STOCK
 INSERT INTO pedido_stock
-	(cantidad, aceptado, solicitante_id_empleado, oferente_id_empleado, id_producto)
+	(cantidad, aceptado, solicitante_legajo, oferente_legajo, id_producto)
 VALUES
 	( 2, 1, 8, 4, 1),
 	( 5, 1, 9, 4, 2);	
@@ -93,7 +93,7 @@ VALUES
 	
 -- FACTURA
 INSERT INTO factura 
-	(fecha_factura, coste_total, id_local, id_empleado, id_cliente, id_chango)
+	(fecha_factura, coste_total, id_local, empleado_legajo, nro_cliente, id_chango)
 VALUES
 	('2020-01-30', 200, 3, 8, 1, 1),
 	('2020-01-31', 1000, 3, 9, 2, 2);
