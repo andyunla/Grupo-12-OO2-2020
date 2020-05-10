@@ -26,7 +26,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class Empleado extends Persona implements Serializable {
 
 	@Column(name="legajo")
-	private int legajo;
+	private long legajo;
 
 	@Column(name="hora_desde")
 	private LocalTime horaDesde;
@@ -44,14 +44,6 @@ public class Empleado extends Persona implements Serializable {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="empleado")
 	private Set<Factura> listaFacturas;
 	
-	// Lista en las que el empleado aparece como oferente
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="oferente")
-	private Set<PedidoStock> listaPedidoOferente;
-
-	// Lista en las que el empleado aparece como solicitante
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="solicitante")
-	private Set<PedidoStock> listaPedidoSolicitante;
-	
 	@Column(name="tipo_empleado", nullable=false)
 	private boolean tipoEmpleado; // Para determinar si es el que administra el local  -> true=gerente, false=empleado
 
@@ -59,7 +51,7 @@ public class Empleado extends Persona implements Serializable {
 		super();
 	}
 
-	public Empleado(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, int legajo, 
+	public Empleado(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, long legajo, 
 					LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, Local local, boolean tipoEmpleado) {
 		super(idPersona, nombre, apellido, dni, fechaNacimiento);
 		this.legajo = legajo;
@@ -70,7 +62,7 @@ public class Empleado extends Persona implements Serializable {
 		this.tipoEmpleado = tipoEmpleado;
 	}
 
-	public Empleado(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, int legajo, 
+	public Empleado(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, long legajo, 
 					LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico) {
 		super(idPersona, nombre, apellido, dni, fechaNacimiento);
 		this.legajo = legajo;
@@ -82,11 +74,11 @@ public class Empleado extends Persona implements Serializable {
 	}
 
 	//Getters y Setters
-	public int getLegajo() {
+	public long getLegajo() {
 		return legajo;
 	}
 
-	public void setLegajo(int legajo) {
+	public void setLegajo(long legajo) {
 		this.legajo = legajo;
 	}
 
@@ -120,22 +112,6 @@ public class Empleado extends Persona implements Serializable {
 
 	public void setListaFacturas(Set<Factura> listaFacturas) {
 		this.listaFacturas = listaFacturas;
-	}
-
-	public Set<PedidoStock> getListaPedidoSolicitante() {
-		return listaPedidoSolicitante;
-	}
-
-	public void setListaPedidoSolicitante(Set<PedidoStock> listaPedidoSolicitante) {
-		this.listaPedidoSolicitante = listaPedidoSolicitante;
-	}
-
-	public Set<PedidoStock> getListaPedidoOferente() {
-		return listaPedidoOferente;
-	}
-
-	public void setListaPedidoOferente(Set<PedidoStock> listaPedidoOferente) {
-		this.listaPedidoOferente = listaPedidoOferente;
 	}
 
 	public Local getLocal() {

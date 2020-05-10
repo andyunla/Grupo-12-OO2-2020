@@ -35,28 +35,26 @@ public class PedidoStock implements Serializable {
 	@Column(name="cantidad", nullable=false)
 	private int cantidad;
 
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="solicitante_id_empleado", nullable=true)
-	private Empleado solicitante;
-	
 	@Column(name="aceptado", nullable=false)
 	private boolean aceptado;
-
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="oferente_id_empleado", nullable=false)
-	private Empleado oferente;
+	
+	@Column(name="solicitante_legajo", nullable=true)
+	private long solicitanteLegajo;
+	
+	@Column(name="oferente_legajo", nullable=true)
+	private long oferenteLegajo;
 
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="pedidostock")
 	private Set<Chango> listaChangos;
 
 	public PedidoStock() {}
 
-	public PedidoStock(Producto producto, int cantidad, Empleado solicitante, boolean aceptado, Empleado oferente) {
+	public PedidoStock(Producto producto, int cantidad, boolean aceptado, long solicitanteLegajo, long oferenteLegajo) {
 		this.producto = producto;
 		this.cantidad = cantidad;
-		this.solicitante = solicitante;
 		this.aceptado = aceptado;
-		this.oferente = oferente;
+		this.solicitanteLegajo = solicitanteLegajo;
+		this.oferenteLegajo = oferenteLegajo;
 	}
 
 	//Getters y Setters
@@ -84,14 +82,6 @@ public class PedidoStock implements Serializable {
 		this.cantidad = cantidad;
 	}
 
-	public Empleado getSolicitante() {
-		return solicitante;
-	}
-
-	public void setSolicitante(Empleado solicitante) {
-		this.solicitante = solicitante;
-	}
-
 	public boolean isAceptado() {
 		return aceptado;
 	}
@@ -100,12 +90,20 @@ public class PedidoStock implements Serializable {
 		this.aceptado = aceptado;
 	}
 
-	public Empleado getOferente() {
-		return oferente;
+	public long getSolicitanteLegajo() {
+		return solicitanteLegajo;
 	}
 
-	public void setOferente(Empleado oferente) {
-		this.oferente = oferente;
+	public void setSolicitanteLegajo(long solicitanteLegajo) {
+		this.solicitanteLegajo = solicitanteLegajo;
+	}
+
+	public long getOferenteLegajo() {
+		return oferenteLegajo;
+	}
+
+	public void setOferenteLegajo(long oferenteLegajo) {
+		this.oferenteLegajo = oferenteLegajo;
 	}
 
 	public Set<Chango> getListaChangos() {
@@ -119,6 +117,6 @@ public class PedidoStock implements Serializable {
 	@Override
 	public String toString() {
 		return "PedidoStock [idPedidoStock=" + idPedidoStock + ", producto=" + producto + ", cantidad=" + cantidad
-				+ ", solicitante=" + solicitante + ", aceptado=" + aceptado + ", oferente=" + oferente + "]";
+				+ ", solicitante=" + solicitanteLegajo + ", aceptado=" + aceptado + ", oferente=" + oferenteLegajo + "]";
 	}
 }

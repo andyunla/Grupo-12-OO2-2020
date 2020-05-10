@@ -30,7 +30,7 @@ public class Factura implements Serializable {
 	private long idFactura;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id_cliente", nullable=false)
+	@JoinColumn(name="nro_cliente", nullable=false)
 	private Cliente cliente;
 
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -44,7 +44,7 @@ public class Factura implements Serializable {
 	private double costeTotal;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id_empleado", nullable=false)
+	@JoinColumn(name="empleado_legajo", nullable=false)
 	private Empleado empleado;
 
 	@ManyToOne(fetch=FetchType.LAZY)

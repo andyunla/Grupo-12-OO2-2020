@@ -25,7 +25,7 @@ public class Cliente extends Persona implements Serializable {
 	private String email;
 
 	@Column(name="nro_cliente", nullable=false)
-	private int nroCliente;
+	private long nroCliente;
 
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="cliente")
 	private Set<Factura> listaFacturas;
@@ -34,7 +34,7 @@ public class Cliente extends Persona implements Serializable {
 		super();
 	}
 
-	public Cliente(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, String email, int nroCliente) {
+	public Cliente(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, String email, long nroCliente) {
 		super(idPersona, nombre, apellido, dni, fechaNacimiento);
 		this.nroCliente = nroCliente;
 		this.email = email;
@@ -49,11 +49,11 @@ public class Cliente extends Persona implements Serializable {
 		this.email = email;
 	}
 
-	public int getNroCliente() {
+	public long getNroCliente() {
 		return nroCliente;
 	}
 
-	public void setNroCliente(int nroCliente) {
+	public void setNroCliente(long nroCliente) {
 		this.nroCliente = nroCliente;
 	}
 
