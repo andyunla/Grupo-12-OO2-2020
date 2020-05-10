@@ -2,6 +2,10 @@ package com.sistema.application.converters;
 
 import java.time.LocalDate;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
 import com.sistema.application.entities.Chango;
 import com.sistema.application.entities.Cliente;
 import com.sistema.application.entities.Empleado;
@@ -11,23 +15,26 @@ import com.sistema.application.models.ClienteModel;
 import com.sistema.application.models.FacturaModel;
 import com.sistema.application.repositories.IClienteRepository;
 
+@Component("facturaConverter")
 public class FacturaConverter {
-	ClienteConverter cliConv = null;
-	IClienteRepository iCR = null;
-	//De entidad a modelo
+	@Autowired
+	@Qualifier("clienteConverter")
+	private static ClienteConverter clienteConverter;
+	
+	@Autowired
+	@Qualifier("changoConverter")
+	private static ChangoConverter changoConverter;
+	
 	public FacturaModel entityToModel(Factura factura) {
-		//revisar el empleado que se trae por legajo
-		
-		// creo un ClienteModel y lo traigo del repositorio con el nro de cliente de la factura.
-		ClienteModel cliente = cliConv.entityToModel(iCR.findByNroCliente(factura.getCliente().getNroCliente()));
-		return new FacturaModel(factura.getIdFactura(), cliente, factura.getChango().getIdChango(), factura.getFechaFactura(), factura.getCosteTotal(),
-				factura.getEmpleado().getLegajo());
+		//return new FacturaModel(factura.getIdFactura(), clienteConverter.entityToModel(factura.getCliente()), changoConverter.entityToModel(factura.getChango()), factura.getFechaFactura(), factura.getCosteTotal(),
+		//		factura.getEmpleado().getLegajo());
+		return new FacturaModel();
 	}
 	
-	//De modelo a entidad
 	public Factura modelToEntity(FacturaModel facturaModel) {
-		
-		return new Factura(Cliente cliente, Chango chango, LocalDate fechaFactura, double costeTotal, Empleado empleado, Local local);
+		//return new Factura(clienteConverter.modelToEntity(facturaModel.getCliente()), changoConverter.modelToEntity(facturaModel.getChango()), facturaModel.getFechaFactura(), facturaModel.getCosteTotal(), 
+		//				   clienteConverter.modelToEntity(facturaModel.getEmpleado(), clienteConverter.modelToEntity(facturaModel.getLocal())));
+		return new Factura();
 	}
 	
 }

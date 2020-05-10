@@ -21,11 +21,7 @@ public class ItemConverter {
 	
 	//De modelo a entidad
 	public Item modelToEntity(ItemModel itemModel) {
-		IProductoRepository iPR = null;
-		Producto prod = iPR.findByIdProducto(itemModel.getIdProducto());
-		IChangoRepository iCR = null;
-		Chango chango = iCR.findByIdChango(itemModel.);
-		return new Item(itemModel.getCantidad(), prod,  );
+		return new Item();
 	}
 	
 }
