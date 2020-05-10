@@ -6,19 +6,19 @@ public class ItemModel {
 	private long idItem;
 	private int cantidad;
 	private ProductoModel productoModel;
+	private ChangoModel changoModel;
 	
 	
 	//Constructores
 	public ItemModel() {}
 
-	public ItemModel(long idItem, int cantidad, ProductoModel productoModel) {
+	public ItemModel(long idItem, int cantidad, ProductoModel productoModel, ChangoModel changoModel) {
 		super();
 		this.idItem = idItem;
 		this.cantidad = cantidad;
 		this.productoModel = productoModel;
+		this.changoModel = changoModel;
 	}
-
-
 
 	//Getters y Setters
 	public long getIdItem() {
@@ -42,12 +42,20 @@ public class ItemModel {
 	public void setProductoModel(ProductoModel productoModel) {
 		this.productoModel = productoModel;
 	}
+	
+	public ChangoModel getChangoModel() {
+		return changoModel;
+	}
+	public void setChangoModel(ChangoModel changoModel) {
+		this.changoModel = changoModel;
+	}
 
 	
 	//toString
 	@Override
 	public String toString() {
-		return "ItemModel [idItem=" + idItem + ", cantidad=" + cantidad + ", productoModel=" + productoModel + "]";
+		return "ItemModel [idItem=" + idItem + ", cantidad=" + cantidad + ", productoModel=" + productoModel
+				+ ", changoModel=" + changoModel + "]";
 	}
 	
 }

@@ -3,24 +3,27 @@ package com.sistema.application.models;
 import java.util.Set;
 
 import com.sistema.application.models.ItemModel;
+import com.sistema.application.models.FacturaModel;
+import com.sistema.application.models.LocalModel;
 
 public class ChangoModel {
 	
 	//Atributos
 	private long idChango;
-	private Set<ItemModel> listaItems;
-	private long idPedidostock;
+	private PedidoStockModel pedidoStock;
+	private LocalModel local;
+	
 	
 	//Constructores
 	public ChangoModel() {}
 
-	public ChangoModel(long idChango, Set<ItemModel> listaItems, long idPedidostock) {
+	public ChangoModel(long idChango, PedidoStockModel pedidoStock, LocalModel local) {
 		super();
 		this.idChango = idChango;
-		this.listaItems = listaItems;
-		this.idPedidostock = idPedidostock;
+		this.pedidoStock = pedidoStock;
+		this.local = local;
 	}
-
+	
 	
 	//Getters y Setters
 	public long getIdChango() {
@@ -30,22 +33,25 @@ public class ChangoModel {
 		this.idChango = idChango;
 	}
 
-	public Set<ItemModel> getListaItems() {
-		return listaItems;
+	public PedidoStockModel getPedidoStock() {
+		return pedidoStock;
 	}
-	public void setListaItems(Set<ItemModel> listaItems) {
-		this.listaItems = listaItems;
+	public void setPedidoStock(PedidoStockModel pedidoStock) {
+		this.pedidoStock = pedidoStock;
 	}
 
-	public long getIdPedidostock() {
-		return idPedidostock;
+	public LocalModel getLocal() {
+		return local;
 	}
-	public void setIdPedidostock(long idPedidostock) {
-		this.idPedidostock = idPedidostock;
-	};
+	public void setLocal(LocalModel local) {
+		this.local = local;
+	}
+
 	
-	
-	
-	
-	
+	//toString
+	@Override
+	public String toString() {
+		return "ChangoModel [idChango=" + idChango + ", pedidoStock=" + pedidoStock + ", local=" + local + "]";
+	}
+
 }
