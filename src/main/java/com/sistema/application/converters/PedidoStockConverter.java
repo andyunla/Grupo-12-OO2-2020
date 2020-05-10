@@ -26,14 +26,9 @@ public class PedidoStockConverter {
 	}
 	
 	//De modelo a entidad
-	public PedidoStock modelToEntity(PedidoStockModel pedidoStockModel) {
-		//revisar el oferente, solicitante. También el isAceptado()
-		IProductoRepository iPR = null;
-		Producto prod = iPR.findByIdProducto(pedidoStockModel.getIdProducto());
-		IEmpleadoRepository iER = null;
-		Empleado solicitante = iER.findByLegajo((int)pedidoStockModel.getIdSolicitante());
-		Empleado oferente = iER.findByLegajo((int)pedidoStockModel.getIdOferente());
-		return new PedidoStock(prod, pedidoStockModel.getCantidad(), solicitante, pedidoStockModel.isAceptado(),  oferente);
+	public PedidoStock modelToEntity(PedidoStockModel pedidoStockModel) {		
+		return new PedidoStock(productoConverter.modelToEntity(pedidoStockModel.getProducto()), 
+				pedidoStockModel.getCantidad(), pedidoStockModel.isAceptado(), pedidoStockModel.getIdSolicitante(),  pedidoStockModel.getIdOferente());
 	}
 	
 }
