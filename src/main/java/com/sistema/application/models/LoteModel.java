@@ -9,24 +9,26 @@ public class LoteModel {
 	private int cantidadInicial;
 	private int cantidadActual;
 	private LocalDate fechaIngreso;
-	private long idProducto;
+	private ProductoModel producto;
 	private boolean activo;
+	
 	
 	//Constructores
 	public LoteModel() {}
 
-	public LoteModel(long idLote, int cantidadInicial, int cantidadActual, LocalDate fechaIngreso, long idProducto,
-			boolean activo) {
+	public LoteModel(long idLote, int cantidadInicial, int cantidadActual, LocalDate fechaIngreso,
+			ProductoModel producto, boolean activo) {
 		super();
 		this.idLote = idLote;
 		this.cantidadInicial = cantidadInicial;
 		this.cantidadActual = cantidadActual;
 		this.fechaIngreso = fechaIngreso;
-		this.idProducto = idProducto;
+		this.producto = producto;
 		this.activo = activo;
 	}
 
-	
+
+
 	//Getters y Setters
 	public long getIdLote() {
 		return idLote;
@@ -56,11 +58,11 @@ public class LoteModel {
 		this.fechaIngreso = fechaIngreso;
 	}
 
-	public long getIdProducto() {
-		return idProducto;
+	public ProductoModel getProductoModel() {
+		return producto;
 	}
-	public void setIdProducto(long idProducto) {
-		this.idProducto = idProducto;
+	public void setProductoModel(ProductoModel producto) {
+		this.producto = producto;
 	}
 
 	public boolean isActivo() {
@@ -75,7 +77,7 @@ public class LoteModel {
 	@Override
 	public String toString() {
 		return "LoteModel [idLote=" + idLote + ", cantidadInicial=" + cantidadInicial + ", cantidadActual="
-				+ cantidadActual + ", fechaIngreso=" + fechaIngreso + ", idProducto=" + idProducto + ", activo="
+				+ cantidadActual + ", fechaIngreso=" + fechaIngreso + ", producto=" + producto + ", activo="
 				+ activo + "]";
 	};
 	
