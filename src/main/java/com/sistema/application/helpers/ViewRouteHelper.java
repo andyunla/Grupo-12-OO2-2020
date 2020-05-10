@@ -10,7 +10,7 @@ public class ViewRouteHelper {
 	public final static String EMPLEADO_ABM = "abm/empleado";
 	public final static String PRODUCTO_ABM = "abm/producto";
 	public final static String LOCAL_ABM = "abm/local";
-
+	public final static String ITEM_ABM = "abm/item";
 
 	/**** Redirects ****/
 	public final static String HOME_ROOT = "index";
@@ -18,5 +18,6 @@ public class ViewRouteHelper {
 	public final static String EMPLEADO_ROOT = "empleado";
 	public final static String PRODUCTO_ROOT = "producto";
 	public final static String LOCAL_ROOT = "local";
-
+	public final static String ITEM_ROOT = "item";
+	
 }
