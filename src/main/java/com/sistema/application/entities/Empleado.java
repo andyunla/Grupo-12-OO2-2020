@@ -28,10 +28,10 @@ public class Empleado extends Persona implements Serializable {
 	@Column(name="legajo")
 	private long legajo;
 
-	@Column(name="hora_desde")
+	@Column(name="horario_desde")
 	private LocalTime horaDesde;
 
-	@Column(name="hora_hasta")
+	@Column(name="horario_hasta")
 	private LocalTime horaHasta;
 
 	@Column(name="sueldo_basico")
