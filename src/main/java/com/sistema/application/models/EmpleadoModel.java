@@ -10,10 +10,8 @@ import org.springframework.format.annotation.NumberFormat.Style;
 public class EmpleadoModel extends PersonaModel {
 	@NumberFormat(style = Style.NUMBER)
 	private long legajo;
-	@DateTimeFormat(pattern = "HH-mm-ss")
-	private LocalTime horaDesde;
-	@DateTimeFormat(pattern = "HH-mm-ss")
-	private LocalTime horaHasta;
+	private String horaDesde;
+	private String horaHasta;
 	private double sueldoBasico;
 	private LocalModel local; // El local donde trabaja
 	private boolean tipoEmpleado; // Para determinar si administra el local; true=gerente
@@ -21,7 +19,7 @@ public class EmpleadoModel extends PersonaModel {
 	public EmpleadoModel() {}
 
 	public EmpleadoModel(long id, String nombre, String apellido, int dni, LocalDate fechaNacimiento, 
-						 long legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, LocalModel local, boolean tipoEmpleado) {
+						 long legajo, String horaDesde, String horaHasta, double sueldoBasico, LocalModel local, boolean tipoEmpleado) {
 		super(id, nombre, apellido, dni, fechaNacimiento);
 		this.legajo = legajo;
 		this.horaDesde = horaDesde;
@@ -36,7 +34,7 @@ public class EmpleadoModel extends PersonaModel {
 	 * La propiedad tipoEmpleado se establece a false
 	 */
 	public EmpleadoModel(String nombre, String apellido, int dni, LocalDate fechaNacimiento, 
-						 long legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, LocalModel local) {
+						 long legajo, String horaDesde, String horaHasta, double sueldoBasico, LocalModel local) {
 		super(nombre, apellido, dni, fechaNacimiento);
 		this.legajo = legajo;
 		this.horaDesde = horaDesde;
@@ -51,7 +49,7 @@ public class EmpleadoModel extends PersonaModel {
 	 * La propiedad tipoEmpleado indica si el empleado administra el local
 	 */
 	public EmpleadoModel(String nombre, String apellido, int dni, LocalDate fechaNacimiento, 
-						 long legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, LocalModel local, boolean tipoEmpleado) {
+						 long legajo, String horaDesde, String horaHasta, double sueldoBasico, LocalModel local, boolean tipoEmpleado) {
 		super(nombre, apellido, dni, fechaNacimiento);
 		this.legajo = legajo;
 		this.horaDesde = horaDesde;
@@ -69,19 +67,19 @@ public class EmpleadoModel extends PersonaModel {
 		this.legajo = legajo;
 	}
 
-	public LocalTime getHoraDesde() {
+	public String getHoraDesde() {
 		return horaDesde;
 	}
 
-	public void setHoraDesde(LocalTime horaDesde) {
+	public void setHoraDesde(String horaDesde) {
 		this.horaDesde = horaDesde;
 	}
 
-	public LocalTime getHoraHasta() {
+	public String getHoraHasta() {
 		return horaHasta;
 	}
 
-	public void setHoraHasta(LocalTime horaHasta) {
+	public void setHoraHasta(String horaHasta) {
 		this.horaHasta = horaHasta;
 	}
 

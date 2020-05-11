@@ -75,17 +75,17 @@
                </div>
                <div class="form-group row">
                     <label for="horaDesdeNuevoEmpleado" class="col-md-2 col-3">Horario de llegada</label>
-                    <input type="date" class="form-control col-sm-4 col-5" id="horaDesdeNuevoEmpleado"
+                    <input type="time" class="form-control col-sm-4 col-5" id="horaDesdeNuevoEmpleado"
                          th:field="*{horaDesde}" />
                </div>
                <div class="form-group row">
                     <label for="horaHastaNuevoEmpleado" class="col-md-2 col-3">Horario de salida</label>
-                    <input type="date" class="form-control col-sm-4 col-5" id="horaHastaNuevoEmpleado"
+                    <input type="time" class="form-control col-sm-4 col-5" id="horaHastaNuevoEmpleado"
                          th:field="*{horaHasta}" />
                </div>
                <div class="form-group row">
                     <label for="sueldoNuevoEmpleado" class="col-md-2 col-3">Sueldo básico</label>
-                    <input type="date" class="form-control col-sm-4 col-5" id="sueldoNuevoEmpleado"
+                    <input type="number" class="form-control col-sm-4 col-5" id="sueldoNuevoEmpleado"
                          th:field="*{sueldoBasico}" />
                </div>
                <div class="form-group row">
@@ -111,6 +111,7 @@
                               <th scope="col">Horario de entrada</th>
                               <th scope="col">Horario de salida</th>
                               <th scope="col">Sueldo básico</th>
+                              <th scope="col">Legajo</th>
                               <th scope="col"></th>
                          </tr>
                     </thead>
@@ -124,6 +125,7 @@
                               <td th:text="${empleado.horaDesde}"></td>
                               <td th:text="${empleado.horaHasta}"></td>
                               <td th:text="${empleado.sueldoBasico}"></td>
+                              <td th:text="${empleado.legajo}"></td>
                               <td class="d-flex justify-content-around">
                                    <div data-toggle="tooltip" data-placement="top" title="Modificar">
                                         <a href="#" data-toggle="modal" data-target="#modifyEmpleado"
@@ -181,13 +183,13 @@
                                              th:field="*{fechaNacimiento}" />
                                    </div>
                                    <div class="form-group row">
-                                        <label for="fechaDesdeModificarEmpleado" class="col-sm-3 col-4">Horario de entrada</label>
-                                        <input type="date" class="form-control col-5" id="fechaDesdeModificarEmpleado"
-                                             th:field="*{horaHasta}" />
+                                        <label for="horaDesdeModificarEmpleado" class="col-sm-3 col-4">Horario de entrada</label>
+                                        <input type="time" class="form-control col-5" id="horaDesdeModificarEmpleado"
+                                             th:field="*{horaDesde}" />
                                    </div>
                                    <div class="form-group row">
-                                        <label for="fechaHastaModificarEmpleado" class="col-sm-3 col-4">Horario de salida</label>
-                                        <input type="date" class="form-control col-5" id="fechaHastaModificarEmpleado"
+                                        <label for="horaHastaModificarEmpleado" class="col-sm-3 col-4">Horario de salida</label>
+                                        <input type="time" class="form-control col-5" id="horaHastaModificarEmpleado"
                                              th:field="*{horaHasta}" />
                                    </div>
                                    <div class="form-group row">
@@ -229,7 +231,8 @@
                document.getElementById("apellidoModificarEmpleado").value = empleados[empleadoIndex].apellido;
                document.getElementById("dniModificarEmpleado").value = empleados[empleadoIndex].dni;
                document.getElementById("fechaDeNacModificarEmpleado").value = empleados[empleadoIndex].fechaNacimiento;
-               document.getElementById("fechaDesdeModificarEmpleado").value = empleados[empleadoIndex].fechaDesde;
+               document.getElementById("horaDesdeModificarEmpleado").value = empleados[empleadoIndex].horaDesde;
+               document.getElementById("horaHastaModificarEmpleado").value = empleados[empleadoIndex].horaHasta;
                document.getElementById("sueldoModificarEmpleado").value = empleados[empleadoIndex].sueldoBasico;
           }));
      </script>

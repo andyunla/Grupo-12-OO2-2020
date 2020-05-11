@@ -20,18 +20,22 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="empleado")
 public class Empleado extends Persona implements Serializable {
 
+	@GeneratedValue
 	@Column(name="legajo")
 	private long legajo;
 
 	@Column(name="horario_desde")
+	@DateTimeFormat(iso=DateTimeFormat.ISO.TIME)
 	private LocalTime horaDesde;
 
 	@Column(name="horario_hasta")
+	@DateTimeFormat(iso=DateTimeFormat.ISO.TIME)
 	private LocalTime horaHasta;
 
 	@Column(name="sueldo_basico")
