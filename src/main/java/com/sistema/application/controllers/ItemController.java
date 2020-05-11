@@ -11,6 +11,7 @@ import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ItemModel;
 import com.sistema.application.services.implementations.ProductoService;
 import com.sistema.application.services.IProductoService;
+import com.sistema.application.services.IItemService;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,18 +24,35 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ItemController {
 	
 	@Autowired
-	@Qualifier("productoService")
-	private IProductoService productoService;
+	@Qualifier("itemService")
+	private IItemService itemService;
 	
-	@GetMapping("/nuevo")
-	public ModelAndView create() {
-		ModelAndView mAV = new ModelAndView(ViewRouteHelper.ITEM_ABM);
-		mAV.addObject("item", new ItemModel() );
-		mAV.addObject("producto", productoService.getAll() );
-		return mAV;
+
+	//Métodos
+	@GetMapping("")
+	public String items(Model modelo) {
+		modelo.addAttribute("items", itemService.getAll() );
+		modelo.addAttribute("item", new ItemModel() );
+		return ViewRouteHelper.ITEM_ABM;
 	}
 	
+	@PostMapping("agregar")
+	public String agregar(@ModelAttribute("item") ItemModel nuevoItem) {
+		System.out.print("\n\n" + nuevoItem + "\n\n");
+		return "redirect:/" + ViewRouteHelper.ITEM_ROOT;
+	}
 	
+	@PostMapping("modificar")
+	public String modificar(@ModelAttribute("item") ItemModel itemModificado) {
+		System.out.print("\n\n" + itemModificado + "\n\n");
+		return "redirect:/" + ViewRouteHelper.CLIENTE_ROOT;
+	}
 	
+	@PostMapping("eliminar/{id}")
+	public String eliminar(@PathVariable("idItem") long idItem, RedirectAttributes redirectAttributes) {
+		redirectAttributes.addFlashAttribute("localEliminado", true);
+        System.out.print("\n\n" + idItem + "\n\n");      // DEBUG: Cambiar lógica apropiada
+		return "redirect:/" + ViewRouteHelper.CLIENTE_ROOT;
+	}
 	
 }

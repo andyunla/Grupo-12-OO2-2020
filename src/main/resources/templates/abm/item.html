@@ -1,50 +1,220 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<title>Item</title>
+<head>
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <title>Items</title>
+     <link rel="shortcut icon" type="image/png" th:href="@{/images/unla.png}" />
+     <link rel="stylesheet" th:href="@{/css/styles.css}" type="text/css" />
+     <!-- Estatico -->
+     <link rel="stylesheet" href="../../static/css/styles.css" type="text/css" />
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
-<body>
+</head>									<!-- --------------------------- -->
+<body class="container-fluid m-0 p-0">
+     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <a class="navbar-brand" th:href="@{/}">
+               <img th:src="@{/images/unla.png}" width="35" height="35" class="d-inline-block align-top" alt="" />
+               UNLa Stock
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+               <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+               <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                         <a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                         <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              ABMs
+                         </a>
+                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item" th:href="@{/producto}">Productos</a>
+                         </div>
+                    </li>
+               </ul>
+          </div>
+     </nav>
+	 <header class="text-center m-3">
+          <h1 class="display-4">ITEMS</h1>
+     </header>
+     <main class="w-100 d-flex flex-column align-items-center">
+
+          <button class="btn btn-info m-3" type="button" data-toggle="collapse" data-target="#collapseForm"
+               id="buttonAgregar">
+               Agregrar
+          </button>
+          <form class="col-11 col-sm-8 col-md-7 m-1 p-2 mx-auto bg-light rounded collapse" id="collapseForm" action="#"
+               th:action="@{/item/agregar}" th:object="${item}" method="post">
+               <div class="form-group row">
+                    <label for="Cantidad" class="col-md-2 col-3">Cantidad</label>
+                    <input type="text" class="form-control col-md-9 col-8" id="cantidad"
+                         th:field="*{cantidad}" />
+               </div>
+               <!-- PROVISORIAMENTE -->
+               <div class="form-group row">
+                    <label for="gerenteNuevoLocal" class="col-md-2 col-3">Gerente</label>
+                    <input type="number" class="form-control col-sm-4 col-5" id="gerenteNuevoLocal"
+                         th:field="*{gerenteLegajo}" />
+               </div>
+               <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+               </div>
+               <!-- 
+               <div class="form-group row d-flex">
+                    <label for="gerenteNuevoLocal" class="col-md-2 col-3">Gerente</label>
+                    <select th:field="*{gerente.id}" class="custom-select w-50" id="gerenteNuevoLocal">
+                         <option value="1" selected disabled>Seleccione un gerente</option>
+                         <option th:each="empleado :${empleados}" th:text="${empleado.nombre} + ${empleado.apellido}"
+                              th:value="${empleado.id}"></option>
+                    </select>
+               </div>
+          -->
+          </form>
+          <!-- LIST -->
+          <div class="container-fluid col-12 col-md-11 text-center table-responsive">
+               <table class="table w-100 shadow mb-3 bg-white rounded">
+                    <thead class="thead-dark">
+                         <tr>
+                              <th scope="col">ID</th>
+                              <th scope="col">Cantidad</th>
+                              <th scope="col">Productp</th>
+                              <th scope="col">Chango</th>
+                              <th></th>
+                         </tr>
+                    </thead>
+                    <tbody>
+                         <tr th:each="local :${locales}">
+                              <td th:text="${local.idLocal}"></td>
+                              <td th:text="${local.nombreLocal}"></td>
+                              <td th:text="${local.latitud}"></td>
+                              <td th:text="${local.longitud}"></td>
+                              <td th:text="${local.direccion}"></td>
+                              <td th:text="${local.telefono}"></td>
+                              <td th:text="${local.gerenteLegajo}"></td>
+                              <td>
+                                   <!-- Traer los empleados de la API REST por medio de la id del local
+                                        Ejemplo: empleados/local/3434 ? -->
+                                   <a class="btn boton-ver-empleados text-primary" data-toggle="collapse"
+                                        href="#${local.idLocal}" data-local="${local.idLocal}" role="button">
+                                        Ver
+                                   </a>
+                                   <div class="collapse" id="${local.idLocal}">
+                                        <ul style="list-style: none;">
+                                             <li>Empleados..</li>
+                                        </ul>
+                                   </div>
+                              </td>
+
+                              <td class="d-flex justify-content-around">
+                                   <div data-toggle="tooltip" data-placement="top" title="Modificar">
+                                        <a href="#" data-toggle="modal" data-target="#modifyLocal" class="modifyButton">
+                                             <img th:src="@{/images/pencil.png}" alt="" class="list-icon edit-icon"
+                                                  th:attr="data-index=${localStat.index}" />
+                                        </a>
+                                   </div>
+                                   <form th:action="@{/local/eliminar/{idLocal}(idLocal = ${local.idLocal})}"
+                                        method="POST" data-toggle="tooltip" data-placement="top" title="Eliminar">
+                                        <button type="submit" class="delete-button">
+                                             <img th:src="@{/images/trashcan.png}" alt=""
+                                                  class="list-icon delete-icon" />
+                                        </button>
+                                   </form>
+                              </td>
+
+                         </tr>
+                    </tbody>
+               </table>
+          </div>
+
+          <div class="modal fade" id="modifyLocal" tabindex="-1" role="dialog">
+               <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                         <div class="modal-header">
+                              <h5 class="modal-title" id="tituloModificarLocal"></h5>
+                              <button type="button" class="close" data-dismiss="modal">
+                                   <span aria-hidden="true">&times;</span>
+                              </button>
+                         </div>
+                         <div class="modal-body">
+                              <form class="col-12 m-1 p-2 mx-auto bg-light rounded" action="#"
+                                   th:action="@{/local/modificar}" th:object="${local}" method="post">
+                                   <input type="number" class="d-none" id="idModificarLocal" th:field="*{idLocal}" />
+                                   <div class="form-group row">
+                                        <label for="nombreModificarLocal" class="col-sm-3 col-4">Nombre</label>
+                                        <input type="text" class="form-control col-md-8  col-7"
+                                             id="nombreModificarLocal" th:field="*{nombreLocal}" />
+                                   </div>
+                                   <div class="form-group row">
+                                        <label for="latitudModificarLocal" class="col-sm-3 col-4">Latitud</label>
+                                        <input type="number" step="0.00001" class="form-control col-md-8 col-7"
+                                             id="latitudModificarLocal" th:field="*{latitud}" />
+                                   </div>
+                                   <div class="form-group row">
+                                        <label for="longitudModificarLocal" class="col-sm-3 col-4">Longitud</label>
+                                        <input type="number" step="0.00001" class="form-control col-md-8 col-7"
+                                             id="longitudModificarLocal" th:field="*{longitud}" />
+                                   </div>
+                                   <div class="form-group row">
+                                        <label for="direccionModificarLocal" class="col-sm-3 col-4">DirecciÃ³n</label>
+                                        <input type="text" class="form-control col-5" id="direccionModificarLocal"
+                                             th:field="*{direccion}" />
+                                   </div>
+                                   <div class="form-group row">
+                                        <label for="telefonoModificarLocal" class="col-sm-3 col-4">Telefono</label>
+                                        <input type="number" class="form-control col-5" id="telefonoModificarLocal"
+                                             th:field="*{telefono}" />
+                                   </div>
+                                   <!-- PROVISORIAMENTE -->
+                                   <div class="form-group row">
+                                        <label for="gerenteModificarLocal" class="col-sm-3 col-4">Gerente</label>
+                                        <input type="number" class="form-control col-5" id="gerenteModificarLocal"
+                                             th:field="*{gerenteLegajo}" />
+                                   </div>
+                                   <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                   </div>
+                              </form>
+                         </div>
+                    </div>
+               </div>
+          </div>
+     </main>
+     <script th:inline="javascript">
+          /*<![CDATA[*/
+          var locales = /*[[${locales}]]*/'default';
+          // Listener a los botones de modificar local
+          let modifyButtons = document.querySelectorAll('.modifyButton');
+          modifyButtons.forEach(button => button.addEventListener('click', event => {
+               let localIndex = event.target.dataset.index;
+               document.getElementById('tituloModificarLocal').innerText = "Modificar Local #" + locales[localIndex].idLocal;
+               document.getElementById("idModificarLocal").value = locales[localIndex].idLocal;
+               document.getElementById("nombreModificarLocal").value = locales[localIndex].nombreLocal;
+               document.getElementById("latitudModificarLocal").value = locales[localIndex].latitud;
+               document.getElementById("longitudModificarLocal").value = locales[localIndex].longitud;
+               document.getElementById("direccionModificarLocal").value = locales[localIndex].direccion;
+               document.getElementById("telefonoModificarLocal").value = locales[localIndex].telefono;
+               document.getElementById("gerenteModificarLocal").value = locales[localIndex].gerenteLegajo;
+          }));
+     </script>
+     <script th:src="@{/js/abm.js}"></script>
+     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+          integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+          crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+          integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+          crossorigin="anonymous"></script>
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+          integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+          crossorigin="anonymous"></script>
+</body>
+
+</html>
 	
-	<!-- Formulario -->
-	<form action="#" th:action="@{/item/agregar}" th:object=${item} method=post>
-	
-	<!-- action="#" tiene la url hacia donde va el formulario al enviarlo con el sumbit 
-	pero como usamos thymeleaf no se lo usa y se deja sólo el #-->
-	
-	<!-- th:action="@{item/agregar}" significa que llamamos al conjunto de métodos @RequestMapping("item")
-	               y de ese conjunto llamamos al método @PostMapping("agregar") -->
-	
-	<!-- th:object=${item} es la entidad (o modelo no se) con la que trabajamos --> 
-	
-	<!-- method=post significa que enviamos datos a la base de datos -->
-	
-		Cantidad:<input type="text" th:field="*{cantidad}"><br>
-	
-		<!-- th:field="*{cantidad}" significa que trabajamos con el atributo cantidad del th:object -->
-	
-		Producto:
-		<select placeholder="Producto" th:field="*{producto.id}">
-			<option th:each="pro: ${productos} " th:value="${pro.id}" th.text="${pro.descripcion}"></option>
-		</select>
-	
-		<!-- select crea una lista y nos permite seleccionar un elemento -->
-		<!-- placeholder especifica una pista breve que describe el valor esperado de un campo de entrada -->
-	
-		<!-- th:each="p : ${productos}" hace referencia a un listado de productos view model que tenes que mandar
-		 del controlador a la lista, para que en cada iteración de cada producto se cargue un nuevo option tag -->
-	
-		<!-- th:value="${p.idProducto}" el valor de cada id de p que se itera se pone como valor de cada option, 
-		así, si un usuario en el desplegable elije un option se manda el id como valor -->
-		
-		<!-- th:text="${p.descripcion}" esto es lo que se muestra al usuario -->
-		
-		
-		
-		<input type="submit">
-	
-	
-	</form>
 
 </body>
 </html>
