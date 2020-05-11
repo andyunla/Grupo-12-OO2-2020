@@ -111,6 +111,7 @@
                               <th scope="col">Horario de entrada</th>
                               <th scope="col">Horario de salida</th>
                               <th scope="col">Sueldo básico</th>
+                              <th scope="col">Legajo</th>
                               <th scope="col"></th>
                          </tr>
                     </thead>
@@ -124,6 +125,7 @@
                               <td th:text="${empleado.horaDesde}"></td>
                               <td th:text="${empleado.horaHasta}"></td>
                               <td th:text="${empleado.sueldoBasico}"></td>
+                              <td th:text="${empleado.legajo}"></td>
                               <td class="d-flex justify-content-around">
                                    <div data-toggle="tooltip" data-placement="top" title="Modificar">
                                         <a href="#" data-toggle="modal" data-target="#modifyEmpleado"
