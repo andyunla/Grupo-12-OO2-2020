@@ -1,3 +1,9 @@
+.font-q{
+    font-family: 'Quicksand', sans-serif;
+}
+
+/* ABM ESTILOS  */
+
 .list-icon{
     width: 1.2em;
     height: auto;
@@ -19,4 +25,10 @@
 .delete-button{
 	border-width: 0;
 	background-color: rgba(0, 0, 0, 0.0);
+}
+
+/* DISTANCIA ESTILOS */
+
+#distancia{
+    font-size: large;
 }
