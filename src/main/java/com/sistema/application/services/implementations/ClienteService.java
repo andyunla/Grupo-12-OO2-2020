@@ -60,12 +60,12 @@ public class ClienteService implements IClienteService {
 		}
 	}
 
-	/*
-	@Override
-	public ClienteModel findById(int id) {
-		return clienteConverter.entityToModel(clienteRepository.findById(id));
-	}
-	*/
+	
+	/*@Override
+	public ClienteModel findById(long id) {
+		return clienteConverter.entityToModel(clienteRepository.findById(id) );
+	}*/
+	
 	@Override
 	public ClienteModel findByNroCliente(int nroCliente) {
 		return clienteConverter.entityToModel(clienteRepository.findByNroCliente(nroCliente));

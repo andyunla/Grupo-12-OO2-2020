@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface IFacturaService {
 
+	//public FacturaModel findById(long id);
+	
 	public List<Factura> getAll();
 	
 	public FacturaModel ingresarOActualizar(FacturaModel facturaModel);

@@ -26,6 +26,11 @@ public class PedidoStockService implements IPedidoStockService{
 		
 		
 		//Métodos
+		/*@Override
+		public PedidoStockModel findById(long id) {
+			return pedidoStockConverter.entityToModel(pedidoStockRepository.findByIdPedidoStock(id) );
+		}*/
+		
 		@Override
 		public List<PedidoStock> getAll(){
 			return pedidoStockRepository.findAll();

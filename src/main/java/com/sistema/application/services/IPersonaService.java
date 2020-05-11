@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface IPersonaService {
 
+	//public PersonaModel findById(long id);
+	
 	public List<Persona> getAll();
 	
 	public PersonaModel ingresarOActualizar(PersonaModel personaModel);

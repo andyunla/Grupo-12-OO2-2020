@@ -26,6 +26,11 @@ public class LoteService implements ILoteService {
 		
 		
 		//Métodos
+		/*@Override
+		public LoteModel findById(long id) {
+			return loteConverter.entityToModel(loteRepository.findByIdLote(id) );
+		}*/
+		
 		@Override
 		public List<Lote> getAll(){
 			return loteRepository.findAll();

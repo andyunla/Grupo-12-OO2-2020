@@ -34,10 +34,10 @@ public class LocalService implements ILocalService {
           return localesModelos;
      }
 
-     @Override
+     /*@Override
      public LocalModel findByIdLocal(long idLocal) {
           return localConverter.entityToModel(localRepository.findByIdLocal(idLocal));
-     }
+     }*/
 
      @Override
      public LocalModel insertOrUpdate(LocalModel localModel) {

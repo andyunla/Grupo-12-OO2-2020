@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface IPedidoStockService {
 
+	//public PedidoStockModel findById(long id);
+	
 	public List<PedidoStock> getAll();
 	
 	public PedidoStockModel ingresarOActualizar(PedidoStockModel pedidoStockModel);

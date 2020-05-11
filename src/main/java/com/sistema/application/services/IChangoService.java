@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface IChangoService {
 
+	//public ChangoModel findById(long id);
+	
 	public List<Chango> getAll();
 	
 	public ChangoModel ingresarOActualizar(ChangoModel changoModel);

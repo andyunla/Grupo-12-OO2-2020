@@ -9,6 +9,7 @@ import com.sistema.application.repositories.IFacturaRepository;
 import com.sistema.application.converters.FacturaConverter;
 import com.sistema.application.entities.Factura;
 import com.sistema.application.models.FacturaModel;
+import com.sistema.application.models.ItemModel;
 
 import java.util.List;
 
@@ -26,6 +27,11 @@ public class FacturaService implements IFacturaService{
 
 
 	//Métodos
+	/*@Override
+	public FacturaModel findById(long id) {
+		return facturaConverter.entityToModel(facturaRepository.findByIdFactura(id) );
+	}*/
+	
 	@Override
 	public List<Factura> getAll(){
 		return facturaRepository.findAll();

@@ -26,6 +26,11 @@ public class ChangoService implements IChangoService{
 		
 		
 		//Métodos
+		/*@Override
+		public ChangoModel findById(long id) {
+			return changoConverter.entityToModel(changoRepository.findByIdChango(id) );
+		}*/
+		
 		@Override
 		public List<Chango> getAll(){
 			return changoRepository.findAll();

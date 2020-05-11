@@ -26,6 +26,11 @@ public class ItemService implements IItemService{
 	
 	
 	//Métodos
+	/*@Override
+	public ItemModel findById(long id) {
+		return itemConverter.entityToModel(itemRepository.findByIdItem(id) );
+	}*/
+	
 	@Override
 	public List<Item> getAll(){
 		return itemRepository.findAll();

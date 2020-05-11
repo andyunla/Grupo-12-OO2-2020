@@ -26,6 +26,11 @@ public class PersonaService implements IPersonaService{
 		
 		
 		//Métodos
+		/*@Override
+		public PersonaModel findById(long id) {
+			return personaConverter.entityToModel(personaRepository.findByIdPersona(id) );
+		}*/
+		
 		@Override
 		public List<Persona> getAll(){
 			return personaRepository.findAll();

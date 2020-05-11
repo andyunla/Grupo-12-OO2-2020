@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface ILoteService {
 	
+	//public LoteModel findById(long id);
+	
 	public List<Lote> getAll();
 	
 	public LoteModel ingresarOActualizar(LoteModel loteModel);
