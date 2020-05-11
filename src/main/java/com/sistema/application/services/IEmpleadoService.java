@@ -11,11 +11,11 @@ public interface IEmpleadoService {
 	
 	//public EmpleadoModel findById(long id);
 	
-	public EmpleadoModel findByLegajo(int legajo);
+	public EmpleadoModel findByLegajo(long legajo);
 	
 	public EmpleadoModel insertOrUpdate(EmpleadoModel empleadoModel);
 	
-	public boolean remove(int id);
+	public boolean remove(long id);
 	
 	public List<EmpleadoModel> findByNombreAndApellido(String nombre, String apellido);
 }

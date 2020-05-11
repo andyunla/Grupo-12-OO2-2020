@@ -47,11 +47,6 @@ VALUES
 	(11, 8, '10:00:00', '18:00:00', 80000, 2, 1),
 	(12, 9, '10:00:00', '18:00:00', 80000, 3, 1);
 
--- Definir gerentes de locales
-UPDATE locales SET gerente_legajo = 1 WHERE id_local = 1;
-UPDATE locales SET gerente_legajo = 2 WHERE id_local = 2;
-UPDATE locales SET gerente_legajo = 3 WHERE id_local = 3;
-
 -- PRODUCTO
 INSERT INTO producto
 	(nombre, descripcion, precio, talle)

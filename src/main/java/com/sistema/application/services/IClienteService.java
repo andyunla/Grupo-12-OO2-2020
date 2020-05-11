@@ -11,11 +11,11 @@ public interface IClienteService {
 	
 	//public ClienteModel findById(long id);
 	
-	public ClienteModel findByNroCliente(int nroCliente);
+	public ClienteModel findByNroCliente(long nroCliente);
 	
 	public ClienteModel insertOrUpdate(ClienteModel clienteModel);
 	
-	public boolean remove(int id);
+	public boolean remove(long id);
 	
 	public List<ClienteModel> findByNombreAndApellido(String nombre, String apellido);
 }

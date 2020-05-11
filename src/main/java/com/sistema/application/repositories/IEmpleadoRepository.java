@@ -12,6 +12,6 @@ import com.sistema.application.entities.Empleado;
 
 @Repository("empleadoRepository")
 public interface IEmpleadoRepository extends JpaRepository<Empleado, Serializable>{
-	public abstract Empleado findByLegajo(int legajo);
+	public abstract Empleado findByLegajo(long legajo);
 	public abstract List<Empleado> findByNombreAndApellido(String nombre, String apellido);
 }

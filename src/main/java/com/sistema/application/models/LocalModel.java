@@ -38,6 +38,7 @@ public class LocalModel {
 		this.listaChangos = listaChangos;
 		this.listaFacturas = listaFacturas;
 	}
+
 	//constructor para los converter
 	public LocalModel(long idLocal, String nombreLocal, double latitud, double longitud, String direccion, int telefono,
 			long gerenteLegajo) {
@@ -49,7 +50,6 @@ public class LocalModel {
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.gerenteLegajo = gerenteLegajo;
-		
 	}
 
 	//Getters y Setters
