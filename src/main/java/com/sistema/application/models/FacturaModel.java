@@ -11,13 +11,14 @@ public class FacturaModel {
 	private LocalDate fechaFactura;
 	private double costeTotal;
 	private EmpleadoModel empleado;
+	private LocalModel local;
 	
 	
 	//Constructores
 	public FacturaModel() {}
 
 	public FacturaModel(long idFactura, ClienteModel cliente, ChangoModel chango, LocalDate fechaFactura,
-			double costeTotal, EmpleadoModel empleado) {
+			double costeTotal, EmpleadoModel empleado, LocalModel local) {
 		super();
 		this.idFactura = idFactura;
 		this.cliente = cliente;
@@ -25,9 +26,18 @@ public class FacturaModel {
 		this.fechaFactura = fechaFactura;
 		this.costeTotal = costeTotal;
 		this.empleado = empleado;
+		this.local = local;
 	}
 	
 	
+	public LocalModel getLocal() {
+		return local;
+	}
+
+	public void setLocal(LocalModel local) {
+		this.local = local;
+	}
+
 	//Getters y Setters
 	public long getIdFactura() {
 		return idFactura;
@@ -76,7 +86,7 @@ public class FacturaModel {
 	@Override
 	public String toString() {
 		return "FacturaModel [idFactura=" + idFactura + ", cliente=" + cliente + ", chango=" + chango
-				+ ", fechaFactura=" + fechaFactura + ", costeTotal=" + costeTotal + ", empleado=" + empleado + "]";
+				+ ", fechaFactura=" + fechaFactura + ", costeTotal=" + costeTotal + ", empleado=" + empleado + "Local"+ local+ "]";
 	};
 	
 }

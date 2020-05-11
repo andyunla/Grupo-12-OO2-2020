@@ -1,17 +1,21 @@
 package com.sistema.application.converters;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.sistema.application.entities.Empleado;
 import com.sistema.application.models.EmpleadoModel;
+import com.sistema.application.models.LocalModel;
 
 @Component("empleadoConverter")
 public class EmpleadoConverter {
 	@Autowired
 	@Qualifier("localConverter")
-	private static LocalConverter localConverter;
+	private LocalConverter localConverter;
 	
 	public EmpleadoModel entityToModel(Empleado empleado) {
 		return new EmpleadoModel(empleado.getIdPersona(), empleado.getNombre(), empleado.getApellido(), empleado.getDni(), empleado.getFechaNacimiento(),

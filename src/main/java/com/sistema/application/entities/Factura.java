@@ -61,6 +61,16 @@ public class Factura implements Serializable {
 		this.empleado = empleado;
 		this.local = local;
 	}
+	// constructor de converter
+	public Factura(long idFactura, Cliente cliente, Chango chango, LocalDate fechaFactura, double costeTotal, Empleado empleado, Local local) {
+		this.idFactura = idFactura;
+		this.cliente = cliente;
+		this.chango = chango;
+		this.fechaFactura = fechaFactura;
+		this.costeTotal = costeTotal;
+		this.empleado = empleado;
+		this.local = local;
+	}
 
 	//Getters y Setters
 	public long getIdFactura() {

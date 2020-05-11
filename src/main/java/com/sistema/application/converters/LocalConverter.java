@@ -9,9 +9,9 @@ import com.sistema.application.models.LocalModel;
 
 @Component("localConverter")
 public class LocalConverter {	
-	@Autowired
-	@Qualifier("empleadoConverter")
-	private EmpleadoConverter empleadoConverter;
+//	@Autowired
+//	@Qualifier("empleadoConverter")
+//	private EmpleadoConverter empleadoConverter;
 
 	public LocalModel entityToModel(Local local) {
 		return new LocalModel(local.getIdLocal(), local.getNombreLocal(), local.getLatitud(), local.getLongitud(),
@@ -21,5 +21,4 @@ public class LocalConverter {
 	public Local modelToEntity(LocalModel localModel) {
 		return new Local(localModel.getIdLocal(), localModel.getNombreLocal(), localModel.getLatitud(), localModel.getLongitud(), 
 						 localModel.getDireccion(), localModel.getTelefono(), localModel.getGerenteLegajo());
-	}
 }

@@ -39,7 +39,9 @@ public class LocalModel {
 		this.listaFacturas = listaFacturas;
 	}
 
-	public LocalModel(long idLocal, String nombreLocal, double latitud, double longitud, String direccion, int telefono, long gerenteLegajo) {
+	//constructor para los converter
+	public LocalModel(long idLocal, String nombreLocal, double latitud, double longitud, String direccion, int telefono,
+			long gerenteLegajo) {
 		super();
 		this.idLocal = idLocal;
 		this.nombreLocal = nombreLocal;

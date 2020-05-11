@@ -48,6 +48,13 @@ public class Item implements Serializable {
 		this.producto = producto;
 		this.chango = chango;
 	}
+	//constructor para converter LEAN
+	public Item(long idItem, int cantidad, Producto producto, Chango chango) {
+		this.idItem = idItem;
+		this.cantidad = cantidad;
+		this.producto = producto;
+		this.chango = chango;
+	}
 
 	//Getters y Setters
 	public long getIdItem() {
