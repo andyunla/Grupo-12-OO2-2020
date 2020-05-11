@@ -57,6 +57,16 @@ public class PedidoStock implements Serializable {
 		this.oferenteLegajo = oferenteLegajo;
 	}
 
+	//Constructor usado por el converter
+	public PedidoStock(long idPedidoStock, Producto producto, int cantidad, boolean aceptado, long solicitanteLegajo, long oferenteLegajo) {
+		this.idPedidoStock = idPedidoStock;
+		this.producto = producto;
+		this.cantidad = cantidad;
+		this.aceptado = aceptado;
+		this.solicitanteLegajo = solicitanteLegajo;
+		this.oferenteLegajo = oferenteLegajo;
+	}
+
 	//Getters y Setters
 	public long getIdPedidoStock() {
 		return idPedidoStock;

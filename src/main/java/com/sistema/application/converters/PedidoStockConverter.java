@@ -20,14 +20,14 @@ public class PedidoStockConverter {
 	//De entidad a modelo
 	public PedidoStockModel entityToModel(PedidoStock pedidoStock) {
 		//revisar el oferente, solicitante. También el isAceptado() LEANDRO
-		return new PedidoStockModel(pedidoStock.getIdPedidoStock(),productoConverter.entityToModel(pedidoStock.getProducto()), 
+		return new PedidoStockModel(pedidoStock.getIdPedidoStock(), productoConverter.entityToModel(pedidoStock.getProducto()), 
 				pedidoStock.getCantidad(), pedidoStock.isAceptado(), pedidoStock.getSolicitanteLegajo(),
 				pedidoStock.getOferenteLegajo());
 	}
 	
 	//De modelo a entidad
 	public PedidoStock modelToEntity(PedidoStockModel pedidoStockModel) {		
-		return new PedidoStock(productoConverter.modelToEntity(pedidoStockModel.getProducto()), 
+		return new PedidoStock(pedidoStockModel.getIdPedidoStock(), productoConverter.modelToEntity(pedidoStockModel.getProducto()), 
 				pedidoStockModel.getCantidad(), pedidoStockModel.isAceptado(), pedidoStockModel.getIdSolicitante(),  pedidoStockModel.getIdOferente());
 	}
 	

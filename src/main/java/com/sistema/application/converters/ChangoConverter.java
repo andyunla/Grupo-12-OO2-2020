@@ -14,18 +14,17 @@ import com.sistema.application.entities.Item;
 @Component("changoConverter")
 public class ChangoConverter {
 	@Autowired
-	@Qualifier("pedidoStocConverter")
+	@Qualifier("pedidoStockConverter")
 	private PedidoStockConverter pedidoStockConverter;
+
 	@Autowired
 	@Qualifier("localConverter")
 	private LocalConverter localConverter;
-	//De entidad a modelo
-	public ChangoModel entityToModel(Chango chango) {
 	
-		return new ChangoModel( chango.getIdChango(),pedidoStockConverter.entityToModel( chango.getPedidostock()), localConverter.entityToModel(chango.getLocal()));
+	public ChangoModel entityToModel(Chango chango) {
+		return new ChangoModel(chango.getIdChango(), pedidoStockConverter.entityToModel(chango.getPedidostock()), localConverter.entityToModel(chango.getLocal()));
 	}
 	
-	//De modelo a entidad
 	public Chango modelToEntity(ChangoModel changoModel) {
 		return new Chango(changoModel.getIdChango(), pedidoStockConverter.modelToEntity(changoModel.getPedidoStock()), localConverter.modelToEntity(changoModel.getLocal()));
 	}
