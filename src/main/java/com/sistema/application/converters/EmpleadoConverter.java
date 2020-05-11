@@ -18,8 +18,6 @@ public class EmpleadoConverter {
 	private LocalConverter localConverter;
 	
 	public EmpleadoModel entityToModel(Empleado empleado) {
-//		long id, String nombre, String apellido, int dni, LocalDate fechaNacimiento, 
-//		 int legajo, LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, LocalModel local, boolean tipoEmpleado
 		return new EmpleadoModel(empleado.getIdPersona(), empleado.getNombre(), empleado.getApellido(), empleado.getDni(), empleado.getFechaNacimiento(),
 								 empleado.getLegajo(), empleado.getHoraDesde(), empleado.getHoraHasta(), empleado.getSueldoBasico(),
 								 localConverter.entityToModel(empleado.getLocal()), empleado.isTipoEmpleado());
