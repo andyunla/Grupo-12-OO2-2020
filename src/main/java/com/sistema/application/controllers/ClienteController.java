@@ -26,8 +26,6 @@ public class ClienteController {
 	@Autowired
 	@Qualifier("clienteService")
 	private IClienteService clienteService;
-
-	private int ultimoNroCliente = 2;
 	
 	@GetMapping("")
 	public String clientes(Model modelo) {
@@ -38,8 +36,6 @@ public class ClienteController {
 	
 	@PostMapping("agregar")
 	public String agregar(@ModelAttribute("cliente") ClienteModel nuevoCliente) {
-		ultimoNroCliente++; // DEBUG: Cambiar lógica apropiada
-		nuevoCliente.setNroCliente(ultimoNroCliente);
 		clienteService.insertOrUpdate(nuevoCliente);
 		return "redirect:/" + ViewRouteHelper.CLIENTE_ROOT;
 	}

@@ -25,6 +25,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Table(name="empleado")
 public class Empleado extends Persona implements Serializable {
 
+	@GeneratedValue
 	@Column(name="legajo")
 	private long legajo;
 

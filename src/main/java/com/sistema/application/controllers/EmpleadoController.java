@@ -31,8 +31,6 @@ public class EmpleadoController {
 	@Autowired
 	@Qualifier("localService")
 	private ILocalService localService;
-
-	private int ultimoLegajo = 2;
 	
 	@GetMapping("")
 	public String empleados(Model modelo) {
@@ -44,8 +42,6 @@ public class EmpleadoController {
 	
 	@PostMapping("agregar")
 	public String agregar(@ModelAttribute("empleado") EmpleadoModel nuevoEmpleado) {
-		ultimoLegajo++; // DEBUG: Cambiar lógica apropiada
-		nuevoEmpleado.setLegajo(ultimoLegajo);
 		empleadoService.insertOrUpdate(nuevoEmpleado);
 		return "redirect:/" + ViewRouteHelper.EMPLEADO_ROOT;
 	}
