@@ -39,6 +39,16 @@ public class LocalModel {
 		this.listaFacturas = listaFacturas;
 	}
 
+	public LocalModel(long idLocal, String nombreLocal, double latitud, double longitud, String direccion, int telefono, long gerenteLegajo) {
+		super();
+		this.idLocal = idLocal;
+		this.nombreLocal = nombreLocal;
+		this.latitud = latitud;
+		this.longitud = longitud;
+		this.direccion = direccion;
+		this.telefono = telefono;
+		this.gerenteLegajo = gerenteLegajo;
+	}
 
 	//Getters y Setters
 	public long getIdLocal() {

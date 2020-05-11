@@ -15,11 +15,11 @@ public class LocalConverter {
 
 	public LocalModel entityToModel(Local local) {
 		return new LocalModel(local.getIdLocal(), local.getNombreLocal(), local.getLatitud(), local.getLongitud(),
-							  local.getDireccion(), local.getTelefono(), empleadoConverter.entityToModel(local.getGerente()));
+							  local.getDireccion(), local.getTelefono(), local.getGerenteLegajo());
 	}
 	
 	public Local modelToEntity(LocalModel localModel) {
 		return new Local(localModel.getIdLocal(), localModel.getNombreLocal(), localModel.getLatitud(), localModel.getLongitud(), 
-						 localModel.getDireccion(), localModel.getTelefono(), empleadoConverter.modelToEntity(localModel.getGerente()));
+						 localModel.getDireccion(), localModel.getTelefono(), localModel.getGerenteLegajo());
 	}
 }
