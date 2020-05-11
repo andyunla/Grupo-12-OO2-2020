@@ -67,7 +67,7 @@ public class EmpleadoService implements IEmpleadoService {
 	}
 	*/
 	@Override
-	public EmpleadoModel findByLegajo(int legajo) {
+	public EmpleadoModel findByLegajo(long legajo) {
 		return empleadoConverter.entityToModel(empleadoRepository.findByLegajo(legajo));
 	}
 	

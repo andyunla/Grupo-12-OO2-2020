@@ -67,7 +67,7 @@ public class ClienteService implements IClienteService {
 	}
 	*/
 	@Override
-	public ClienteModel findByNroCliente(int nroCliente) {
+	public ClienteModel findByNroCliente(long nroCliente) {
 		return clienteConverter.entityToModel(clienteRepository.findByNroCliente(nroCliente));
 	}
 	
