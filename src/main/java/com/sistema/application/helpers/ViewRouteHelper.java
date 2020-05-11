@@ -19,5 +19,8 @@ public class ViewRouteHelper {
 	public final static String PRODUCTO_ROOT = "producto";
 	public final static String LOCAL_ROOT = "local";
 	public final static String ITEM_ROOT = "item";
+
+	// CASOS DE USO
+	public final static String DISTANCIA_ROOT = "cu/distancia";
 	
 }
