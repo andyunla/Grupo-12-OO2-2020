@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.sistema.application.entities.Empleado;
+import com.sistema.application.funciones.Funciones;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.LocalModel;
 
@@ -19,13 +20,15 @@ public class EmpleadoConverter {
 	
 	public EmpleadoModel entityToModel(Empleado empleado) {
 		return new EmpleadoModel(empleado.getIdPersona(), empleado.getNombre(), empleado.getApellido(), empleado.getDni(), empleado.getFechaNacimiento(),
-								 empleado.getLegajo(), empleado.getHoraDesde(), empleado.getHoraHasta(), empleado.getSueldoBasico(),
+								 empleado.getLegajo(), empleado.getHoraDesde().toString(), empleado.getHoraHasta().toString(), empleado.getSueldoBasico(),
 								 localConverter.entityToModel(empleado.getLocal()), empleado.isTipoEmpleado());
 	}
 	
 	public Empleado modelToEntity(EmpleadoModel empleadoModel) {
+		LocalTime horaDesde = Funciones.horaFromString(empleadoModel.getHoraDesde());
+		LocalTime horaHasta = Funciones.horaFromString(empleadoModel.getHoraHasta());
 		return new Empleado(empleadoModel.getId(), empleadoModel.getNombre(), empleadoModel.getApellido(), empleadoModel.getDni(), empleadoModel.getFechaNacimiento(),
-							empleadoModel.getLegajo(), empleadoModel.getHoraDesde(), empleadoModel.getHoraHasta(), empleadoModel.getSueldoBasico(),
+							empleadoModel.getLegajo(), horaDesde, horaHasta, empleadoModel.getSueldoBasico(),
 							localConverter.modelToEntity(empleadoModel.getLocal()), empleadoModel.isTipoEmpleado());
 	}
 }

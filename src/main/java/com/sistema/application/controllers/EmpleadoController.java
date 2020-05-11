@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +42,11 @@ public class EmpleadoController {
 	}
 	
 	@PostMapping("agregar")
-	public String agregar(@ModelAttribute("empleado") EmpleadoModel nuevoEmpleado) {
+	public String agregar(@ModelAttribute("empleado") EmpleadoModel nuevoEmpleado, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			System.out.println("EL EMPLEADO ES: \n\n\n" + nuevoEmpleado);
+        	return "index";
+      	}
 		empleadoService.insertOrUpdate(nuevoEmpleado);
 		return "redirect:/" + ViewRouteHelper.EMPLEADO_ROOT;
 	}
