@@ -1,11 +1,12 @@
 package com.sistema.application.models;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Set;
-
 
 public class LocalModel {
 
-	//Atributos
+	// Atributos
 	private long idLocal;
 	private String nombreLocal;
 	private double latitud;
@@ -17,13 +18,13 @@ public class LocalModel {
 	private Set<EmpleadoModel> listaEmpleados;
 	private Set<ChangoModel> listaChangos;
 	private Set<FacturaModel> listaFacturas;
-	
-	
-	//Constructores
-	public LocalModel() {}
 
-	public LocalModel(long idLocal, String nombreLocal, double latitud, double longitud, String direccion, int telefono,
-			long gerenteLegajo, Set<LoteModel> listaLotes, Set<EmpleadoModel> listaEmpleados,
+	// Constructores
+	public LocalModel() {
+	}
+
+	public LocalModel(long idLocal, String nombreLocal, double latitud, double longitud, String direccion,
+			int telefono, long gerenteLegajo, Set<LoteModel> listaLotes, Set<EmpleadoModel> listaEmpleados,
 			Set<ChangoModel> listaChangos, Set<FacturaModel> listaFacturas) {
 		super();
 		this.idLocal = idLocal;
@@ -141,14 +142,25 @@ public class LocalModel {
 		this.listaFacturas = listaFacturas;
 	}
 
-	
-	//toString
+	// toString
 	@Override
 	public String toString() {
 		return "LocalModel [idLocal=" + idLocal + ", nombreLocal=" + nombreLocal + ", latitud=" + latitud
-				+ ", longitud=" + longitud + ", direccion=" + direccion + ", telefono=" + telefono + ", gerenteLegajo="
-				+ gerenteLegajo + ", listaLotes=" + listaLotes + ", listaEmpleados=" + listaEmpleados
-				+ ", listaChangos=" + listaChangos + ", listaFacturas=" + listaFacturas + "]";
+				+ ", longitud=" + longitud + ", direccion=" + direccion + ", telefono=" + telefono
+				+ ", gerenteLegajo=" + gerenteLegajo + ", listaLotes=" + listaLotes + ", listaEmpleados="
+				+ listaEmpleados + ", listaChangos=" + listaChangos + ", listaFacturas=" + listaFacturas + "]";
 	}
-	
+
+	public double calcularDistancia(LocalModel local) {
+		double radioTierra = 6371; // en kilómetros
+		double dLat = Math.toRadians(local.latitud - this.latitud);
+		double dLng = Math.toRadians(local.longitud - this.longitud);
+		double sindLat = Math.sin(dLat / 2);
+		double sindLng = Math.sin(dLng / 2);
+		double va1 = Math.pow(sindLat, 2)
+				+ Math.pow(sindLng, 2) * Math.cos(Math.toRadians(this.latitud)) 
+				* Math.cos(Math.toRadians(local.latitud));
+		double va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));
+		return radioTierra * va2;
+	}
 }
