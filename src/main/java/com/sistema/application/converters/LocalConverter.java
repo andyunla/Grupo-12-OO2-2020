@@ -21,4 +21,5 @@ public class LocalConverter {
 	public Local modelToEntity(LocalModel localModel) {
 		return new Local(localModel.getIdLocal(), localModel.getNombreLocal(), localModel.getLatitud(), localModel.getLongitud(), 
 						 localModel.getDireccion(), localModel.getTelefono(), localModel.getGerenteLegajo());
+	}
 }
