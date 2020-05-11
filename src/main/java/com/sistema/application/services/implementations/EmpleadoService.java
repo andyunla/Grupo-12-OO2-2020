@@ -42,7 +42,7 @@ public class EmpleadoService implements IEmpleadoService {
 	}
 
 	@Override
-	public boolean remove(int id) {
+	public boolean remove(long id) {
 		try {
 			List<Empleado> empleados = empleadoRepository.findAll();
 			Empleado empleado = null;

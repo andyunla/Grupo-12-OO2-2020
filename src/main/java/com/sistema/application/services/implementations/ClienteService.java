@@ -42,7 +42,7 @@ public class ClienteService implements IClienteService {
 	}
 
 	@Override
-	public boolean remove(int id) {
+	public boolean remove(long id) {
 		try {
 			List<Cliente> clientes = clienteRepository.findAll();
 			Cliente cliente = null;

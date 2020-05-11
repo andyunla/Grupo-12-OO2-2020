@@ -47,7 +47,7 @@ public class LocalService implements ILocalService {
      }
 
      @Override
-     public boolean remove(int id) {
+     public boolean remove(long id) {
           try{
                localRepository.deleteById(id);
                return true;
