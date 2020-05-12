@@ -70,7 +70,10 @@ public class EmpleadoService implements IEmpleadoService {
 	public EmpleadoModel findByLegajo(long legajo) {
 		return empleadoConverter.entityToModel(empleadoRepository.findByLegajo(legajo));
 	}
-	
+	@Override
+	public EmpleadoModel findByGerenteLocal(long idLocal) {
+		return empleadoConverter.entityToModel(empleadoRepository.findByGerenteLocal(idLocal));
+	}
 	@Override
 	public List<EmpleadoModel> findByNombreAndApellido(String nombre, String apellido) {
 		List<EmpleadoModel> models = new ArrayList<EmpleadoModel>();

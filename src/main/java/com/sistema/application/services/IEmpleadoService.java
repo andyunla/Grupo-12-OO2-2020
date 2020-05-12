@@ -20,4 +20,6 @@ public interface IEmpleadoService {
 	public List<EmpleadoModel> findByNombreAndApellido(String nombre, String apellido);
 
 	public List<EmpleadoModel> findByIdLocal(long idLocal);
+
+	EmpleadoModel findByGerenteLocal(long idLocal);
 }
