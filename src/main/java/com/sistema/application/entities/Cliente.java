@@ -24,6 +24,7 @@ public class Cliente extends Persona implements Serializable {
 	@Column(name="email", nullable=false, length=50)
 	private String email;
 
+	@GeneratedValue
 	@Column(name="nro_cliente", nullable=false)
 	private long nroCliente;
 

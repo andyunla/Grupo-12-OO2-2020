@@ -19,13 +19,13 @@ VALUES
 
 -- CLIENTES:
 INSERT INTO cliente 
-	(id_persona, email, nro_cliente)
+	(id_persona, email)
 VALUES
-	(1, 'cliente1@email.com', 1),
-	(2, 'cliente2@email.com', 2),
-	(3, 'cliente3@email.com', 3);
-	
--- LOCAL (Los gerentes_legajo se definen luego de cargar empleados)
+	(1, 'cliente1@email.com'),
+	(2, 'cliente2@email.com'),
+	(3, 'cliente3@email.com');
+
+-- LOCAL (Los gerente_legajo se definen luego de cargar empleados)
 INSERT INTO locales
 	(nombre_local, latitud, longitud, direccion, telefono, gerente_legajo)
 VALUES 	
@@ -35,17 +35,17 @@ VALUES
 
 -- EMPLEADOS:
 INSERT INTO empleado
-	(id_persona, legajo, horario_desde, horario_hasta, sueldo_basico, id_local, tipo_empleado)
+	(id_persona, horario_desde, horario_hasta, sueldo_basico, id_local, tipo_empleado)
 VALUES
-	(4, 1, '08:00:00', '16:00:00', 30000, 1, 0),	-- Empleados
-	(5, 2, '16:00:00', '20:00:00', 30000, 1, 0),
-	(6, 3, '08:00:00', '16:00:00', 30000, 2, 0),
-	(7, 4, '16:00:00', '20:00:00', 30000, 2, 0),
-	(8, 5, '08:00:00', '16:00:00', 30000, 3, 0),
-	(9, 6, '16:00:00', '20:00:00', 30000, 3, 0),
-	(10, 7, '10:00:00', '18:00:00', 80000, 1, 1),	-- Gerentes
-	(11, 8, '10:00:00', '18:00:00', 80000, 2, 1),
-	(12, 9, '10:00:00', '18:00:00', 80000, 3, 1);
+	(4, '08:00:00', '16:00:00', 30000, 1, 0),	-- Empleados
+	(5, '16:00:00', '20:00:00', 30000, 1, 0),
+	(6, '08:00:00', '16:00:00', 30000, 2, 0),
+	(7, '16:00:00', '20:00:00', 30000, 2, 0),
+	(8, '08:00:00', '16:00:00', 30000, 3, 0),
+	(9, '16:00:00', '20:00:00', 30000, 3, 0),
+	(10, '10:00:00', '18:00:00', 80000, 1, 1),	-- Gerentes
+	(11, '10:00:00', '18:00:00', 80000, 2, 1),
+	(12, '10:00:00', '18:00:00', 80000, 3, 1);
 
 -- PRODUCTO
 INSERT INTO producto

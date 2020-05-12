@@ -11,11 +11,21 @@ import java.util.Random;
 
 public class Funciones {
 	/**
-   	* Método que retorna una fecha de tipo LocalDate
+   	* Método que retorna un horario de tipo LocalTime
    	* dado un String 
-   	* @param fecha Tiene que ser del tipo "AAAA-MM-DD"
-   	* @return LocalDate
+   	* @param hora Tiene que ser del tipo "hh:mm:ss"
+   	* @return LocalTime
    	*/
+	public static LocalTime horaFromString(String hora) {
+		return LocalTime.parse(hora);
+	}
+	
+	/**
+	* Método que retorna una fecha de tipo LocalDate
+	* dado un String 
+	* @param fecha Tiene que ser del tipo "AAAA-MM-DD"
+	* @return LocalDate
+	*/
 	public static LocalDate traerFecha(String fecha) {
 		//Parámetro de la forma "AAAA-MM-DD"
 		int aaaa,mm,dd;
@@ -25,16 +35,16 @@ public class Funciones {
 		anio = fecha.substring(0, 4);
 		aaaa = Integer.parseInt(anio);
 		mm = Integer.parseInt(mes);
- 		dd = Integer.parseInt(dia);
+		dd = Integer.parseInt(dia);
 		LocalDate fechaNueva = LocalDate.of(aaaa, mm, dd);
 		return fechaNueva;
 	}
 
 	/**
-   	* Método que retorna una fecha de tipo String 
-   	* @param fecha de tipo GregorianCalendar
-   	* @return String
-   	*/
+	* Método que retorna una fecha de tipo String 
+	* @param fecha de tipo GregorianCalendar
+	* @return String
+	*/
 	public static String fechaForm(GregorianCalendar fecha){
 		int anyo = 0;
 		int mes = 0;
@@ -52,10 +62,10 @@ public class Funciones {
 	}
 
 	/**
-   	* Método Para obtener el nombre de un mes dado un GregorianCalendar 
-   	* @param fecha de tipo GregorianCalendar
-   	* @return String
-   	*/
+	* Método Para obtener el nombre de un mes dado un GregorianCalendar 
+	* @param fecha de tipo GregorianCalendar
+	* @return String
+	*/
 	public static String mesForm(GregorianCalendar fecha){
 		String[] months = {"Enero", "Febrero", "Marzo", "Abril", "mayo", "Junio", "Julio", "Agosto", "Septiembre", "Noviembre", "Diciembre"};
 		int index = fecha.get(GregorianCalendar.MONTH);
@@ -63,11 +73,11 @@ public class Funciones {
 	}
 	
 	/**
-   	* Método para  calcular el tiempo transcurrido entre 2 fechas 
-   	* @param fechaActual de tipo GregorianCalendar
-   	* @param fechaDeNacimiento de tipo GregorianCalendar
-   	* @return String
-   	*/
+	* Método para  calcular el tiempo transcurrido entre 2 fechas 
+	* @param fechaActual de tipo GregorianCalendar
+	* @param fechaDeNacimiento de tipo GregorianCalendar
+	* @return String
+	*/
 	public static String calcularEdad (GregorianCalendar fechaActual, GregorianCalendar fechaDeNacimiento) {
 		int anios=0;  int meses=0;  int dias=0;
 
@@ -286,13 +296,13 @@ public class Funciones {
 		return fecha;
 	}
 	
-    public static GregorianCalendar aGregorianCalendar(int anio, int mes, int dia, int hora, int minutos, int segundos){
-    	GregorianCalendar fecha = new GregorianCalendar(anio, (mes)-1, dia);
+	public static GregorianCalendar aGregorianCalendar(int anio, int mes, int dia, int hora, int minutos, int segundos){
+		GregorianCalendar fecha = new GregorianCalendar(anio, (mes)-1, dia);
 		fecha.set(Calendar.HOUR_OF_DAY, hora);
 		fecha.set(Calendar.MINUTE, minutos);
 		fecha.set(Calendar.SECOND, segundos);
-    	fecha.setLenient(false);
-    	return fecha;
+		fecha.setLenient(false);
+		return fecha;
 	}
 	
 	public static String fechaCorta(GregorianCalendar fecha){
