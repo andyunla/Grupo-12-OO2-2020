@@ -18,5 +18,5 @@ public interface IEmpleadoRepository extends JpaRepository<Empleado, Serializabl
 	@Query("FROM Empleado WHERE id_local = (:idLocal)")
 	public abstract List<Empleado> findByIdLocal(long idLocal);
 	@Query("FROM Empleado WHERE id_local = (:idLocal) and tipo_empleado = true")
-	public abstract List<Empleado> findByGerenteLocal(long idLocal);
+	public abstract Empleado findByGerenteLocal(long idLocal);
 }
