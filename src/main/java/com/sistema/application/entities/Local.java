@@ -45,8 +45,8 @@ public class Local implements Serializable {
 	@Column(name="telefono", nullable=false)
 	private int telefono;
 
-	@Column(name="gerente_legajo", nullable=false)
-	private long gerenteLegajo;
+	@Column(name="gerente_legajo", nullable=true)
+	private Long gerenteLegajo;
 
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="local")
 	private Set<Lote> listaLotes;
@@ -68,7 +68,7 @@ public class Local implements Serializable {
 		this.longitud = longitud;
 		this.direccion = direccion;
 		this.telefono = telefono;
-		this.gerenteLegajo = 0;
+		this.gerenteLegajo = null;
 	}
 
 	// Constructor usado por el converter, ver sobre el gerente...
@@ -80,7 +80,7 @@ public class Local implements Serializable {
 		this.longitud = longitud;
 		this.direccion = direccion;
 		this.telefono = telefono;
-		this.gerenteLegajo = gerenteLegajo;
+		setGerenteLegajo(gerenteLegajo);
 	}
 	
 	//Getters y Setters
@@ -93,11 +93,11 @@ public class Local implements Serializable {
 	}
 
 	public long getGerenteLegajo() {
-		return gerenteLegajo;
+		return (gerenteLegajo == null) ? 0 : gerenteLegajo;
 	}
 
 	public void setGerenteLegajo(long gerenteLegajo) {
-		this.gerenteLegajo = gerenteLegajo;
+		this.gerenteLegajo = (gerenteLegajo == 0) ? null : gerenteLegajo;
 	}
 
 	public String getNombreLocal() {
@@ -175,6 +175,7 @@ public class Local implements Serializable {
 	@Override
 	public String toString() {
 		return "\n\nLocal " + idLocal + ": "+"\nNombre: " + nombreLocal + "\nLatitud: " + latitud + "\nLongitud: "
-				+ longitud + "\nDireccion: " + direccion + "\nTelefono: " + telefono ;
+				+ longitud + "\nDireccion: " + direccion + "\nTelefono: " + telefono + "\nGerenteLegajo: " +
+				gerenteLegajo ;
 	}
 }

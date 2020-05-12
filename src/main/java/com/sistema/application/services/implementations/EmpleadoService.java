@@ -79,4 +79,13 @@ public class EmpleadoService implements IEmpleadoService {
 		}
 		return models;
 	}
+
+	@Override
+	public List<EmpleadoModel> findByIdLocal(long idLocal) {
+		List<EmpleadoModel> models = new ArrayList<EmpleadoModel>();
+		for (Empleado empleado : empleadoRepository.findByIdLocal(idLocal)) {
+			models.add(empleadoConverter.entityToModel(empleado));
+		}
+		return models;
+	}
 }

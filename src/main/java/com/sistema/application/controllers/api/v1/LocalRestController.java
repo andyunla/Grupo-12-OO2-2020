@@ -1,6 +1,10 @@
 package com.sistema.application.controllers.api.v1;
 
+import java.util.List;
+
+import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.LocalModel;
+import com.sistema.application.services.IEmpleadoService;
 import com.sistema.application.services.ILocalService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +24,10 @@ public class LocalRestController {
      @Qualifier("localService")
      private ILocalService localService;
 
+     @Autowired
+     @Qualifier("empleadoService")
+     private IEmpleadoService empleadoService;
+     // Faltaría implementar en caso de errores
      @GetMapping("distancia/{idLocal1}/{idLocal2}")
      ResponseEntity <Double> distancia(@PathVariable("idLocal1") long idLocal1,
                 @PathVariable("idLocal2") long idLocal2){
@@ -27,5 +35,11 @@ public class LocalRestController {
           LocalModel local2 = localService.findByIdLocal(idLocal2);
           double distancia = local1.calcularDistancia(local2);
           return new ResponseEntity <Double>(distancia, HttpStatus.OK);
+     }
+     
+     @GetMapping("empleados/{idLocal}")
+     ResponseEntity <List<EmpleadoModel>> empleados(@PathVariable("idLocal") long idLocal){
+          List <EmpleadoModel> empleados = empleadoService.findByIdLocal(idLocal);
+          return new ResponseEntity<List<EmpleadoModel>>(empleados, HttpStatus.OK);
      }
 } 

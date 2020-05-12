@@ -7,8 +7,7 @@
      <title>Locales</title>
      <link rel="shortcut icon" type="image/png" th:href="@{/images/unla.png}" />
      <link rel="stylesheet" th:href="@{/css/styles.css}" type="text/css" />
-     <!-- Estatico -->
-     <link rel="stylesheet" href="../../static/css/styles.css" type="text/css" />
+     <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
@@ -64,12 +63,12 @@
                </div>
                <div class="form-group row">
                     <label for="latitudNuevoLocal" class="col-md-2 col-3">Latitud</label>
-                    <input type="number" step="0.00001" class="form-control col-md-9 col-8" id="latitudNuevoLocal"
+                    <input type="number" step="0.0001" class="form-control col-md-9 col-8" id="latitudNuevoLocal"
                          th:field="*{latitud}" />
                </div>
                <div class="form-group row">
                     <label for="longitudNuevoLocal" class="col-md-2 col-3">Longitud</label>
-                    <input type="number" min="0" step="0.00001" class="form-control col-md-9 col-8"
+                    <input type="number" min="0" step="0.0001" class="form-control col-md-9 col-8"
                          id="longitudNuevoLocal" th:field="*{longitud}" />
                </div>
                <div class="form-group row">
@@ -79,28 +78,12 @@
                </div>
                <div class="form-group row">
                     <label for="telefonoNuevoLocal" class="col-md-2 col-3">Telefono</label>
-                    <input type="number" class="form-control col-sm-4 col-5" id="telefonoNuevoLocal"
-                         th:field="*{telefono}" />
-               </div>
-               <!-- PROVISORIAMENTE -->
-               <div class="form-group row">
-                    <label for="gerenteNuevoLocal" class="col-md-2 col-3">Gerente</label>
-                    <input type="number" class="form-control col-sm-4 col-5" id="gerenteNuevoLocal"
-                         th:field="*{gerenteLegajo}" />
+                    <input type="number" min="0" max="2147483646" class="form-control col-sm-4 col-5"
+                         id="telefonoNuevoLocal" th:field="*{telefono}" />
                </div>
                <div class="text-center">
                     <button type="submit" class="btn btn-primary">Guardar</button>
                </div>
-               <!-- 
-               <div class="form-group row d-flex">
-                    <label for="gerenteNuevoLocal" class="col-md-2 col-3">Gerente</label>
-                    <select th:field="*{gerente.id}" class="custom-select w-50" id="gerenteNuevoLocal">
-                         <option value="1" selected disabled>Seleccione un gerente</option>
-                         <option th:each="empleado :${empleados}" th:text="${empleado.nombre} + ${empleado.apellido}"
-                              th:value="${empleado.id}"></option>
-                    </select>
-               </div>
-          -->
           </form>
           <!-- LIST -->
           <div class="container-fluid col-12 col-md-11 text-center table-responsive">
@@ -113,8 +96,7 @@
                               <th scope="col">Longitud</th>
                               <th scope="col">Dirección</th>
                               <th scope="col">Telefono</th>
-                              <th scope="col">Gerente</th>
-                              <th scope="col">Empleados</th>
+                              <th scope="col">Leg. Gerente</th>
                               <th></th>
                          </tr>
                     </thead>
@@ -127,20 +109,6 @@
                               <td th:text="${local.direccion}"></td>
                               <td th:text="${local.telefono}"></td>
                               <td th:text="${local.gerenteLegajo}"></td>
-                              <td>
-                                   <!-- Traer los empleados de la API REST por medio de la id del local
-                                        Ejemplo: empleados/local/3434 ? -->
-                                   <a class="btn boton-ver-empleados text-primary" data-toggle="collapse"
-                                        href="#${local.idLocal}" data-local="${local.idLocal}" role="button">
-                                        Ver
-                                   </a>
-                                   <div class="collapse" id="${local.idLocal}">
-                                        <ul style="list-style: none;">
-                                             <li>Empleados..</li>
-                                        </ul>
-                                   </div>
-                              </td>
-
                               <td class="d-flex justify-content-around">
                                    <div data-toggle="tooltip" data-placement="top" title="Modificar">
                                         <a href="#" data-toggle="modal" data-target="#modifyLocal" class="modifyButton">
@@ -182,12 +150,12 @@
                                    </div>
                                    <div class="form-group row">
                                         <label for="latitudModificarLocal" class="col-sm-3 col-4">Latitud</label>
-                                        <input type="number" step="0.00001" class="form-control col-md-8 col-7"
+                                        <input type="number" step="0.0001" class="form-control col-md-8 col-7"
                                              id="latitudModificarLocal" th:field="*{latitud}" />
                                    </div>
                                    <div class="form-group row">
                                         <label for="longitudModificarLocal" class="col-sm-3 col-4">Longitud</label>
-                                        <input type="number" step="0.00001" class="form-control col-md-8 col-7"
+                                        <input type="number" step="0.0001" class="form-control col-md-8 col-7"
                                              id="longitudModificarLocal" th:field="*{longitud}" />
                                    </div>
                                    <div class="form-group row">
@@ -197,14 +165,16 @@
                                    </div>
                                    <div class="form-group row">
                                         <label for="telefonoModificarLocal" class="col-sm-3 col-4">Telefono</label>
-                                        <input type="number" class="form-control col-5" id="telefonoModificarLocal"
-                                             th:field="*{telefono}" />
+                                        <input type="number" min="0" max="2147483646" class="form-control col-5"
+                                             id="telefonoModificarLocal" th:field="*{telefono}" />
                                    </div>
-                                   <!-- PROVISORIAMENTE -->
-                                   <div class="form-group row">
+                                   <div class="form-group row d-flex">
                                         <label for="gerenteModificarLocal" class="col-sm-3 col-4">Gerente</label>
-                                        <input type="number" class="form-control col-5" id="gerenteModificarLocal"
-                                             th:field="*{gerenteLegajo}" />
+                                        <select th:field="*{gerenteLegajo}" class=" col-5 custom-select w-50"
+                                             id="gerenteModificarLocal">
+                                             <option value="1" selected hidden disabled>Seleccione un empleado</option>
+
+                                        </select>
                                    </div>
                                    <div class="text-center">
                                         <button type="submit" class="btn btn-primary">Guardar</button>
@@ -218,6 +188,11 @@
      <script th:inline="javascript">
           /*<![CDATA[*/
           var locales = /*[[${locales}]]*/'default';
+          var localEliminado = /*[[${localEliminado}]]*/ 'default';
+          /*]]>*/
+          if (localEliminado != null && !localEliminado) {
+               setTimeout(() => { alert("No se pudo eliminar local"); }, 300);
+          }
           // Listener a los botones de modificar local
           let modifyButtons = document.querySelectorAll('.modifyButton');
           modifyButtons.forEach(button => button.addEventListener('click', event => {
@@ -230,6 +205,26 @@
                document.getElementById("direccionModificarLocal").value = locales[localIndex].direccion;
                document.getElementById("telefonoModificarLocal").value = locales[localIndex].telefono;
                document.getElementById("gerenteModificarLocal").value = locales[localIndex].gerenteLegajo;
+               let selectGerenteElement = document.getElementById("gerenteModificarLocal");
+               selectGerenteElement.innerHTML = '<option selected disabled>cargando</option>';
+               fetch("http://localhost:8080/api/v1/local/empleados/" + locales[localIndex].idLocal)
+                    .then((response) => {
+                         return response.json();
+                    })
+                    .then((empleados) => {
+                         selectGerenteElement.innerHTML = '';
+                         for (var i = 0; i < empleados.length; i++) {
+                              selectGerenteElement.innerHTML = selectGerenteElement.innerHTML +
+                                   '<option value="' + empleados[i].legajo + '">' +
+                                   empleados[i].legajo + ' - ' +
+                                   empleados[i].nombre + ' ' +
+                                   empleados[i].apellido +
+                                   '</option>';
+                         }
+                    })
+                    .catch((e) => {
+                         console.log(e);
+                    });
           }));
      </script>
      <script th:src="@{/js/abm.js}"></script>

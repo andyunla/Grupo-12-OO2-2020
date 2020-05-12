@@ -11,7 +11,10 @@ import org.springframework.stereotype.Repository;
 import com.sistema.application.entities.Empleado;
 
 @Repository("empleadoRepository")
-public interface IEmpleadoRepository extends JpaRepository<Empleado, Serializable>{
+public interface IEmpleadoRepository extends JpaRepository<Empleado, Serializable> {
 	public abstract Empleado findByLegajo(long legajo);
 	public abstract List<Empleado> findByNombreAndApellido(String nombre, String apellido);
+	// Devuelve la lista de empleados que trabajan en un local determinado
+	@Query("FROM Empleado WHERE id_local = (:idLocal)")
+	public abstract List<Empleado> findByIdLocal(long idLocal);
 }
