@@ -18,4 +18,6 @@ public interface IEmpleadoService {
 	public boolean remove(long id);
 	
 	public List<EmpleadoModel> findByNombreAndApellido(String nombre, String apellido);
+
+	public List<EmpleadoModel> findByIdLocal(long idLocal);
 }
