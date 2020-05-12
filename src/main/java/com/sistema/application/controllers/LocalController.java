@@ -47,27 +47,31 @@ public class LocalController {
           System.out.println(localModificado);
           // Modifico el empleado gerente anterior si es que se eligió un nuevo gerente
           if(localModificado.getGerenteLegajo() != 0) {
-          // Obtengo el local modificado de la bd
+               // Obtengo el local modificado de la bd
                LocalModel localOriginal = localService.findByIdLocal(localModificado.getIdLocal());
                // Obtengo el legajo del empleado que era gerente
-               long legajoGerente = localOriginal.getGerenteLegajo();
-               // Obtengo el empleado que era gerente y lo cambio a empleado común
-               EmpleadoModel gerenteAnterior = empleadoService.findByLegajo(legajoGerente);
-               gerenteAnterior.setTipoEmpleado(false);
-               empleadoService.insertOrUpdate(gerenteAnterior);
-                // Actualizo el local modificado y al empleado que será gerente
-               EmpleadoModel nuevoGerente = empleadoService.findByLegajo( localModificado.getGerenteLegajo() );
+               long legajoGerenteOriginal = localOriginal.getGerenteLegajo();
+               // Si el local no tiene un gerente asociado 'legajoGerente' vale 0 
+               // y ocacionará una excepción si se lo busca por el método 'empleadoService.findByLegajo'
+               if(legajoGerenteOriginal != 0) {
+                    // Obtengo el empleado que era gerente y lo cambio a empleado común
+                    EmpleadoModel gerenteAnterior = empleadoService.findByLegajo(legajoGerenteOriginal);
+                    gerenteAnterior.setTipoEmpleado(false);
+                    empleadoService.insertOrUpdate(gerenteAnterior);
+               }
+               // Actualizo el local modificado y al empleado que será gerente
+               EmpleadoModel nuevoGerente = empleadoService.findByLegajo(localModificado.getGerenteLegajo());
                nuevoGerente.setTipoEmpleado(true);
                empleadoService.insertOrUpdate(nuevoGerente);
           }
           localService.insertOrUpdate(localModificado);
           return "redirect:/" + ViewRouteHelper.LOCAL_ROOT;
-     } 
+     }
      
      @PostMapping("eliminar/{idLocal}")
 	public String eliminar(@PathVariable("idLocal") long idLocal, RedirectAttributes redirectAttributes) {
           boolean eliminado = localService.remove(idLocal);
 		redirectAttributes.addFlashAttribute("localEliminado", eliminado);
 		return "redirect:/" + ViewRouteHelper.LOCAL_ROOT;
-	}	
+	}
 }
