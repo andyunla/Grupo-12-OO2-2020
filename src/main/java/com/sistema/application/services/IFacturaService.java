@@ -9,7 +9,7 @@ public interface IFacturaService {
 
 	public List<Factura> getAll();
 	
-	public FacturaModel ingresarOActualizar(FacturaModel facturaModel);
+	public FacturaModel insertOrUpdate(FacturaModel facturaModel);
 	
-	public boolean eliminar(long id);	
+	public boolean remove(long id);	
 }

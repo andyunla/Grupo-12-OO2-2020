@@ -9,7 +9,7 @@ public interface IChangoService {
 
 	public List<Chango> getAll();
 	
-	public ChangoModel ingresarOActualizar(ChangoModel changoModel);
+	public ChangoModel insertOrUpdate(ChangoModel changoModel);
 	
-	public boolean eliminar(long id);
+	public boolean remove(long id);
 }

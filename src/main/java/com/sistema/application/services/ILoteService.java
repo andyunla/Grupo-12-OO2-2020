@@ -9,7 +9,7 @@ public interface ILoteService {
 	
 	public List<Lote> getAll();
 	
-	public LoteModel ingresarOActualizar(LoteModel loteModel);
+	public LoteModel insertOrUpdate(LoteModel loteModel);
 	
-	public boolean eliminar(long id);
+	public boolean remove(long id);
 }

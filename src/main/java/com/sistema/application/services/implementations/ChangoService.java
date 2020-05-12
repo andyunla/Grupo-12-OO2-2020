@@ -32,13 +32,13 @@ public class ChangoService implements IChangoService{
 		}
 		
 		@Override
-		public ChangoModel ingresarOActualizar(ChangoModel changoModel) {
+		public ChangoModel insertOrUpdate(ChangoModel changoModel) {
 			Chango chango = changoRepository.save(changoConverter.modelToEntity(changoModel) );
 			return changoConverter.entityToModel(chango);
 		}
 		
 		@Override
-		public boolean eliminar(long id) {
+		public boolean remove(long id) {
 			try {
 				changoRepository.deleteById(id);
 				return true;

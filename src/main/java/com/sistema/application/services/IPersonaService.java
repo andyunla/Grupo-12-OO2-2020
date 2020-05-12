@@ -9,7 +9,7 @@ public interface IPersonaService {
 
 	public List<Persona> getAll();
 	
-	public PersonaModel ingresarOActualizar(PersonaModel personaModel);
+	public PersonaModel insertOrUpdate(PersonaModel personaModel);
 	
-	public boolean eliminar(long id);
+	public boolean remove(long id);
 }

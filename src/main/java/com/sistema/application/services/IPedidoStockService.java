@@ -9,7 +9,7 @@ public interface IPedidoStockService {
 
 	public List<PedidoStock> getAll();
 	
-	public PedidoStockModel ingresarOActualizar(PedidoStockModel pedidoStockModel);
+	public PedidoStockModel insertOrUpdate(PedidoStockModel pedidoStockModel);
 	
-	public boolean eliminar(long id);
+	public boolean remove(long id);
 }

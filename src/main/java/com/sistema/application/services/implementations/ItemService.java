@@ -32,13 +32,13 @@ public class ItemService implements IItemService{
 	}
 	
 	@Override
-	public ItemModel ingresarOActualizar(ItemModel itemModel) {
+	public ItemModel insertOrUpdate(ItemModel itemModel) {
 		Item item = itemRepository.save(itemConverter.modelToEntity(itemModel) );
 		return itemConverter.entityToModel(item);
 	}
 	
 	@Override
-	public boolean eliminar(long id) {
+	public boolean remove(long id) {
 		try {
 			itemRepository.deleteById(id);
 			return true;
