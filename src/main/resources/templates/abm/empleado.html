@@ -161,6 +161,8 @@
                                    th:action="@{/empleado/modificar}" th:object="${empleado}" method="post">
                                    <input type="number" class="d-none" id="idEmpleadoModificar"
                                         th:field="*{id}" />
+                                   <input type="number" class="d-none" id="legajoEmpleadoModificar"
+                                        th:field="*{legajo}" />
                                    <div class="form-group row">
                                         <label for="nombreModificarEmpleado" class="col-sm-3 col-4">Nombre</label>
                                         <input type="text" class="form-control col-md-8  col-7"
@@ -227,6 +229,7 @@
                let empleadoIndex = event.target.dataset.index;
                document.getElementById('tituloModificarEmpleado').innerText = "Modificar Empleado #" + empleados[empleadoIndex].legajo;
                document.getElementById("idEmpleadoModificar").value = empleados[empleadoIndex].id;
+               document.getElementById("legajoEmpleadoModificar").value = empleados[empleadoIndex].legajo;
                document.getElementById("nombreModificarEmpleado").value = empleados[empleadoIndex].nombre;
                document.getElementById("apellidoModificarEmpleado").value = empleados[empleadoIndex].apellido;
                document.getElementById("dniModificarEmpleado").value = empleados[empleadoIndex].dni;
