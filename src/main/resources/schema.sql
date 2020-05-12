@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`locales` (
   `longitud` DOUBLE NULL,
   `direccion` VARCHAR(45) NULL,
   `telefono` INT NULL,
-  `gerente_legajo` INT(11) NULL DEFAULT 0,
+  `gerente_legajo` INT(11) DEFAULT NULL,
   PRIMARY KEY (`id_local`),
   UNIQUE INDEX `gerente_idEmpleado_UNIQUE` (`gerente_legajo` ASC))
 ENGINE = InnoDB;

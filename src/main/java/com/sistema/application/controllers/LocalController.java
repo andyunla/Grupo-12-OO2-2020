@@ -25,9 +25,6 @@ public class LocalController {
 
      @GetMapping("")
 	public String locales(Model modelo) {
-          // Trae los empleados disponibles para ser gerentes...
-          // modelo.addAttribute("empleados", empleadoService.getNoGerentes()  ?  );
-          //
           modelo.addAttribute("locales", localService.getAll());
           modelo.addAttribute("local", new LocalModel());
           return ViewRouteHelper.LOCAL_ABM;
@@ -35,20 +32,20 @@ public class LocalController {
      
      @PostMapping("agregar")
 	public String agregar(@ModelAttribute("local") LocalModel nuevoLocal) {
-          System.out.print("\n\n" + nuevoLocal + "\n\n");   // DEBUG: Cambiar lógica apropiada
+          localService.insertOrUpdate(nuevoLocal);
           return "redirect:/" + ViewRouteHelper.LOCAL_ROOT;
      }
      
      @PostMapping("modificar")
 	public String modificar(@ModelAttribute("local") LocalModel localModificado) {
-          System.out.print("\n\n" + localModificado + "\n\n");   // DEBUG: Cambiar lógica apropiada
+          localService.insertOrUpdate(localModificado);
           return "redirect:/" + ViewRouteHelper.LOCAL_ROOT;
-     }
+     } 
      
      @PostMapping("eliminar/{idLocal}")
 	public String eliminar(@PathVariable("idLocal") long idLocal, RedirectAttributes redirectAttributes) {
-          redirectAttributes.addFlashAttribute("localEliminado", true);
-          System.out.print("\n\n" + idLocal + "\n\n");      // DEBUG: Cambiar lógica apropiada
+          boolean eliminado = localService.remove(idLocal);
+		redirectAttributes.addFlashAttribute("localEliminado", eliminado);
 		return "redirect:/" + ViewRouteHelper.LOCAL_ROOT;
 	}	
 }
