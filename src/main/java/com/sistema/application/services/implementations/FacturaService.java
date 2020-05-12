@@ -32,13 +32,13 @@ public class FacturaService implements IFacturaService{
 	}
 
 	@Override
-	public FacturaModel ingresarOActualizar(FacturaModel facturaModel) {
+	public FacturaModel insertOrUpdate(FacturaModel facturaModel) {
 		Factura factura = facturaRepository.save(facturaConverter.modelToEntity(facturaModel) );
 		return facturaConverter.entityToModel(factura);
 	}
 
 	@Override
-	public boolean eliminar(long id) {
+	public boolean remove(long id) {
 		try {
 			facturaRepository.deleteById(id);
 			return true;

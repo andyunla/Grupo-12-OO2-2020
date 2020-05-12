@@ -9,7 +9,7 @@ public interface IItemService {
 
 	public List<Item> getAll();
 	
-	public ItemModel ingresarOActualizar(ItemModel itemModel);
+	public ItemModel insertOrUpdate(ItemModel itemModel);
 	
-	public boolean eliminar(long id);
+	public boolean remove(long id);
 }

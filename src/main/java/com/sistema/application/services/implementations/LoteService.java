@@ -32,13 +32,13 @@ public class LoteService implements ILoteService {
 		}
 		
 		@Override
-		public LoteModel ingresarOActualizar(LoteModel loteModel) {
-			Lote lote = loteRepository.save(loteConverter.modelToEntity(loteModel) );
+		public LoteModel insertOrUpdate(LoteModel loteModel) {
+			Lote lote = loteRepository.save(loteConverter.modelToEntity(loteModel));
 			return loteConverter.entityToModel(lote);
 		}
 		
 		@Override
-		public boolean eliminar(long id) {
+		public boolean remove(long id) {
 			try {
 				loteRepository.deleteById(id);
 				return true;

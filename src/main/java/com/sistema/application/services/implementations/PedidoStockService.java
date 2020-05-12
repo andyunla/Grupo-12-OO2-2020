@@ -32,13 +32,13 @@ public class PedidoStockService implements IPedidoStockService{
 		}
 		
 		@Override
-		public PedidoStockModel ingresarOActualizar(PedidoStockModel pedidoStockModel) {
+		public PedidoStockModel insertOrUpdate(PedidoStockModel pedidoStockModel) {
 			PedidoStock pedidoStock = pedidoStockRepository.save(pedidoStockConverter.modelToEntity(pedidoStockModel) );
 			return pedidoStockConverter.entityToModel(pedidoStock);
 		}
 		
 		@Override
-		public boolean eliminar(long id) {
+		public boolean remove(long id) {
 			try {
 				pedidoStockRepository.deleteById(id);
 				return true;

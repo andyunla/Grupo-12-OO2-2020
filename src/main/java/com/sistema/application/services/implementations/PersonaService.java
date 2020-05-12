@@ -32,13 +32,13 @@ public class PersonaService implements IPersonaService{
 		}
 		
 		@Override
-		public PersonaModel ingresarOActualizar(PersonaModel personaModel) {
-			Persona persona = personaRepository.save(personaConverter.modelToEntity(personaModel) );
+		public PersonaModel insertOrUpdate(PersonaModel personaModel) {
+			Persona persona = personaRepository.save(personaConverter.modelToEntity(personaModel));
 			return personaConverter.entityToModel(persona);
 		}
 		
 		@Override
-		public boolean eliminar(long id) {
+		public boolean remove(long id) {
 			try {
 				personaRepository.deleteById(id);
 				return true;
