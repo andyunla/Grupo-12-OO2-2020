@@ -44,8 +44,7 @@ public class EmpleadoController {
 	@PostMapping("agregar")
 	public String agregar(@ModelAttribute("empleado") EmpleadoModel nuevoEmpleado, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			System.out.println("EL EMPLEADO ES: \n\n\n" + nuevoEmpleado);
-        	return "index";
+        	return ViewRouteHelper.EMPLEADO_ROOT;
       	}
 		empleadoService.insertOrUpdate(nuevoEmpleado);
 		return "redirect:/" + ViewRouteHelper.EMPLEADO_ROOT;
