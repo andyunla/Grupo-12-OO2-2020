@@ -12,7 +12,7 @@
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
-</head>									<!-- --------------------------- -->
+</head>									
 <body class="container-fluid m-0 p-0">
      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
           <a class="navbar-brand" th:href="@{/}">
@@ -43,7 +43,6 @@
           <h1 class="display-4">ITEMS</h1>
      </header>
      <main class="w-100 d-flex flex-column align-items-center">
-
           <button class="btn btn-info m-3" type="button" data-toggle="collapse" data-target="#collapseForm"
                id="buttonAgregar">
                Agregrar
@@ -51,29 +50,23 @@
           <form class="col-11 col-sm-8 col-md-7 m-1 p-2 mx-auto bg-light rounded collapse" id="collapseForm" action="#"
                th:action="@{/item/agregar}" th:object="${item}" method="post">
                <div class="form-group row">
-                    <label for="Cantidad" class="col-md-2 col-3">Cantidad</label>
-                    <input type="text" class="form-control col-md-9 col-8" id="cantidad"
+                    <label for="cantidadNuevoItem" class="col-md-2 col-3">Cantidad</label>
+                    <input type="text" class="form-control col-md-9 col-8" id="cantidadNuevoItem"
                          th:field="*{cantidad}" />
                </div>
-               <!-- PROVISORIAMENTE -->
                <div class="form-group row">
-                    <label for="gerenteNuevoLocal" class="col-md-2 col-3">Gerente</label>
-                    <input type="number" class="form-control col-sm-4 col-5" id="gerenteNuevoLocal"
-                         th:field="*{gerenteLegajo}" />
+                    <label for="productoNuevoItem" class="col-md-2 col-3">Producto</label>
+                    <input type="number" class="form-control col-sm-4 col-5" id="productoNuevoItem"
+                         th:field="*{producto}" />
+               </div>
+               <div class="form-group row">
+                    <label for="changoNuevoItem" class="col-md-2 col-3">Chango</label>
+                    <input type="number" class="form-control col-sm-4 col-5" id="changoNuevoItem"
+                         th:field="*{chango}" />
                </div>
                <div class="text-center">
                     <button type="submit" class="btn btn-primary">Guardar</button>
                </div>
-               <!-- 
-               <div class="form-group row d-flex">
-                    <label for="gerenteNuevoLocal" class="col-md-2 col-3">Gerente</label>
-                    <select th:field="*{gerente.id}" class="custom-select w-50" id="gerenteNuevoLocal">
-                         <option value="1" selected disabled>Seleccione un gerente</option>
-                         <option th:each="empleado :${empleados}" th:text="${empleado.nombre} + ${empleado.apellido}"
-                              th:value="${empleado.id}"></option>
-                    </select>
-               </div>
-          -->
           </form>
           <!-- LIST -->
           <div class="container-fluid col-12 col-md-11 text-center table-responsive">
@@ -88,24 +81,19 @@
                          </tr>
                     </thead>
                     <tbody>
-                         <tr th:each="local :${locales}">
-                              <td th:text="${local.idLocal}"></td>
-                              <td th:text="${local.nombreLocal}"></td>
-                              <td th:text="${local.latitud}"></td>
-                              <td th:text="${local.longitud}"></td>
-                              <td th:text="${local.direccion}"></td>
-                              <td th:text="${local.telefono}"></td>
-                              <td th:text="${local.gerenteLegajo}"></td>
+                         <tr th:each="item :${items}">
+                              <td th:text="${item.idLocal}"></td>
+                              <td th:text="${item.cantidad}"></td>
+                              <td th:text="${item.producto}"></td>
+                              <td th:text="${item.chango}"></td>
                               <td>
-                                   <!-- Traer los empleados de la API REST por medio de la id del local
-                                        Ejemplo: empleados/local/3434 ? -->
-                                   <a class="btn boton-ver-empleados text-primary" data-toggle="collapse"
-                                        href="#${local.idLocal}" data-local="${local.idLocal}" role="button">
+                                   <a class="btn boton-ver-items text-primary" data-toggle="collapse"
+                                        href="#${item.idItem}" data-local="${item.idItem}" role="button">
                                         Ver
                                    </a>
-                                   <div class="collapse" id="${local.idLocal}">
+                                   <div class="collapse" id="${item.idItem}">
                                         <ul style="list-style: none;">
-                                             <li>Empleados..</li>
+                                             <li>Items..</li>
                                         </ul>
                                    </div>
                               </td>
@@ -142,39 +130,22 @@
                          </div>
                          <div class="modal-body">
                               <form class="col-12 m-1 p-2 mx-auto bg-light rounded" action="#"
-                                   th:action="@{/local/modificar}" th:object="${local}" method="post">
-                                   <input type="number" class="d-none" id="idModificarLocal" th:field="*{idLocal}" />
+                                   th:action="@{/item/modificar}" th:object="${item}" method="post">
+                                   <input type="number" class="d-none" id="idModificarItem" th:field="*{idItem}" />
                                    <div class="form-group row">
-                                        <label for="nombreModificarLocal" class="col-sm-3 col-4">Nombre</label>
+                                        <label for="cantidadModificarItem" class="col-sm-3 col-4">Cantidad</label>
                                         <input type="text" class="form-control col-md-8  col-7"
-                                             id="nombreModificarLocal" th:field="*{nombreLocal}" />
+                                             id="cantidadModificarItem" th:field="*{cantidad}" />
                                    </div>
                                    <div class="form-group row">
-                                        <label for="latitudModificarLocal" class="col-sm-3 col-4">Latitud</label>
+                                        <label for="productoModificarLocal" class="col-sm-3 col-4">Producto</label>
                                         <input type="number" step="0.00001" class="form-control col-md-8 col-7"
-                                             id="latitudModificarLocal" th:field="*{latitud}" />
+                                             id="productoModificarLocal" th:field="*{producto}" />
                                    </div>
                                    <div class="form-group row">
-                                        <label for="longitudModificarLocal" class="col-sm-3 col-4">Longitud</label>
+                                        <label for="changoModificarItem" class="col-sm-3 col-4">Chango</label>
                                         <input type="number" step="0.00001" class="form-control col-md-8 col-7"
-                                             id="longitudModificarLocal" th:field="*{longitud}" />
-                                   </div>
-                                   <div class="form-group row">
-                                        <label for="direccionModificarLocal" class="col-sm-3 col-4">Dirección</label>
-                                        <input type="text" class="form-control col-5" id="direccionModificarLocal"
-                                             th:field="*{direccion}" />
-                                   </div>
-                                   <div class="form-group row">
-                                        <label for="telefonoModificarLocal" class="col-sm-3 col-4">Telefono</label>
-                                        <input type="number" class="form-control col-5" id="telefonoModificarLocal"
-                                             th:field="*{telefono}" />
-                                   </div>
-                                   <!-- PROVISORIAMENTE -->
-                                   <div class="form-group row">
-                                        <label for="gerenteModificarLocal" class="col-sm-3 col-4">Gerente</label>
-                                        <input type="number" class="form-control col-5" id="gerenteModificarLocal"
-                                             th:field="*{gerenteLegajo}" />
-                                   </div>
+                                             id="changoModificarItem" th:field="*{chango}" />
                                    <div class="text-center">
                                         <button type="submit" class="btn btn-primary">Guardar</button>
                                    </div>
@@ -186,19 +157,16 @@
      </main>
      <script th:inline="javascript">
           /*<![CDATA[*/
-          var locales = /*[[${locales}]]*/'default';
-          // Listener a los botones de modificar local
+          var items = /*[[${items}]]*/'default';
+          // Listener a los botones de modificar item
           let modifyButtons = document.querySelectorAll('.modifyButton');
           modifyButtons.forEach(button => button.addEventListener('click', event => {
-               let localIndex = event.target.dataset.index;
-               document.getElementById('tituloModificarLocal').innerText = "Modificar Local #" + locales[localIndex].idLocal;
-               document.getElementById("idModificarLocal").value = locales[localIndex].idLocal;
-               document.getElementById("nombreModificarLocal").value = locales[localIndex].nombreLocal;
-               document.getElementById("latitudModificarLocal").value = locales[localIndex].latitud;
-               document.getElementById("longitudModificarLocal").value = locales[localIndex].longitud;
-               document.getElementById("direccionModificarLocal").value = locales[localIndex].direccion;
-               document.getElementById("telefonoModificarLocal").value = locales[localIndex].telefono;
-               document.getElementById("gerenteModificarLocal").value = locales[localIndex].gerenteLegajo;
+               let itemIndex = event.target.dataset.index;
+               document.getElementById('tituloModificarItem').innerText = "Modificar Item #" + items[itemIndex].idItem;
+               document.getElementById("idModificarItem").value = items[itemIndex].idItem;
+               document.getElementById("cantidadModificarItem").value = items[itemIndex].cantidad;
+               document.getElementById("productoModificarItem").value = items[itemIndex].producto;
+               document.getElementById("changoModificarItem").value = items[itemIndex].chango;
           }));
      </script>
      <script th:src="@{/js/abm.js}"></script>
