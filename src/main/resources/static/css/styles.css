@@ -1,34 +1,63 @@
-.font-q{
+.font-q {
     font-family: 'Quicksand', sans-serif;
 }
 
 /* ABM ESTILOS  */
 
-.list-icon{
+.list-icon {
     width: 1.2em;
     height: auto;
     padding: 0.1em;
     border-radius: 25%;
 }
-.edit-icon{
+
+.edit-icon {
     background-color: rgb(187, 217, 245);
 }
-.delete-icon{
+
+.delete-icon {
     background-color: rgb(247, 183, 183);
 }
-.edit-icon:hover{
+
+.edit-icon:hover {
     background-color: rgb(151, 205, 255);
 }
-.delete-icon:hover{
+
+.delete-icon:hover {
     background-color: rgb(245, 140, 140);
 }
-.delete-button{
-	border-width: 0;
-	background-color: rgba(0, 0, 0, 0.0);
+
+.delete-button {
+    border-width: 0;
+    background-color: rgba(0, 0, 0, 0.0);
 }
 
+#alertContainer {
+    position: fixed;
+    right: 2vw;
+    top: 2vh;
+}
+
+#alertContainer div{
+    animation: blinkingBackground 2s infinite;
+}
+
+@keyframes blinkingBackground {
+    0% {
+         background-color: #f8d7da
+    }
+    30% {
+         background-color: #f8d6d9
+    }
+    60% {
+         background-color: #eec9cc
+    }
+    100% {
+         background-color: #f8d7da
+    }
+}
 /* DISTANCIA ESTILOS */
 
-#distancia{
+#distancia {
     font-size: large;
 }
