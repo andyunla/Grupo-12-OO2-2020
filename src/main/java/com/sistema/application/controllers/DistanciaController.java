@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("distancia")
 public class DistanciaController {
-     
-     @Autowired
-     @Qualifier("localService")
-     private ILocalService localService;
-     
-     @GetMapping("")
+	 
+	@Autowired
+	@Qualifier("localService")
+	private ILocalService localService;
+	
+	@GetMapping("")
 	public String distancia(Model modelo) {
-          modelo.addAttribute("locales", localService.getAll());
-          return ViewRouteHelper.DISTANCIA_ROOT;
-     }
+		modelo.addAttribute("locales", localService.getAll());
+		return ViewRouteHelper.DISTANCIA_ROOT;
+	}
 }
