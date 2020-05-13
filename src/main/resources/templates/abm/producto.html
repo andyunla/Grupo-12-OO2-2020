@@ -66,8 +66,8 @@
                </div>
                <div class="form-group row">
                     <label for="precioNuevoProducto" class="col-md-2 col-3">Precio</label>
-                    <input type="number" min="0" step="0.01" class="form-control col-md-9 col-8" id="precioNuevoProducto"
-                         th:field="*{precio}" />
+                    <input type="number" min="0" step="0.01" class="form-control col-md-9 col-8"
+                         id="precioNuevoProducto" th:field="*{precio}" />
                </div>
                <div class="form-group row">
                     <label for="talleNuevoProducto" class="col-md-2 col-3">Talle</label>
@@ -133,7 +133,8 @@
                          <div class="modal-body">
                               <form class="col-12 m-1 p-2 mx-auto bg-light rounded" action="#"
                                    th:action="@{/producto/modificar}" th:object="${producto}" method="post">
-                                   <input type="number" class="d-none" id="idModificarProducto" th:field="*{idProducto}" />
+                                   <input type="number" class="d-none" id="idModificarProducto"
+                                        th:field="*{idProducto}" />
                                    <div class="form-group row">
                                         <label for="nombreModificarProducto" class="col-sm-3 col-4">Nombre</label>
                                         <input type="text" class="form-control col-md-8  col-7"
@@ -152,8 +153,8 @@
                                    </div>
                                    <div class="form-group row">
                                         <label for="talleModificarProducto" class="col-sm-3 col-4">Talle</label>
-                                        <input type="number" min="0" class="form-control col-5" id="talleModificarProducto"
-                                             th:field="*{talle}" />
+                                        <input type="number" min="0" class="form-control col-5"
+                                             id="talleModificarProducto" th:field="*{talle}" />
                                    </div>
                                    <div class="text-center">
                                         <button type="submit" class="btn btn-primary">Guardar</button>
@@ -164,13 +165,23 @@
                </div>
           </div>
      </main>
+     <!-- Contenedor del mensaje de alerta al no poder realizar una operación, cargado desde js -->
+     <div class="p-1 col-11 col-sm-7 col-md-6 col-lg-4" id="alertContainer"></div>
      <script th:inline="javascript">
           /*<![CDATA[*/
           var products = /*[[${productos}]]*/'default';
           var productoEliminado = /*[[${productoEliminado}]]*/ 'default';
           /*]]>*/
-          if(productoEliminado != null && !productoEliminado){
-               setTimeout(() => { alert("No se pudo eliminar producto"); }, 300);
+          // Verifica si hubo una operación de eliminación de producto y sí pudo concretarse
+          if (productoEliminado != null && !productoEliminado) {
+               let alertContainer = document.getElementById("alertContainer");
+               alertContainer.innerHTML =
+                    '<div class="p-4 alert alert-danger alert-dismissible fade show" role="alert">' +
+                         '<strong>¡ERROR!</strong> El producto no pudo ser eliminado' +
+                         '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                              '<span aria-hidden="true">&times;</span>' +
+                         '</button>' +
+                    '</div> ';
           }
           //Listener to modal modify client
           let modifyButtons = document.querySelectorAll('.modifyButton');
