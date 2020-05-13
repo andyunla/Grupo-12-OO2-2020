@@ -214,15 +214,24 @@
                </div>
           </div>
      </main>
+     <!-- Contenedor del mensaje de alerta al no poder realizar una operación, cargado desde js -->
+     <div class="p-1 col-11 col-sm-7 col-md-6 col-lg-4" id="alertContainer"></div>
      <script th:inline="javascript">
           /*<![CDATA[*/
           var empleados = /*[[${empleados}]]*/'default';
           var empleadoEliminado = /*[[${empleadoEliminado}]]*/ 'default';
           /*]]>*/
+          // Verifica si hubo una operación de eliminación de empleado y si no pudo realizarse lanza un alert
           if(empleadoEliminado != null && !empleadoEliminado){
-               setTimeout(() => { alert("No se pudo eliminar el empleado"); }, 300);
+               let alertContainer = document.getElementById("alertContainer");
+               alertContainer.innerHTML =
+                    '<div class="p-4 alert alert-danger alert-dismissible fade show" role="alert">' +
+                         '<strong>¡ERROR!</strong> El empleado no pudo ser eliminado' +
+                         '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                              '<span aria-hidden="true">&times;</span>' +
+                         '</button>' +
+                    '</div> ';
           }
-          /*]]>*/
           //Listener to modal's modify employee
           let modifyButtons = document.querySelectorAll('.modifyButton');
           modifyButtons.forEach(button => button.addEventListener('click', event => {
