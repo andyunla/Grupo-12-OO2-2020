@@ -29,9 +29,9 @@ VALUES
 INSERT INTO locales
 	(nombre_local, latitud, longitud, direccion, telefono, gerente_legajo)
 VALUES 	
-	('Local 1', 100, 100, "Av. Local 1", 41111111, 7),
-	('Local 2', 100, 200, "Av. Local 2", 42222222, 8),
-	('Local 3', 100, 250, "Av. Local 3", 43333333, 9);
+	('Local 1', -34.617046, -58.433942, "Av. Local 1", 41111111, 7),
+	('Local 2', -34.608982, -58.371930, "Av. Local 2", 42222222, 8),
+	('Local 3', -34.602662, -58.383379, "Av. Local 3", 43333333, 9);
 
 -- EMPLEADOS:
 INSERT INTO empleado
