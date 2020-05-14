@@ -24,6 +24,13 @@ public class ProductoService implements IProductoService {
      @Qualifier("productoConverter")
      private ProductoConverter productoConverter;
 
+     /*
+ 	@Override
+ 	public ProductoModel findById(long id) {
+ 		return productoConverter.entityToModel(productoRepository.findByIdProducto(id) );
+ 	}
+ 	*/
+     
      @Override
      public List<ProductoModel> getAll() {
           List<ProductoModel> productos = new ArrayList<ProductoModel>();
