@@ -27,11 +27,11 @@ VALUES
 
 -- LOCAL (Los gerente_legajo se definen luego de cargar empleados)
 INSERT INTO locales
-	(nombre_local, latitud, longitud, direccion, telefono, gerente_legajo)
+	(nombre_local, latitud, longitud, direccion, telefono)
 VALUES 	
-	('Local 1', -34.617046, -58.433942, "Av. Local 1", 41111111, 7),
-	('Local 2', -34.608982, -58.371930, "Av. Local 2", 42222222, 8),
-	('Local 3', -34.602662, -58.383379, "Av. Local 3", 43333333, 9);
+	('Local 1', -34.617046, -58.433942, "Av. Local 1", 41111111),
+	('Local 2', -34.608982, -58.371930, "Av. Local 2", 42222222),
+	('Local 3', -34.602662, -58.383379, "Av. Local 3", 43333333);
 
 -- EMPLEADOS:
 INSERT INTO empleado
@@ -46,6 +46,11 @@ VALUES
 	(10, '10:00:00', '18:00:00', 80000, 1, 1),	-- Gerentes
 	(11, '10:00:00', '18:00:00', 80000, 2, 1),
 	(12, '10:00:00', '18:00:00', 80000, 3, 1);
+
+-- Definir gerentes de locales
+UPDATE locales SET gerente_legajo = 1 WHERE id_local = 1;
+UPDATE locales SET gerente_legajo = 2 WHERE id_local = 2;
+UPDATE locales SET gerente_legajo = 3 WHERE id_local = 3;
 
 -- PRODUCTO
 INSERT INTO producto
@@ -67,10 +72,10 @@ VALUES
 	
 -- PEDIDO STOCK
 INSERT INTO pedido_stock
-	(cantidad, aceptado, solicitante_legajo, oferente_legajo, id_producto)
+	(cantidad, aceptado, empleado_legajo, id_producto)
 VALUES
-	( 2, 1, 8, 4, 1),
-	( 5, 1, 9, 4, 2);	
+	( 2, 1, 4, 1),
+	( 5, 1, 4, 2);	
 
 -- CHANGO
 INSERT INTO chango 
