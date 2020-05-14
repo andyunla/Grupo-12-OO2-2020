@@ -13,7 +13,7 @@ public class LocalModel {
 	private double longitud;
 	private String direccion;
 	private int telefono;
-	private long gerenteLegajo;
+	private EmpleadoModel gerente;
 	private Set<LoteModel> listaLotes;
 	private Set<EmpleadoModel> listaEmpleados;
 	private Set<ChangoModel> listaChangos;
@@ -24,7 +24,7 @@ public class LocalModel {
 	}
 
 	public LocalModel(long idLocal, String nombreLocal, double latitud, double longitud, String direccion,
-			int telefono, long gerenteLegajo, Set<LoteModel> listaLotes, Set<EmpleadoModel> listaEmpleados,
+			int telefono, EmpleadoModel gerente, Set<LoteModel> listaLotes, Set<EmpleadoModel> listaEmpleados,
 			Set<ChangoModel> listaChangos, Set<FacturaModel> listaFacturas) {
 		super();
 		this.idLocal = idLocal;
@@ -33,7 +33,7 @@ public class LocalModel {
 		this.longitud = longitud;
 		this.direccion = direccion;
 		this.telefono = telefono;
-		this.gerenteLegajo = gerenteLegajo;
+		this.gerente = gerente;
 		this.listaLotes = listaLotes;
 		this.listaEmpleados = listaEmpleados;
 		this.listaChangos = listaChangos;
@@ -42,7 +42,7 @@ public class LocalModel {
 
 	//constructor para los converter
 	public LocalModel(long idLocal, String nombreLocal, double latitud, double longitud, String direccion, int telefono,
-			long gerenteLegajo) {
+			EmpleadoModel gerente) {
 		super();
 		this.idLocal = idLocal;
 		this.nombreLocal = nombreLocal;
@@ -50,7 +50,7 @@ public class LocalModel {
 		this.longitud = longitud;
 		this.direccion = direccion;
 		this.telefono = telefono;
-		this.gerenteLegajo = gerenteLegajo;
+		this.gerente = gerente;
 	}
 
 	//Getters y Setters
@@ -102,12 +102,12 @@ public class LocalModel {
 		this.telefono = telefono;
 	}
 
-	public long getGerenteLegajo() {
-		return gerenteLegajo;
+	public EmpleadoModel getGerente() {
+		return gerente;
 	}
 
-	public void setGerenteLegajo(long gerenteLegajo) {
-		this.gerenteLegajo = gerenteLegajo;
+	public void setGerente(EmpleadoModel gerente) {
+		this.gerente = gerente;
 	}
 
 	public Set<LoteModel> getListaLotes() {
@@ -147,7 +147,7 @@ public class LocalModel {
 	public String toString() {
 		return "LocalModel [idLocal=" + idLocal + ", nombreLocal=" + nombreLocal + ", latitud=" + latitud
 				+ ", longitud=" + longitud + ", direccion=" + direccion + ", telefono=" + telefono
-				+ ", gerenteLegajo=" + gerenteLegajo + ", listaLotes=" + listaLotes + ", listaEmpleados="
+				+ ", gerente=" + gerente + ", listaLotes=" + listaLotes + ", listaEmpleados="
 				+ listaEmpleados + ", listaChangos=" + listaChangos + ", listaFacturas=" + listaFacturas + "]";
 	}
 

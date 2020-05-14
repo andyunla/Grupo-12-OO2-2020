@@ -27,8 +27,6 @@ public class LoteModel {
 		this.activo = activo;
 	}
 
-
-
 	//Getters y Setters
 	public long getIdLote() {
 		return idLote;
