@@ -53,7 +53,7 @@ public class PedidoStockModel {
 		this.aceptado = aceptado;
 	}
 
-	public long getEmpleado() {
+	public EmpleadoModel getEmpleado() {
 		return empleado;
 	}
 	public void setEmpleado(EmpleadoModel empleado) {

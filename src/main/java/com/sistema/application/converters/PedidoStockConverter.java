@@ -17,18 +17,17 @@ public class PedidoStockConverter {
 	@Autowired
 	@Qualifier("productoConverter")
 	private ProductoConverter productoConverter;
-	//De entidad a modelo
+	@Autowired
+	@Qualifier("empleadoConverter")
+	private EmpleadoConverter empleadoConverter;
+	
 	public PedidoStockModel entityToModel(PedidoStock pedidoStock) {
-		//revisar el oferente, solicitante. También el isAceptado() LEANDRO
 		return new PedidoStockModel(pedidoStock.getIdPedidoStock(), productoConverter.entityToModel(pedidoStock.getProducto()), 
-				pedidoStock.getCantidad(), pedidoStock.isAceptado(), pedidoStock.getSolicitanteLegajo(),
-				pedidoStock.getOferenteLegajo());
+				pedidoStock.getCantidad(), pedidoStock.isAceptado(), empleadoConverter.entityToModel(pedidoStock.getEmpleado()));
 	}
 	
-	//De modelo a entidad
 	public PedidoStock modelToEntity(PedidoStockModel pedidoStockModel) {		
 		return new PedidoStock(pedidoStockModel.getIdPedidoStock(), productoConverter.modelToEntity(pedidoStockModel.getProducto()), 
-				pedidoStockModel.getCantidad(), pedidoStockModel.isAceptado(), pedidoStockModel.getIdSolicitante(),  pedidoStockModel.getIdOferente());
+				pedidoStockModel.getCantidad(), pedidoStockModel.isAceptado(), empleadoConverter.modelToEntity(pedidoStockModel.getEmpleado()));
 	}
-	
 }
