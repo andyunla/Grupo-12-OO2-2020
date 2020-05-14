@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import javax.validation.Valid;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ClienteModel;
 import com.sistema.application.services.IClienteService;
+
 
 @Controller
 @RequestMapping("cliente")
@@ -35,8 +38,13 @@ public class ClienteController {
 	}
 	
 	@PostMapping("agregar")
-	public String agregar(@ModelAttribute("cliente") ClienteModel nuevoCliente) {
-		clienteService.insertOrUpdate(nuevoCliente);
+	public String agregar(@Valid @ModelAttribute("cliente") ClienteModel nuevoCliente,
+	BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return ViewRouteHelper.CLIENTE_ABM;
+		}else {
+			clienteService.insertOrUpdate(nuevoCliente);
+		}
 		return "redirect:/" + ViewRouteHelper.CLIENTE_ROOT;
 	}
 	
