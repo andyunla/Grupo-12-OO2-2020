@@ -6,6 +6,8 @@ import com.sistema.application.models.ProductoModel;
 
 public interface IProductoService {
 
+	//public ProductoModel findById(long id);
+	
     public List<ProductoModel> getAll();
     
     public ProductoModel insertOrUpdate(ProductoModel productoModel);
