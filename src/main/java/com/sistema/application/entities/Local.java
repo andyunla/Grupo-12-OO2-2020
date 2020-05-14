@@ -45,8 +45,9 @@ public class Local implements Serializable {
 	@Column(name="telefono", nullable=false)
 	private int telefono;
 
-	@Column(name="gerente_legajo", nullable=true)
-	private Long gerenteLegajo;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "gerente_legajo", referencedColumnName = "legajo")
+	private Empleado gerente;
 
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="local")
 	private Set<Lote> listaLotes;
@@ -68,19 +69,19 @@ public class Local implements Serializable {
 		this.longitud = longitud;
 		this.direccion = direccion;
 		this.telefono = telefono;
-		this.gerenteLegajo = null;
+		this.gerente = null;
 	}
 
 	// Constructor usado por el converter, ver sobre el gerente...
 	public Local(long idLocal, String nombreLocal, double latitud, double longitud, String direccion, 
-			int telefono, long gerenteLegajo) {
+			int telefono, Empleado gerente) {
 		this.idLocal = idLocal;
 		this.nombreLocal = nombreLocal;
 		this.latitud = latitud;
 		this.longitud = longitud;
 		this.direccion = direccion;
 		this.telefono = telefono;
-		setGerenteLegajo(gerenteLegajo);
+		setGerente(gerente);
 	}
 	
 	//Getters y Setters
@@ -92,12 +93,12 @@ public class Local implements Serializable {
 		this.idLocal = idLocal;
 	}
 
-	public long getGerenteLegajo() {
-		return (gerenteLegajo == null) ? 0 : gerenteLegajo;
+	public Empleado getGerente() {
+		return gerente;
 	}
 
-	public void setGerenteLegajo(long gerenteLegajo) {
-		this.gerenteLegajo = (gerenteLegajo == 0) ? null : gerenteLegajo;
+	public void setGerente(Empleado gerente) {
+		this.gerente = gerente;
 	}
 
 	public String getNombreLocal() {
@@ -175,7 +176,7 @@ public class Local implements Serializable {
 	@Override
 	public String toString() {
 		return "\n\nLocal " + idLocal + ": "+"\nNombre: " + nombreLocal + "\nLatitud: " + latitud + "\nLongitud: "
-				+ longitud + "\nDireccion: " + direccion + "\nTelefono: " + telefono + "\nGerenteLegajo: " +
-				gerenteLegajo ;
+				+ longitud + "\nDireccion: " + direccion + "\nTelefono: " + telefono + "\nGerente: " +
+				gerente ;
 	}
 }
