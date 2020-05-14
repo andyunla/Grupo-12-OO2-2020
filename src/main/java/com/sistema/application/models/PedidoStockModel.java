@@ -9,21 +9,18 @@ public class PedidoStockModel {
 	private ProductoModel producto;
 	private int cantidad;
 	private boolean aceptado;
-	private long idSolicitante;
-	private long idOferente;
+	private EmpleadoModel empleado;
 	
 	//Constructores
 	public PedidoStockModel() {}
 	
-	public PedidoStockModel(long idPedidoStock, ProductoModel producto, int cantidad, boolean aceptado,
-			long idSolicitante, long idOferente) {
+	public PedidoStockModel(long idPedidoStock, ProductoModel producto, int cantidad, boolean aceptado, EmpleadoModel empleado) {
 		super();
 		this.idPedidoStock = idPedidoStock;
 		this.producto = producto;
 		this.cantidad = cantidad;
 		this.aceptado = aceptado;
-		this.idSolicitante = idSolicitante;
-		this.idOferente = idOferente;
+		this.empleado = empleado;
 	}
 
 	
@@ -56,26 +53,17 @@ public class PedidoStockModel {
 		this.aceptado = aceptado;
 	}
 
-	public long getIdSolicitante() {
-		return idSolicitante;
+	public EmpleadoModel getEmpleado() {
+		return empleado;
 	}
-	public void setIdSolicitante(long idSolicitante) {
-		this.idSolicitante = idSolicitante;
-	}
-
-	public long getIdOferente() {
-		return idOferente;
-	}
-	public void setIdOferente(long idOferente) {
-		this.idOferente = idOferente;
-	}
-	
+	public void setEmpleado(EmpleadoModel empleado) {
+		this.empleado = empleado;
+	}	
 	
 	//toString
 	@Override
 	public String toString() {
 		return "PedidoStockModel [idPedidoStock=" + idPedidoStock + ", producto=" + producto + ", cantidad=" + cantidad
-				+ ", aceptado=" + aceptado + ", idSolicitante=" + idSolicitante + ", idOferente=" + idOferente + "]";
+				+ ", aceptado=" + aceptado + ", empleado=" + empleado + "]";
 	}
-	
 }

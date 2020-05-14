@@ -36,7 +36,7 @@ public class Chango implements Serializable {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_pedido_stock", nullable=false)
-	private PedidoStock pedidostock;
+	private PedidoStock pedidoStock;
 
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_local")
@@ -44,16 +44,16 @@ public class Chango implements Serializable {
 
 	public Chango() {}
 	
-	public Chango(PedidoStock pedidostock, Local local) {
+	public Chango(PedidoStock pedidoStock, Local local) {
 		super();
-		this.pedidostock = pedidostock;
+		this.pedidoStock = pedidoStock;
 		this.local = local;
 	}
 	//contructor converter
-	public Chango(long idChango, PedidoStock pedidostock, Local local) {
+	public Chango(long idChango, PedidoStock pedidoStock, Local local) {
 		super();
 		this.idChango = idChango;
-		this.pedidostock = pedidostock;
+		this.pedidoStock = pedidoStock;
 		this.local = local;
 	}
 
@@ -75,11 +75,11 @@ public class Chango implements Serializable {
 	}
 
 	public PedidoStock getPedidostock() {
-		return pedidostock;
+		return pedidoStock;
 	}
 
-	public void setPedidostock(PedidoStock pedidostock) {
-		this.pedidostock = pedidostock;
+	public void setPedidostock(PedidoStock pedidoStock) {
+		this.pedidoStock = pedidoStock;
 	}
 
 	public Set<Factura> getListaFacturas() {
@@ -105,6 +105,6 @@ public class Chango implements Serializable {
 	@Override
 	public String toString() {
 		return "\n\nCHANGO: " + idChango + listaItems.toString();
-		//return "Chango [idChango=" + idChango + ", pedidostock=" + pedidostock + "]";
+		//return "Chango [idChango=" + idChango + ", pedidoStock=" + pedidoStock + "]";
 	}
 }

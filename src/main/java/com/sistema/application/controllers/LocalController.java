@@ -46,21 +46,21 @@ public class LocalController {
 	public String modificar(@ModelAttribute("local") LocalModel localModificado) {
           System.out.println(localModificado);
           // Modifico el empleado gerente anterior si es que se eligió un nuevo gerente
-          if(localModificado.getGerenteLegajo() != 0) {
+          if(localModificado.getGerente() != null) {
                // Obtengo el local modificado de la bd
                LocalModel localOriginal = localService.findByIdLocal(localModificado.getIdLocal());
                // Obtengo el legajo del empleado que era gerente
-               long legajoGerenteOriginal = localOriginal.getGerenteLegajo();
+               EmpleadoModel gerenteOriginal = localOriginal.getGerente();
                // Si el local no tiene un gerente asociado 'legajoGerente' vale 0 
                // y ocacionará una excepción si se lo busca por el método 'empleadoService.findByLegajo'
-               if(legajoGerenteOriginal != 0) {
+               if(gerenteOriginal != null) {
                     // Obtengo el empleado que era gerente y lo cambio a empleado común
-                    EmpleadoModel gerenteAnterior = empleadoService.findByLegajo(legajoGerenteOriginal);
+                    EmpleadoModel gerenteAnterior = empleadoService.findByLegajo(gerenteOriginal.getLegajo());
                     gerenteAnterior.setTipoEmpleado(false);
                     empleadoService.insertOrUpdate(gerenteAnterior);
                }
                // Actualizo el local modificado y al empleado que será gerente
-               EmpleadoModel nuevoGerente = empleadoService.findByLegajo(localModificado.getGerenteLegajo());
+               EmpleadoModel nuevoGerente = empleadoService.findByLegajo(localModificado.getGerente().getLegajo());
                nuevoGerente.setTipoEmpleado(true);
                empleadoService.insertOrUpdate(nuevoGerente);
           }
