@@ -33,13 +33,13 @@ public class EmpleadoConverter {
 		LocalModel localModel = obtenerLocalModel(empleado.getLocal());
 		return new EmpleadoModel(empleado.getIdPersona(), empleado.getNombre(), empleado.getApellido(), empleado.getDni(), empleado.getFechaNacimiento(),
 								 empleado.getLegajo(), empleado.getHoraDesde().toString(), empleado.getHoraHasta().toString(), empleado.getSueldoBasico(),
-								 localModel, empleado.isTipoEmpleado());
+								 localModel, empleado.isTipoGerente());
 	}
 	// Método utilizado internamente para generar un modelo de gerente pero sin local
 	protected EmpleadoModel entityToModelWithoutLocal(Empleado empleado) {
 		return new EmpleadoModel(empleado.getIdPersona(), empleado.getNombre(), empleado.getApellido(), empleado.getDni(), empleado.getFechaNacimiento(),
 								 empleado.getLegajo(), empleado.getHoraDesde().toString(), empleado.getHoraHasta().toString(), empleado.getSueldoBasico(),
-								 empleado.isTipoEmpleado());
+								 empleado.isTipoGerente());
 	}
 
 	// Models to entities
@@ -50,7 +50,7 @@ public class EmpleadoConverter {
 		Local local = obtenerLocal(empleadoModel.getLocal());
 		return new Empleado(empleadoModel.getId(), empleadoModel.getNombre(), empleadoModel.getApellido(), empleadoModel.getDni(), empleadoModel.getFechaNacimiento(),
 							empleadoModel.getLegajo(), horaDesde, horaHasta, empleadoModel.getSueldoBasico(),
-							local, empleadoModel.isTipoEmpleado());
+							local, empleadoModel.isTipoGerente());
 	}
 	// Método utilizado internamente para generar una entidad de gerente pero sin local
 	protected Empleado modelToEntityWithoutLocal(EmpleadoModel empleadoModel) {
@@ -58,7 +58,7 @@ public class EmpleadoConverter {
 		LocalTime horaHasta = Funciones.horaFromString(empleadoModel.getHoraHasta());
 		return new Empleado(empleadoModel.getId(), empleadoModel.getNombre(), empleadoModel.getApellido(), empleadoModel.getDni(), empleadoModel.getFechaNacimiento(),
 							empleadoModel.getLegajo(), horaDesde, horaHasta, empleadoModel.getSueldoBasico(),
-							empleadoModel.isTipoEmpleado());
+							empleadoModel.isTipoGerente());
 	}
 
 	/**

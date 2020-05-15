@@ -56,12 +56,12 @@ public class LocalController {
                if(gerenteOriginal != null) {
                     // Obtengo el empleado que era gerente y lo cambio a empleado común
                     EmpleadoModel gerenteAnterior = empleadoService.findByLegajo(gerenteOriginal.getLegajo());
-                    gerenteAnterior.setTipoEmpleado(false);
+                    gerenteAnterior.setTipoGerente(false);
                     empleadoService.insertOrUpdate(gerenteAnterior);
                }
                // Actualizo el local modificado y al empleado que será gerente
                EmpleadoModel nuevoGerente = empleadoService.findByLegajo(localModificado.getGerente().getLegajo());
-               nuevoGerente.setTipoEmpleado(true);
+               nuevoGerente.setTipoGerente(true);
                empleadoService.insertOrUpdate(nuevoGerente);
           }
           localService.insertOrUpdate(localModificado);
