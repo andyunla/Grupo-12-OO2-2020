@@ -40,7 +40,6 @@ public class LocalConverter {
 	// *******************************************************
 	public Local modelToEntity(LocalModel localModel) {
 		Empleado gerente = obtenerGerente(localModel.getGerente());
-		System.out.println("GERENTEMODEL OBTENIDO\n");
 		return new Local(localModel.getIdLocal(), localModel.getNombreLocal(), localModel.getLatitud(), localModel.getLongitud(), 
 						 localModel.getDireccion(), localModel.getTelefono(), gerente);
 	}

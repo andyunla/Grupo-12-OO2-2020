@@ -39,7 +39,7 @@ public class EmpleadoConverter {
 	protected EmpleadoModel entityToModelWithoutLocal(Empleado empleado) {
 		return new EmpleadoModel(empleado.getIdPersona(), empleado.getNombre(), empleado.getApellido(), empleado.getDni(), empleado.getFechaNacimiento(),
 								 empleado.getLegajo(), empleado.getHoraDesde().toString(), empleado.getHoraHasta().toString(), empleado.getSueldoBasico(),
-								 null, empleado.isTipoEmpleado());
+								 empleado.isTipoEmpleado());
 	}
 
 	// Models to entities
@@ -47,7 +47,7 @@ public class EmpleadoConverter {
 	public Empleado modelToEntity(EmpleadoModel empleadoModel) {
 		LocalTime horaDesde = Funciones.horaFromString(empleadoModel.getHoraDesde());
 		LocalTime horaHasta = Funciones.horaFromString(empleadoModel.getHoraHasta());
-		Local local = localRepository.findByIdLocal(empleadoModel.getLocal().getIdLocal());
+		Local local = obtenerLocal(empleadoModel.getLocal());
 		return new Empleado(empleadoModel.getId(), empleadoModel.getNombre(), empleadoModel.getApellido(), empleadoModel.getDni(), empleadoModel.getFechaNacimiento(),
 							empleadoModel.getLegajo(), horaDesde, horaHasta, empleadoModel.getSueldoBasico(),
 							local, empleadoModel.isTipoEmpleado());

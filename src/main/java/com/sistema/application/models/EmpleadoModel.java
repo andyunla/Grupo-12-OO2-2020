@@ -29,6 +29,18 @@ public class EmpleadoModel extends PersonaModel {
 		this.tipoEmpleado = tipoEmpleado;
 	}
 
+	// Utilizado por el converter pero sin establecer el local
+	public EmpleadoModel(long id, String nombre, String apellido, int dni, LocalDate fechaNacimiento, 
+						 long legajo, String horaDesde, String horaHasta, double sueldoBasico, boolean tipoEmpleado) {
+		super(id, nombre, apellido, dni, fechaNacimiento);
+		this.legajo = legajo;
+		this.horaDesde = horaDesde;
+		this.horaHasta = horaHasta;
+		this.sueldoBasico = sueldoBasico;
+		this.local = null;
+		this.tipoEmpleado = tipoEmpleado;
+	}
+
 	/*
 	 * Para crear un empleado normal
 	 * La propiedad tipoEmpleado se establece a false
