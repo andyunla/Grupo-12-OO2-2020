@@ -3,6 +3,7 @@ package com.sistema.application.models;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -182,5 +183,28 @@ public class LocalModel {
 	public LoteModel crearLote (int cantidadInicial ,ProductoModel producto ) {
 		return iLoteService.insertOrUpdate(new LoteModel( cantidadInicial, cantidadInicial, LocalDate.now(), producto, this ));
 	}
-	
+	public boolean restarLote(ProductoModel producto, int cantidad) {
+		int i =0;
+		//traigo la lista de lotes del producto en el local
+		Set<LoteModel> lista = iLoteService.findByLoteProductoActivo(producto.getIdProducto(), this.idLocal);
+		Iterator<LoteModel> itr = lista.iterator();
+		LoteModel lo = null;// creo un LoteModel objeto vacio
+		while(cantidad>0 && itr.hasNext()) {//mientras haya cantidad que restar
+			lo = itr.next(); 
+			if(lo.getCantidadActual() - cantidad <=0 ) {// si la cantidad actual queda en 0 doy de baja el lote
+				cantidad = cantidad - lo.getCantidadActual(); // actualizo la cantidad a restar
+				lo.setCantidadActual(0);
+				lo.setActivo(false);
+				iLoteService.insertOrUpdate(lo);// actualizo el lote en la base de datos
+				}
+			if (lo.getCantidadActual() - cantidad >=1) {
+				lo.setCantidadActual(lo.getCantidadActual()- cantidad);
+				iLoteService.insertOrUpdate(lo);// actualizo el lote en la base de datos
+				cantidad =0;// seteo en cero para salir del bucle, ya no hay mas que restar
+			}			
+		i++;	
+		}
+		
+		return true;
+	}
 }
