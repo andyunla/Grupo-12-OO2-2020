@@ -2,14 +2,14 @@
 <html lang="en">
 
 <head>
-     <div th:insert="fragments/head :: head"></div>
-     <title>Distancia</title>
+     <head th:replace="fragments/head :: head(title='Distancia')"></head>
+     <title>Distancia*</title>
 </head>
 
 <body class="container-fluid m-0 p-0">
-     <div th:replace="fragments/navbar :: navbar"></div>
+     <nav th:replace="fragments/navbar :: navbar(active='distancia)'"></nav>
      <header class="text-center m-3">
-          <h1 class="display-4">DISTANCIAS ENTRE LOCALES</h1>
+          <h1 class="display-4">DISTANCIAS ENTRE DOS LOCALES</h1>
      </header>
      <main class="w-100 d-flex flex-column align-items-center">
           <section class="bg-light rounded col-lg-4 col-md-5 col-sm-7 col-11 p-2 m-3 shadow p-3 mb-5">
@@ -38,7 +38,7 @@
                </form>
           </section>
      </main>
-     <div th:replace="fragments/footer :: footer"></div>
+     <footer th:replace="fragments/footer :: footer"></footer>
      <script th:src="@{/js/distancia.js}"></script>
      <div th:replace="fragments/scripts :: scripts"></div>
 </body>
