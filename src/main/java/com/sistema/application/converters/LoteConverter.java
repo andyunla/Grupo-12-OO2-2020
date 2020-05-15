@@ -18,17 +18,20 @@ public class LoteConverter {
 	@Autowired
 	@Qualifier("productoConverter")
 	private ProductoConverter productoConverter;
+	@Autowired
+	@Qualifier("localConverter")
+	private LocalConverter localConverter;
 	//De entidad a modelo
 	public LoteModel entityToModel(Lote lote) {
 		return new LoteModel(lote.getIdLote(), lote.getCantidadInicial(), lote.getCantidadActual(),
-				lote.getFechaIngreso(),productoConverter.entityToModel( lote.getProducto()), lote.isActivo() );
+				lote.getFechaIngreso(),productoConverter.entityToModel( lote.getProducto()), lote.isActivo(), localConverter.entityToModel(lote.getLocal()) );
 	}
 	
 	//De modelo a entidad
 	public Lote modelToEntity(LoteModel loteModel) {
 		
 		return new Lote(loteModel.getIdLote(), loteModel.getCantidadInicial(), loteModel.getCantidadActual(), 
-				loteModel.getFechaIngreso(), productoConverter.modelToEntity(loteModel.getProductoModel()) );
+				loteModel.getFechaIngreso(), productoConverter.modelToEntity(loteModel.getProductoModel()), localConverter.modelToEntity(loteModel.getLocal()) );
 	}
 	
 }
