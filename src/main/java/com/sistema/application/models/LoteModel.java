@@ -15,16 +15,17 @@ public class LoteModel {
 	
 	//Constructores
 	public LoteModel() {}
-
+	
+	//constructor para el converter, se deben respetar el valor y estado de todos los atrubutos LEAN
 	public LoteModel(long idLote, int cantidadInicial, int cantidadActual, LocalDate fechaIngreso,
-			ProductoModel producto,LocalModel local ) {
+			ProductoModel producto,boolean activo, LocalModel local ) {
 		super();
 		this.idLote = idLote;
 		this.cantidadInicial = cantidadInicial;
 		this.cantidadActual = cantidadActual;
 		this.fechaIngreso = fechaIngreso;
 		this.producto = producto;
-		this.activo = true;
+		this.activo = activo;
 		this.local = local;
 	}
 	public LoteModel( int cantidadInicial, int cantidadActual, LocalDate fechaIngreso,
