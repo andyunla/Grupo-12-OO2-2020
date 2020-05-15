@@ -8,20 +8,12 @@ import com.sistema.application.entities.Empleado;
 import com.sistema.application.entities.Local;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.LocalModel;
-import com.sistema.application.repositories.IEmpleadoRepository;
-import com.sistema.application.services.IEmpleadoService;
 
 @Component("localConverter")
 public class LocalConverter {
 	@Autowired
 	@Qualifier("empleadoConverter")
 	private EmpleadoConverter empleadoConverter;
-	@Autowired
-	@Qualifier("empleadoRepository")
-	private IEmpleadoRepository empleadoRepository;
-	@Autowired
-	@Qualifier("empleadoService")
-	private IEmpleadoService empleadoService;
 	
 	// Entities to models
 	// *******************************************************
