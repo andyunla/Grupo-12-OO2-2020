@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-     <div th:insert="fragments/head :: head"></div>
-     <title>Productos</title>
-</head>
-
+     <head th:replace="fragments/head :: head(title='Producto')"></head>
 <body class="container-fluid m-0 p-0">
-     <div th:replace="fragments/navbar :: navbar"></div>
+     <div th:replace="fragments/navbar :: navbar(active='abm')"></div>
      <header class="text-center m-3">
           <h1 class="display-4">PRODUCTOS</h1>
      </header>
@@ -42,6 +37,7 @@
                     <button type="submit" class="btn btn-primary">Guardar</button>
                </div>
           </form>
+
 
           <!-- LIST -->
           <div class="container-fluid col-12 col-md-11 text-center table-responsive">
@@ -128,7 +124,7 @@
                </div>
           </div>
      </main>
-     <div th:replace="fragments/footer :: footer"></div>
+     <footer th:replace="fragments/footer :: footer"></footer>
      <!-- Contenedor del mensaje de alerta al no poder realizar una operación, cargado desde js -->
      <div class="p-1 col-11 col-sm-7 col-md-6 col-lg-4" id="alertContainer"></div>
      <script th:inline="javascript">

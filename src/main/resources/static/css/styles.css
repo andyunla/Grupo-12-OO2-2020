@@ -1,5 +1,36 @@
-.font-q {
+/* FUENTE */
+.quicksand {
     font-family: 'Quicksand', sans-serif;
+}
+
+/* FOOTER */
+
+html{
+    height: 100%;
+}
+body {
+    position: relative;
+    min-height:100%; 
+    padding-bottom:0; 
+    margin:0;
+    background-color: red;
+}
+
+body::after {
+    content: '';
+    display: block;
+    height: 80px;
+    padding: 0;
+    margin: 0;
+}
+
+footer {
+    font-size: 0.85em;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    margin: 0;
 }
 
 /* ABM ESTILOS  */
@@ -38,24 +69,25 @@
     top: 2vh;
 }
 
-#alertContainer div{
+#alertContainer div {
     animation: blinkingBackground 2s infinite;
 }
 
 @keyframes blinkingBackground {
     0% {
-         background-color: #f8d7da
+        background-color: #f8d7da
     }
     30% {
-         background-color: #f8d6d9
+        background-color: #f8d6d9
     }
     60% {
-         background-color: #eec9cc
+        background-color: #eec9cc
     }
     100% {
-         background-color: #f8d7da
+        background-color: #f8d7da
     }
 }
+
 /* DISTANCIA ESTILOS */
 
 #distancia {

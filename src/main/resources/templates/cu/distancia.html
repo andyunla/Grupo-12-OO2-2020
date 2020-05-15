@@ -15,7 +15,7 @@
           <section class="bg-light rounded col-lg-4 col-md-5 col-sm-7 col-11 p-2 m-3 shadow p-3 mb-5">
                <form class="col-11 mx-auto text-center" action="#">
                     <div class="form-group row d-flex flex-column mb-4">
-                         <label for="localDesde" class="font-q">DESDE</label>
+                         <label for="localDesde" class="quicksand">DESDE</label>
                          <select class="custom-select" id="localDesde" required>
                               <option value="0" selected hidden disabled>Seleccione un local</option>
                               <option th:each="local :${locales}" th:text="${local.idLocal + ' - ' + local.nombreLocal}"
@@ -23,7 +23,7 @@
                          </select>
                     </div>
                     <div class="form-group row d-flex flex-column mb-4">
-                         <label for="localHasta" class="font-q">HASTA</label>
+                         <label for="localHasta" class="quicksand">HASTA</label>
                          <select class="custom-select" id="localHasta" required>
                               <option value="0" selected hidden disabled>Seleccione un local</option>
                               <option th:each="local :${locales}" th:text="${local.idLocal + ' - ' + local.nombreLocal}"
@@ -31,7 +31,7 @@
                          </select>
                     </div>
                     <div class="row d-flex justify-content-center m-3">
-                         <p class="m-1 p-2 font-weight-bold text-light bg-secondary rounded w-50 font-q"
+                         <p class="m-1 p-2 font-weight-bold text-light bg-secondary rounded w-50 quicksand"
                                id="distancia">0
                          </p>
                     </div>
