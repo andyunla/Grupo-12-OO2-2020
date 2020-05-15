@@ -2,7 +2,14 @@ package com.sistema.application.models;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
+import com.sistema.application.entities.Producto;
+import com.sistema.application.services.ILoteService;
 
 public class LocalModel {
 
@@ -18,7 +25,10 @@ public class LocalModel {
 	private Set<EmpleadoModel> listaEmpleados;
 	private Set<ChangoModel> listaChangos;
 	private Set<FacturaModel> listaFacturas;
-
+	//Services
+	@Autowired
+	@Qualifier("iLoteService")
+	ILoteService iLoteService;
 	// Constructores
 	public LocalModel() {
 	}
@@ -163,4 +173,10 @@ public class LocalModel {
 		double va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));
 		return radioTierra * va2;
 	}
+		
+		
+	public LoteModel crearLote (int cantidadInicial ,ProductoModel producto ) {
+		return iLoteService.insertOrUpdate(new LoteModel( cantidadInicial, cantidadInicial, LocalDate.now(), producto, this ));
+	}
+	
 }
