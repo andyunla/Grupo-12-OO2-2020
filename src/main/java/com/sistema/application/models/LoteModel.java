@@ -17,14 +17,14 @@ public class LoteModel {
 	public LoteModel() {}
 
 	public LoteModel(long idLote, int cantidadInicial, int cantidadActual, LocalDate fechaIngreso,
-			ProductoModel producto, boolean activo,LocalModel local ) {
+			ProductoModel producto,LocalModel local ) {
 		super();
 		this.idLote = idLote;
 		this.cantidadInicial = cantidadInicial;
 		this.cantidadActual = cantidadActual;
 		this.fechaIngreso = fechaIngreso;
 		this.producto = producto;
-		this.activo = activo;
+		this.activo = true;
 		this.local = local;
 	}
 
