@@ -51,8 +51,8 @@ public class LocalConverter {
 	}
 
 	/**
-   	* Métodos que crea un gerente y un local(de la entidad y modelo) pero sin establecer
-   	* como argumento el otro objeto para no generar recursividad
+   	* Métodos que crea un empleado (de la entidad y modelo) pero sin establecer
+   	* como argumento el local para no generar recursividad
    	*/
 	private EmpleadoModel obtenerGerenteModel(Empleado gerente) {
 		// Gerente sin local
