@@ -11,13 +11,13 @@ public class LoteModel {
 	private LocalDate fechaIngreso;
 	private ProductoModel producto;
 	private boolean activo;
-	
+	private LocalModel local;
 	
 	//Constructores
 	public LoteModel() {}
 
 	public LoteModel(long idLote, int cantidadInicial, int cantidadActual, LocalDate fechaIngreso,
-			ProductoModel producto, boolean activo) {
+			ProductoModel producto, boolean activo,LocalModel local ) {
 		super();
 		this.idLote = idLote;
 		this.cantidadInicial = cantidadInicial;
@@ -25,6 +25,7 @@ public class LoteModel {
 		this.fechaIngreso = fechaIngreso;
 		this.producto = producto;
 		this.activo = activo;
+		this.local = local;
 	}
 
 	//Getters y Setters
@@ -69,8 +70,17 @@ public class LoteModel {
 	public void setActivo(boolean activo) {
 		this.activo = activo;
 	}
-
 	
+	
+
+	public LocalModel getLocal() {
+		return local;
+	}
+
+	public void setLocal(LocalModel local) {
+		this.local = local;
+	}
+
 	//toString
 	@Override
 	public String toString() {
