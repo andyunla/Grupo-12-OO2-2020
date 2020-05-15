@@ -12,20 +12,12 @@ import com.sistema.application.entities.Local;
 import com.sistema.application.funciones.Funciones;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.LocalModel;
-import com.sistema.application.repositories.ILocalRepository;
-import com.sistema.application.services.ILocalService;
 
 @Component("empleadoConverter")
 public class EmpleadoConverter {
 	@Autowired
 	@Qualifier("localConverter")
 	private LocalConverter localConverter;
-	@Autowired
-	@Qualifier("localRepository")
-	private ILocalRepository localRepository;
-	@Autowired
-	@Qualifier("localService")
-	private ILocalService localService;
 
 	// Entities to models
 	// *******************************************************
