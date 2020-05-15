@@ -27,6 +27,17 @@ public class LoteModel {
 		this.activo = true;
 		this.local = local;
 	}
+	public LoteModel( int cantidadInicial, int cantidadActual, LocalDate fechaIngreso,
+			ProductoModel producto,LocalModel local ) {
+		super();
+		
+		this.cantidadInicial = cantidadInicial;
+		this.cantidadActual = cantidadActual;
+		this.fechaIngreso = fechaIngreso;
+		this.producto = producto;
+		this.activo = true;
+		this.local = local;
+	}
 
 	//Getters y Setters
 	public long getIdLote() {
