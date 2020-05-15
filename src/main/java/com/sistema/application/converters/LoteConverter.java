@@ -31,7 +31,7 @@ public class LoteConverter {
 	public Lote modelToEntity(LoteModel loteModel) {
 		
 		return new Lote(loteModel.getIdLote(), loteModel.getCantidadInicial(), loteModel.getCantidadActual(), 
-				loteModel.getFechaIngreso(), productoConverter.modelToEntity(loteModel.getProductoModel()), localConverter.modelToEntity(loteModel.getLocal()) );
+				loteModel.getFechaIngreso(), productoConverter.modelToEntity(loteModel.getProductoModel()),loteModel.isActivo(), localConverter.modelToEntity(loteModel.getLocal()) );
 	}
 	
 }
