@@ -51,21 +51,23 @@ public class Lote implements Serializable {
 
 	public Lote() {}
 
-	public Lote(int cantidadInicial, int cantidadActual, LocalDate fechaIngreso, Producto producto) {
+	public Lote(int cantidadInicial, int cantidadActual, LocalDate fechaIngreso, Producto producto, Local local) {
 		this.cantidadInicial = cantidadInicial;
 		this.cantidadActual = cantidadActual;
 		this.fechaIngreso = fechaIngreso;
 		this.producto = producto;
 		this.activo = true;
+		this.local = local;
 	}
 	//constructor para Converter LEAN
-	public Lote(long idLote, int cantidadInicial, int cantidadActual, LocalDate fechaIngreso, Producto producto) {
+	public Lote(long idLote, int cantidadInicial, int cantidadActual, LocalDate fechaIngreso, Producto producto, Local local) {
 		this.idLote = idLote;
 		this.cantidadInicial = cantidadInicial;
 		this.cantidadActual = cantidadActual;
 		this.fechaIngreso = fechaIngreso;
 		this.producto = producto;
 		this.activo = true;
+		this.local = local;
 	}
 
 	//Getters y Setters
@@ -126,7 +128,7 @@ public class Lote implements Serializable {
 	}
 
 	@Override
-	public String toString() {
+	public String toString() {// faltaría agregar el local a toString
 		return "Lote [idLote=" + idLote + ", cantidadInicial=" + cantidadInicial + ", cantidadActual=" + cantidadActual
 				+ ", fechaIngreso=" + fechaIngreso + ", producto=" + producto + ", activo=" + activo + "]";
 	}
