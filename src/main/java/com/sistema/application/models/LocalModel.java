@@ -64,6 +64,17 @@ public class LocalModel {
 		this.gerente = gerente;
 	}
 
+	public LocalModel(long idLocal, String nombreLocal, double latitud, double longitud, String direccion, int telefono) {
+		super();
+		this.idLocal = idLocal;
+		this.nombreLocal = nombreLocal;
+		this.latitud = latitud;
+		this.longitud = longitud;
+		this.direccion = direccion;
+		this.telefono = telefono;
+		this.gerente = null;
+	}
+
 	//Getters y Setters
 	public long getIdLocal() {
 		return idLocal;

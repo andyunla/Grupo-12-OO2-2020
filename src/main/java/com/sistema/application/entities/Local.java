@@ -84,6 +84,16 @@ public class Local implements Serializable {
 		this.telefono = telefono;
 		setGerente(gerente);
 	}
+
+	public Local(long idLocal, String nombreLocal, double latitud, double longitud, String direccion, int telefono) {
+		this.idLocal = idLocal;
+		this.nombreLocal = nombreLocal;
+		this.latitud = latitud;
+		this.longitud = longitud;
+		this.direccion = direccion;
+		this.telefono = telefono;
+		this.gerente = null;
+	}
 	
 	//Getters y Setters
 	public long getIdLocal() {
