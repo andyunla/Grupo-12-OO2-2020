@@ -59,14 +59,14 @@ public class Lote implements Serializable {
 		this.activo = true;
 		this.local = local;
 	}
-	//constructor para Converter LEAN
-	public Lote(long idLote, int cantidadInicial, int cantidadActual, LocalDate fechaIngreso, Producto producto, Local local) {
+	//constructor para Converter se debe respetar el valor y estado de todos los atributos LEAN
+	public Lote(long idLote, int cantidadInicial, int cantidadActual, LocalDate fechaIngreso, Producto producto,boolean activo, Local local) {
 		this.idLote = idLote;
 		this.cantidadInicial = cantidadInicial;
 		this.cantidadActual = cantidadActual;
 		this.fechaIngreso = fechaIngreso;
 		this.producto = producto;
-		this.activo = true;
+		this.activo = activo;
 		this.local = local;
 	}
 
