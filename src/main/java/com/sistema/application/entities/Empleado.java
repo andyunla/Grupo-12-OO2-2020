@@ -48,22 +48,22 @@ public class Empleado extends Persona implements Serializable {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="empleado")
 	private Set<Factura> listaFacturas;
 	
-	@Column(name="tipo_empleado", nullable=false)
-	private boolean tipoEmpleado; // Para determinar si es el que administra el local  -> true=gerente, false=empleado
+	@Column(name="tipo_gerente", nullable=false)
+	private boolean tipoGerente; // Para determinar si es el que administra el local  -> true=gerente, false=empleado
 
 	public Empleado() {
 		super();
 	}
 
 	public Empleado(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, long legajo, 
-					LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, Local local, boolean tipoEmpleado) {
+					LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, Local local, boolean tipoGerente) {
 		super(idPersona, nombre, apellido, dni, fechaNacimiento);
 		this.legajo = legajo;
 		this.horaDesde = horaDesde;
 		this.horaHasta = horaHasta;
 		this.sueldoBasico = sueldoBasico;
 		this.local = local;
-		this.tipoEmpleado = tipoEmpleado;
+		this.tipoGerente = tipoGerente;
 	}
 
 	public Empleado(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, long legajo, 
@@ -74,7 +74,18 @@ public class Empleado extends Persona implements Serializable {
 		this.horaHasta = horaHasta;
 		this.sueldoBasico = sueldoBasico;
 		this.local = null;
-		this.tipoEmpleado = false;
+		this.tipoGerente = false;
+	}
+
+	public Empleado(long idPersona, String nombre, String apellido, int dni, LocalDate fechaNacimiento, long legajo, 
+					LocalTime horaDesde, LocalTime horaHasta, double sueldoBasico, boolean tipoGerente) {
+		super(idPersona, nombre, apellido, dni, fechaNacimiento);
+		this.legajo = legajo;
+		this.horaDesde = horaDesde;
+		this.horaHasta = horaHasta;
+		this.sueldoBasico = sueldoBasico;
+		this.local = null;
+		this.tipoGerente = tipoGerente;
 	}
 
 	//Getters y Setters
@@ -122,12 +133,12 @@ public class Empleado extends Persona implements Serializable {
 		return local;
 	}
 
-	public void setTipoEmpleado(boolean tipoEmpleado) {
-		this.tipoEmpleado = tipoEmpleado;
+	public void setTipoGerente(boolean tipoGerente) {
+		this.tipoGerente = tipoGerente;
 	}
 
-	public boolean isTipoEmpleado() {
-		return tipoEmpleado;
+	public boolean isTipoGerente() {
+		return tipoGerente;
 	}
 
 	public void setLocal(Local local) {
@@ -141,6 +152,6 @@ public class Empleado extends Persona implements Serializable {
 	@Override
 	public String toString() {
 		return "\n\nNombre: "+ this.nombre +"\nApellido: "+this.apellido +"\nDNI: "+ this.dni +"\nLegajo: " + legajo + "\nHoraDesde: " + horaDesde + "\nHoraHasta: " + horaHasta
-				+ "\nSueldoBasico: " + sueldoBasico  + "\nEs gerente: " + isTipoEmpleado();
+				+ "\nSueldoBasico: " + sueldoBasico  + "\nEs gerente: " + isTipoGerente();
 	}
 }

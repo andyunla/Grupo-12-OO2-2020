@@ -71,7 +71,7 @@
                               <td th:text="${local.longitud}"></td>
                               <td th:text="${local.direccion}"></td>
                               <td th:text="${local.telefono}"></td>
-                              <td th:text="${local.gerente.legajo}"></td>
+                              <td th:text="${local.gerente.getLegajo()}"></td>
                               <td class="d-flex justify-content-around">
                                    <div data-toggle="tooltip" data-placement="top" title="Modificar">
                                         <a href="#" data-toggle="modal" data-target="#modifyLocal" class="modifyButton">
@@ -177,7 +177,6 @@
                document.getElementById("longitudModificarLocal").value = locales[localIndex].longitud;
                document.getElementById("direccionModificarLocal").value = locales[localIndex].direccion;
                document.getElementById("telefonoModificarLocal").value = locales[localIndex].telefono;
-
                let selectGerenteElement = document.getElementById("gerenteModificarLocal");
                selectGerenteElement.innerHTML = '<option selected disabled>cargando</option>';
                fetch("http://localhost:8080/api/v1/local/empleados/" + locales[localIndex].idLocal)

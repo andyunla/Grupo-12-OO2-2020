@@ -21,5 +21,5 @@ public interface IEmpleadoService {
 
 	public List<EmpleadoModel> findByIdLocal(long idLocal);
 
-	EmpleadoModel findByGerenteLocal(long idLocal);
+	public EmpleadoModel findByGerenteLocal(long idLocal);
 }
