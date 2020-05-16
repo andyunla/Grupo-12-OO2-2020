@@ -15,4 +15,6 @@ public interface ILoteService {
 	public boolean remove(long id);
 	
 	public Set<LoteModel> findByLoteProductoActivo(long idProducto, long idLocal);
+	
+	public Set<LoteModel> findByLoteProductoBaja(long idProducto, long idLocal);
 }
