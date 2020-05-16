@@ -9,6 +9,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.sistema.application.entities.Lote;
 import com.sistema.application.entities.Producto;
 import com.sistema.application.services.ILoteService;
 
@@ -239,5 +240,21 @@ public class LocalModel {
 		i++;	
 		}		
 		return true;
+	}
+	/****************************************************************************************************/
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	//7) VALIDAR STOCK Y POSIBILIDADES DE LOCALES A SOLICITAR STOCK///////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	/****************************************************************************************************/
+	public int calcularStockLocal(ProductoModel producto) {		
+		int cantidadStock = 0;		
+		Set<LoteModel> lista = iLoteService.findByLoteProductoActivo(producto.getIdProducto(), this.idLocal);
+		for(LoteModel lo : lista) {
+			cantidadStock = cantidadStock + lo.getCantidadActual();			
+		}		
+		return cantidadStock;
+	}	
+	public boolean validarStock(ProductoModel producto, int cantidad) {
+		return calcularStockLocal(producto)>= cantidad;		
 	}
 }
