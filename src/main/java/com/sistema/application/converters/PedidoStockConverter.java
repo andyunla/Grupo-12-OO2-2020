@@ -23,11 +23,11 @@ public class PedidoStockConverter {
 	
 	public PedidoStockModel entityToModel(PedidoStock pedidoStock) {
 		return new PedidoStockModel(pedidoStock.getIdPedidoStock(), productoConverter.entityToModel(pedidoStock.getProducto()), 
-				pedidoStock.getCantidad(), pedidoStock.isAceptado(), empleadoConverter.entityToModel(pedidoStock.getEmpleado()));
+				pedidoStock.getCantidad(), pedidoStock.isAceptado(), empleadoConverter.entityToModel(pedidoStock.getEmpleadoSolicitante()), empleadoConverter.entityToModel(pedidoStock.getEmpleadoOferente()));
 	}
 	
 	public PedidoStock modelToEntity(PedidoStockModel pedidoStockModel) {		
 		return new PedidoStock(pedidoStockModel.getIdPedidoStock(), productoConverter.modelToEntity(pedidoStockModel.getProducto()), 
-				pedidoStockModel.getCantidad(), pedidoStockModel.isAceptado(), empleadoConverter.modelToEntity(pedidoStockModel.getEmpleado()));
+				pedidoStockModel.getCantidad(), pedidoStockModel.isAceptado(), empleadoConverter.modelToEntity(pedidoStockModel.getEmpleadoSolicitante()), empleadoConverter.modelToEntity(pedidoStockModel.getEmpleadoOferente()));
 	}
 }
