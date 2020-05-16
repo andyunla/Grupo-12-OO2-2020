@@ -79,10 +79,10 @@ VALUES
 
 -- CHANGO
 INSERT INTO chango 
-	(id_pedido_stock, id_local)
+	(id_local)
 VALUES 
-	(1, 3),	
-	(2, 3);	
+	(3),	
+	(3);	
 	
 -- ITEM
 INSERT INTO item 
