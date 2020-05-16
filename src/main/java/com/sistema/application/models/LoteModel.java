@@ -59,6 +59,8 @@ public class LoteModel {
 		return cantidadActual;
 	}
 	public void setCantidadActual(int cantidadActual) {
+		if (cantidadActual <1) this.setActivo(false);
+		if (cantidadActual >0) this.setActivo(true);
 		this.cantidadActual = cantidadActual;
 	}
 
