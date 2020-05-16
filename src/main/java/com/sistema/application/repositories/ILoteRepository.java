@@ -14,4 +14,6 @@ public interface ILoteRepository extends JpaRepository<Lote, Serializable> {
 	public abstract Lote findByIdLote(long idLote);
 	@Query("FROM Lote  WHERE id_local = (:idLocal) and id_producto=(:idProducto) and activo = true")
 	public abstract Set<Lote> findByLoteProductoActivo(long idProducto, long idLocal);
+	@Query("FROM Lote  WHERE id_local = (:idLocal) and id_producto=(:idProducto) and activo = false order by fecha_ingreso desc")
+	public abstract Set<Lote> findByLoteProductoBaja(long idProducto, long idLocal);
 }
