@@ -205,17 +205,39 @@ public class LocalModel {
 			if(lo.getCantidadActual() - cantidad <=0 ) {// si la cantidad actual queda en 0 doy de baja el lote
 				cantidad = cantidad - lo.getCantidadActual(); // actualizo la cantidad a restar
 				lo.setCantidadActual(0);
-				lo.setActivo(false);
+				//lo.setActivo(false); //esta validación la agregué dentor del set cantidadActual
 				iLoteService.insertOrUpdate(lo);// actualizo el lote en la base de datos
 				}
-			if (lo.getCantidadActual() - cantidad >=1) {
+			else if (lo.getCantidadActual() - cantidad >=1) {
 				lo.setCantidadActual(lo.getCantidadActual()- cantidad);
 				iLoteService.insertOrUpdate(lo);// actualizo el lote en la base de datos
 				cantidad =0;// seteo en cero para salir del bucle, ya no hay mas que restar
 			}			
 		i++;	
-		}
-		
+		}		
+		return true;
+	}
+	public boolean sumarLote(ProductoModel producto, int cantidad) {
+		int i =0;
+		//traigo la lista de lotes del producto en el local
+		Set<LoteModel> lista = iLoteService.findByLoteProductoBaja(producto.getIdProducto(), this.idLocal);
+		Iterator<LoteModel> itr = lista.iterator();
+		LoteModel lo = null;// creo un LoteModel objeto vacio
+		while(cantidad>0 && itr.hasNext()) {//mientras haya cantidad que restar
+			lo = itr.next(); 
+			if(lo.getCantidadActual() + cantidad >= lo.getCantidadInicial() ) {// si supero la cantidad del lote con la suma, paso sumar en el siguiente lote
+				cantidad = cantidad - lo.getCantidadInicial(); // actualizo la cantidad a restar
+				lo.setCantidadActual(lo.getCantidadInicial());
+				//lo.setActivo(true);//esta validación la agregué dentor del set cantidadActual
+				iLoteService.insertOrUpdate(lo);// actualizo el lote en la base de datos
+				}
+			else if (lo.getCantidadActual() + cantidad < lo.getCantidadInicial()) {
+				lo.setCantidadActual(lo.getCantidadActual()+ cantidad);
+				iLoteService.insertOrUpdate(lo);// actualizo el lote en la base de datos
+				cantidad =0;// seteo en cero para salir del bucle, ya no hay mas que sumar
+			}			
+		i++;	
+		}		
 		return true;
 	}
 }
