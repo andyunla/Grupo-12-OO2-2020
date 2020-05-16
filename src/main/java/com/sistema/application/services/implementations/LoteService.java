@@ -57,5 +57,16 @@ public class LoteService implements ILoteService {
 			}			
 			return lista;
 		}
+		public Set<LoteModel> findByLoteProductoBaja(long idProducto, long idLocal){
+			//creo un set list vacio
+			Set<LoteModel> lista = null;
+			//recorro la lista de lotes inactivos del poducto en el local correspondiente
+			for (Lote lo : loteRepository.findByLoteProductoBaja(idProducto, idLocal)) {
+				//a cada lote lo convierto de entidad a model y lo agrego a la lista
+				lista.add(loteConverter.entityToModel(lo));
+			}			
+			return lista;
+		}
+		
 	
 }
