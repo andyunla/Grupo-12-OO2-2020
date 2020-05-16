@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import com.sistema.application.entities.Lote;
 import com.sistema.application.entities.Producto;
 import com.sistema.application.services.ILoteService;
+import com.sistema.application.services.IPedidoStockService;
 
 public class LocalModel {
 
@@ -31,6 +32,9 @@ public class LocalModel {
 	@Autowired
 	@Qualifier("iLoteService")
 	ILoteService iLoteService;
+	@Autowired
+	@Qualifier("iPedidoStockService")
+	IPedidoStockService iPedidoStockService;
 	// Constructores
 	public LocalModel() {
 	}
@@ -257,4 +261,32 @@ public class LocalModel {
 	public boolean validarStock(ProductoModel producto, int cantidad) {
 		return calcularStockLocal(producto)>= cantidad;		
 	}
+	/****************************************************************************************************/
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	//8) GENERACION DE SOLICITUD DE USO DE STOCK DE OTRO LOCAL////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	/****************************************************************************************************/
+	public boolean crearPedidoStock(ProductoModel producto, int cantidad, EmpleadoModel solicitante){	
+		iPedidoStockService.insertOrUpdate(new PedidoStockModel(producto, cantidad, solicitante));		
+		return true;
+	}
+	/****************************************************************************************************/
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	//9) ACEPTAR O RECHAZAR SOLICITUD DE STOCK////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	/****************************************************************************************************/
+	public boolean modificarPedidoStock(long idPedidoStock, boolean aceptado, EmpleadoModel oferente) throws Exception{		
+		PedidoStockModel pedidoStockModel = iPedidoStockService.findByIdPedidoStock(idPedidoStock);
+		pedidoStockModel.setEmpleadoOferente(oferente);
+		pedidoStockModel.setAceptado(aceptado);
+		
+//		if (traerPedidoStock(idPedidoStock).isAceptado()) {
+//			traerLocal(oferente.getIdLocal()).restarLote(traerPedidoStock(idPedidoStock).getProducto(),traerPedidoStock(idPedidoStock).getCantidad());
+//		}
+//		else { 
+//			eliminarPedidoStock( idPedidoStock);		
+//		}
+		return true;
+	}
+
 }
