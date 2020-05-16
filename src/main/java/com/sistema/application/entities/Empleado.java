@@ -48,6 +48,13 @@ public class Empleado extends Persona implements Serializable {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="empleado")
 	private Set<Factura> listaFacturas;
 	
+	// Lista en las que el empleado aparece como solicitante
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="empleadoSolicitante")
+	private Set<PedidoStock> listaEmpleadoSolicitante;
+	// Lista en las que el empleado aparece como oferente
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="empleadoOferente")
+	private Set<PedidoStock> listaEmpleadoOferente;
+
 	@Column(name="tipo_gerente", nullable=false)
 	private boolean tipoGerente; // Para determinar si es el que administra el local  -> true=gerente, false=empleado
 
@@ -127,6 +134,22 @@ public class Empleado extends Persona implements Serializable {
 
 	public void setListaFacturas(Set<Factura> listaFacturas) {
 		this.listaFacturas = listaFacturas;
+	}
+
+	public Set<PedidoStock> getListaEmpleadoSolicitante() {
+		return listaEmpleadoSolicitante;
+	}
+
+	public void setListaEmpleadoSolicitante(Set<PedidoStock> listaEmpleadoSolicitante) {
+		this.listaEmpleadoSolicitante = listaEmpleadoSolicitante;
+	}
+
+	public Set<PedidoStock> getListaEmpleadoOferente() {
+		return listaEmpleadoOferente;
+	}
+
+	public void setListaEmpleadoOferente(Set<PedidoStock> listaEmpleadoOferente) {
+		this.listaEmpleadoOferente = listaEmpleadoOferente;
 	}
 
 	public Local getLocal() {
