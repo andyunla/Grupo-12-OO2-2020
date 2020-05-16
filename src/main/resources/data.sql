@@ -72,10 +72,10 @@ VALUES
 	
 -- PEDIDO STOCK
 INSERT INTO pedido_stock
-	(cantidad, aceptado, empleado_legajo, id_producto)
+	(cantidad, aceptado, solicitante_legajo, oferente_legajo, id_producto)
 VALUES
-	( 2, 1, 4, 1),
-	( 5, 1, 4, 2);	
+	( 2, 1, 4, null, 1),
+	( 5, 1, 4, null, 2);	
 
 -- CHANGO
 INSERT INTO chango 
