@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import com.sistema.application.entities.Empleado;
 import com.sistema.application.entities.Lote;
+
+@Repository("loteRepository")
 public interface ILoteRepository extends JpaRepository<Lote, Serializable> {
 	public abstract Lote findByIdLote(long idLote);
 	@Query("FROM Lote  WHERE id_local = (:idLocal) and id_producto=(:idProducto) and activo = true")
