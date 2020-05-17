@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="fragments/head :: head(title='Lote')"></head>
+
+<body class="container-fluid m-0 p-0">
+     <div th:replace="fragments/navbar :: navbar(active='abm')"></div>
+     <header class="text-center m-3">
+          <h1 class="display-4">LOTES</h1>
+     </header>
+     <main class="w-100 d-flex flex-column align-items-center">
+          <!-- BOTON DE ELECCIÓN DEL LOCAL
+          <div class="form-group row">
+               <label for="localSelection" class="col-sm-3 col-4">Local</label>
+               <select th:field="*{local.idLocal}" class="custom-select col-md-9 col-8" id="localSelection">
+                    <option th:each="l: ${locales}" th:value="${l.idLocal}" th:text="${l.nombreLocal}"></option>
+               </select>
+          </div>-->
+          <!-- BOTON DE AGREGAR NUEVO LOTE -->
+          <button class="btn btn-primary">Agregar</button>
+          <!-- LISTA DE LOTES -->
+          <div class="container-fluid col-12 col-md-11 text-center table-responsive">
+               <table class="table w-100 shadow mb-3 bg-white rounded">
+                    <thead class="thead-dark">
+                         <tr>
+                              <th scope="col">ID</th>
+                              <th scope="col">Producto</th>
+                              <th scope="col">Fecha</th>
+                              <th scope="col">Cant. inicial</th>
+                              <th scope="col">Cant. actual</th>
+                              <th scope="col">Activo</th> <!-- Columna usada para obtener su estado (activo) -->
+                              <th scope="col"></th>
+                         </tr>
+                    </thead>
+                    <tbody>
+                         <tr th:each="lote :${lotes}">
+                              <td th:text="${lote.idLote}"></td>
+                              <td th:text="${lote.productoModel.nombre}"></td>
+                              <td th:text="${lote.fechaIngreso}"></td>
+                              <td th:text="${lote.cantidadInicial}"></td>
+                              <td th:text="${lote.cantidadActual}"></td>
+                              <td th:text="${lote.activo}"></td>
+                              <td><button class="btn-danger btn" id="elminar">Eliminar</button></td>
+                         </tr>
+                    </tbody>
+               </table>
+          </div>
+     </main>
+
+     <footer th:replace="fragments/footer :: footer"></footer>
+     <!-- Contenedor del mensaje de alerta al no poder realizar una operación, cargado desde js -->
+     <div class="p-1 col-11 col-sm-7 col-md-6 col-lg-4" id="alertContainer"></div>
+     <div th:replace="fragments/scripts :: scripts"></div>
+</body>
+
+</html>

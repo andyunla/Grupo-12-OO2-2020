@@ -11,6 +11,7 @@ public class ViewRouteHelper {
 	public final static String PRODUCTO_ABM = "abm/producto";
 	public final static String LOCAL_ABM = "abm/local";
 	public final static String ITEM_ABM = "abm/item";
+	public static final String LOTE_ABM = "abm/lote";
 
 	/**** Redirects ****/
 	public final static String HOME_ROOT = "index";

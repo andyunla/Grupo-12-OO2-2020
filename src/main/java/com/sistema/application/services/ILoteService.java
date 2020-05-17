@@ -9,7 +9,10 @@ import java.util.Set;
 public interface ILoteService {
 	
 	public List<Lote> getAll();
-	
+
+	public List <LoteModel> getAllModels();
+	public List <LoteModel> getAllModels2();
+
 	public LoteModel insertOrUpdate(LoteModel loteModel);
 	
 	public boolean remove(long id);
