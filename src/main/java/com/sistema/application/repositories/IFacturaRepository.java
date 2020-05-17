@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sistema.application.entities.Factura;
 
+@Repository("facturaRepository")
 public interface IFacturaRepository  extends JpaRepository<Factura, Serializable>{
 	public abstract Factura findByIdFactura(long idFactura);
 }

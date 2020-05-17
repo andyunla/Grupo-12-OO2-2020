@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sistema.application.entities.Chango;
 
+@Repository("changoRepository")
 public interface IChangoRepository extends JpaRepository<Chango, Serializable> {
 	public abstract Chango findByIdChango(long idChango);
 }
