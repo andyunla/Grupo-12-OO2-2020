@@ -78,25 +78,17 @@ public class LoteService implements ILoteService {
 		public List<LoteModel> getAllModels() {
 			List <LoteModel> lotes = new ArrayList<LoteModel>();
 			for(Lote l: loteRepository.findAll() ){
-				lotes.add( new LoteModel(
-					l.getIdLote(),
-					l.getCantidadInicial(),
-					l.getCantidadActual(),
-					l.getFechaIngreso(), 
-					productoConverter.entityToModel(l.getProducto()),
-					l.isActivo()
-				));
-			}
-			return lotes;
-		}
-		@Override
-		public List<LoteModel> getAllModels2() {
-			List <LoteModel> lotes = new ArrayList<LoteModel>();
-			for(Lote l: loteRepository.findAll() ){
 				lotes.add(loteConverter.entityToModel(l));
 			}
 			return lotes;
 		}
-		
-	
+
+		@Override
+		public List<LoteModel>findByLocalProductoYActivo(long idLocal, long idProducto, boolean soloActivos){
+			List <LoteModel> lotes = new ArrayList<LoteModel>();
+			for(Lote l: loteRepository.findByLocalProductoYActivo(idLocal, idProducto, soloActivos) ){
+				lotes.add(loteConverter.entityToModel(l));
+			}
+			return lotes;
+		}
 }

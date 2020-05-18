@@ -11,7 +11,6 @@ public interface ILoteService {
 	public List<Lote> getAll();
 
 	public List <LoteModel> getAllModels();
-	public List <LoteModel> getAllModels2();
 
 	public LoteModel insertOrUpdate(LoteModel loteModel);
 	
@@ -20,4 +19,7 @@ public interface ILoteService {
 	public Set<LoteModel> findByLoteProductoActivo(long idProducto, long idLocal);
 	
 	public Set<LoteModel> findByLoteProductoBaja(long idProducto, long idLocal);
+	
+	public List<LoteModel> findByLocalProductoYActivo(long idLocal, long idProducto, boolean soloActivos);
+
 }

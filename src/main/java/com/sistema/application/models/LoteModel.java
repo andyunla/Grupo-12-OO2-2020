@@ -2,12 +2,15 @@ package com.sistema.application.models;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class LoteModel {
 
-	// Atributos
+	// Atributos 
 	private long idLote;
-	private int cantidadInicial;
+	private int cantidadInicial;  
 	private int cantidadActual;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")    
 	private LocalDate fechaIngreso;
 	private ProductoModel producto;
 	private boolean activo;
@@ -82,7 +85,7 @@ public class LoteModel {
 			this.setActivo(true);
 		this.cantidadActual = cantidadActual;
 	}
-
+ 
 	public LocalDate getFechaIngreso() {
 		return fechaIngreso;
 	}
@@ -97,7 +100,7 @@ public class LoteModel {
 
 	public void setProductoModel(ProductoModel producto) {
 		this.producto = producto;
-	}
+	} 
 
 	public boolean isActivo() {
 		return activo;

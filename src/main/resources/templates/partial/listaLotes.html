@@ -1,0 +1,13 @@
+<tr th:each="lote :${lotes}" class="fila-lote">
+     <td class="d-none lote-estado" th:attr="data-activo=${lote.activo}"></td>
+     <td th:text="${lote.idLote}"></td>
+     <td th:text="${lote.local.nombreLocal}"></td>
+     <td th:text="${lote.productoModel.nombre}"></td>
+     <td th:text="${lote.fechaIngreso}"></td>
+     <td th:text="${lote.cantidadInicial}"></td>
+     <td th:text="${lote.cantidadActual}"></td>
+     <td th:if="${lote.activo} AND ${lote.cantidadInicial} == ${lote.cantidadActual}">
+          <button class="btn-danger btn botonEliminar" th:attr="data-idLote=${lote.idLote}">Eliminar</button>
+     </td>
+     <td th:unless="${lote.activo} AND ${lote.cantidadInicial} == ${lote.cantidadActual}"></td>
+</tr>
