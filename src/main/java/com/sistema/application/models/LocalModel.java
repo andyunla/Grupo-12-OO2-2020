@@ -13,6 +13,7 @@ import com.sistema.application.converters.ProductoConverter;
 import com.sistema.application.entities.Item;
 import com.sistema.application.entities.Lote;
 import com.sistema.application.entities.Producto;
+import com.sistema.application.services.IChangoService;
 import com.sistema.application.services.IFacturaService;
 import com.sistema.application.services.ILoteService;
 import com.sistema.application.services.IPedidoStockService;
@@ -36,6 +37,9 @@ public class LocalModel {
 	@Autowired
 	@Qualifier("iLoteService")
 	ILoteService iLoteService;
+	@Autowired
+	@Qualifier("iChangoService")
+	IChangoService iChangoService;
 	@Autowired
 	@Qualifier("iFacturaService")
 	IFacturaService iFacturaService;
@@ -292,12 +296,13 @@ public class LocalModel {
 		PedidoStockModel pedidoStockModel = iPedidoStockService.findByIdPedidoStock(idPedidoStock); //traiugo el Pedido de la base de datos
 		pedidoStockModel.setEmpleadoOferente(oferente); //seteo el oferente
 		pedidoStockModel.setAceptado(aceptado); //seteo el estado del pedido
-		iPedidoStockService.insertOrUpdate(pedidoStockModel); // lo actualizo en la base de datos
-		if (pedidoStockModel.isAceptado()) {
+		
+		if (pedidoStockModel.isAceptado()) {// si es un pedidoStock aceptado
+			iPedidoStockService.insertOrUpdate(pedidoStockModel); // lo actualizo en la base de datos
 			pedidoStockModel.getEmpleadoOferente().getLocal().restarLote(pedidoStockModel.getProducto(), pedidoStockModel.getCantidad());			
 		}
 		else { 
-			iPedidoStockService.remove(idPedidoStock);
+			iPedidoStockService.remove(idPedidoStock);// si no lo elimino
 		}
 		return true;
 	}
