@@ -3,6 +3,7 @@ package com.sistema.application.controllers;
 import java.util.List;
 
 import com.sistema.application.helpers.ViewRouteHelper;
+import com.sistema.application.models.LocalModel;
 import com.sistema.application.models.LoteModel;
 import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.ILoteService;
@@ -48,8 +49,9 @@ public class LoteController {
 
      @PostMapping("agregar")
      public String agregar(@ModelAttribute("lote") LoteModel nuevoLote) {
+          nuevoLote.setCantidadActual(nuevoLote.getCantidadInicial());
           loteService.insertOrUpdate(nuevoLote);
-          return ViewRouteHelper.LOTE_ROOT;
+          return "redirect:/" + ViewRouteHelper.LOTE_ROOT;
      }
 
      @GetMapping("traer/{idLocal}/{idProducto}/{soloActivos}")
