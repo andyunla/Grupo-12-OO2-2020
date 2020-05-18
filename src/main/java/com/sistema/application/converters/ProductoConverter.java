@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 @Component("productoConverter")
 public class ProductoConverter {
 
-     public ProductoModel entityToModel(Producto producto) {
-          return new ProductoModel(producto.getIdProducto(), producto.getNombre(), producto.getDescripcion(),
-                    producto.getPrecio(), producto.getTalle());
-     }
+	public ProductoModel entityToModel(Producto producto) {
+		return new ProductoModel(producto.getIdProducto(), producto.getNombre(), producto.getDescripcion(),
+								 producto.getPrecio(), producto.getTalle());
+	}
 
-     public Producto modelToEntity(ProductoModel producto) {
-          return new Producto(producto.getIdProducto(), producto.getNombre(), producto.getDescripcion(),
-                    producto.getPrecio(), producto.getTalle());
-     }
+	public Producto modelToEntity(ProductoModel producto) {
+		return new Producto(producto.getIdProducto(), producto.getNombre(), producto.getDescripcion(),
+				   producto.getPrecio(), producto.getTalle());
+	}
 }

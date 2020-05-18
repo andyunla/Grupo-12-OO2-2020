@@ -1,6 +1,5 @@
 package com.sistema.application.converters;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +11,23 @@ import com.sistema.application.entities.Local;
 import com.sistema.application.funciones.Funciones;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.LocalModel;
+import com.sistema.application.models.dto.EmpleadoDto;
+import com.sistema.application.repositories.ILocalRepository;
 
 @Component("empleadoConverter")
 public class EmpleadoConverter {
 	@Autowired
 	@Qualifier("localConverter")
 	private LocalConverter localConverter;
+	
+	@Autowired
+	@Qualifier("localRepository")
+	private ILocalRepository localRepository;
 
 	// Entities to models
 	// *******************************************************
 	public EmpleadoModel entityToModel(Empleado empleado) {
-		LocalModel localModel = obtenerLocalModel(empleado.getLocal());
+		LocalModel localModel = localConverter.entityToModelWithoutGerente(empleado.getLocal()); // Local sin gerente
 		return new EmpleadoModel(empleado.getIdPersona(), empleado.getNombre(), empleado.getApellido(), empleado.getDni(), empleado.getFechaNacimiento(),
 								 empleado.getLegajo(), empleado.getHoraDesde().toString(), empleado.getHoraHasta().toString(), empleado.getSueldoBasico(),
 								 localModel, empleado.isTipoGerente());
@@ -39,7 +44,7 @@ public class EmpleadoConverter {
 	public Empleado modelToEntity(EmpleadoModel empleadoModel) {
 		LocalTime horaDesde = Funciones.horaFromString(empleadoModel.getHoraDesde());
 		LocalTime horaHasta = Funciones.horaFromString(empleadoModel.getHoraHasta());
-		Local local = obtenerLocal(empleadoModel.getLocal());
+		Local local = localConverter.modelToEntityWithoutGerente(empleadoModel.getLocal()); // Local sin gerente
 		return new Empleado(empleadoModel.getId(), empleadoModel.getNombre(), empleadoModel.getApellido(), empleadoModel.getDni(), empleadoModel.getFechaNacimiento(),
 							empleadoModel.getLegajo(), horaDesde, horaHasta, empleadoModel.getSueldoBasico(),
 							local, empleadoModel.isTipoGerente());
@@ -53,28 +58,34 @@ public class EmpleadoConverter {
 							empleadoModel.isTipoGerente());
 	}
 
-	/**
-	* Métodos que crea un local(de la entidad y modelo) pero sin establecer
-	* como argumento el empleado para no generar recursividad
-	*/
-	private LocalModel obtenerLocalModel(Local local) {
-		// Local sin gerente
-		LocalModel localModel = localConverter.entityToModelWithoutGerente(local);
-		// Gerente sin local
-		EmpleadoModel gerenteModel = this.entityToModelWithoutLocal(local.getGerente());
-		gerenteModel.setLocal(localModel);
-		localModel.setGerente(gerenteModel);
-		return localModel;
+	// Entities to DTO
+	// *******************************************************
+	public EmpleadoDto entityToDto(Empleado empleado) {
+		return new EmpleadoDto(empleado.getIdPersona(), empleado.getNombre(), empleado.getApellido(), empleado.getDni(), empleado.getFechaNacimiento(),
+							   empleado.getLegajo(), empleado.getHoraDesde().toString(), empleado.getHoraHasta().toString(), empleado.getSueldoBasico(),
+							   empleado.getLocal().getIdLocal(), empleado.isTipoGerente());
 	}
-	private Local obtenerLocal(LocalModel localModel) {
-		// Local sin gerente
-		Local local = localConverter.modelToEntityWithoutGerente(localModel);
-		// Gerente sin local
-		Empleado gerente = this.modelToEntityWithoutLocal(localModel.getGerente());
-		
-		// Les asignamos a cada uno el otro objeto
-		gerente.setLocal(local);
-		local.setGerente(gerente);
-		return local;
+	public Empleado dtoToEntity(EmpleadoDto empleadoDto) {
+		LocalTime horaDesde = Funciones.horaFromString(empleadoDto.getHoraDesde());
+		LocalTime horaHasta = Funciones.horaFromString(empleadoDto.getHoraHasta());
+		Local local = localRepository.findByIdLocal(empleadoDto.getIdLocal());
+		return new Empleado(empleadoDto.getId(), empleadoDto.getNombre(), empleadoDto.getApellido(), empleadoDto.getDni(), empleadoDto.getFechaNacimiento(),
+							empleadoDto.getLegajo(), horaDesde, horaHasta, empleadoDto.getSueldoBasico(),
+							local, empleadoDto.isTipoGerente());
+	}
+
+	// models to DTO
+	// *******************************************************
+	public EmpleadoDto modelToDto(EmpleadoModel empleadoModel) {
+		return new EmpleadoDto(empleadoModel.getId(), empleadoModel.getNombre(), empleadoModel.getApellido(), empleadoModel.getDni(), empleadoModel.getFechaNacimiento(),
+							   empleadoModel.getLegajo(), empleadoModel.getHoraDesde().toString(), empleadoModel.getHoraHasta().toString(), empleadoModel.getSueldoBasico(),
+							   empleadoModel.getLocal().getIdLocal(), empleadoModel.isTipoGerente());
+	}
+	public EmpleadoModel dtoToModel(EmpleadoDto empleadoDto) {
+		Local local = localRepository.findByIdLocal(empleadoDto.getIdLocal());
+		LocalModel localModel = localConverter.entityToModel(local);
+		return new EmpleadoModel(empleadoDto.getId(), empleadoDto.getNombre(), empleadoDto.getApellido(), empleadoDto.getDni(), empleadoDto.getFechaNacimiento(),
+								 empleadoDto.getLegajo(), empleadoDto.getHoraDesde().toString(), empleadoDto.getHoraHasta().toString(), empleadoDto.getSueldoBasico(),
+								 localModel, empleadoDto.isTipoGerente());
 	}
 }

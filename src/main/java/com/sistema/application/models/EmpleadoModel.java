@@ -121,8 +121,8 @@ public class EmpleadoModel extends PersonaModel {
 	
 	@Override
 	public String toString() {
-		return "EmpleadoModel [legajo=" + legajo + ", horaDesde=" + horaDesde + ", horaHasta=" + horaHasta
-				+ ", sueldoBasico=" + sueldoBasico + ", local=" + local + ", es gerente=" + isTipoGerente()
+		return "EmpleadoModel [id=" + getId() + "legajo=" + legajo + ", horaDesde=" + horaDesde + ", horaHasta=" + horaHasta
+				+ ", sueldoBasico=" + sueldoBasico + ", es gerente=" + isTipoGerente()
 				+ ", getDni()=" + getDni() + ", getNombre()=" + getNombre() + ", getApellido()=" + getApellido()
 				+ ", getFechaNacimiento()=" + getFechaNacimiento() + "]";
 	}

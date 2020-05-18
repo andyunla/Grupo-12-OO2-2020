@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.EmpleadoModel;
+import com.sistema.application.models.LocalModel;
 import com.sistema.application.services.IEmpleadoService;
 import com.sistema.application.services.ILocalService;
 
@@ -35,8 +36,16 @@ public class EmpleadoController {
 	
 	@GetMapping("")
 	public String empleados(Model modelo) {
-		modelo.addAttribute("empleados", empleadoService.getAll());
-		modelo.addAttribute("locales", localService.getAll());
+		List<EmpleadoModel> empleados = empleadoService.getAll();
+		for(EmpleadoModel e: empleados) {
+			e.getLocal().setGerente(null);
+		}
+		modelo.addAttribute("empleados", empleados);
+		List<LocalModel> locales = localService.getAll();
+		for(LocalModel l: locales) {
+			l.getGerente().setLocal(null);
+		}
+		modelo.addAttribute("locales", locales);
 		modelo.addAttribute("empleado", new EmpleadoModel());
 		return ViewRouteHelper.EMPLEADO_ABM;
 	}
