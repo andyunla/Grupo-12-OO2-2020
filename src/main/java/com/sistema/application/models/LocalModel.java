@@ -280,12 +280,12 @@ public class LocalModel {
 		pedidoStockModel.setEmpleadoOferente(oferente);
 		pedidoStockModel.setAceptado(aceptado);
 		
-//		if (traerPedidoStock(idPedidoStock).isAceptado()) {
-//			traerLocal(oferente.getIdLocal()).restarLote(traerPedidoStock(idPedidoStock).getProducto(),traerPedidoStock(idPedidoStock).getCantidad());
-//		}
-//		else { 
+		if (pedidoStockModel.isAceptado()) {
+			pedidoStockModel.getEmpleadoOferente().getLocal().restarLote(pedidoStockModel.getProducto(), pedidoStockModel.getCantidad());			
+		}
+		else { 
 //			eliminarPedidoStock( idPedidoStock);		
-//		}
+		}
 		return true;
 	}
 
