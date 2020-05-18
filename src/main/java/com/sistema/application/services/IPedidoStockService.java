@@ -12,4 +12,6 @@ public interface IPedidoStockService {
 	public PedidoStockModel insertOrUpdate(PedidoStockModel pedidoStockModel);
 	
 	public boolean remove(long id);
+	
+	public PedidoStockModel findByIdPedidoStock(long idPedidoStock);
 }

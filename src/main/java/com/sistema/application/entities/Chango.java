@@ -35,7 +35,7 @@ public class Chango implements Serializable {
 	private Set<Factura> listaFacturas;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id_pedido_stock", nullable=false)
+	@JoinColumn(name="id_pedido_stock", nullable=true)
 	private PedidoStock pedidoStock;
 
 	@ManyToOne(fetch=FetchType.LAZY)

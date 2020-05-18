@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sistema.application.entities.Item;
 
+@Repository("itemRepository")
 public interface IItemRepository extends JpaRepository<Item, Serializable>{
 	public abstract Item findByIdItem(long idItem);
 }

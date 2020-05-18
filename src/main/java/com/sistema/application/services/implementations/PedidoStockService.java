@@ -46,5 +46,8 @@ public class PedidoStockService implements IPedidoStockService{
 				return false;
 			}
 		}
+		public PedidoStockModel findByIdPedidoStock(long idPedidoStock) {
+			return pedidoStockConverter.entityToModel(pedidoStockRepository.findByIdPedidoStock(idPedidoStock));
+		}
 	
 }
