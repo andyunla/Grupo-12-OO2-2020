@@ -55,5 +55,12 @@ public class FacturaService implements IFacturaService{
 		}
 		return lista;
 	}
+	public  Set<FacturaModel> findFacturasEntreFechas(LocalDate fecha1, LocalDate fecha2, long idLocal){
+		Set<FacturaModel> lista = null;// crei una lista de facturas
+		for (Factura fa : facturaRepository.findFacturasEntreFechas(fecha1, fecha2 )) {//traigo la lista de facturas entre fechas d eun local
+			lista.add(facturaConverter.entityToModel(fa));// las agrego a la lista model
+		}
+		return lista;
+	}
 	
 }
