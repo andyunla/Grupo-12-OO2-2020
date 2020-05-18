@@ -9,6 +9,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.sistema.application.converters.ProductoConverter;
 import com.sistema.application.entities.Item;
 import com.sistema.application.entities.Lote;
 import com.sistema.application.entities.Producto;
@@ -44,6 +45,10 @@ public class LocalModel {
 	@Autowired
 	@Qualifier("iProductoService")
 	IProductoService iProductoService;
+	//Converters
+	@Autowired
+	@Qualifier("productoConverter")
+	ProductoConverter productoConverter;
 	// Constructores
 	public LocalModel() {
 	}
@@ -308,8 +313,8 @@ public class LocalModel {
 		return true;
 	}
 	public void restarChango(ChangoModel chango) {
-		for ( Item it : chango.getListaItems()) {
-			restarLote(iProductoConverter. it.getProducto(), it.getCantidad());
+		for ( ItemModel it : chango.getListaItems()) {
+			restarLote(it.getProductoModel() , it.getCantidad());
 		}
 	}
 //	public List<Factura> traerFactura (LocalDate fecha1, LocalDate fecha2) {
