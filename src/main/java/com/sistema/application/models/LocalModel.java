@@ -354,16 +354,17 @@ public class LocalModel {
 	/****************************************************************************************************/
 	public double calcularSueldo(EmpleadoModel empleado) {
 		double comisionCompleta =0;			
-			for (FacturaModel fa : traerFacturaMesPasado() ) {			
-				if (fa.getEmpleado().equals(empleado)) {
-					if(fa.getChango().getPedidoStock() !=null ) {					
+			for (FacturaModel fa : traerFacturaMesPasado() ) {// para cada factura del mes pasado			
+				if (fa.getEmpleado().equals(empleado)) { //si la factura pertenece a este empleado
+					if(fa.getChango().getPedidoStock() !=null ) { // el chango de la factura tiene un pedido stock, esta factura es con stock de otro local		
+						// si el empleado solicito stock de otro local se calcula la comision de 3%
 						if(fa.getChango().getPedidoStock().getEmpleadoSolicitante().equals(empleado))  comisionCompleta = comisionCompleta + ((fa.getCosteTotal()*3)/100);
 						}
-					else {
+					else {// si este empleado no  pidio stock se calcula la comision del 5%
 						comisionCompleta = comisionCompleta + ((fa.getCosteTotal()*5)/100);
 						}
 				}	
-				else {
+				else {//si la factura no es de este empleado y si este empleado ofreció stock se el calcula el 2%
 					 if(fa.getChango().getPedidoStock()!=null && fa.getChango().getPedidoStock().getEmpleadoOferente().equals(empleado))comisionCompleta = comisionCompleta + ((fa.getCosteTotal()*2)/100);
 				}
 			}		
@@ -372,6 +373,6 @@ public class LocalModel {
 	public Set<FacturaModel> traerFacturaMesPasado() {// 
 		LocalDate fecha1 = LocalDate.now().minusMonths(1).withDayOfMonth(1);// mes pasado dia 1
 		LocalDate fecha2 = LocalDate.now().minusMonths(1).withDayOfMonth(fecha1.lengthOfMonth());// último día del mes pasado
-		return iFacturaService.findFacturasEntreFechasLocal(fecha1, fecha2, this.idLocal);// retorno la lista de facturas
+		return iFacturaService.findFacturasEntreFechas(fecha1, fecha2);// retorno la lista de facturas
 	}
 }
