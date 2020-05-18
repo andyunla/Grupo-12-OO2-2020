@@ -5,7 +5,7 @@ function cambiarColorALotesInactivos() {
      let lotes = document.querySelectorAll('.lote-estado');
      for (let lote of lotes) {
           if (lote.dataset.activo == 'false') {
-               lote.parentElement.classList.add('bg-light-red')
+               lote.parentElement.classList.add('text-danger')
           }
      }
 }
