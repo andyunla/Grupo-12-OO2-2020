@@ -276,10 +276,10 @@ public class LocalModel {
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
 	public boolean modificarPedidoStock(long idPedidoStock, boolean aceptado, EmpleadoModel oferente) throws Exception{		
-		PedidoStockModel pedidoStockModel = iPedidoStockService.findByIdPedidoStock(idPedidoStock);
-		pedidoStockModel.setEmpleadoOferente(oferente);
-		pedidoStockModel.setAceptado(aceptado);
-		
+		PedidoStockModel pedidoStockModel = iPedidoStockService.findByIdPedidoStock(idPedidoStock); //traiugo el Pedido de la base de datos
+		pedidoStockModel.setEmpleadoOferente(oferente); //seteo el oferente
+		pedidoStockModel.setAceptado(aceptado); //seteo el estado del pedido
+		iPedidoStockService.insertOrUpdate(pedidoStockModel); // lo actualizo en la base de datos
 		if (pedidoStockModel.isAceptado()) {
 			pedidoStockModel.getEmpleadoOferente().getLocal().restarLote(pedidoStockModel.getProducto(), pedidoStockModel.getCantidad());			
 		}
