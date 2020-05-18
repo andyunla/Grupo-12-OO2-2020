@@ -45,7 +45,7 @@ public class LocalConverter {
 		if(localModel.getGerente() != null) {
 			gerente = empleadoConverter.modelToEntityWithoutLocal(localModel.getGerente()); // Gerente sin local
 		} else {
-			gerente = Empleado();
+			gerente = new Empleado();
 		}
 		return new Local(localModel.getIdLocal(), localModel.getNombreLocal(), localModel.getLatitud(), localModel.getLongitud(), 
 						 localModel.getDireccion(), localModel.getTelefono(), gerente);
