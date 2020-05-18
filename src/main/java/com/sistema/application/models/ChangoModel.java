@@ -3,6 +3,7 @@ package com.sistema.application.models;
 import java.util.Set;
 
 import com.sistema.application.models.ItemModel;
+import com.sistema.application.entities.Item;
 import com.sistema.application.models.FacturaModel;
 import com.sistema.application.models.LocalModel;
 
@@ -12,6 +13,7 @@ public class ChangoModel {
 	private long idChango;
 	private PedidoStockModel pedidoStock;
 	private LocalModel local;
+	private Set<Item> listaItems;
 	
 	
 	//Constructores
@@ -48,6 +50,14 @@ public class ChangoModel {
 	}
 
 	
+	public Set<Item> getListaItems() {
+		return listaItems;
+	}
+
+	public void setListaItems(Set<Item> listaItems) {
+		this.listaItems = listaItems;
+	}
+
 	//toString
 	@Override
 	public String toString() {
