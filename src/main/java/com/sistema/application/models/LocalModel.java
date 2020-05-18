@@ -9,10 +9,13 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.sistema.application.entities.Item;
 import com.sistema.application.entities.Lote;
 import com.sistema.application.entities.Producto;
+import com.sistema.application.services.IFacturaService;
 import com.sistema.application.services.ILoteService;
 import com.sistema.application.services.IPedidoStockService;
+import com.sistema.application.services.IProductoService;
 
 public class LocalModel {
 
@@ -33,8 +36,14 @@ public class LocalModel {
 	@Qualifier("iLoteService")
 	ILoteService iLoteService;
 	@Autowired
+	@Qualifier("iFacturaService")
+	IFacturaService iFacturaService;
+	@Autowired
 	@Qualifier("iPedidoStockService")
 	IPedidoStockService iPedidoStockService;
+	@Autowired
+	@Qualifier("iProductoService")
+	IProductoService iProductoService;
 	// Constructores
 	public LocalModel() {
 	}
@@ -287,5 +296,30 @@ public class LocalModel {
 		}
 		return true;
 	}
+	/****************************************************************************************************/
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	//12) GENERAR FACTURA/////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	/****************************************************************************************************/
+		
+	public boolean crearFactura(ClienteModel cliente, ChangoModel chango,LocalDate fecha, double costeTotal, EmpleadoModel empleado) {		
+		iFacturaService.insertOrUpdate(new FacturaModel(cliente, chango, fecha, costeTotal, empleado, this)); //creo la factura
+		if(chango.getPedidoStock() == null) restarChango(chango); // Si no hay pedidoStock, resto todos los productos del chango a este local
+		return true;
+	}
+	public void restarChango(ChangoModel chango) {
+		for ( Item it : chango.getListaItems()) {
+			restarLote(iProductoConverter. it.getProducto(), it.getCantidad());
+		}
+	}
+//	public List<Factura> traerFactura (LocalDate fecha1, LocalDate fecha2) {
+//		List<Factura> list = new ArrayList<Factura>();		
+//			int i= 0;
+//			while (i<listaFacturas.size() && listaFacturas.get(i).getFechaFactura().isBefore(fecha2) ) {
+//				if(listaFacturas.get(i).getFechaFactura().isEqual(fecha1) || listaFacturas.get(i).getFechaFactura().isAfter(fecha1) )list.add(listaFacturas.get(i));
+//				i++;
+//			}
+//		return list;
+//	}
 
 }
