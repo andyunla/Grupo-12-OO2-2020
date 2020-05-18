@@ -347,4 +347,31 @@ public class LocalModel {
 			sumarLote(it.getProductoModel() , it.getCantidad());// sumo la cantidad de productos correspondientes a el local
 		}
 	}
+	/****************************************************************************************************/
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	//13) CIERRE DEL MES PARA DEFINIR EL SUELDO DE LOS EMPLEADOS//////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	/****************************************************************************************************/
+	public double calcularSueldo(EmpleadoModel empleado) {
+		double comisionCompleta =0;			
+			for (FacturaModel fa : traerFacturaMesPasado() ) {			
+				if (fa.getEmpleado().equals(empleado)) {
+					if(fa.getChango().getPedidoStock() !=null ) {					
+						if(fa.getChango().getPedidoStock().getEmpleadoSolicitante().equals(empleado))  comisionCompleta = comisionCompleta + ((fa.getCosteTotal()*3)/100);
+						}
+					else {
+						comisionCompleta = comisionCompleta + ((fa.getCosteTotal()*5)/100);
+						}
+				}	
+				else {
+					 if(fa.getChango().getPedidoStock()!=null && fa.getChango().getPedidoStock().getEmpleadoOferente().equals(empleado))comisionCompleta = comisionCompleta + ((fa.getCosteTotal()*2)/100);
+				}
+			}		
+		return (empleado.getSueldoBasico()+ comisionCompleta);	
+		}
+	public Set<FacturaModel> traerFacturaMesPasado() {// 
+		LocalDate fecha1 = LocalDate.now().minusMonths(1).withDayOfMonth(1);// mes pasado dia 1
+		LocalDate fecha2 = LocalDate.now().minusMonths(1).withDayOfMonth(fecha1.lengthOfMonth());// último día del mes pasado
+		return iFacturaService.findFacturasEntreFechasLocal(fecha1, fecha2, this.idLocal);// retorno la lista de facturas
+	}
 }
