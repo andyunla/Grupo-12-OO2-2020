@@ -51,7 +51,7 @@ public class LoteController {
      public String agregar(@ModelAttribute("lote") LoteModel nuevoLote) {
           nuevoLote.setCantidadActual(nuevoLote.getCantidadInicial());
           loteService.insertOrUpdate(nuevoLote);
-          return "redirect:" + ViewRouteHelper.LOTE_ROOT;
+          return "redirect:/" + ViewRouteHelper.LOTE_ROOT;
      }
 
      @GetMapping("traer/{idLocal}/{idProducto}/{soloActivos}")
