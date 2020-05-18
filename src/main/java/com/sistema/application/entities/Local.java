@@ -21,6 +21,11 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name="locales")
 public class Local implements Serializable {
@@ -46,6 +51,7 @@ public class Local implements Serializable {
 	@Column(name="telefono", nullable=false)
 	private int telefono;
 
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "gerente_legajo", referencedColumnName = "legajo")
 	private Empleado gerente;
@@ -53,6 +59,7 @@ public class Local implements Serializable {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="local")
 	private Set<Lote> listaLotes;
 	
+	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="local")
 	private Set<Empleado> listaEmpleados;
 	

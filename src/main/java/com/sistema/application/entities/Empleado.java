@@ -22,6 +22,10 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name="empleado")
 public class Empleado extends Persona implements Serializable {
@@ -41,6 +45,7 @@ public class Empleado extends Persona implements Serializable {
 	@Column(name="sueldo_basico")
 	private double sueldoBasico;
 
+	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_local", nullable=false)
 	private Local local;

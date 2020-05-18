@@ -170,8 +170,7 @@ public class LocalModel {
 	public String toString() {
 		return "LocalModel [idLocal=" + idLocal + ", nombreLocal=" + nombreLocal + ", latitud=" + latitud
 				+ ", longitud=" + longitud + ", direccion=" + direccion + ", telefono=" + telefono
-				+ ", gerente=" + gerente + ", listaLotes=" + listaLotes + ", listaEmpleados="
-				+ listaEmpleados + ", listaChangos=" + listaChangos + ", listaFacturas=" + listaFacturas + "]";
+				+ ", gerente=" + gerente + ", listaLotes=" + listaLotes + ", listaChangos=" + listaChangos + ", listaFacturas=" + listaFacturas + "]";
 	}
 
 	public double calcularDistancia(LocalModel local) {
