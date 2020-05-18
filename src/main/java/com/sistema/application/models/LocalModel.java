@@ -284,7 +284,7 @@ public class LocalModel {
 			pedidoStockModel.getEmpleadoOferente().getLocal().restarLote(pedidoStockModel.getProducto(), pedidoStockModel.getCantidad());			
 		}
 		else { 
-//			eliminarPedidoStock( idPedidoStock);		
+			iPedidoStockService.remove(idPedidoStock);
 		}
 		return true;
 	}
