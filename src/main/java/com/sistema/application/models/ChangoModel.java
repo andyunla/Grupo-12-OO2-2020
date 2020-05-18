@@ -25,6 +25,12 @@ public class ChangoModel {
 		this.pedidoStock = pedidoStock;
 		this.local = local;
 	}
+	//Constructor para crerar un chango en un local
+	public ChangoModel(LocalModel local) {
+		super();		
+		this.pedidoStock = null;
+		this.local = local;
+	}
 	
 	
 	//Getters y Setters
