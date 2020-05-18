@@ -13,6 +13,7 @@ import com.sistema.application.converters.ProductoConverter;
 import com.sistema.application.entities.Item;
 import com.sistema.application.entities.Lote;
 import com.sistema.application.entities.Producto;
+import com.sistema.application.services.IChangoService;
 import com.sistema.application.services.IFacturaService;
 import com.sistema.application.services.ILoteService;
 import com.sistema.application.services.IPedidoStockService;
@@ -36,6 +37,9 @@ public class LocalModel {
 	@Autowired
 	@Qualifier("iLoteService")
 	ILoteService iLoteService;
+	@Autowired
+	@Qualifier("iChangoService")
+	IChangoService iChangoService;
 	@Autowired
 	@Qualifier("iFacturaService")
 	IFacturaService iFacturaService;
@@ -292,12 +296,13 @@ public class LocalModel {
 		PedidoStockModel pedidoStockModel = iPedidoStockService.findByIdPedidoStock(idPedidoStock); //traiugo el Pedido de la base de datos
 		pedidoStockModel.setEmpleadoOferente(oferente); //seteo el oferente
 		pedidoStockModel.setAceptado(aceptado); //seteo el estado del pedido
-		iPedidoStockService.insertOrUpdate(pedidoStockModel); // lo actualizo en la base de datos
-		if (pedidoStockModel.isAceptado()) {
+		
+		if (pedidoStockModel.isAceptado()) {// si es un pedidoStock aceptado
+			iPedidoStockService.insertOrUpdate(pedidoStockModel); // lo actualizo en la base de datos
 			pedidoStockModel.getEmpleadoOferente().getLocal().restarLote(pedidoStockModel.getProducto(), pedidoStockModel.getCantidad());			
 		}
 		else { 
-			iPedidoStockService.remove(idPedidoStock);
+			iPedidoStockService.remove(idPedidoStock);// si no lo elimino
 		}
 		return true;
 	}
@@ -312,11 +317,7 @@ public class LocalModel {
 		if(chango.getPedidoStock() == null) restarChango(chango); // Si no hay pedidoStock, resto todos los productos del chango a este local
 		return true;
 	}
-	public void restarChango(ChangoModel chango) {
-		for ( ItemModel it : chango.getListaItems()) {
-			restarLote(it.getProductoModel() , it.getCantidad());
-		}
-	}
+	
 //	public List<Factura> traerFactura (LocalDate fecha1, LocalDate fecha2) {
 //		List<Factura> list = new ArrayList<Factura>();		
 //			int i= 0;
@@ -327,4 +328,23 @@ public class LocalModel {
 //		return list;
 //	}
 
+	/****************************************************************************************************/
+	public ChangoModel crearChango () {
+		return iChangoService.insertOrUpdate(new ChangoModel(this)); //creo un chango nuevo para este Local
+	}
+	public boolean eliminarChango (ChangoModel chango) {// si elimino el chango debo restaurar todos los items
+		sumarChango(chango);// sumo todos los items al local
+		iChangoService.remove(chango.getIdChango());// elimino el chango de la DB
+		return true; // return true
+	}
+	public void restarChango(ChangoModel chango) {
+		for ( ItemModel it : chango.getListaItems()) {// para cada item del chango
+			restarLote(it.getProductoModel() , it.getCantidad()); // // resto la cantidad de productos correspondientes a el local
+		}
+	}
+	public void sumarChango(ChangoModel chango) {
+		for ( ItemModel it : chango.getListaItems()) {// para cada item del chango
+			sumarLote(it.getProductoModel() , it.getCantidad());// sumo la cantidad de productos correspondientes a el local
+		}
+	}
 }
