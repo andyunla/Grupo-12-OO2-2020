@@ -15,5 +15,5 @@ public interface IFacturaService {
 	
 	public boolean remove(long id);	
 	
-	public  Set<Factura> findFacturasEntreFechasLocal(LocalDate fecha1, LocalDate fecha2, long idLocal);
+	public  Set<FacturaModel> findFacturasEntreFechasLocal(LocalDate fecha1, LocalDate fecha2, long idLocal);
 }
