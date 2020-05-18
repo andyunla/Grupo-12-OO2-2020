@@ -13,7 +13,7 @@ public class ChangoModel {
 	private long idChango;
 	private PedidoStockModel pedidoStock;
 	private LocalModel local;
-	private Set<Item> listaItems;
+	private Set<ItemModel> listaItems;
 	
 	
 	//Constructores
@@ -50,11 +50,11 @@ public class ChangoModel {
 	}
 
 	
-	public Set<Item> getListaItems() {
+	public Set<ItemModel> getListaItems() {
 		return listaItems;
 	}
 
-	public void setListaItems(Set<Item> listaItems) {
+	public void setListaItems(Set<ItemModel> listaItems) {
 		this.listaItems = listaItems;
 	}
 
