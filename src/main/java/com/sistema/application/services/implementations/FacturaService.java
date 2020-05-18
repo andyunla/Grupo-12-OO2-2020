@@ -10,7 +10,9 @@ import com.sistema.application.converters.FacturaConverter;
 import com.sistema.application.entities.Factura;
 import com.sistema.application.models.FacturaModel;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Service("facturaService")
 public class FacturaService implements IFacturaService{
@@ -45,6 +47,13 @@ public class FacturaService implements IFacturaService{
 		}catch(Exception e) {
 			return false;
 		}
+	}
+	public  Set<FacturaModel> findFacturasEntreFechasLocal(LocalDate fecha1, LocalDate fecha2, long idLocal){
+		Set<FacturaModel> lista = null;// crei una lista de facturas
+		for (Factura fa : facturaRepository.findFacturasEntreFechasLocal(fecha1, fecha2, idLocal)) {//traigo la lista de facturas entre fechas d eun local
+			lista.add(facturaConverter.entityToModel(fa));// las agrego a la lista model
+		}
+		return lista;
 	}
 	
 }

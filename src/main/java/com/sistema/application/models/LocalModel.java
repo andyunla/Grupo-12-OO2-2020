@@ -317,11 +317,7 @@ public class LocalModel {
 		if(chango.getPedidoStock() == null) restarChango(chango); // Si no hay pedidoStock, resto todos los productos del chango a este local
 		return true;
 	}
-	public void restarChango(ChangoModel chango) {
-		for ( ItemModel it : chango.getListaItems()) {
-			restarLote(it.getProductoModel() , it.getCantidad());
-		}
-	}
+	
 //	public List<Factura> traerFactura (LocalDate fecha1, LocalDate fecha2) {
 //		List<Factura> list = new ArrayList<Factura>();		
 //			int i= 0;
@@ -332,4 +328,50 @@ public class LocalModel {
 //		return list;
 //	}
 
+	/****************************************************************************************************/
+	public ChangoModel crearChango () {
+		return iChangoService.insertOrUpdate(new ChangoModel(this)); //creo un chango nuevo para este Local
+	}
+	public boolean eliminarChango (ChangoModel chango) {// si elimino el chango debo restaurar todos los items
+		sumarChango(chango);// sumo todos los items al local
+		iChangoService.remove(chango.getIdChango());// elimino el chango de la DB
+		return true; // return true
+	}
+	public void restarChango(ChangoModel chango) {
+		for ( ItemModel it : chango.getListaItems()) {// para cada item del chango
+			restarLote(it.getProductoModel() , it.getCantidad()); // // resto la cantidad de productos correspondientes a el local
+		}
+	}
+	public void sumarChango(ChangoModel chango) {
+		for ( ItemModel it : chango.getListaItems()) {// para cada item del chango
+			sumarLote(it.getProductoModel() , it.getCantidad());// sumo la cantidad de productos correspondientes a el local
+		}
+	}
+	/****************************************************************************************************/
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	//13) CIERRE DEL MES PARA DEFINIR EL SUELDO DE LOS EMPLEADOS//////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	/****************************************************************************************************/
+	public double calcularSueldo(EmpleadoModel empleado) {
+		double comisionCompleta =0;			
+			for (FacturaModel fa : traerFacturaMesPasado() ) {			
+				if (fa.getEmpleado().equals(empleado)) {
+					if(fa.getChango().getPedidoStock() !=null ) {					
+						if(fa.getChango().getPedidoStock().getEmpleadoSolicitante().equals(empleado))  comisionCompleta = comisionCompleta + ((fa.getCosteTotal()*3)/100);
+						}
+					else {
+						comisionCompleta = comisionCompleta + ((fa.getCosteTotal()*5)/100);
+						}
+				}	
+				else {
+					 if(fa.getChango().getPedidoStock()!=null && fa.getChango().getPedidoStock().getEmpleadoOferente().equals(empleado))comisionCompleta = comisionCompleta + ((fa.getCosteTotal()*2)/100);
+				}
+			}		
+		return (empleado.getSueldoBasico()+ comisionCompleta);	
+		}
+	public Set<FacturaModel> traerFacturaMesPasado() {// 
+		LocalDate fecha1 = LocalDate.now().minusMonths(1).withDayOfMonth(1);// mes pasado dia 1
+		LocalDate fecha2 = LocalDate.now().minusMonths(1).withDayOfMonth(fecha1.lengthOfMonth());// último día del mes pasado
+		return iFacturaService.findFacturasEntreFechasLocal(fecha1, fecha2, this.idLocal);// retorno la lista de facturas
+	}
 }
