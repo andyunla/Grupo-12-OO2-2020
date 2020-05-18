@@ -9,7 +9,9 @@ import java.util.Set;
 public interface ILoteService {
 	
 	public List<Lote> getAll();
-	
+
+	public List <LoteModel> getAllModels();
+
 	public LoteModel insertOrUpdate(LoteModel loteModel);
 	
 	public boolean remove(long id);
@@ -17,4 +19,7 @@ public interface ILoteService {
 	public Set<LoteModel> findByLoteProductoActivo(long idProducto, long idLocal);
 	
 	public Set<LoteModel> findByLoteProductoBaja(long idProducto, long idLocal);
+	
+	public List<LoteModel> findByLocalProductoYActivo(long idLocal, long idProducto, boolean soloActivos);
+
 }
