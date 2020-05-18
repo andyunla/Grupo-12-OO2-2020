@@ -15,9 +15,9 @@ import java.util.List;
 @Service("changoService")
 public class ChangoService implements IChangoService{
 
-	//Atributos
+		//Atributos
 		@Autowired
-		@Qualifier("changpRepository")
+		@Qualifier("changoRepository")
 		private IChangoRepository changoRepository;
 		
 		@Autowired

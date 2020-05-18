@@ -7,13 +7,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import com.sistema.application.services.ILoteService;
 import com.sistema.application.repositories.ILoteRepository;
 import com.sistema.application.converters.LoteConverter;
+import com.sistema.application.converters.ProductoConverter;
 import com.sistema.application.entities.Lote;
 import com.sistema.application.models.LoteModel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-@Service("loteServicec")
+@Service("loteService")
 public class LoteService implements ILoteService {
 
 	//Atributos
@@ -24,6 +26,10 @@ public class LoteService implements ILoteService {
 		@Autowired
 		@Qualifier("loteConverter")
 		private LoteConverter loteConverter;
+
+		@Autowired
+		@Qualifier("productoConverter")
+		private ProductoConverter productoConverter;
 		
 		
 		//Métodos
@@ -67,6 +73,22 @@ public class LoteService implements ILoteService {
 			}			
 			return lista;
 		}
-		
-	
+ 
+		@Override
+		public List<LoteModel> getAllModels() {
+			List <LoteModel> lotes = new ArrayList<LoteModel>();
+			for(Lote l: loteRepository.findAll() ){
+				lotes.add(loteConverter.entityToModel(l));
+			}
+			return lotes;
+		}
+
+		@Override
+		public List<LoteModel>findByLocalProductoYActivo(long idLocal, long idProducto, boolean soloActivos){
+			List <LoteModel> lotes = new ArrayList<LoteModel>();
+			for(Lote l: loteRepository.findByLocalProductoYActivo(idLocal, idProducto, soloActivos) ){
+				lotes.add(loteConverter.entityToModel(l));
+			}
+			return lotes;
+		}
 }

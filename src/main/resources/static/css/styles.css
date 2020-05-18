@@ -69,26 +69,7 @@ footer {
     top: 2vh;
 }
 
-#alertContainer div {
-    animation: blinkingBackground 2s infinite;
-}
-
-@keyframes blinkingBackground {
-    0% {
-        background-color: #f8d7da
-    }
-    30% {
-        background-color: #f8d6d9
-    }
-    60% {
-        background-color: #eec9cc
-    }
-    100% {
-        background-color: #f8d7da
-    }
-}
-
-/* DISTANCIA ESTILOS */
+/* DISTANCIA */
 
 #distancia {
     font-size: large;
