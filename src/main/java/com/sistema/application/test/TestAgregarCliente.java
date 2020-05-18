@@ -1,7 +1,7 @@
 package com.sistema.application.test;
 
 import java.time.LocalDate;
-import com.company.funciones.LoggerWrapper;
+import com.sistema.application.funciones.LoggerWrapper;
 
 /*
  * Test para agregar un nuevo cliente
