@@ -1,8 +1,5 @@
 package com.sistema.application.controllers;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +33,12 @@ public class EmpleadoController {
 	
 	@GetMapping("")
 	public String empleados(Model modelo) {
-		List<EmpleadoModel> empleados = empleadoService.getAll();
+		List<EmpleadoModel> empleados = empleadoService.getAllModel();
 		for(EmpleadoModel e: empleados) {
 			e.getLocal().setGerente(null);
 		}
 		modelo.addAttribute("empleados", empleados);
-		List<LocalModel> locales = localService.getAll();
+		List<LocalModel> locales = localService.getAllModel();
 		for(LocalModel l: locales) {
 			l.getGerente().setLocal(null);
 		}

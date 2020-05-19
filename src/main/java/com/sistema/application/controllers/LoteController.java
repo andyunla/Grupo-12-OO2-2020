@@ -40,7 +40,7 @@ public class LoteController {
 
      @GetMapping("")
      public String lotes(Model modelo) {
-          modelo.addAttribute("lotes", loteService.getAllModels());
+          modelo.addAttribute("lotes", loteService.getAllModel());
           modelo.addAttribute("lote", new LoteModel());
           modelo.addAttribute("locales", localService.getAll());
           modelo.addAttribute("productos", productoService.getAll());
