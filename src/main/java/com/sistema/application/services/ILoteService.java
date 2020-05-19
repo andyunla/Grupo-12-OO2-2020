@@ -12,7 +12,7 @@ public interface ILoteService {
 	
 	public List<Lote> getAll();
 
-	public List <LoteModel> getAllModels();
+	public List <LoteModel> getAllModel();
 
 	public LoteModel insertOrUpdate(LoteModel loteModel);
 	

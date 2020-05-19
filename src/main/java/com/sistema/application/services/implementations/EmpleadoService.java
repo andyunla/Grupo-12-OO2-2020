@@ -17,6 +17,7 @@ import com.sistema.application.services.IEmpleadoService;
 @Service("empleadoService")
 public class EmpleadoService implements IEmpleadoService {
 
+	//Atributos
 	@Autowired
 	@Qualifier("empleadoRepository")
 	private IEmpleadoRepository empleadoRepository;
@@ -25,8 +26,14 @@ public class EmpleadoService implements IEmpleadoService {
 	@Qualifier("empleadoConverter")
 	private EmpleadoConverter empleadoConverter;
 	
+	
+	//Métodos
+	public List<Empleado> getAll(){
+		return empleadoRepository.findAll();
+	}
+	
 	@Override
-	public List<EmpleadoModel> getAll() {
+	public List<EmpleadoModel> getAllModel() {
 		List <EmpleadoModel> empleados = new ArrayList <EmpleadoModel>();
 		for(Empleado empleado: empleadoRepository.findAll()){
 			EmpleadoModel em = empleadoConverter.entityToModel(empleado);
@@ -70,11 +77,6 @@ public class EmpleadoService implements IEmpleadoService {
 	public EmpleadoModel findByLegajo(long legajo) {
 		return empleadoConverter.entityToModel(empleadoRepository.findByLegajo(legajo));
 	}
-	
-	@Override
-	public EmpleadoModel findByGerenteLocal(long idLocal) {
-		return empleadoConverter.entityToModel(empleadoRepository.findByGerenteLocal(idLocal));
-	}
 
 	@Override
 	public List<EmpleadoModel> findByNombreAndApellido(String nombre, String apellido) {
@@ -93,4 +95,10 @@ public class EmpleadoService implements IEmpleadoService {
 		}
 		return models;
 	}
+	
+	@Override
+	public EmpleadoModel findByGerenteLocal(long idLocal) {
+		return empleadoConverter.entityToModel(empleadoRepository.findByGerenteLocal(idLocal));
+	}
+	
 }

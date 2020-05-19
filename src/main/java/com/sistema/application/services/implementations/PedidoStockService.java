@@ -39,7 +39,7 @@ public class PedidoStockService implements IPedidoStockService{
 		}
 		
 		@Override
-		public Set<PedidoStockModel> getAllModels(){
+		public Set<PedidoStockModel> getAllModel(){
 			Set<PedidoStockModel> pedidoStock = null;
 			for(PedidoStock p: pedidoStockRepository.findAll() ) {
 				pedidoStock.add(pedidoStockConverter.entityToModel(p) );

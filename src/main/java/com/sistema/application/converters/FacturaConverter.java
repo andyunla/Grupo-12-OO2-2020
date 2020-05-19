@@ -1,21 +1,11 @@
 package com.sistema.application.converters;
 
-import java.time.LocalDate;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import com.sistema.application.entities.Chango;
-import com.sistema.application.entities.Cliente;
-import com.sistema.application.entities.Empleado;
 import com.sistema.application.entities.Factura;
-import com.sistema.application.entities.Local;
-import com.sistema.application.models.ChangoModel;
-import com.sistema.application.models.ClienteModel;
-import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.FacturaModel;
-import com.sistema.application.repositories.IClienteRepository;
 
 @Component("facturaConverter")
 public class FacturaConverter {

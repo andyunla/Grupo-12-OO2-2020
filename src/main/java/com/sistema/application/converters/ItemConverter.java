@@ -4,14 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.ItemModel;
 import com.sistema.application.entities.Item;
 
-import com.sistema.application.converters.ProductoConverter;
-import com.sistema.application.models.ProductoModel;
-import com.sistema.application.repositories.IChangoRepository;
-import com.sistema.application.repositories.IProductoRepository;
 
 @Component("itemConverter")
 public class ItemConverter {

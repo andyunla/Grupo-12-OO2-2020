@@ -8,9 +8,11 @@ import com.sistema.application.models.LocalModel;
 public interface ILocalService {
 	
 	public LocalModel findByIdLocal(long iLocal);
+    
+    public List<Local> getAll();
 	
-    public List<LocalModel> getAll();
-	
+    public List<LocalModel> getAllModel();
+    
 	public LocalModel insertOrUpdate(LocalModel localModel);
 	
 	public boolean remove(long id);
