@@ -22,6 +22,6 @@ public interface ILoteService {
 	
 	public Set<LoteModel> findByLoteProductoBaja(long idProducto, long idLocal);
 	
-	public List<LoteModel> findByLocalProductoYActivo(long idLocal, long idProducto, boolean soloActivos);
+	public List<LoteModel> findByLocalProductoAndActivo(long idLocal, long idProducto, boolean soloActivos);
 
 }

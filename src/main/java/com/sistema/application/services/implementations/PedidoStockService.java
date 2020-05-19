@@ -63,7 +63,8 @@ public class PedidoStockService implements IPedidoStockService{
 				return false;
 			}
 		}
-	
+		
+		@Override
 		public Set<PedidoStockModel> findByEmpleadoSolicitante(EmpleadoModel empleadoSolicitante) {
 			Set<PedidoStockModel> pedidoStock = null;
 			for(PedidoStock p: pedidoStockRepository.findByEmpleadoSolicitante(empleadoSolicitante.getLegajo()) ) {

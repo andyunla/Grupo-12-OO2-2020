@@ -373,6 +373,6 @@ public class LocalModel {
 	public Set<FacturaModel> traerFacturaMesPasado() {// 
 		LocalDate fecha1 = LocalDate.now().minusMonths(1).withDayOfMonth(1);// mes pasado dia 1
 		LocalDate fecha2 = LocalDate.now().minusMonths(1).withDayOfMonth(fecha1.lengthOfMonth());// último día del mes pasado
-		return iFacturaService.findFacturasEntreFechas(fecha1, fecha2);// retorno la lista de facturas
+		return iFacturaService.findByFechaFacturaBetween(fecha1, fecha2);// retorno la lista de facturas
 	}
 }

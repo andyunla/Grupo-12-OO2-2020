@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service("facturaService")
-public class FacturaService implements IFacturaService{
+public class FacturaService implements IFacturaService {
 
 	//Atributos
 	@Autowired
@@ -66,19 +66,22 @@ public class FacturaService implements IFacturaService{
 			return false;
 		}
 	}
-	public  Set<FacturaModel> findFacturasEntreFechasLocal(LocalDate fecha1, LocalDate fecha2, long idLocal){
+	
+	@Override
+	public  Set<FacturaModel> findByFechaFacturaBetweenAndIdLocal(LocalDate fecha1, LocalDate fecha2, long idLocal){
 		Set<FacturaModel> lista = null;// crei una lista de facturas
-		for (Factura fa : facturaRepository.findFacturasEntreFechasLocal(fecha1, fecha2, idLocal)) {//traigo la lista de facturas entre fechas d eun local
-			lista.add(facturaConverter.entityToModel(fa));// las agrego a la lista model
-		}
-		return lista;
-	}
-	public  Set<FacturaModel> findFacturasEntreFechas(LocalDate fecha1, LocalDate fecha2, long idLocal){
-		Set<FacturaModel> lista = null;// crei una lista de facturas
-		for (Factura fa : facturaRepository.findFacturasEntreFechas(fecha1, fecha2 )) {//traigo la lista de facturas entre fechas d eun local
+		for (Factura fa : facturaRepository.findByFechaFacturaBetweenAndIdLocal(fecha1, fecha2, idLocal)) {//traigo la lista de facturas entre fechas d eun local
 			lista.add(facturaConverter.entityToModel(fa));// las agrego a la lista model
 		}
 		return lista;
 	}
 	
+	@Override
+	public  Set<FacturaModel> findByFechaFacturaBetween(LocalDate fecha1, LocalDate fecha2){
+		Set<FacturaModel> lista = null;// crei una lista de facturas
+		for (Factura fa : facturaRepository.findByFechaFacturaBetween(fecha1, fecha2 )) {//traigo la lista de facturas entre fechas d eun local
+			lista.add(facturaConverter.entityToModel(fa));// las agrego a la lista model
+		}
+		return lista;
+	}
 }

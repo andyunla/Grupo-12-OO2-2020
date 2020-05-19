@@ -58,7 +58,8 @@ public class LoteService implements ILoteService {
 			return false;
 		}
 	}
-	
+
+	@Override
 	public Set<LoteModel> findByLoteProductoActivo(long idProducto, long idLocal){
 		//creo un set list vacio
 		Set<LoteModel> lista = null;
@@ -69,7 +70,8 @@ public class LoteService implements ILoteService {
 		}			
 		return lista;
 	}
-		
+	
+	@Override
 	public Set<LoteModel> findByLoteProductoBaja(long idProducto, long idLocal){
 		//creo un set list vacio
 		Set<LoteModel> lista = null;
@@ -91,9 +93,9 @@ public class LoteService implements ILoteService {
 	}
 
 	@Override
-	public List<LoteModel>findByLocalProductoYActivo(long idLocal, long idProducto, boolean soloActivos){
+	public List<LoteModel>findByLocalProductoAndActivo(long idLocal, long idProducto, boolean soloActivos){
 		List <LoteModel> lotes = new ArrayList<LoteModel>();
-		for(Lote l: loteRepository.findByLocalProductoYActivo(idLocal, idProducto, soloActivos) ){
+		for(Lote l: loteRepository.findByLocalProductoAndActivo(idLocal, idProducto, soloActivos) ){
 			lotes.add(loteConverter.entityToModel(l));
 		}
 		return lotes;

@@ -58,7 +58,7 @@ public class LoteController {
      public ModelAndView traer(@PathVariable("idLocal") long idLocal, @PathVariable("idProducto") long idProducto,
                @PathVariable("soloActivos") boolean soloActivos) {
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.LISTA_LOTES);
-          List<LoteModel> lotes = loteService.findByLocalProductoYActivo(idLocal, idProducto, soloActivos);
+          List<LoteModel> lotes = loteService.findByLocalProductoAndActivo(idLocal, idProducto, soloActivos);
           mAV.addObject("lotes", lotes);
           return mAV;
      }
