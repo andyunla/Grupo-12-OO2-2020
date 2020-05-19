@@ -33,7 +33,11 @@ public class LocalService implements ILocalService {
     }
 	
      @Override
-     public List<LocalModel> getAll() {
+     public List<Local> getAll(){
+    	 return localRepository.findAll();
+     }
+     
+     public List<LocalModel> getAllModel() {
           List <LocalModel> localesModelos = new ArrayList<LocalModel>();
           for(Local entidadLocal: localRepository.findAll()){
                LocalModel modeloLocal = localConverter.entityToModel(entidadLocal);

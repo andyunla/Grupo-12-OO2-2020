@@ -1,8 +1,6 @@
 package com.sistema.application.entities;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -14,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name="producto")

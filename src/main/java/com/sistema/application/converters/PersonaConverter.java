@@ -1,11 +1,7 @@
 package com.sistema.application.converters;
 
 import com.sistema.application.models.PersonaModel;
-
-import java.time.LocalDate;
-
 import org.springframework.stereotype.Component;
-
 import com.sistema.application.entities.Persona;
 
 @Component("personaConverter")

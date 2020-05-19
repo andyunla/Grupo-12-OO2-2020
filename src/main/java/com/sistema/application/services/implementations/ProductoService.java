@@ -32,34 +32,39 @@ public class ProductoService implements IProductoService {
  		return productoConverter.entityToModel(productoRepository.findByIdProducto(idProducto) );
  	}
      
-     @Override
-     public List<ProductoModel> getAll() {
-          List<ProductoModel> productos = new ArrayList<ProductoModel>();
-          for (Producto entidadProducto : productoRepository.findAll()) {
-               productos.add(productoConverter.entityToModel(entidadProducto));
-          }
-          return productos;
-     }
+ 	public List<Producto> getAll(){
+ 		return productoRepository.findAll();
+ 	}
+ 	
+    @Override
+    public List<ProductoModel> getAllModel() {
+    	List<ProductoModel> productos = new ArrayList<ProductoModel>();
+        for (Producto entidadProducto : productoRepository.findAll()) {
+              productos.add(productoConverter.entityToModel(entidadProducto));
+         }
+        
+        return productos;
+    }
 
-     @Override
-     public ProductoModel insertOrUpdate(ProductoModel productoModel) {
-          Producto productoEntidad = productoConverter.modelToEntity(productoModel);
-          Producto productoGuardado = productoRepository.save(productoEntidad);
-          return productoConverter.entityToModel(productoGuardado);
-     }
+    @Override
+    public ProductoModel insertOrUpdate(ProductoModel productoModel) {
+         Producto productoEntidad = productoConverter.modelToEntity(productoModel);
+         Producto productoGuardado = productoRepository.save(productoEntidad);
+         return productoConverter.entityToModel(productoGuardado);
+    }
 
-     @Override
-     public boolean remove(long idProducto) {
-          try {
-               productoRepository.deleteById(idProducto);
-               return true;
-          } catch (Exception e) {
-               return false;
-          }
-     }
+    @Override
+    public boolean remove(long idProducto) {
+         try {
+              productoRepository.deleteById(idProducto);
+              return true;
+         } catch (Exception e) {
+              return false;
+         }
+    }
      
-     public ProductoModel findByNombre(String nombre) {
-    	 return productoConverter.entityToModel(productoRepository.findByNombre(nombre) );
-     }
+    public ProductoModel findByNombre(String nombre) {
+    	return productoConverter.entityToModel(productoRepository.findByNombre(nombre) );
+    }
      
 }

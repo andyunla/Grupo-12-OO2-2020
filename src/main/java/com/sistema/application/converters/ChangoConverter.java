@@ -1,15 +1,11 @@
 package com.sistema.application.converters;
 
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.sistema.application.models.ChangoModel;
-import com.sistema.application.models.ItemModel;
 import com.sistema.application.entities.Chango;
-import com.sistema.application.entities.Item;
 
 @Component("changoConverter")
 public class ChangoConverter {

@@ -84,7 +84,7 @@ public class LoteService implements ILoteService {
 	}
  
 	@Override
-	public List<LoteModel> getAllModels() {
+	public List<LoteModel> getAllModel() {
 		List <LoteModel> lotes = new ArrayList<LoteModel>();
 		for(Lote l: loteRepository.findAll() ){
 			lotes.add(loteConverter.entityToModel(l));

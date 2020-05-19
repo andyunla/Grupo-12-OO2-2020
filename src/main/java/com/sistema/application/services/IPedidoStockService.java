@@ -13,7 +13,7 @@ public interface IPedidoStockService {
 	
 	public List<PedidoStock> getAll();
 	
-	public Set<PedidoStockModel> getAllModels();
+	public Set<PedidoStockModel> getAllModel();
 	
 	public PedidoStockModel insertOrUpdate(PedidoStockModel pedidoStockModel);
 	

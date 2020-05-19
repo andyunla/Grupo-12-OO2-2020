@@ -1,17 +1,12 @@
 package com.sistema.application.converters;
 
 import com.sistema.application.models.LoteModel;
-import com.sistema.application.models.ProductoModel;
-import com.sistema.application.repositories.IProductoRepository;
-
-import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.sistema.application.entities.Lote;
-import com.sistema.application.entities.Producto;
 
 @Component("loteConverter")
 public class LoteConverter {
