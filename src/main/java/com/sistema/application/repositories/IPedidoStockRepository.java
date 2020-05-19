@@ -13,7 +13,7 @@ public interface IPedidoStockRepository extends  JpaRepository<PedidoStock, Seri
 	
 	public abstract PedidoStock findByIdPedidoStock(long idPedidoStock);
 	
-	@Query("FROM pedido_stock WHERE solicitante_legajo=(:legajoEmpleadoSolicitante)")
+	@Query("FROM PedidoStock WHERE solicitante_legajo=(:legajoEmpleadoSolicitante)")
 	public abstract Set<PedidoStock> findByEmpleadoSolicitante(long legajoEmpleadoSolicitante);
 	
 }
