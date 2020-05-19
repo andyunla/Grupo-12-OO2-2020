@@ -375,4 +375,25 @@ public class LocalModel {
 		LocalDate fecha2 = LocalDate.now().minusMonths(1).withDayOfMonth(fecha1.lengthOfMonth());// último día del mes pasado
 		return iFacturaService.findByFechaFacturaBetween(fecha1, fecha2);// retorno la lista de facturas
 	}
+	/****************************************************************************************************/
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	//14) EMITIR REPORTE DE PRODUCTOS VENDIDOS ENTRE FECHAS POR LOCAL/////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	/****************************************************************************************************/
+	public void reporte(LocalDate fecha1, LocalDate fecha2) {
+		System.out.println(this.getNombreLocal());
+		// Para cada producto de la lista de productos
+		for (ProductoModel pro : iProductoService.getAllModel()) {
+			int cantidad = 0;
+			//Traigo la lista de facturas del local entre fechas
+			Set<FacturaModel> listaFacturas = iFacturaService.findByFechaFacturaBetweenAndIdLocal(fecha1, fecha2, this.idLocal);
+			
+			for (FacturaModel fa : listaFacturas) {
+				// de cada factura obtengo el chango y traigo el item que tenga el producto que estamos evaluando
+				// si el producto está en la factura, se suma la cantidad correspondiente
+				if(fa.getChango().traerItem(pro)!=null) cantidad = cantidad + fa.getChango().traerItem(pro).getCantidad();
+			}
+			System.out.println("Producto: " +pro.getNombre()+ " Cantidad: "+cantidad);
+			System.out.println();
+		}
 }
