@@ -1,5 +1,6 @@
 package com.sistema.application.models;
 
+import java.util.Iterator;
 import java.util.Set;
 
 public class ChangoModel {
@@ -65,4 +66,15 @@ public class ChangoModel {
 		return "ChangoModel [idChango=" + idChango + ", pedidoStock=" + pedidoStock + ", local=" + local + "]";
 	}
 
+	// Métodos
+	public ItemModel traerItem(ProductoModel producto) {
+		ItemModel obj = null;
+		Iterator<ItemModel> itr = listaItems.iterator();
+		while (obj == null && itr.hasNext()) {
+			ItemModel item = itr.next();
+			if (item.getProductoModel().equals(producto))
+				obj = itr.next();
+		}
+		return obj;
+	}
 }
