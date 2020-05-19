@@ -10,6 +10,7 @@ import com.sistema.application.converters.ChangoConverter;
 import com.sistema.application.entities.Chango;
 import com.sistema.application.models.ChangoModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("changoService")
@@ -27,8 +28,22 @@ public class ChangoService implements IChangoService{
 		
 		//Métodos
 		@Override
+		public ChangoModel findByIdChango(long idChango) {
+			return changoConverter.entityToModel(changoRepository.findByIdChango(idChango) );
+		}
+		
+		@Override
 		public List<Chango> getAll(){
 			return changoRepository.findAll();
+		}
+		
+		@Override
+		public List<ChangoModel> getAllModel(){
+			List <ChangoModel> changos = new ArrayList<ChangoModel>();
+			for(Chango c: changoRepository.findAll() ){
+				changos.add(changoConverter.entityToModel(c) );
+			}
+			return changos;
 		}
 		
 		@Override

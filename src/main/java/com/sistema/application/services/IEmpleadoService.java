@@ -2,7 +2,6 @@ package com.sistema.application.services;
 
 import java.util.List;
 
-import com.sistema.application.entities.Empleado;
 import com.sistema.application.models.EmpleadoModel;
 
 public interface IEmpleadoService {

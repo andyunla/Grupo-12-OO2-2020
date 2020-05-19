@@ -7,7 +7,11 @@ import java.util.List;
 
 public interface IItemService {
 
+	public ItemModel findByIdItem(long idItem);
+	
 	public List<Item> getAll();
+	
+	public List<ItemModel> getAllModel();
 	
 	public ItemModel insertOrUpdate(ItemModel itemModel);
 	

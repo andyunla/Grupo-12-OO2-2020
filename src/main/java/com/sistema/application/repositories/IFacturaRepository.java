@@ -1,7 +1,6 @@
 package com.sistema.application.repositories;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;

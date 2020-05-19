@@ -16,7 +16,8 @@ import org.springframework.stereotype.Service;
 @Service("localService")
 public class LocalService implements ILocalService {
 
-     @Autowired
+	//Atributos
+    @Autowired
 	@Qualifier("localRepository")
 	private ILocalRepository localRepository;
 	
@@ -24,6 +25,13 @@ public class LocalService implements ILocalService {
 	@Qualifier("localConverter")
      private LocalConverter localConverter;
      
+	
+	//Métodos
+    @Override
+    public LocalModel findByIdLocal(long idLocal) {
+         return localConverter.entityToModel(localRepository.findByIdLocal(idLocal) );
+    }
+	
      @Override
      public List<LocalModel> getAll() {
           List <LocalModel> localesModelos = new ArrayList<LocalModel>();
@@ -32,11 +40,6 @@ public class LocalService implements ILocalService {
                localesModelos.add(modeloLocal);
           }
           return localesModelos;
-     }
-
-     @Override
-     public LocalModel findByIdLocal(long idLocal) {
-          return localConverter.entityToModel(localRepository.findByIdLocal(idLocal));
      }
 
      @Override
@@ -55,6 +58,16 @@ public class LocalService implements ILocalService {
           catch(Exception e){
                return false;
           }
+     }
+     
+     @Override
+     public LocalModel findByNombreLocal(String nombreLocal) {
+    	 return localConverter.entityToModel(localRepository.findByNombreLocal(nombreLocal) );
+     }
+     
+     @Override
+     public LocalModel findByDireccion(String direccion) {
+    	 return localConverter.entityToModel(localRepository.findByDireccion(direccion) );
      }
      
 }
