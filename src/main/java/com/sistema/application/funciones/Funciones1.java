@@ -189,5 +189,49 @@ public class Funciones1 {
 
 	        return resultado;
 		}
+		public static void orden(long[] id, int[] cantidad) {			
+			int cantidadAux = 0;
+			long idAux = 0;
+			boolean ordene = true;
+			while (ordene){
+				ordene = false;
+				for (int i = 0; i < cantidad.length; i++) {
+					if(cantidad[i]< cantidad[i+1]) {
+						// ordenamos la cantidad
+						cantidadAux = cantidad[i];
+						cantidad[i] = cantidad[i+1];
+						cantidad[i+1] = cantidadAux;
+						//y hacemos lo mismo con el ID
+						idAux = id[i];
+						id[i] = id[i+1];
+						id[i+1] = idAux;
+						//y ponemos la bandera en true, porque hubo un cambio
+						ordene = true;
+					}
+				}
+			}
+		}
+		public static void orden(long[] id, double[] cantidad) {			
+			double cantidadAux = 0;
+			long idAux = 0;
+			boolean ordene = true;
+			while (ordene){
+				ordene = false;
+				for (int i = 0; i < cantidad.length; i++) {
+					if(cantidad[i]< cantidad[i+1]) {
+						// ordenamos la cantidad
+						cantidadAux = cantidad[i];
+						cantidad[i] = cantidad[i+1];
+						cantidad[i+1] = cantidadAux;
+						//y hacemos lo mismo con el ID
+						idAux = id[i];
+						id[i] = id[i+1];
+						id[i+1] = idAux;
+						//y ponemos la bandera en true, porque hubo un cambio
+						ordene = true;
+					}
+				}
+			}
+		}
 	
 }

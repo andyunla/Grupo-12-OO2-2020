@@ -6,11 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.servlet.ModelAndView;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ItemModel;
-import com.sistema.application.services.implementations.ProductoService;
-import com.sistema.application.services.IProductoService;
 import com.sistema.application.services.IItemService;
 
 import org.springframework.ui.Model;

@@ -25,7 +25,7 @@ public class ProductoController {
 
 	@GetMapping("")
 	public String productos(Model modelo) {
-		modelo.addAttribute("productos", productoService.getAll());
+		modelo.addAttribute("productos", productoService.getAllModel());
 		modelo.addAttribute("producto", new ProductoModel());
 		return ViewRouteHelper.PRODUCTO_ABM;
 	}

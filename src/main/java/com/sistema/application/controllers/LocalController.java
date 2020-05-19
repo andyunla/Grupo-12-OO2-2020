@@ -37,7 +37,7 @@ public class LocalController {
 
 	@GetMapping("")
 	public String locales(Model modelo) {
-		List<LocalModel> localesModel = localService.getAll();
+		List<LocalModel> localesModel = localService.getAllModel();
 		List<LocalDto> locales = new ArrayList<LocalDto>();
 		for(LocalModel model: localesModel) {
 			LocalDto dto = localConverter.modelToDto(model);
