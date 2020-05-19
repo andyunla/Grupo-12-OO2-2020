@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import com.sistema.application.services.IFacturaService;
 import com.sistema.application.repositories.IFacturaRepository;
 import com.sistema.application.converters.FacturaConverter;
+import com.sistema.application.entities.Chango;
 import com.sistema.application.entities.Factura;
+import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.FacturaModel;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -29,10 +32,25 @@ public class FacturaService implements IFacturaService{
 
 	//Métodos
 	@Override
+	public FacturaModel findByIdFactura(long idFactura) {
+		return facturaConverter.entityToModel(facturaRepository.findByIdFactura(idFactura) );
+	}
+	
+	
+	@Override
 	public List<Factura> getAll(){
 		return facturaRepository.findAll();
 	}
 
+	@Override
+	public List<FacturaModel> getAllModel(){
+		List <FacturaModel> facturas = new ArrayList<FacturaModel>();
+		for(Factura f: facturaRepository.findAll() ){
+			facturas.add(facturaConverter.entityToModel(f) );
+		}
+		return facturas;
+	}
+	
 	@Override
 	public FacturaModel insertOrUpdate(FacturaModel facturaModel) {
 		Factura factura = facturaRepository.save(facturaConverter.modelToEntity(facturaModel) );

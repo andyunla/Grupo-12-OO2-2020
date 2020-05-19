@@ -63,7 +63,7 @@ public class ClienteService implements IClienteService {
 	/*
 	@Override
 	public ClienteModel findById(int id) {
-		return clienteConverter.entityToModel(clienteRepository.findById(id));
+		//return clienteConverter.entityToModel(clienteRepository.findById(id));
 	}
 	*/
 	@Override

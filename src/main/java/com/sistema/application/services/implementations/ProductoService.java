@@ -16,20 +16,21 @@ import org.springframework.stereotype.Service;
 @Service("productoService")
 public class ProductoService implements IProductoService {
 
-     @Autowired
-     @Qualifier("productoRepository")
-     private IProductoRepository productoRepository;
+	//Atributos
+    @Autowired
+    @Qualifier("productoRepository")
+    private IProductoRepository productoRepository;
 
-     @Autowired
-     @Qualifier("productoConverter")
-     private ProductoConverter productoConverter;
+    @Autowired
+    @Qualifier("productoConverter")
+    private ProductoConverter productoConverter;
 
-     /*
+     
+    //Métodos
  	@Override
- 	public ProductoModel findById(long id) {
- 		return productoConverter.entityToModel(productoRepository.findByIdProducto(id) );
+ 	public ProductoModel findByIdProducto(long idProducto) {
+ 		return productoConverter.entityToModel(productoRepository.findByIdProducto(idProducto) );
  	}
- 	*/
      
      @Override
      public List<ProductoModel> getAll() {
@@ -56,4 +57,9 @@ public class ProductoService implements IProductoService {
                return false;
           }
      }
+     
+     public ProductoModel findByNombre(String nombre) {
+    	 return productoConverter.entityToModel(productoRepository.findByNombre(nombre) );
+     }
+     
 }

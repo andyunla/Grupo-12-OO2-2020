@@ -7,7 +7,11 @@ import java.util.List;
 
 public interface IChangoService {
 
+	public ChangoModel findByIdChango(long idChango);
+	
 	public List<Chango> getAll();
+	
+	public List<ChangoModel> getAllModel();
 	
 	public ChangoModel insertOrUpdate(ChangoModel changoModel);
 	

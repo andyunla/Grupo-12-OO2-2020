@@ -10,6 +10,7 @@ import com.sistema.application.converters.ItemConverter;
 import com.sistema.application.entities.Item;
 import com.sistema.application.models.ItemModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("itemService")
@@ -26,9 +27,22 @@ public class ItemService implements IItemService{
 	
 	
 	//Métodos
+	public ItemModel findByIdItem(long idItem) {
+		return itemConverter.entityToModel(itemRepository.findByIdItem(idItem) );
+	}
+	
 	@Override
 	public List<Item> getAll(){
 		return itemRepository.findAll();
+	}
+	
+	@Override
+	public List<ItemModel> getAllModel(){
+		List <ItemModel> items = new ArrayList<ItemModel>();
+		for(Item i: itemRepository.findAll() ){
+			items.add(itemConverter.entityToModel(i) );
+		}
+		return items;
 	}
 	
 	@Override

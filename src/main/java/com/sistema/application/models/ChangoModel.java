@@ -2,11 +2,6 @@ package com.sistema.application.models;
 
 import java.util.Set;
 
-import com.sistema.application.models.ItemModel;
-import com.sistema.application.entities.Item;
-import com.sistema.application.models.FacturaModel;
-import com.sistema.application.models.LocalModel;
-
 public class ChangoModel {
 	
 	//Atributos

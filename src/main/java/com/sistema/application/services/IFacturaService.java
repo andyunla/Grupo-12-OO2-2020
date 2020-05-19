@@ -9,7 +9,11 @@ import java.util.Set;
 
 public interface IFacturaService {
 
+	public FacturaModel findByIdFactura(long idFactura);
+	
 	public List<Factura> getAll();
+	
+	public List<FacturaModel> getAllModel();
 	
 	public FacturaModel insertOrUpdate(FacturaModel facturaModel);
 	

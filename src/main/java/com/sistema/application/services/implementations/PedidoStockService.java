@@ -11,6 +11,7 @@ import com.sistema.application.entities.PedidoStock;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.PedidoStockModel;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -27,7 +28,16 @@ public class PedidoStockService implements IPedidoStockService{
 		private PedidoStockConverter pedidoStockConverter;
 		
 		
-		//Métodos		
+		//Métodos
+		public PedidoStockModel findByIdPedidoStock(long idPedidoStock) {
+			return pedidoStockConverter.entityToModel(pedidoStockRepository.findByIdPedidoStock(idPedidoStock) );
+		}
+		
+		@Override
+		public List<PedidoStock> getAll(){
+			return pedidoStockRepository.findAll();
+		}
+		
 		@Override
 		public Set<PedidoStockModel> getAllModels(){
 			Set<PedidoStockModel> pedidoStock = null;
@@ -52,10 +62,6 @@ public class PedidoStockService implements IPedidoStockService{
 			}catch(Exception e) {
 				return false;
 			}
-		}
-		
-		public PedidoStockModel findByIdPedidoStock(long idPedidoStock) {
-			return pedidoStockConverter.entityToModel(pedidoStockRepository.findByIdPedidoStock(idPedidoStock) );
 		}
 	
 		public Set<PedidoStockModel> findByEmpleadoSolicitante(EmpleadoModel empleadoSolicitante) {

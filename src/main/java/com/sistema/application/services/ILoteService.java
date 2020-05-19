@@ -8,6 +8,8 @@ import java.util.Set;
 
 public interface ILoteService {
 	
+	public LoteModel findByIdLote(long idLote);
+	
 	public List<Lote> getAll();
 
 	public List <LoteModel> getAllModels();
