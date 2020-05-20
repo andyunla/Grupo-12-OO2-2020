@@ -27,10 +27,10 @@ public class ClienteController {
 	
 	@GetMapping("")
 	public String clientes(Model modelo) {
-		modelo.addAttribute("clientes", clienteService.getAll());
+		modelo.addAttribute("clientes", clienteService.getAllModel());
 		modelo.addAttribute("cliente", new ClienteModel());
 		return ViewRouteHelper.CLIENTE_ABM;
-	}
+	}  
 	
 	@PostMapping("agregar")
 	public String agregar(@Valid @ModelAttribute("cliente") ClienteModel nuevoCliente,

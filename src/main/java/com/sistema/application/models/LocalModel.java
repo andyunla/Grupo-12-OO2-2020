@@ -205,21 +205,27 @@ public class LocalModel {
 	//6) CALCULO DE DIISTANCIA ENTRE LOCALES//////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
-	public List<LocalModel> localesCercanos() {
+	public List<LocalModel> localesCercanos(ProductoModel producto, int cantidad) {
 		List<LocalModel> lista = null;
-		List<LocalModel> listaLocales = iLocalService.getAllModel();
-		double[] distancia =  new double[listaLocales.size()-1];// vector para guardar el valor de la distancia
-		long[] id = new long[listaLocales.size()-1];// vector para guardar el valor ID del Local
+		List<LocalModel> listaLocales = stockDisponible(producto, cantidad);
+		double[] distancia =  new double[listaLocales.size()];// vector para guardar el valor de la distancia
+		long[] id = new long[listaLocales.size()];// vector para guardar el valor ID del Local
 		for (int i = 0; i < listaLocales.size(); i++) {
-			if(listaLocales.get(i).getIdLocal() != this.idLocal) {// si no es este local
 				id[i] = listaLocales.get(i).getIdLocal();
 				distancia[i] =  calcularDistancia(listaLocales.get(i));
-			}
 		}
 		Funciones1.orden(id, distancia);// este método ordena los dos  vectores de mayor a menor usando el valor de la distancia
 		for (long l : id) {
 			lista.add(iLocalService.findByIdLocal(l));//agrego a la lista los productos con ID en orden
 		}		
+		return lista;
+	}
+	public List<LocalModel> stockDisponible(ProductoModel producto, int cantidad){
+		List<LocalModel> lista = null;
+		for (LocalModel lo : iLocalService.getAllModel()) {// de todos los locales
+			//si no es este local y me puede dar stock le agrego a la lista
+			if(lo.getIdLocal() != this.idLocal && lo.validarStock(producto, cantidad)) lista.add(lo);
+		}
 		return lista;
 	}	
 	public double calcularDistancia(LocalModel local) {
@@ -234,6 +240,7 @@ public class LocalModel {
 		double va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));
 		return radioTierra * va2;
 	}
+	
 	/****************************************************************************************************/
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	//5) ALTA, Y CONSUMO DE STOCK/////////////////////////////////////////////////////////////////////////
@@ -446,7 +453,9 @@ public class LocalModel {
 	}
 	public int cantidadProductoVendido(ProductoModel producto) {		
 		int cantidad = 0;		
-		for(FacturaModel fa: iFacturaService.getAllModel() ) {		
+		for(FacturaModel fa: iFacturaService.getAllModel() ) {	
+			// de cada factura obtengo el chango y traigo el item que tenga el producto que estamos evaluando
+			// si el producto está en la factura, se suma la cantidad correspondiente
 			if (fa.getChango().traerItem(producto)!=null)cantidad = cantidad + fa.getChango().traerItem(producto).getCantidad();
 		}		
 		return cantidad;

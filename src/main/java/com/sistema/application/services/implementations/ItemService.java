@@ -11,54 +11,64 @@ import com.sistema.application.entities.Item;
 import com.sistema.application.models.ItemModel;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service("itemService")
-public class ItemService implements IItemService{
+public class ItemService implements IItemService {
 
-	//Atributos
+	// Atributos
 	@Autowired
 	@Qualifier("itemRepository")
 	private IItemRepository itemRepository;
-	
+
 	@Autowired
 	@Qualifier("itemConverter")
 	private ItemConverter itemConverter;
-	
-	
-	//Métodos
+
+	// Métodos
 	public ItemModel findByIdItem(long idItem) {
-		return itemConverter.entityToModel(itemRepository.findByIdItem(idItem) );
+		return itemConverter.entityToModel(itemRepository.findByIdItem(idItem));
 	}
-	
+
 	@Override
-	public List<Item> getAll(){
+	public List<Item> getAll() {
 		return itemRepository.findAll();
 	}
-	
+
 	@Override
-	public List<ItemModel> getAllModel(){
-		List <ItemModel> items = new ArrayList<ItemModel>();
-		for(Item i: itemRepository.findAll() ){
-			items.add(itemConverter.entityToModel(i) );
+	public List<ItemModel> getAllModel() {
+		List<ItemModel> items = new ArrayList<ItemModel>();
+		for (Item i : itemRepository.findAll()) {
+			items.add(itemConverter.entityToModel(i));
 		}
 		return items;
 	}
-	
+
 	@Override
 	public ItemModel insertOrUpdate(ItemModel itemModel) {
-		Item item = itemRepository.save(itemConverter.modelToEntity(itemModel) );
+		Item item = itemRepository.save(itemConverter.modelToEntity(itemModel));
 		return itemConverter.entityToModel(item);
 	}
-	
+
 	@Override
 	public boolean remove(long id) {
 		try {
 			itemRepository.deleteById(id);
 			return true;
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	@Override
+	public Set<ItemModel> insertOrUpdateMany(Set<ItemModel> items) {
+		Set<ItemModel> itemsModelos = new HashSet<ItemModel>();
+		for(ItemModel item: items){
+			itemsModelos.add( insertOrUpdate(item) );
+		}
+		return itemsModelos;
 	}
 	
 }

@@ -20,6 +20,14 @@ public class ItemModel {
 		this.changoModel = changoModel;
 	}
 
+	// Constructor usado para crear items desde el model
+	public ItemModel(int cantidad, ProductoModel productoModel, ChangoModel changoModel) {
+		super();
+		this.cantidad = cantidad;
+		this.productoModel = productoModel;
+		this.changoModel = changoModel;
+	}
+
 	//Getters y Setters
 	public long getIdItem() {
 		return idItem;
@@ -56,6 +64,11 @@ public class ItemModel {
 	public String toString() {
 		return "ItemModel [idItem=" + idItem + ", cantidad=" + cantidad + ", productoModel=" + productoModel
 				+ ", changoModel=" + changoModel + "]";
+	}
+
+	// Método para testear
+	public String toStringShorter() {
+		return "ItemModel [idItem=" + idItem + ", cantidad=" + cantidad + ", productoModel=" + productoModel.getNombre() + "]";
 	}
 	
 }
