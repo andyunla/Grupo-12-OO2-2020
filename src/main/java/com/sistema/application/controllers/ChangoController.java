@@ -1,7 +1,7 @@
 package com.sistema.application.controllers;
 
-import java.util.List;
-
+import com.sistema.application.converters.ChangoConverter;
+import com.sistema.application.entities.Chango;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ChangoModel;
 import com.sistema.application.services.IChangoService;
@@ -20,12 +20,26 @@ public class ChangoController {
      @Qualifier("changoService")
      private IChangoService changoService;
 
-     @GetMapping("/testA")   // ruta: http:localhost:8080/chango/testA
+     @Autowired
+     @Qualifier("changoConverter")
+     private ChangoConverter changoConverter;
+
+     // Test provisorio de conversión de las entidades a modelos
+     @GetMapping("/toModels")   
      public String deEntidadAModelo(){
-          List<ChangoModel> modelos = changoService.getAllModel();
-          for(ChangoModel cm: modelos){
+          for(ChangoModel cm: changoService.getAllModel()){
                System.out.println(cm.toStringWithItems());
           }
-          return ViewRouteHelper.HOME_ROOT;  //Devuelve al home porque tiene que devolver algo siempre
+          return ViewRouteHelper.HOME_ROOT;  
+     }
+
+     // Test  provisoriode conversión de los modelos a entidades
+     @GetMapping("/toEntities")   
+     public String deModeloAEntidad(){
+          for(ChangoModel cm: changoService.getAllModel()){
+               Chango ce = changoConverter.modelToEntity(cm);
+               System.out.println(ce.toString());
+          }
+          return ViewRouteHelper.HOME_ROOT;  
      }
 }

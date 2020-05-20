@@ -32,12 +32,11 @@ public class PedidoStockConverter {
 	public PedidoStock modelToEntity(PedidoStockModel pedidoStockModel) {
 		// Verifica si el oferente es nulo, de serlo entonces no realiza su conversion a modelo
 		EmpleadoModel oferente = pedidoStockModel.getEmpleadoOferente();
-		Empleado oferenteModel = (oferente == null) ? null : empleadoConverter.modelToEntity(oferente);
-
+		Empleado oferenteEntity = (oferente == null) ? null : empleadoConverter.modelToEntity(oferente);
 		return new PedidoStock(pedidoStockModel.getIdPedidoStock(),
 				productoConverter.modelToEntity(pedidoStockModel.getProducto()), pedidoStockModel.getCantidad(),
 				pedidoStockModel.isAceptado(),
 				empleadoConverter.modelToEntity(pedidoStockModel.getEmpleadoSolicitante()),
-				oferenteModel);
+				oferenteEntity);
 	}
 }
