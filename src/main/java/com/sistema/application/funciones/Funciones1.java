@@ -211,18 +211,18 @@ public class Funciones1 {
 				}
 			}
 		}
-		public static void orden(long[] id, double[] cantidad) {			
-			double cantidadAux = 0;
+		public static void orden(long[] id, double[] distancia) {			
+			double distanciaAux = 0;
 			long idAux = 0;
 			boolean ordene = true;
 			while (ordene){
 				ordene = false;
-				for (int i = 0; i < cantidad.length; i++) {
-					if(cantidad[i]< cantidad[i+1]) {
-						// ordenamos la cantidad
-						cantidadAux = cantidad[i];
-						cantidad[i] = cantidad[i+1];
-						cantidad[i+1] = cantidadAux;
+				for (int i = 0; i < distancia.length; i++) {
+					if(distancia[i]> distancia[i+1]) {
+						// ordenamos la distancia
+						distanciaAux = distancia[i];
+						distancia[i] = distancia[i+1];
+						distancia[i+1] = distanciaAux;
 						//y hacemos lo mismo con el ID
 						idAux = id[i];
 						id[i] = id[i+1];
