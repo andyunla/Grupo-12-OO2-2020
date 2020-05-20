@@ -1,20 +1,25 @@
+const host = "localhost:8080";
+const url = host + "/traer";
+//const url = host + "/api/v1/local/distancia/";
+
 window.onload = () => {
      let localDesde = document.getElementById("localDesde");
-     let localHasta = document.getElementById("localHasta");
-     let distancia = document.getElementById("distancia");
+     let productoDeLotes = document.getElementById("productoDeLotes");
+     let cantidadProducto = document.getElementById("cantidadProducto");
 
-     function calcularDistancia() {
+     function listarMasCercanos() {
           // Condicion para verificar que hay dos locales elegidos 
-          if (localDesde.selectedIndex != 0 && localHasta.selectedIndex != 0) {
+          if (localDesde.selectedIndex != 0 && productoDeLotes.selectedIndex != 0 && cantidadProducto.text != "") {
                let idLocalDesde = localDesde.options[localDesde.selectedIndex].value;
-               let idLocalHasta = localHasta.options[localHasta.selectedIndex].value;
+               let idProductoDeLotes = productoDeLotes.options[productoDeLotes.selectedIndex].value;
+               let cantidad = cantidadProducto.value;
                distancia.innerText = "cargando";
-               fetch("http://localhost:8080/api/v1/local/distancia/" + idLocalDesde + "/" + idLocalHasta)
+               fetch(url + "/" + idLocalDesde + "/" + idProductoDeLotes + "/" + cantidad)
                     .then((response) => {
-                         return response.json();
+                         return response.text();
                     })
-                    .then((res) => {
-                         distancia.innerText = res.toFixed(2) + "km";
+                    .then((html) => {
+                         document.querySelector("tbody").innerText = html;
                     })
                     .catch((e) => {
                          console.log(e);
@@ -22,6 +27,7 @@ window.onload = () => {
           }
      }
 
-     localDesde.addEventListener('change', calcularDistancia);
-     localHasta.addEventListener('change', calcularDistancia);
+     localDesde.addEventListener('change', listarMasCercanos);
+     productoDeLotes.addEventListener('change', listarMasCercanos);
+     cantidadProducto.addEventListener('change', listarMasCercanos);
 }

@@ -13,6 +13,7 @@ public class ViewRouteHelper {
 	public static final String LOTE_ABM = "abm/lote";
 	// Parciales
 	public final static String LISTA_LOTES = "partial/listaLotes";
+	public final static String LISTA_LOCALES_CERCANOS = "partial/listaLocalesCercanos";
 	// CASOS DE USO
 	public final static String DISTANCIA_ROOT = "cu/distancia";
 
