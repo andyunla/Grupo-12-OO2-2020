@@ -1,5 +1,5 @@
-const host = "localhost:8080";
-const url = host + "/traer";
+const host = "http://localhost:8080";
+const url = host + "/distancia/traer";
 //const url = host + "/api/v1/local/distancia/";
 
 window.onload = () => {
@@ -8,17 +8,14 @@ window.onload = () => {
      let cantidadProducto = document.getElementById("cantidadProducto");
 
      function listarMasCercanos() {
-          if (localDesde.selectedIndex != 0 && productoDeLotes.selectedIndex != 0 && cantidadProducto.value != "") {
+          if (localDesde.selectedIndex != 0 && productoDeLotes.selectedIndex != 0 && cantidadProducto.value > 0) {
                let idLocalDesde = localDesde.options[localDesde.selectedIndex].value;
                let idProductoDeLotes = productoDeLotes.options[productoDeLotes.selectedIndex].value;
                let cantidad = cantidadProducto.value;
-               distancia.innerText = "cargando";
                fetch(url + "/" + idLocalDesde + "/" + idProductoDeLotes + "/" + cantidad)
-                    .then((response) => {
-                         return response.text();
-                    })
-                    .then((html) => {
-                         document.querySelector("tbody").innerText = html;
+                    .then(response => response.text())
+                    .then(html => {
+                         document.querySelector("tbody").innerHTML = html;
                     })
                     .catch((e) => {
                          console.log(e);
