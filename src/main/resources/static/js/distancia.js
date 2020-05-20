@@ -8,7 +8,7 @@ window.onload = () => {
      let cantidadProducto = document.getElementById("cantidadProducto");
 
      function listarMasCercanos() {
-          if (localDesde.selectedIndex != 0 && productoDeLotes.selectedIndex != 0 && cantidadProducto.text != "") {
+          if (localDesde.selectedIndex != 0 && productoDeLotes.selectedIndex != 0 && cantidadProducto.value != "") {
                let idLocalDesde = localDesde.options[localDesde.selectedIndex].value;
                let idProductoDeLotes = productoDeLotes.options[productoDeLotes.selectedIndex].value;
                let cantidad = cantidadProducto.value;
