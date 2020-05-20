@@ -8,7 +8,6 @@ window.onload = () => {
      let cantidadProducto = document.getElementById("cantidadProducto");
 
      function listarMasCercanos() {
-          // Condicion para verificar que hay dos locales elegidos 
           if (localDesde.selectedIndex != 0 && productoDeLotes.selectedIndex != 0 && cantidadProducto.text != "") {
                let idLocalDesde = localDesde.options[localDesde.selectedIndex].value;
                let idProductoDeLotes = productoDeLotes.options[productoDeLotes.selectedIndex].value;
@@ -29,5 +28,5 @@ window.onload = () => {
 
      localDesde.addEventListener('change', listarMasCercanos);
      productoDeLotes.addEventListener('change', listarMasCercanos);
-     cantidadProducto.addEventListener('change', listarMasCercanos);
+     cantidadProducto.addEventListener('input', listarMasCercanos);
 }
