@@ -4,6 +4,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,10 @@ import com.sistema.application.converters.ProductoConverter;
 import com.sistema.application.entities.Item;
 import com.sistema.application.entities.Lote;
 import com.sistema.application.entities.Producto;
+import com.sistema.application.funciones.Funciones1;
 import com.sistema.application.services.IChangoService;
 import com.sistema.application.services.IFacturaService;
+import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.ILoteService;
 import com.sistema.application.services.IPedidoStockService;
 import com.sistema.application.services.IProductoService;
@@ -49,6 +52,9 @@ public class LocalModel {
 	@Autowired
 	@Qualifier("iProductoService")
 	IProductoService iProductoService;
+	@Autowired
+	@Qualifier("iLocalService")
+	ILocalService iLocalService;
 	//Converters
 	@Autowired
 	@Qualifier("productoConverter")
@@ -194,7 +200,28 @@ public class LocalModel {
 				+ ", longitud=" + longitud + ", direccion=" + direccion + ", telefono=" + telefono
 				+ ", gerente=" + gerente + ", listaLotes=" + listaLotes + ", listaChangos=" + listaChangos + ", listaFacturas=" + listaFacturas + "]";
 	}
-
+	/****************************************************************************************************/
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	//6) CALCULO DE DIISTANCIA ENTRE LOCALES//////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	/****************************************************************************************************/
+	public List<LocalModel> localesCercanos() {
+		List<LocalModel> lista = null;
+		List<LocalModel> listaLocales = iLocalService.getAllModel();
+		double[] distancia =  new double[listaLocales.size()-1];// vector para guardar el valor de la distancia
+		long[] id = new long[listaLocales.size()-1];// vector para guardar el valor ID del Local
+		for (int i = 0; i < listaLocales.size(); i++) {
+			if(listaLocales.get(i).getIdLocal() != this.idLocal) {// si no es este local
+				id[i] = listaLocales.get(i).getIdLocal();
+				distancia[i] =  calcularDistancia(listaLocales.get(i));
+			}
+		}
+		Funciones1.orden(id, distancia);// este método ordena los dos  vectores de mayor a menor usando el valor de la distancia
+		for (long l : id) {
+			lista.add(iLocalService.findByIdLocal(l));//agrego a la lista los productos con ID en orden
+		}		
+		return lista;
+	}	
 	public double calcularDistancia(LocalModel local) {
 		double radioTierra = 6371; // en kilómetros
 		double dLat = Math.toRadians(local.latitud - this.latitud);
@@ -396,5 +423,44 @@ public class LocalModel {
 			System.out.println("Producto: " +pro.getNombre()+ " Cantidad: "+cantidad);
 			System.out.println();
 		}
-}
+	}
+	/****************************************************************************************************/
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	//15) RANKING DE PRODUCTOS MÁS VENDIDOS //////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	/****************************************************************************************************/
+	public List<ProductoModel> ranking() {
+		List<ProductoModel> lista = null;
+		List<ProductoModel> listaProductos = iProductoService.getAllModel();
+		int[] cantidad =  new int[listaProductos.size()];// vector para guardar el valor de cantidadProductoVendido
+		long[] id = new long[listaProductos.size()];// vector para guardar el valor ID del producto
+		for (int i = 0; i < listaProductos.size(); i++) {
+			id[i] = listaProductos.get(i).getIdProducto();
+			cantidad[i] =  cantidadProductoVendido(listaProductos.get(i));
+		}
+		Funciones1.orden(id, cantidad);// este método ordena los dos  vectores de mayor a menor usando el valor de la cantidad
+		for (long l : id) {
+			lista.add(iProductoService.findByIdProducto(l));//agrego a la lista los productos con ID en orden
+		}		
+		return lista;
+	}
+	public int cantidadProductoVendido(ProductoModel producto) {		
+		int cantidad = 0;		
+		for(FacturaModel fa: iFacturaService.getAllModel() ) {		
+			if (fa.getChango().traerItem(producto)!=null)cantidad = cantidad + fa.getChango().traerItem(producto).getCantidad();
+		}		
+		return cantidad;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
