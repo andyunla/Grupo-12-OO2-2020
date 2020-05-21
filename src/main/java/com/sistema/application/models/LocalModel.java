@@ -4,8 +4,8 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -456,8 +456,8 @@ public class LocalModel {
 	////////////////////////////////////////////////////////////////////////////////////////////////////// LOCAL/////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
-	public HashMap<ProductoModel, Integer> reporte(LocalDate fecha1, LocalDate fecha2) {
-		HashMap<ProductoModel, Integer> listaReporte = new HashMap<ProductoModel, Integer>();
+	public LinkedHashMap<ProductoModel, Integer> reporte(LocalDate fecha1, LocalDate fecha2) {
+		LinkedHashMap<ProductoModel, Integer> listaReporte = new LinkedHashMap<ProductoModel, Integer>();
 		// Para cada producto de la lista de productos
 		for (ProductoModel pro : iProductoService.getAllModel()) {
 			int cantidad = 0;
@@ -483,21 +483,24 @@ public class LocalModel {
 	////////////////////////////////////////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
-	public List<ProductoModel> ranking() {
-		List<ProductoModel> lista = new ArrayList<ProductoModel>();
+	public LinkedHashMap<ProductoModel, Integer> ranking() {
 		List<ProductoModel> listaProductos = iProductoService.getAllModel();
-		int[] cantidad = new int[listaProductos.size()];// vector para guardar el valor de cantidadProductoVendido
-		long[] id = new long[listaProductos.size()];// vector para guardar el valor ID del producto
+		LinkedHashMap<ProductoModel, Integer> rankingProductos = new LinkedHashMap<ProductoModel, Integer>();
+		int[] cantidadList = new int[listaProductos.size()];// vector para guardar el valor de cantidadProductoVendido
+		long[] idList = new long[listaProductos.size()];// vector para guardar el valor ID del producto
 		for (int i = 0; i < listaProductos.size(); i++) {
-			id[i] = listaProductos.get(i).getIdProducto();
-			cantidad[i] = cantidadProductoVendido(listaProductos.get(i));
+			idList[i] = listaProductos.get(i).getIdProducto();
+			cantidadList[i] = cantidadProductoVendido(listaProductos.get(i));
 		}
-		Funciones1.orden(id, cantidad);// este método ordena los dos vectores de mayor a menor usando el valor de la
+		Funciones1.orden(idList, cantidadList);// este método ordena los dos vectores de mayor a menor usando el valor de la
 									   // cantidad
-		for (long l : id) {
-			lista.add(iProductoService.findByIdProducto(l));// agrego a la lista los productos con ID en orden
+		int cont = 0;
+		for (long id : idList) {
+			// agrego a la lista los productos con ID en orden
+			rankingProductos.put(iProductoService.findByIdProducto(id), cantidadList[cont]);
+			cont++;
 		}
-		return lista;
+		return rankingProductos;
 	}
 
 	public int cantidadProductoVendido(ProductoModel producto) {
