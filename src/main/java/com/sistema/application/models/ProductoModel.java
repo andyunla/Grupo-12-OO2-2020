@@ -52,7 +52,7 @@ public class ProductoModel {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result * idProducto + ((nombre == null) ? 0 : nombre.hashCode());
+		result = prime * result * (int)idProducto + ((nombre == null) ? 0 : nombre.hashCode());
 		return result;
 	}
 
