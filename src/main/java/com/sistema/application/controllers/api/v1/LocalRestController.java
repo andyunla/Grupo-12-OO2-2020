@@ -70,14 +70,10 @@ public class LocalRestController {
         ProductoModel producto = productoService.findByIdProducto(idProducto);
         List<LocalModel> listaLocales = local.localesCercanos(producto, cantidad);
         List<LocalDistanciaDto> localesCercanos = new ArrayList<LocalDistanciaDto>();
-        int maxLocales = 3;
-        int i = 0;
-        while(i < maxLocales && i < listaLocales.size()) {
-            LocalModel model = listaLocales.get(i);
+        for(LocalModel model: listaLocales) {
             LocalDistanciaDto dto = new LocalDistanciaDto(model.getIdLocal(), model.getNombreLocal(), local.calcularDistancia(model),
                                     model.getDireccion(), model.getTelefono());
             localesCercanos.add(dto);
-            i++;
         }
         return new ResponseEntity<List<LocalDistanciaDto>>(localesCercanos, HttpStatus.OK);
     }
