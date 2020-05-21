@@ -49,14 +49,22 @@ public class ProductoModel {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result * idProducto + ((nombre == null) ? 0 : nombre.hashCode());
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj){
-        if (obj instanceof ProductoModel) {
-            ProductoModel prod = (ProductoModel) obj;
-            return (this.idProducto == prod.idProducto && this.nombre == prod.nombre);
-        } else {
-            return false;
-        }
-    }
+		if (obj instanceof ProductoModel) {
+			ProductoModel prod = (ProductoModel) obj;
+			return (this.idProducto == prod.idProducto && this.nombre == prod.nombre);
+		} else {
+			return false;
+		}
+	}
 
 	@Override
 	public String toString() {
