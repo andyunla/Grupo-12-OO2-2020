@@ -54,15 +54,6 @@ public class Chango implements Serializable {
 		this.local = local;
 	}
 
-	//Constructor converter para chango con items
-	public Chango(long idChango, PedidoStock pedidoStock, Local local, Set<Item>listaItems) {
-		super();
-		this.idChango = idChango;
-		this.pedidoStock = pedidoStock;
-		this.local = local;
-		this.listaItems = listaItems;
-	}
-
 	//Getters y Setters
 	public long getIdChango() {
 		return idChango;

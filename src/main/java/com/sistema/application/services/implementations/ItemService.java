@@ -11,9 +11,7 @@ import com.sistema.application.entities.Item;
 import com.sistema.application.models.ItemModel;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service("itemService")
 public class ItemService implements IItemService {
@@ -60,15 +58,5 @@ public class ItemService implements IItemService {
 		} catch (Exception e) {
 			return false;
 		}
-	}
-
-	@Override
-	public Set<ItemModel> insertOrUpdateMany(Set<ItemModel> items) {
-		Set<ItemModel> itemsModelos = new HashSet<ItemModel>();
-		for(ItemModel item: items){
-			itemsModelos.add( insertOrUpdate(item) );
-		}
-		return itemsModelos;
-	}
-	
+	}	
 }

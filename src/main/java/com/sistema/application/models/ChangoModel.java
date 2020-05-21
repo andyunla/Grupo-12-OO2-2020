@@ -24,15 +24,6 @@ public class ChangoModel {
 		this.listaItems = new HashSet<ItemModel>();
 	}
 
-	// Constructor usado para el converter
-	public ChangoModel(long idChango, PedidoStockModel pedidoStock, LocalModel local, Set<ItemModel> listaItems) {
-		super();
-		this.idChango = idChango;
-		this.pedidoStock = pedidoStock;
-		this.local = local;
-		this.listaItems = listaItems;
-	}
-
 	// Constructor para crerar un chango en un local
 	public ChangoModel(LocalModel local) {
 		super();
@@ -78,16 +69,6 @@ public class ChangoModel {
 	@Override
 	public String toString() {
 		return "ChangoModel [idChango=" + idChango + ", pedidoStock=" + pedidoStock + ", local=" + local + "]";
-	}
-
-	// Método para testear
-	public String toStringWithItems() {
-		String items = "";
-		for(ItemModel item: listaItems){
-			items += item.toStringShorter() + "\n";
-		}
-		return "ChangoModel [idChango=" + idChango + ", pedidoStock=" + pedidoStock + ", local=" + local + 
-			"\n:Items:\n" + items + "]";
 	}
 
 	// Métodos
