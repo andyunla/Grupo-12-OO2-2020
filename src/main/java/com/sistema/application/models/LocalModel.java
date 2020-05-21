@@ -3,7 +3,9 @@ package com.sistema.application.models;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -36,7 +38,7 @@ public class LocalModel {
 	private Set<EmpleadoModel> listaEmpleados;
 	private Set<ChangoModel> listaChangos;
 	private Set<FacturaModel> listaFacturas;
-	//Services
+	// Services
 	@Autowired
 	@Qualifier("iLoteService")
 	ILoteService iLoteService;
@@ -55,16 +57,17 @@ public class LocalModel {
 	@Autowired
 	@Qualifier("iLocalService")
 	ILocalService iLocalService;
-	//Converters
+	// Converters
 	@Autowired
 	@Qualifier("productoConverter")
 	ProductoConverter productoConverter;
+
 	// Constructores
 	public LocalModel() {
 	}
 
-	public LocalModel(long idLocal, String nombreLocal, double latitud, double longitud, String direccion,
-			int telefono, EmpleadoModel gerente, Set<LoteModel> listaLotes, Set<EmpleadoModel> listaEmpleados,
+	public LocalModel(long idLocal, String nombreLocal, double latitud, double longitud, String direccion, int telefono,
+			EmpleadoModel gerente, Set<LoteModel> listaLotes, Set<EmpleadoModel> listaEmpleados,
 			Set<ChangoModel> listaChangos, Set<FacturaModel> listaFacturas) {
 		super();
 		this.idLocal = idLocal;
@@ -80,7 +83,7 @@ public class LocalModel {
 		this.listaFacturas = listaFacturas;
 	}
 
-	//constructor para los converter
+	// constructor para los converter
 	public LocalModel(long idLocal, String nombreLocal, double latitud, double longitud, String direccion, int telefono,
 			EmpleadoModel gerente) {
 		super();
@@ -93,7 +96,8 @@ public class LocalModel {
 		this.gerente = gerente;
 	}
 
-	public LocalModel(long idLocal, String nombreLocal, double latitud, double longitud, String direccion, int telefono) {
+	public LocalModel(long idLocal, String nombreLocal, double latitud, double longitud, String direccion,
+			int telefono) {
 		super();
 		this.idLocal = idLocal;
 		this.nombreLocal = nombreLocal;
@@ -104,7 +108,7 @@ public class LocalModel {
 		this.gerente = null;
 	}
 
-	//Getters y Setters
+	// Getters y Setters
 	public long getIdLocal() {
 		return idLocal;
 	}
@@ -197,161 +201,185 @@ public class LocalModel {
 	@Override
 	public String toString() {
 		return "LocalModel [idLocal=" + idLocal + ", nombreLocal=" + nombreLocal + ", latitud=" + latitud
-				+ ", longitud=" + longitud + ", direccion=" + direccion + ", telefono=" + telefono
-				+ ", gerente=" + gerente + ", listaLotes=" + listaLotes + ", listaChangos=" + listaChangos + ", listaFacturas=" + listaFacturas + "]";
+				+ ", longitud=" + longitud + ", direccion=" + direccion + ", telefono=" + telefono + ", gerente="
+				+ gerente + ", listaLotes=" + listaLotes + ", listaChangos=" + listaChangos + ", listaFacturas="
+				+ listaFacturas + "]";
 	}
+
 	/****************************************************************************************************/
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
-	//6) CALCULO DE DIISTANCIA ENTRE LOCALES//////////////////////////////////////////////////////////////
+	// 6) CALCULO DE DIISTANCIA ENTRE
+	////////////////////////////////////////////////////////////////////////////////////////////////////// LOCALES//////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
 	public List<LocalModel> localesCercanos(ProductoModel producto, int cantidad) {
-		List<LocalModel> lista = null;
+		List<LocalModel> lista = new ArrayList<LocalModel>();
 		List<LocalModel> listaLocales = stockDisponible(producto, cantidad);
-		double[] distancia =  new double[listaLocales.size()];// vector para guardar el valor de la distancia
+		double[] distancia = new double[listaLocales.size()];// vector para guardar el valor de la distancia
 		long[] id = new long[listaLocales.size()];// vector para guardar el valor ID del Local
 		for (int i = 0; i < listaLocales.size(); i++) {
-				id[i] = listaLocales.get(i).getIdLocal();
-				distancia[i] =  calcularDistancia(listaLocales.get(i));
+			id[i] = listaLocales.get(i).getIdLocal();
+			distancia[i] = calcularDistancia(listaLocales.get(i));
 		}
-		Funciones1.orden(id, distancia);// este método ordena los dos  vectores de mayor a menor usando el valor de la distancia
+		Funciones1.orden(id, distancia);// este método ordena los dos vectores de mayor a menor usando el valor de la
+										// distancia
 		for (long l : id) {
-			lista.add(iLocalService.findByIdLocal(l));//agrego a la lista los productos con ID en orden
-		}		
+			lista.add(iLocalService.findByIdLocal(l));// agrego a la lista los productos con ID en orden
+		}
 		return lista;
 	}
-	public List<LocalModel> stockDisponible(ProductoModel producto, int cantidad){
-		List<LocalModel> lista = null;
+
+	public List<LocalModel> stockDisponible(ProductoModel producto, int cantidad) {
+		List<LocalModel> lista = new ArrayList<LocalModel>();
 		for (LocalModel lo : iLocalService.getAllModel()) {// de todos los locales
-			//si no es este local y me puede dar stock le agrego a la lista
-			if(lo.getIdLocal() != this.idLocal && lo.validarStock(producto, cantidad)) lista.add(lo);
+			// si no es este local y me puede dar stock le agrego a la lista
+			if (lo.getIdLocal() != this.idLocal && lo.validarStock(producto, cantidad))
+				lista.add(lo);
 		}
 		return lista;
-	}	
+	}
+
 	public double calcularDistancia(LocalModel local) {
 		double radioTierra = 6371; // en kilómetros
 		double dLat = Math.toRadians(local.latitud - this.latitud);
 		double dLng = Math.toRadians(local.longitud - this.longitud);
 		double sindLat = Math.sin(dLat / 2);
 		double sindLng = Math.sin(dLng / 2);
-		double va1 = Math.pow(sindLat, 2)
-				+ Math.pow(sindLng, 2) * Math.cos(Math.toRadians(this.latitud)) 
+		double va1 = Math.pow(sindLat, 2) + Math.pow(sindLng, 2) * Math.cos(Math.toRadians(this.latitud))
 				* Math.cos(Math.toRadians(local.latitud));
 		double va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));
 		return radioTierra * va2;
 	}
-	
+
 	/****************************************************************************************************/
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
-	//5) ALTA, Y CONSUMO DE STOCK/////////////////////////////////////////////////////////////////////////
+	// 5) ALTA, Y CONSUMO DE
+	////////////////////////////////////////////////////////////////////////////////////////////////////// STOCK/////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
-			
-	public LoteModel crearLote (int cantidadInicial ,ProductoModel producto ) {
-		return iLoteService.insertOrUpdate(new LoteModel( cantidadInicial, cantidadInicial, LocalDate.now(), producto, this ));
+
+	public LoteModel crearLote(int cantidadInicial, ProductoModel producto) {
+		return iLoteService
+				.insertOrUpdate(new LoteModel(cantidadInicial, cantidadInicial, LocalDate.now(), producto, this));
 	}
+
 	public boolean restarLote(ProductoModel producto, int cantidad) {
-		int i =0;
-		//traigo la lista de lotes del producto en el local
+		int i = 0;
+		// traigo la lista de lotes del producto en el local
 		Set<LoteModel> lista = iLoteService.findByLoteProductoActivo(producto.getIdProducto(), this.idLocal);
 		Iterator<LoteModel> itr = lista.iterator();
 		LoteModel lo = null;// creo un LoteModel objeto vacio
-		while(cantidad>0 && itr.hasNext()) {//mientras haya cantidad que restar
-			lo = itr.next(); 
-			if(lo.getCantidadActual() - cantidad <=0 ) {// si la cantidad actual queda en 0 doy de baja el lote
+		while (cantidad > 0 && itr.hasNext()) {// mientras haya cantidad que restar
+			lo = itr.next();
+			if (lo.getCantidadActual() - cantidad <= 0) {// si la cantidad actual queda en 0 doy de baja el lote
 				cantidad = cantidad - lo.getCantidadActual(); // actualizo la cantidad a restar
 				lo.setCantidadActual(0);
-				//lo.setActivo(false); //esta validación la agregué dentor del set cantidadActual
+				// lo.setActivo(false); //esta validación la agregué dentor del set
+				// cantidadActual
 				iLoteService.insertOrUpdate(lo);// actualizo el lote en la base de datos
-				}
-			else if (lo.getCantidadActual() - cantidad >=1) {
-				lo.setCantidadActual(lo.getCantidadActual()- cantidad);
+			} else if (lo.getCantidadActual() - cantidad >= 1) {
+				lo.setCantidadActual(lo.getCantidadActual() - cantidad);
 				iLoteService.insertOrUpdate(lo);// actualizo el lote en la base de datos
-				cantidad =0;// seteo en cero para salir del bucle, ya no hay mas que restar
-			}			
-		i++;	
-		}		
+				cantidad = 0;// seteo en cero para salir del bucle, ya no hay mas que restar
+			}
+			i++;
+		}
 		return true;
 	}
+
 	public boolean sumarLote(ProductoModel producto, int cantidad) {
-		int i =0;
-		//traigo la lista de lotes del producto en el local
+		int i = 0;
+		// traigo la lista de lotes del producto en el local
 		Set<LoteModel> lista = iLoteService.findByLoteProductoBaja(producto.getIdProducto(), this.idLocal);
 		Iterator<LoteModel> itr = lista.iterator();
 		LoteModel lo = null;// creo un LoteModel objeto vacio
-		while(cantidad>0 && itr.hasNext()) {//mientras haya cantidad que restar
-			lo = itr.next(); 
-			if(lo.getCantidadActual() + cantidad >= lo.getCantidadInicial() ) {// si supero la cantidad del lote con la suma, paso sumar en el siguiente lote
+		while (cantidad > 0 && itr.hasNext()) {// mientras haya cantidad que restar
+			lo = itr.next();
+			if (lo.getCantidadActual() + cantidad >= lo.getCantidadInicial()) {// si supero la cantidad del lote con la
+																				// suma, paso sumar en el siguiente lote
 				cantidad = cantidad - lo.getCantidadInicial(); // actualizo la cantidad a restar
 				lo.setCantidadActual(lo.getCantidadInicial());
-				//lo.setActivo(true);//esta validación la agregué dentor del set cantidadActual
+				// lo.setActivo(true);//esta validación la agregué dentor del set cantidadActual
 				iLoteService.insertOrUpdate(lo);// actualizo el lote en la base de datos
-				}
-			else if (lo.getCantidadActual() + cantidad < lo.getCantidadInicial()) {
-				lo.setCantidadActual(lo.getCantidadActual()+ cantidad);
+			} else if (lo.getCantidadActual() + cantidad < lo.getCantidadInicial()) {
+				lo.setCantidadActual(lo.getCantidadActual() + cantidad);
 				iLoteService.insertOrUpdate(lo);// actualizo el lote en la base de datos
-				cantidad =0;// seteo en cero para salir del bucle, ya no hay mas que sumar
-			}			
-		i++;	
-		}		
+				cantidad = 0;// seteo en cero para salir del bucle, ya no hay mas que sumar
+			}
+			i++;
+		}
 		return true;
 	}
+
 	/****************************************************************************************************/
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
-	//7) VALIDAR STOCK Y POSIBILIDADES DE LOCALES A SOLICITAR STOCK///////////////////////////////////////
+	// 7) VALIDAR STOCK Y POSIBILIDADES DE LOCALES A SOLICITAR
+	////////////////////////////////////////////////////////////////////////////////////////////////////// STOCK///////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
-	public int calcularStockLocal(ProductoModel producto) {		
-		int cantidadStock = 0;		
+	public int calcularStockLocal(ProductoModel producto) {
+		int cantidadStock = 0;
 		Set<LoteModel> lista = iLoteService.findByLoteProductoActivo(producto.getIdProducto(), this.idLocal);
-		for(LoteModel lo : lista) {
-			cantidadStock = cantidadStock + lo.getCantidadActual();			
-		}		
+		for (LoteModel lo : lista) {
+			cantidadStock = cantidadStock + lo.getCantidadActual();
+		}
 		return cantidadStock;
-	}	
-	public boolean validarStock(ProductoModel producto, int cantidad) {
-		return calcularStockLocal(producto)>= cantidad;		
 	}
+
+	public boolean validarStock(ProductoModel producto, int cantidad) {
+		return calcularStockLocal(producto) >= cantidad;
+	}
+
 	/****************************************************************************************************/
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
-	//8) GENERACION DE SOLICITUD DE USO DE STOCK DE OTRO LOCAL////////////////////////////////////////////
+	// 8) GENERACION DE SOLICITUD DE USO DE STOCK DE OTRO
+	////////////////////////////////////////////////////////////////////////////////////////////////////// LOCAL////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
-	public boolean crearPedidoStock(ProductoModel producto, int cantidad, EmpleadoModel solicitante){	
-		iPedidoStockService.insertOrUpdate(new PedidoStockModel(producto, cantidad, solicitante));		
+	public boolean crearPedidoStock(ProductoModel producto, int cantidad, EmpleadoModel solicitante) {
+		iPedidoStockService.insertOrUpdate(new PedidoStockModel(producto, cantidad, solicitante));
 		return true;
 	}
+
 	/****************************************************************************************************/
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
-	//9) ACEPTAR O RECHAZAR SOLICITUD DE STOCK////////////////////////////////////////////////////////////
+	// 9) ACEPTAR O RECHAZAR SOLICITUD DE
+	////////////////////////////////////////////////////////////////////////////////////////////////////// STOCK////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
-	public boolean modificarPedidoStock(long idPedidoStock, boolean aceptado, EmpleadoModel oferente) throws Exception{		
-		PedidoStockModel pedidoStockModel = iPedidoStockService.findByIdPedidoStock(idPedidoStock); //traiugo el Pedido de la base de datos
-		pedidoStockModel.setEmpleadoOferente(oferente); //seteo el oferente
-		pedidoStockModel.setAceptado(aceptado); //seteo el estado del pedido
-		
+	public boolean modificarPedidoStock(long idPedidoStock, boolean aceptado, EmpleadoModel oferente) throws Exception {
+		PedidoStockModel pedidoStockModel = iPedidoStockService.findByIdPedidoStock(idPedidoStock); // traiugo el Pedido
+																									// de la base de
+																									// datos
+		pedidoStockModel.setEmpleadoOferente(oferente); // seteo el oferente
+		pedidoStockModel.setAceptado(aceptado); // seteo el estado del pedido
+
 		if (pedidoStockModel.isAceptado()) {// si es un pedidoStock aceptado
 			iPedidoStockService.insertOrUpdate(pedidoStockModel); // lo actualizo en la base de datos
-			pedidoStockModel.getEmpleadoOferente().getLocal().restarLote(pedidoStockModel.getProducto(), pedidoStockModel.getCantidad());			
-		}
-		else { 
+			pedidoStockModel.getEmpleadoOferente().getLocal().restarLote(pedidoStockModel.getProducto(),
+					pedidoStockModel.getCantidad());
+		} else {
 			iPedidoStockService.remove(idPedidoStock);// si no lo elimino
 		}
 		return true;
 	}
+
 	/****************************************************************************************************/
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
-	//12) GENERAR FACTURA/////////////////////////////////////////////////////////////////////////////////
+	// 12) GENERAR
+	////////////////////////////////////////////////////////////////////////////////////////////////////// FACTURA/////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
-		
-	public boolean crearFactura(ClienteModel cliente, ChangoModel chango,LocalDate fecha, double costeTotal, EmpleadoModel empleado) {		
-		iFacturaService.insertOrUpdate(new FacturaModel(cliente, chango, fecha, costeTotal, empleado, this)); //creo la factura
-		if(chango.getPedidoStock() == null) restarChango(chango); // Si no hay pedidoStock, resto todos los productos del chango a este local
+
+	public boolean crearFactura(ClienteModel cliente, ChangoModel chango, LocalDate fecha, double costeTotal,
+			EmpleadoModel empleado) {
+		iFacturaService.insertOrUpdate(new FacturaModel(cliente, chango, fecha, costeTotal, empleado, this)); // creo la
+																												// factura
+		if (chango.getPedidoStock() == null)
+			restarChango(chango); // Si no hay pedidoStock, resto todos los productos del chango a este local
 		return true;
 	}
-	
+
 //	public List<Factura> traerFactura (LocalDate fecha1, LocalDate fecha2) {
 //		List<Factura> list = new ArrayList<Factura>();		
 //			int i= 0;
@@ -363,113 +391,128 @@ public class LocalModel {
 //	}
 
 	/****************************************************************************************************/
-	public ChangoModel crearChango () {
-		return iChangoService.insertOrUpdate(new ChangoModel(this)); //creo un chango nuevo para este Local
+	public ChangoModel crearChango() {
+		return iChangoService.insertOrUpdate(new ChangoModel(this)); // creo un chango nuevo para este Local
 	}
-	public boolean eliminarChango (ChangoModel chango) {// si elimino el chango debo restaurar todos los items
+
+	public boolean eliminarChango(ChangoModel chango) {// si elimino el chango debo restaurar todos los items
 		sumarChango(chango);// sumo todos los items al local
 		iChangoService.remove(chango.getIdChango());// elimino el chango de la DB
 		return true; // return true
 	}
+
 	public void restarChango(ChangoModel chango) {
-		for ( ItemModel it : chango.getListaItems()) {// para cada item del chango
-			restarLote(it.getProductoModel() , it.getCantidad()); // // resto la cantidad de productos correspondientes a el local
+		for (ItemModel it : chango.getListaItems()) {// para cada item del chango
+			restarLote(it.getProductoModel(), it.getCantidad()); // // resto la cantidad de productos correspondientes a
+																	// el local
 		}
 	}
+
 	public void sumarChango(ChangoModel chango) {
-		for ( ItemModel it : chango.getListaItems()) {// para cada item del chango
-			sumarLote(it.getProductoModel() , it.getCantidad());// sumo la cantidad de productos correspondientes a el local
+		for (ItemModel it : chango.getListaItems()) {// para cada item del chango
+			sumarLote(it.getProductoModel(), it.getCantidad());// sumo la cantidad de productos correspondientes a el
+																// local
 		}
 	}
+
 	/****************************************************************************************************/
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
-	//13) CIERRE DEL MES PARA DEFINIR EL SUELDO DE LOS EMPLEADOS//////////////////////////////////////////
+	// 13) CIERRE DEL MES PARA DEFINIR EL SUELDO DE LOS
+	////////////////////////////////////////////////////////////////////////////////////////////////////// EMPLEADOS//////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
 	public double calcularSueldo(EmpleadoModel empleado) {
-		double comisionCompleta =0;			
-			for (FacturaModel fa : traerFacturaMesPasado() ) {// para cada factura del mes pasado			
-				if (fa.getEmpleado().equals(empleado)) { //si la factura pertenece a este empleado
-					if(fa.getChango().getPedidoStock() !=null ) { // el chango de la factura tiene un pedido stock, esta factura es con stock de otro local		
-						// si el empleado solicito stock de otro local se calcula la comision de 3%
-						if(fa.getChango().getPedidoStock().getEmpleadoSolicitante().equals(empleado))  comisionCompleta = comisionCompleta + ((fa.getCosteTotal()*3)/100);
-						}
-					else {// si este empleado no  pidio stock se calcula la comision del 5%
-						comisionCompleta = comisionCompleta + ((fa.getCosteTotal()*5)/100);
-						}
-				}	
-				else {//si la factura no es de este empleado y si este empleado ofreció stock se el calcula el 2%
-					 if(fa.getChango().getPedidoStock()!=null && fa.getChango().getPedidoStock().getEmpleadoOferente().equals(empleado))comisionCompleta = comisionCompleta + ((fa.getCosteTotal()*2)/100);
+		double comisionCompleta = 0;
+		for (FacturaModel fa : traerFacturaMesPasado()) {// para cada factura del mes pasado
+			if (fa.getEmpleado().equals(empleado)) { // si la factura pertenece a este empleado
+				if (fa.getChango().getPedidoStock() != null) { // el chango de la factura tiene un pedido stock, esta
+																// factura es con stock de otro local
+					// si el empleado solicito stock de otro local se calcula la comision de 3%
+					if (fa.getChango().getPedidoStock().getEmpleadoSolicitante().equals(empleado))
+						comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 3) / 100);
+				} else {// si este empleado no pidio stock se calcula la comision del 5%
+					comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 5) / 100);
 				}
-			}		
-		return (empleado.getSueldoBasico()+ comisionCompleta);	
+			} else {// si la factura no es de este empleado y si este empleado ofreció stock se el
+					// calcula el 2%
+				if (fa.getChango().getPedidoStock() != null
+						&& fa.getChango().getPedidoStock().getEmpleadoOferente().equals(empleado))
+					comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 2) / 100);
+			}
 		}
-	public Set<FacturaModel> traerFacturaMesPasado() {// 
+		return (empleado.getSueldoBasico() + comisionCompleta);
+	}
+
+	public Set<FacturaModel> traerFacturaMesPasado() {
 		LocalDate fecha1 = LocalDate.now().minusMonths(1).withDayOfMonth(1);// mes pasado dia 1
-		LocalDate fecha2 = LocalDate.now().minusMonths(1).withDayOfMonth(fecha1.lengthOfMonth());// último día del mes pasado
+		LocalDate fecha2 = LocalDate.now().minusMonths(1).withDayOfMonth(fecha1.lengthOfMonth());// último día del mes
+																									// pasado
 		return iFacturaService.findByFechaFacturaBetween(fecha1, fecha2);// retorno la lista de facturas
 	}
+
 	/****************************************************************************************************/
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
-	//14) EMITIR REPORTE DE PRODUCTOS VENDIDOS ENTRE FECHAS POR LOCAL/////////////////////////////////////
+	// 14) EMITIR REPORTE DE PRODUCTOS VENDIDOS ENTRE FECHAS POR
+	////////////////////////////////////////////////////////////////////////////////////////////////////// LOCAL/////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
-	public void reporte(LocalDate fecha1, LocalDate fecha2) {
-		System.out.println(this.getNombreLocal());
+	public LinkedHashMap<ProductoModel, Integer> reporte(LocalDate fecha1, LocalDate fecha2) {
+		LinkedHashMap<ProductoModel, Integer> listaReporte = new LinkedHashMap<ProductoModel, Integer>();
 		// Para cada producto de la lista de productos
 		for (ProductoModel pro : iProductoService.getAllModel()) {
 			int cantidad = 0;
-			//Traigo la lista de facturas del local entre fechas
-			Set<FacturaModel> listaFacturas = iFacturaService.findByFechaFacturaBetweenAndIdLocal(fecha1, fecha2, this.idLocal);
-			
+			// Traigo la lista de facturas del local entre fechas
+			Set<FacturaModel> listaFacturas = iFacturaService.findByFechaFacturaBetweenAndIdLocal(fecha1, fecha2,
+					this.idLocal);
+
 			for (FacturaModel fa : listaFacturas) {
-				// de cada factura obtengo el chango y traigo el item que tenga el producto que estamos evaluando
+				// de cada factura obtengo el chango y traigo el item que tenga el producto que
+				// estamos evaluando
 				// si el producto está en la factura, se suma la cantidad correspondiente
-				if(fa.getChango().traerItem(pro)!=null) cantidad = cantidad + fa.getChango().traerItem(pro).getCantidad();
+				if (fa.getChango().traerItem(pro) != null)
+					cantidad = cantidad + fa.getChango().traerItem(pro).getCantidad();
 			}
-			System.out.println("Producto: " +pro.getNombre()+ " Cantidad: "+cantidad);
-			System.out.println();
+			listaReporte.put(pro, cantidad);
 		}
+		return listaReporte;
 	}
+
 	/****************************************************************************************************/
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
-	//15) RANKING DE PRODUCTOS MÁS VENDIDOS //////////////////////////////////////////////////////////////
+	// 15) RANKING DE PRODUCTOS MÁS VENDIDOS
+	////////////////////////////////////////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
-	public List<ProductoModel> ranking() {
-		List<ProductoModel> lista = null;
+	public LinkedHashMap<ProductoModel, Integer> ranking() {
 		List<ProductoModel> listaProductos = iProductoService.getAllModel();
-		int[] cantidad =  new int[listaProductos.size()];// vector para guardar el valor de cantidadProductoVendido
-		long[] id = new long[listaProductos.size()];// vector para guardar el valor ID del producto
+		LinkedHashMap<ProductoModel, Integer> rankingProductos = new LinkedHashMap<ProductoModel, Integer>();
+		int[] cantidadList = new int[listaProductos.size()];// vector para guardar el valor de cantidadProductoVendido
+		long[] idList = new long[listaProductos.size()];// vector para guardar el valor ID del producto
 		for (int i = 0; i < listaProductos.size(); i++) {
-			id[i] = listaProductos.get(i).getIdProducto();
-			cantidad[i] =  cantidadProductoVendido(listaProductos.get(i));
+			idList[i] = listaProductos.get(i).getIdProducto();
+			cantidadList[i] = cantidadProductoVendido(listaProductos.get(i));
 		}
-		Funciones1.orden(id, cantidad);// este método ordena los dos  vectores de mayor a menor usando el valor de la cantidad
-		for (long l : id) {
-			lista.add(iProductoService.findByIdProducto(l));//agrego a la lista los productos con ID en orden
-		}		
-		return lista;
+		Funciones1.orden(idList, cantidadList);// este método ordena los dos vectores de mayor a menor usando el valor de la
+									   // cantidad
+		int cont = 0;
+		for (long id : idList) {
+			// agrego a la lista los productos con ID en orden
+			rankingProductos.put(iProductoService.findByIdProducto(id), cantidadList[cont]);
+			cont++;
+		}
+		return rankingProductos;
 	}
-	public int cantidadProductoVendido(ProductoModel producto) {		
-		int cantidad = 0;		
-		for(FacturaModel fa: iFacturaService.getAllModel() ) {	
-			// de cada factura obtengo el chango y traigo el item que tenga el producto que estamos evaluando
+
+	public int cantidadProductoVendido(ProductoModel producto) {
+		int cantidad = 0;
+		for (FacturaModel fa : iFacturaService.getAllModel()) {
+			// de cada factura obtengo el chango y traigo el item que tenga el producto que
+			// estamos evaluando
 			// si el producto está en la factura, se suma la cantidad correspondiente
-			if (fa.getChango().traerItem(producto)!=null)cantidad = cantidad + fa.getChango().traerItem(producto).getCantidad();
-		}		
+			if (fa.getChango().traerItem(producto) != null)
+				cantidad = cantidad + fa.getChango().traerItem(producto).getCantidad();
+		}
 		return cantidad;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }
