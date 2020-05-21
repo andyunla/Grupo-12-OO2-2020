@@ -25,32 +25,14 @@ public class ItemConverter {
 	public ItemModel entityToModel(Item item) {
 		return new ItemModel(item.getIdItem(), item.getCantidad(),
 				productoConverter.entityToModel(item.getProducto()),
-				changoConverter.entityToModelWithoutItems(item.getChango()));
+				changoConverter.entityToModel(item.getChango()));
 	}	
-
-	// Convierte una set de Item a un set de ItemModel
-	public Set<ItemModel> entitiesToModels(Set<Item> itemsEntities) {
-		Set<ItemModel> itemsModels = new HashSet<ItemModel>();
-		for (Item item : itemsEntities) {
-			itemsModels.add(entityToModel(item));
-		}
-		return itemsModels;
-	}
 
 	// Models to entities
 	// *******************************************************
 	public Item modelToEntity(ItemModel itemModel) {
 		return new Item(itemModel.getIdItem(), itemModel.getCantidad(),
 				productoConverter.modelToEntity(itemModel.getProductoModel()),
-				changoConverter.modelToEntityWithoutItems(itemModel.getChangoModel()));
-	}
-
-	// Convierte una set de itemModel a un set de Item (Entidad)
-	public Set<Item> modelsToEntity(Set<ItemModel> itemsModels) {
-		Set<Item> itemsEntities = new HashSet<Item>();
-		for (ItemModel itemModel : itemsModels) {
-			itemsEntities.add(modelToEntity(itemModel));
-		}
-		return itemsEntities;
+				changoConverter.modelToEntity(itemModel.getChangoModel()));
 	}
 }

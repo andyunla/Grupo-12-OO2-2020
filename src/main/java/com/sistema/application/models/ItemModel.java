@@ -65,10 +65,5 @@ public class ItemModel {
 		return "ItemModel [idItem=" + idItem + ", cantidad=" + cantidad + ", productoModel=" + productoModel
 				+ ", changoModel=" + changoModel + "]";
 	}
-
-	// Método para testear
-	public String toStringShorter() {
-		return "ItemModel [idItem=" + idItem + ", cantidad=" + cantidad + ", productoModel=" + productoModel.getNombre() + "]";
-	}
 	
 }

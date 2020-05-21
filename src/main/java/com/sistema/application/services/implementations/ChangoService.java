@@ -52,24 +52,10 @@ public class ChangoService implements IChangoService{
 			return changos;
 		}
 		
-		// A CONSULTAR
 		@Override
 		public ChangoModel insertOrUpdate(ChangoModel changoModel) {
 			Chango chango = changoRepository.save(changoConverter.modelToEntity(changoModel) );
-			ChangoModel changoGuardado = changoConverter.entityToModel(chango);
-			if(!changoModel.getListaItems().isEmpty()){
-				// Establezco el chango recien guardado como el chango de sus items porque si era un chango 
-				// recién creado entonces los items referenciaban a un modelo de chango sin id
-				Set<ItemModel> items = changoModel.getListaItems();
-				for(ItemModel item: items){
-					item.setChangoModel(changoGuardado);
-				}
-				// Guardo todos los items del chango y los seteo a la lista de items del chango
-				// ya que ahora tienen la referencia (id) correcta al chango
-				items = itemService.insertOrUpdateMany( items );
-				changoGuardado.setListaItems( items ); 
-			}
-			return changoGuardado;
+			return changoConverter.entityToModel(chango);
 		}
 		
 		@Override

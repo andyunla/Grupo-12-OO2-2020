@@ -23,45 +23,18 @@ public class ChangoConverter {
 	@Qualifier("itemConverter")
 	private ItemConverter itemConverter;
 
-	// Entites to models
-	// *******************************************************
 	public ChangoModel entityToModel(Chango chango) {
 		// Verifica si el pedidoStock es nulo, de serlo no lo convierte a modelo
 		PedidoStock pedidoEntidad = chango.getPedidostock();
 		PedidoStockModel pedidoModel = (pedidoEntidad == null) ? null : pedidoStockConverter.entityToModel(pedidoEntidad);
-		return new ChangoModel( chango.getIdChango(), 
-				pedidoModel,
-				localConverter.entityToModel( chango.getLocal() ), 
-				itemConverter.entitiesToModels( chango.getListaItems() ) 
-				);
+		return new ChangoModel( chango.getIdChango(), pedidoModel, localConverter.entityToModel( chango.getLocal()) );
 	}
 
-	// Método utilizado internamente para generar un modelo de chango pero sin items
-	public ChangoModel entityToModelWithoutItems(Chango chango){
-		// Verifica si el pedidoStock es nulo, de serlo no lo convierte a modelo
-		PedidoStock pedidoEntidad = chango.getPedidostock();
-		PedidoStockModel pedidoModel = (pedidoEntidad == null) ? null : pedidoStockConverter.entityToModel(pedidoEntidad);
-		return new ChangoModel( chango.getIdChango(), pedidoModel, localConverter.entityToModel(chango.getLocal()) );
-	}
-
-	// Models to entities
-	// *******************************************************
 	public Chango modelToEntity(ChangoModel changoModel) {
 		// Verifica si el pedidoStock es nulo, de serlo no lo convierte a modelo
 		PedidoStockModel pedidoModel = changoModel.getPedidoStock();
 		PedidoStock pedidoEntidad = (pedidoModel == null) ? null : pedidoStockConverter.modelToEntity(pedidoModel);
-		return new Chango( changoModel.getIdChango(), 
-			pedidoEntidad,
-			localConverter.modelToEntity(changoModel.getLocal()),
-			itemConverter.modelsToEntity(changoModel.getListaItems())
-			);
+		return new Chango( changoModel.getIdChango(), pedidoEntidad, localConverter.modelToEntity(changoModel.getLocal()));
 	}
 
-	// Método utilizado internamente para generar una entidad de chango pero sin items
-	public Chango modelToEntityWithoutItems(ChangoModel changoModel){
-		// Verifica si el pedidoStock es nulo, de serlo no lo convierte a modelo
-		PedidoStockModel pedidoModel = changoModel.getPedidoStock();
-		PedidoStock pedidoEntidad = (pedidoModel == null) ? null : pedidoStockConverter.modelToEntity(pedidoModel);
-		return new Chango(changoModel.getIdChango(), pedidoEntidad,	localConverter.modelToEntity(changoModel.getLocal()) );
-	}
 }
