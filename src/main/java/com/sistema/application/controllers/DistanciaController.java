@@ -48,7 +48,7 @@ public class DistanciaController {
 
 	@GetMapping("traer/{idLocal}/{idProducto}/{cantidad}")
 	public ModelAndView traerLocalesCercanos(@PathVariable("idLocal") long idLocal, @PathVariable("idProducto") long idProducto,
-											 @PathVariable("soloActivos") int cantidad) {
+											 @PathVariable("cantidad") int cantidad) {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.LISTA_LOCALES_CERCANOS);
 		LocalModel local = localService.findByIdLocal(idLocal);
         ProductoModel producto = productoService.findByIdProducto(idProducto);

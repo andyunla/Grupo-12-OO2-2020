@@ -51,8 +51,12 @@ public class EmpleadoConverter {
 	}
 	// Método utilizado internamente para generar una entidad de gerente pero sin local
 	protected Empleado modelToEntityWithoutLocal(EmpleadoModel empleadoModel) {
-		LocalTime horaDesde = Funciones.horaFromString(empleadoModel.getHoraDesde());
-		LocalTime horaHasta = Funciones.horaFromString(empleadoModel.getHoraHasta());
+		LocalTime horaDesde = null;
+		LocalTime horaHasta = null;
+		if(empleadoModel.getHoraDesde() != null) {
+			horaDesde = Funciones.horaFromString(empleadoModel.getHoraDesde());
+			horaHasta = Funciones.horaFromString(empleadoModel.getHoraHasta());
+		}
 		return new Empleado(empleadoModel.getId(), empleadoModel.getNombre(), empleadoModel.getApellido(), empleadoModel.getDni(), empleadoModel.getFechaNacimiento(),
 							empleadoModel.getLegajo(), horaDesde, horaHasta, empleadoModel.getSueldoBasico(),
 							empleadoModel.isTipoGerente());
