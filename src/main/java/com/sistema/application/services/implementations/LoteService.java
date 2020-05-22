@@ -12,6 +12,7 @@ import com.sistema.application.entities.Lote;
 import com.sistema.application.models.LoteModel;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -62,7 +63,7 @@ public class LoteService implements ILoteService {
 	@Override
 	public Set<LoteModel> findByLoteProductoActivo(long idProducto, long idLocal){
 		//creo un set list vacio
-		Set<LoteModel> lista = null;
+		Set<LoteModel> lista = new HashSet<LoteModel>();
 		//recorro la lista de lotes activos del poducto en el local correspondiente
 		for (Lote lo : loteRepository.findByLoteProductoActivo(idProducto, idLocal)) {
 			//a cada lote lo convierto de entidad a model y lo agrego a la lista

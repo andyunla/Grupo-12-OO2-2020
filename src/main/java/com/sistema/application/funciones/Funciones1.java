@@ -217,7 +217,7 @@ public class Funciones1 {
 			boolean ordene = true;
 			while (ordene){
 				ordene = false;
-				for (int i = 0; i < distancia.length; i++) {
+				for (int i = 0; i < distancia.length - 1; i++) {
 					if(distancia[i]> distancia[i+1]) {
 						// ordenamos la distancia
 						distanciaAux = distancia[i];
