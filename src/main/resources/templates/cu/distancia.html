@@ -18,7 +18,7 @@
                     <div class="form-group col col-11 col-sm-5 col-md-4 col-lg-3">
                          <label for="localDesde">Local</label>
                          <select class="custom-select" id="localDesde">
-                              <option value="0" selected>Todos</option>
+                              <option value="0" selected>Seleccione local</option>
                               <option th:each="l: ${locales}" th:value="${l.idLocal}" th:text="${l.nombreLocal}">
                               </option>
                          </select>
@@ -26,7 +26,7 @@
                     <div class="form-group col col-11 col-sm-5 col-md-4 col-lg-3">
                          <label for="productoDeLotes">Producto</label>
                          <select class="custom-select " id="productoDeLotes">
-                              <option value="0" selected>Todos</option>
+                              <option value="0" selected>Seleccione producto</option>
                               <option th:each="p: ${productos}" th:value="${p.idProducto}" th:text="${p.nombre}">
                               </option>
                          </select>
@@ -51,16 +51,7 @@
                               <th scope="col"></th>
                          </tr>
                     </thead>
-                    <tbody id="tbody">
-                         <tr th:each="local :${localesCercanos}" class="fila-local">
-                              <td th:text="${local.idLocal}"></td>
-                              <td th:text="${local.nombreLocal}"></td>
-                              <td th:text="${local.direccion}"></td>
-                              <td th:text="${local.distancia}"></td>
-                              <td th:text="${local.telefono}"></td>
-                              <td th:text="${local.cantidadActual}"></td>
-                         </tr>
-                    </tbody>
+                    <tbody id="tbody"></tbody>
                </table>
           </div>
      </main>
