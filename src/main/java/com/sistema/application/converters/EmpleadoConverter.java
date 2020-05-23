@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import com.sistema.application.dto.EmpleadoDto;
 import com.sistema.application.entities.Empleado;
 import com.sistema.application.entities.Local;
 import com.sistema.application.funciones.Funciones;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.LocalModel;
-import com.sistema.application.models.dto.EmpleadoDto;
 import com.sistema.application.repositories.ILocalRepository;
 
 @Component("empleadoConverter")

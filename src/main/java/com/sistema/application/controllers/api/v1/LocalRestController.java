@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sistema.application.converters.EmpleadoConverter;
+import com.sistema.application.dto.EmpleadoDto;
 import com.sistema.application.models.EmpleadoModel;
-import com.sistema.application.models.dto.EmpleadoDto;
 import com.sistema.application.services.IEmpleadoService;
 import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.IProductoService;

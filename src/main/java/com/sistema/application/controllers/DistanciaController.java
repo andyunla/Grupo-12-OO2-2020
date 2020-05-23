@@ -1,11 +1,11 @@
 package com.sistema.application.controllers;
 
 import com.sistema.application.converters.LocalConverter;
+import com.sistema.application.dto.LocalDistanciaDto;
+import com.sistema.application.dto.LocalDto;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.LocalModel;
 import com.sistema.application.models.ProductoModel;
-import com.sistema.application.models.dto.LocalDistanciaDto;
-import com.sistema.application.models.dto.LocalDto;
 import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.IProductoService;
 
