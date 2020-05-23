@@ -71,5 +71,4 @@ public class ProductoModel {
 		return "ProductoModel [id=" + idProducto + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precio=" + precio
 				+ ", talle=" + talle + "]";
 	}
-	
 }
