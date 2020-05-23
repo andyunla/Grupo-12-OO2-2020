@@ -72,4 +72,14 @@ public class ProductoModel {
 				+ ", talle=" + talle + "]";
 	}
 	
+	@Override
+	public boolean equals(Object obj){
+        if (obj instanceof ProductoModel) {
+            ProductoModel prod = (ProductoModel) obj;
+            return (this.idProducto == prod.idProducto && this.nombre == prod.nombre);
+        } else {
+            return false;
+        }
+    }
+
 }

@@ -483,9 +483,10 @@ public class LocalModel {
 		// Para cada producto de la lista de productos
 		for (ProductoModel pro : productoService.getAllModel()) {
 			int cantidad = 0;
-			//Traigo la lista de facturas del local entre fechas
-			Set<FacturaModel> listaFacturas = facturaService.findByFechaFacturaBetweenAndIdLocal(fecha1, fecha2, this.idLocal);
-			
+			// Traigo la lista de facturas del local entre fechas
+			Set<FacturaModel> listaFacturas = facturaService.findByFechaFacturaBetweenAndIdLocal(fecha1, fecha2,
+					this.idLocal);
+
 			for (FacturaModel fa : listaFacturas) {
 				// de cada factura obtengo el chango y traigo el item que tenga el producto que
 				// estamos evaluando
@@ -504,32 +505,35 @@ public class LocalModel {
 	////////////////////////////////////////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
-	public List<ProductoModel> ranking() {
-		List<ProductoModel> lista = null;
+	public LinkedHashMap<ProductoModel, Integer> ranking() {
 		List<ProductoModel> listaProductos = productoService.getAllModel();
-		int[] cantidadList =  new int[listaProductos.size()];// vector para guardar el valor de cantidadProductoVendido
+		LinkedHashMap<ProductoModel, Integer> rankingProductos = new LinkedHashMap<ProductoModel, Integer>();
+		int[] cantidadList = new int[listaProductos.size()];// vector para guardar el valor de cantidadProductoVendido
 		long[] idList = new long[listaProductos.size()];// vector para guardar el valor ID del producto
 		for (int i = 0; i < listaProductos.size(); i++) {
 			idList[i] = listaProductos.get(i).getIdProducto();
 			cantidadList[i] = cantidadProductoVendido(listaProductos.get(i));
 		}
-		Funciones1.orden(idList, cantidadList);// este método ordena los dos  vectores de mayor a menor usando el valor de la cantidad
-		for (long l : idList) {
-			lista.add(productoService.findByIdProducto(l));//agrego a la lista los productos con ID en orden
-		}		
-		return lista;
+		Funciones1.orden(idList, cantidadList);// este método ordena los dos vectores de mayor a menor usando el valor de la
+									   // cantidad
+		int cont = 0;
+		for (long id : idList) {
+			// agrego a la lista los productos con ID en orden
+			rankingProductos.put(productoService.findByIdProducto(id), cantidadList[cont]);
+			cont++;
+		}
+		return rankingProductos;
 	}
-	public int cantidadProductoVendido(ProductoModel producto) {		
-		int cantidad = 0;		
-		for(FacturaModel fa: facturaService.getAllModel() ) {	
-			// de cada factura obtengo el chango y traigo el item que tenga el producto que estamos evaluando
+
+	public int cantidadProductoVendido(ProductoModel producto) {
+		int cantidad = 0;
+		for (FacturaModel fa : facturaService.getAllModel()) {
+			// de cada factura obtengo el chango y traigo el item que tenga el producto que
+			// estamos evaluando
 			// si el producto está en la factura, se suma la cantidad correspondiente
 			if (fa.getChango().traerItem(producto) != null)
 				cantidad = cantidad + fa.getChango().traerItem(producto).getCantidad();
 		}
 		return cantidad;
 	}
-	
-	
-	
 }
