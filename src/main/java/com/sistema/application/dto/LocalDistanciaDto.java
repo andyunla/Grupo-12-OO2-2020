@@ -1,4 +1,4 @@
-package com.sistema.application.models.dto;
+package com.sistema.application.dto;
 
 public class LocalDistanciaDto {
 	private long idLocal;
