@@ -332,7 +332,7 @@ public class LocalModel {
 	/****************************************************************************************************/
 	public int calcularStockLocal(ProductoModel producto) {		
 		int cantidadStock = 0;		
-		List<LoteModel> lista = loteService.getAllModel();
+		Set<LoteModel> lista = loteService.findByLoteProductoActivo( producto.getIdProducto(), this.idLocal );
 		for(LoteModel lo : lista) {
 			cantidadStock = cantidadStock + lo.getCantidadActual();			
 		}		
