@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -23,6 +24,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.JoinColumn;
 
 @Entity
+@Table(name="user")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = -6833167247955613395L;
@@ -42,6 +44,8 @@ public class User implements Serializable {
 	private String username;
 	@Column(name="password", nullable=false, length=60)
 	private String password;
+	@Column(name="enabled")
+	private boolean enabled;
 
 	@Column(name="created_at")
 	@CreationTimestamp
@@ -61,22 +65,24 @@ public class User implements Serializable {
 		this.id = id;
 	}
 	
-	public User(Long id, Empleado empleado, String email, String username, String password) {
+	public User(Long id, Empleado empleado, String email, String username, String password, boolean enabled) {
 		super();
 		this.id = id;
 		this.empleado = empleado;
 		this.email = email;
 		this.username = username;
 		this.password = password;
+		this.enabled = enabled;
 	}
 
-	public User(Long id, Empleado empleado, String email, String username, String password, Set<UserRole> userRoles) {
+	public User(Long id, Empleado empleado, String email, String username, String password, boolean enabled, Set<UserRole> userRoles) {
 		super();
 		this.id = id;
 		this.empleado = empleado;
 		this.email = email;
 		this.username = username;
 		this.password = password;
+		this.enabled = enabled;
 		this.userRoles = userRoles;
 	}
 
@@ -118,6 +124,14 @@ public class User implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public Set<UserRole> getUserRoles() {
