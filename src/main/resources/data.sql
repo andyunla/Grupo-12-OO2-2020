@@ -116,17 +116,12 @@ VALUES
 	(8, 'gerente2@admin.com', '$2a$04$qFAWDaf8.ktsAdEp2qHF.eZ31SGdSagROxQkeXjaRPaWJfffeVJ7y', 'gerente2'),
 	(9, 'gerente3@admin.com', '$2a$04$9CW3bFRuXHd8OL5qszw0zejxAMYIYeCNzzXTKXudHVjceyKIxDuv2', 'gerente3');
 
-INSERT INTO `role` (`descripcion`, `nombre`) VALUES ('ROLE_ADMIN', 'ADMIN');
-INSERT INTO `role` (`descripcion`, `nombre`) VALUES ('ROLE_USER', 'USER');
-INSERT INTO `role` (`descripcion`, `nombre`) VALUES ('ROLE_GERENTE', 'GERENTE');
-INSERT INTO `role` (`descripcion`, `nombre`) VALUES ('ROLE_EMPLEADO', 'EMPLEADO');
-
-INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES ('1', '4');
-INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES ('2', '4');
-INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES ('3', '4');
-INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES ('4', '4');
-INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES ('5', '4');
-INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES ('6', '4');
-INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES ('7', '3');
-INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES ('8', '3');
-INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES ('9', '3');
+INSERT INTO `user_role` (user_id, role) VALUES ('1', 'EMPLEADO');
+INSERT INTO `user_role` (user_id, role) VALUES ('2', 'EMPLEADO');
+INSERT INTO `user_role` (user_id, role) VALUES ('3', 'EMPLEADO');
+INSERT INTO `user_role` (user_id, role) VALUES ('4', 'EMPLEADO');
+INSERT INTO `user_role` (user_id, role) VALUES ('5', 'EMPLEADO');
+INSERT INTO `user_role` (user_id, role) VALUES ('6', 'EMPLEADO');
+INSERT INTO `user_role` (user_id, role) VALUES ('7', 'GERENTE');
+INSERT INTO `user_role` (user_id, role) VALUES ('8', 'GERENTE');
+INSERT INTO `user_role` (user_id, role) VALUES ('9', 'GERENTE');
