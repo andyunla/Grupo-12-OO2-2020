@@ -32,5 +32,13 @@
                     <a class="nav-link" th:href="@{/distancia}">Distancia</a>
                </li>
           </ul>
+          <ul class="nav navbar-nav flex-row justify-content-between ml-auto">
+               <li class="nav-item" th:classappend="${active=='home'} ? active : ''">
+                    <p id="current-user"><span th:text="${username}" /></a>
+               </li>
+               <li class="nav-item" th:classappend="${active=='home'} ? active : ''">
+                    <a class="nav-link" th:href="@{/logout}">Logout</a>
+               </li>
+          </ul>
      </div>
 </nav>
