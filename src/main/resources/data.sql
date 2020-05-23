@@ -7,7 +7,7 @@ VALUES
 	('Carlos', 'Carrizo', 10000001, '1990-01-01'),	-- Clientes (3)
 	('Casimiro', 'Camaño', 10000002, '1990-01-01'),
 	('Cecilia', 'Caballero', 10000003, '1990-01-01'),
-	('Ernesto', 'Espinoza', 10000001, '1990-04-01'),	-- Empleados (6)
+	('Ernesto', 'Espinoza', 20000001, '1990-04-01'),	-- Empleados (6)
 	('Edmundo', 'Escobar', 20000002, '1990-04-02'),
 	('Ernestina', 'Epo', 20000003, '1990-04-03'),
 	('Eriberto', 'Estrada', 20000004, '1990-04-04'),
@@ -101,3 +101,32 @@ INSERT INTO factura
 VALUES
 	('2020-01-30', 200, 3, 8, 1, 1),
 	('2020-01-31', 1000, 3, 9, 2, 2);
+
+-- USUARIOS Y ROLES
+INSERT INTO `user`
+	(empleado_legajo, email, password, username)
+VALUES 
+	(1, 'empleado1@email.com', '$2a$04$sQsVRjZlaKTC93hXNbQN4.tN.Zv2MSiGQ7wgQLLz8dppeLW1bj7AK', 'empleado1'),
+	(2, 'empleado2@email.com', '$2a$04$nH0668HrSZcgT00qbczC.Os0vT0DOLvcmmvDhrFDCt.DGByMGlv9C', 'empleado2'),
+	(3, 'empleado3@email.com', '$2a$04$Co8Q8AadIEVDFdaDizjtsuHGGVFmWgIWK4cFK8MJOMjzV4C8ZFBam', 'empleado3'),
+	(4, 'empleado4@email.com', '$2a$04$e9Gr0kj88by6p72LsdLw6Oj2yWSr8qQq6tqY6B3c55lQY9aiQVxaC', 'empleado4'),
+	(5, 'empleado5@email.com', '$2a$04$xbQ5sosNfrtcrG6zMQnwRuNGNLyS9x1Fdo35xmuh63szoOFbGtjNC', 'empleado5'),
+	(6, 'empleado6@email.com', '$2a$04$RDzik0PX9JzDyIV/T8I0aO9szIJ2pRGHT7YW9ReEb6QmiKrMQ7K/G', 'empleado6'),
+	(7, 'gerente1@admin.com', '$2a$04$zZOGoK8FTWSWoIExeppysOQGN/12JBKVsfVORvdetGTWm/.UNn5li', 'gerente1'),
+	(8, 'gerente2@admin.com', '$2a$04$qFAWDaf8.ktsAdEp2qHF.eZ31SGdSagROxQkeXjaRPaWJfffeVJ7y', 'gerente2'),
+	(9, 'gerente3@admin.com', '$2a$04$9CW3bFRuXHd8OL5qszw0zejxAMYIYeCNzzXTKXudHVjceyKIxDuv2', 'gerente3');
+
+INSERT INTO `role` (`descripcion`, `nombre`) VALUES ('ROLE_ADMIN', 'ADMIN');
+INSERT INTO `role` (`descripcion`, `nombre`) VALUES ('ROLE_USER', 'USER');
+INSERT INTO `role` (`descripcion`, `nombre`) VALUES ('ROLE_GERENTE', 'GERENTE');
+INSERT INTO `role` (`descripcion`, `nombre`) VALUES ('ROLE_EMPLEADO', 'EMPLEADO');
+
+INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES ('1', '4');
+INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES ('2', '4');
+INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES ('3', '4');
+INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES ('4', '4');
+INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES ('5', '4');
+INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES ('6', '4');
+INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES ('7', '3');
+INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES ('8', '3');
+INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES ('9', '3');

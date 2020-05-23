@@ -274,6 +274,53 @@ CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`item` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- SESIONES DE USUARIO
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Grupo-12-BDD-OO2-2020`.`user` ;
+CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`user` (
+  `id_user` INT(11) NOT NULL AUTO_INCREMENT,
+  `empleado_legajo` INT(11) NOT NULL,
+  `email` VARCHAR(45) NULL DEFAULT NULL,
+  `username` VARCHAR(20) NOT NULL,
+  `password` VARCHAR(70) NOT NULL,
+  PRIMARY KEY (`id_user`),
+  INDEX `fk_user_empleado1_idx` (`empleado_legajo` ASC),
+  CONSTRAINT `fk_user_empleado1`
+    FOREIGN KEY (`empleado_legajo`)
+    REFERENCES `Grupo-12-BDD-OO2-2020`.`empleado` (`legajo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS `Grupo-12-BDD-OO2-2020`.`role` ;
+CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`role` (
+  `id_role` INT(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` VARCHAR(45) NULL DEFAULT NULL,
+  `nombre` VARCHAR(25) NOT NULL,
+  PRIMARY KEY (`id_role`))
+ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS `Grupo-12-BDD-OO2-2020`.`user_roles` ;
+CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`user_roles` (
+  `user_id` INT NOT NULL,
+  `role_id` INT NOT NULL,
+  PRIMARY KEY (`user_id`, `role_id`),
+  INDEX `fk_user_has_role_role1_idx` (`role_id` ASC),
+  INDEX `fk_user_has_role_user1_idx` (`user_id` ASC),
+  CONSTRAINT `fk_user_has_role_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `Grupo-12-BDD-OO2-2020`.`user` (`id_user`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_has_role_role1`
+    FOREIGN KEY (`role_id`)
+    REFERENCES `Grupo-12-BDD-OO2-2020`.`role` (`id_role`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
