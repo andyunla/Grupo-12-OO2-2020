@@ -22,17 +22,17 @@ import com.sistema.application.helpers.ViewRouteHelper;
 @RequestMapping("/")
 public class HomeController {
 
-	@GetMapping("/")
-	public RedirectView redirectToHomeIndex() {
-		return new RedirectView(ViewRouteHelper.HOME_ROOT);
-	}
-
-	//GET Example: SERVER/index
+	// GET Example: SERVER/index
 	@GetMapping("/index")
 	public ModelAndView index() {
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.INDEX);
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		modelAndView.addObject("username", user.getUsername());
 		return modelAndView;
+	}
+
+	@GetMapping("/")
+	public RedirectView redirectToHomeIndex() {
+		return new RedirectView(ViewRouteHelper.HOME_ROOT);
 	}
 }
