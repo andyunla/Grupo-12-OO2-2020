@@ -2,6 +2,7 @@ package com.sistema.application.controllers;
 
 import javax.validation.Valid;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.sistema.application.helpers.ViewRouteHelper;
 
 @Controller
+@PreAuthorize("hasRole('EMPLEADO') or hasRole('GERENTE')")
 @RequestMapping("/")
 public class HomeController {
 
