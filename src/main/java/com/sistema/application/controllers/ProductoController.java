@@ -2,6 +2,7 @@ package com.sistema.application.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ProductoModel;
 
 @Controller
+@PreAuthorize("hasRole('GERENTE')")
 @RequestMapping("producto")
 public class ProductoController {
 	
