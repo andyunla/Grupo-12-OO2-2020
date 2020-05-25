@@ -6,9 +6,11 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import com.sistema.application.services.IItemService;
 
+@Component("changoModel")
 public class ChangoModel {
 
 	// Atributos
@@ -37,6 +39,13 @@ public class ChangoModel {
 		super();
 		this.pedidoStock = null;
 		this.local = local;
+		this.listaItems = new HashSet<ItemModel>();
+	}
+
+	public void setInstance(ChangoModel chango){
+		this.idChango = chango.idChango;
+		this.pedidoStock = chango.pedidoStock;
+		this.local = chango.local;
 		this.listaItems = new HashSet<ItemModel>();
 	}
 
