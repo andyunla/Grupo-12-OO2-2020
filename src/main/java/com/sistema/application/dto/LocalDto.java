@@ -1,4 +1,4 @@
-package com.sistema.application.models.dto;
+package com.sistema.application.dto;
 
 import java.io.Serializable;
 import java.util.Set;

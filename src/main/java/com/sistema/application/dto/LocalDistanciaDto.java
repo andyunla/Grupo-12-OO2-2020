@@ -1,4 +1,4 @@
-package com.sistema.application.models.dto;
+package com.sistema.application.dto;
 
 public class LocalDistanciaDto {
 	private long idLocal;
@@ -6,17 +6,19 @@ public class LocalDistanciaDto {
 	private double distancia;
 	private String direccion;
 	private int telefono;
+	private int stock;
 	
 	public LocalDistanciaDto() {}
 
 	public LocalDistanciaDto(long idLocal, String nombreLocal, double distancia, String direccion,
-			int telefono) {
+			int telefono, int stock) {
 		super();
 		this.idLocal = idLocal;
 		this.nombreLocal = nombreLocal;
-		this.distancia = distancia;
+		this.setDistancia(distancia);
 		this.direccion = direccion;
 		this.telefono = telefono;
+		this.stock = stock;
 	}
 
 	public long getIdLocal() {
@@ -40,7 +42,7 @@ public class LocalDistanciaDto {
 	}
 
 	public void setDistancia(double distancia) {
-		this.distancia = distancia;
+		this.distancia = Math.floor(distancia * 100) / 100;
 	}
 
 	public String getDireccion() {
@@ -57,5 +59,13 @@ public class LocalDistanciaDto {
 
 	public void setTelefono(int telefono) {
 		this.telefono = telefono;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
+	public int getStock() {
+		return stock;
 	}
 }

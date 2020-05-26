@@ -4,6 +4,11 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
+import com.sistema.application.services.IItemService;
+
 public class ChangoModel {
 
 	// Atributos
@@ -11,7 +16,10 @@ public class ChangoModel {
 	private PedidoStockModel pedidoStock;
 	private LocalModel local;
 	private Set<ItemModel> listaItems;
-
+	//Service
+	@Autowired
+	@Qualifier("itemService")
+	IItemService itemService;
 	// Constructores
 	public ChangoModel() {
 	}
@@ -96,22 +104,34 @@ public class ChangoModel {
 	}
 
 	public boolean crearItem(int cantidad, ProductoModel producto) {
-		// Le saqué la creación del id porque eso lo hace la base de datos
-		if (traerItem(producto) != null) {
-			traerItem(producto).setCantidad(traerItem(producto).getCantidad() + cantidad);
-		} else {
-			listaItems.add(new ItemModel(cantidad, producto, this));
+																// Le saqué la creación del id porque eso lo hace la base de datos
+		ItemModel itm = traerItem(producto);
+		if (itm != null) {												// si existe el item
+			itm.setCantidad(itm.getCantidad() + cantidad); 				// le sumo la cantidad
+			itemService.insertOrUpdate(itm); 							// lo actualizo en la DB
+			local.restarLote(producto, cantidad); 						// resto  el lote del local
+		} else {// si no existe
+			ItemModel item = new ItemModel(cantidad, producto, this); 	// Creo un item con el producto y cantidad
+			listaItems.add(item); 										// lo agrego a la lista de items
+			itemService.insertOrUpdate(item);							// lo inserto  en la DB
+			local.restarLote(producto, cantidad); 						// resto el lote del local
 		}
 		return true;
 	}
 
 	public boolean eliminarItem(int cantidad, ProductoModel producto) throws Exception {
-		if (traerItem(producto) == null)
-			throw new Exception("El producto " + producto.getNombre() + " no existe");
-		if (traerItem(producto).getCantidad() - cantidad <= 0)
-			listaItems.remove(traerItem(producto));
-		else
-			traerItem(producto).setCantidad(traerItem(producto).getCantidad() - cantidad);
+		ItemModel itm = traerItem(producto);
+		if (itm == null)throw new Exception("El producto " + producto.getNombre() + " no existe"); // no sé si hace falta la excepcion
+		if (itm.getCantidad() - cantidad <= 0) { 							// Si la resta da cero o menos
+			listaItems.remove(itm); 										// elimino el item de la lista
+			itemService.remove(itm.getIdItem());							// tambien dee la DB
+			local.sumarLote(producto, itm.getCantidad()); 					// esos productos los sumo al lote
+		}
+		else { // Si la resta no da cero o menos
+			itm.setCantidad(itm.getCantidad() - cantidad); 					// Le resto la cantidad
+			itemService.insertOrUpdate(itm);								// lo actualizo en la DB
+			local.sumarLote(producto, cantidad);							// esos productos los sumo al lote
+		}
 		return true;
 	}
 
