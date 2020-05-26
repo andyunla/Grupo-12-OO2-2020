@@ -24,10 +24,13 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	@Qualifier("userRepository")
 	private IUserRepository userRepository;
-	
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		com.sistema.application.entities.User user = userRepository.findByUsernameAndFetchUserRolesEagerly(username);
+		if (user == null) {
+			throw new UsernameNotFoundException("Usuario '" + username + "' no encontrado.");
+		}
 		return buildUser(user, buildGrantedAuthorities(user.getUserRoles()));
 	}
 	
