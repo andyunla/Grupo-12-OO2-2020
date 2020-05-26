@@ -32,6 +32,7 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
 	@GenericGenerator(name = "native", strategy = "native")
+	@Column(name="id_user")
 	private Long id;
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -157,4 +158,11 @@ public class User implements Serializable {
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", empleado=" + empleado + ", email=" + email + ", username=" + username
+				+ ", password=" + password + ", enabled=" + enabled + ", createdAt=" + createdAt + ", updatedAt="
+				+ updatedAt + ", userRoles=" + userRoles + "]";
+	}	
 }

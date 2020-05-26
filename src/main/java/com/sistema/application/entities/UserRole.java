@@ -27,6 +27,7 @@ public class UserRole implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO, generator="native")
 	@GenericGenerator(name="native", strategy="native")
+	@Column(name="id_user_role")
 	private Long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
