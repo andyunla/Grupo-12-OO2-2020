@@ -1,6 +1,7 @@
 package com.sistema.application.controllers;
 
 import com.sistema.application.converters.LocalConverter;
+import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.LocalModel;
@@ -14,6 +15,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@PreAuthorize("hasRole('GERENTE')")
 @RequestMapping("local")
 public class LocalController {
 	@Autowired
@@ -39,6 +42,11 @@ public class LocalController {
 
 	@GetMapping("")
 	public String locales(Model modelo) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		modelo.addAttribute("username", user.getUsername());
+		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
+		modelo.addAttribute("isGerente", isGerente);
+		
 		List<LocalModel> localesModel = localService.getAllModel();
 		List<LocalDto> locales = new ArrayList<LocalDto>();
 		for(LocalModel model: localesModel) {
