@@ -16,6 +16,9 @@ public class ViewRouteHelper {
 	public final static String LISTA_LOCALES_CERCANOS = "partial/listaLocalesCercanos";
 	// CASOS DE USO
 	public final static String DISTANCIA_ROOT = "cu/distancia";
+	// USER
+	public final static String USER_LOGIN = "user/login";
+	public final static String USER_LOGOUT = "user/logout";
 
 	/**** Redirects *****************************************/
 	public final static String HOME_ROOT = "index";

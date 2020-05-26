@@ -2,6 +2,9 @@ package com.sistema.application.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,11 +12,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sistema.application.helpers.ViewRouteHelper;
+import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.models.ClienteModel;
 import com.sistema.application.services.IClienteService;
 
@@ -27,6 +32,10 @@ public class ClienteController {
 	
 	@GetMapping("")
 	public String clientes(Model modelo) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		modelo.addAttribute("username", user.getUsername());
+		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
+		modelo.addAttribute("isGerente", isGerente);
 		modelo.addAttribute("clientes", clienteService.getAllModel());
 		modelo.addAttribute("cliente", new ClienteModel());
 		return ViewRouteHelper.CLIENTE_ABM;

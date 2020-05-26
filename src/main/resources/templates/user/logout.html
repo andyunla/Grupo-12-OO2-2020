@@ -7,22 +7,21 @@
     <div class="d-flex justify-content-center h-100">
         <div class="card">
             <div class="card-header">
-                <h3>Sign In</h3>
+                <h3>Login</h3>
             </div>
             <div class="card-body">
-                <form>
+                <form th:action="@{/loginprocess}" method="post">
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Nombre de usuario">
-                        
+                        <input type="text" name="username" class="form-control" placeholder="Nombre de usuario">
                     </div>
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-key"></i></span>
                         </div>
-                        <input type="password" class="form-control" placeholder="Contraseña">
+                        <input type="password" name="password" class="form-control" placeholder="Contraseña">
                     </div>
                     <div class="row align-items-center remember">
                         <input type="checkbox">Recordarme</input>
@@ -36,7 +35,7 @@
                     Contraseña o nombre de usuario inválido.
                 </div>
                 <div th:if="${param.logout}" class="alert alert-success" role="alert">
-                    Ha cerrado sesión.
+                    Ha cerrado sesión satisfactoriamente.
                 </div>
             <div class="card-footer">
             </div>
@@ -46,7 +45,7 @@
      <div th:replace="fragments/footer :: footer"></div>
      <!-- BOOTSTRAP Scripts -->
      <footer th:replace="fragments/scripts :: scripts"></footer>
-     <link rel="stylesheet" type="text/css" href="static/css/index.css" th:href="@{/css/login.css}">
+     <link rel="stylesheet" type="text/css" href="/static/css/index.css" th:href="@{/css/login.css}">
 </body>
 
 </html>

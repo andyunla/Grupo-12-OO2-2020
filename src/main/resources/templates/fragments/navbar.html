@@ -32,5 +32,14 @@
                     <a class="nav-link" th:href="@{/distancia}">Distancia</a>
                </li>
           </ul>
+          <ul class="nav navbar-nav flex-row justify-content-between ml-auto">
+               <li class="nav-item dropdown">
+                    <a id="current-user" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"><span th:text="${username}  " /></a>
+                    <div class="dropdown-menu">
+                         <div class="dropdown-divider"></div>
+                         <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                    </div>
+               </li>
+          </ul>
      </div>
 </nav>

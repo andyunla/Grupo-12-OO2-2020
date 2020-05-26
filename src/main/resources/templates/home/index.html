@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-     <div th:insert="fragments/head :: head"></div>
-     <title>UNLa Stock</title>
-</head>
+<head th:replace="fragments/head :: head(title='UNLa Stock')"></head>
 
 <body class="container-fluid m-0 p-0">
-     <div th:replace="fragments/navbar :: navbar"></div>
-     <header class="text-center m-3">
-          <h1 class="h2">SISTEMA DE DEMOCRATIZACION DE STOCK</h1>
+     <div th:replace="fragments/navbar :: navbar(active='home')"></div>
+     <header class="text-center m-4">
+          <h1 class="quicksand mt-5 mb-5">SISTEMA DE DEMOCRATIZACIÓN DE STOCK</h1>
+          <h3 class="quicksand mb-5">Proyecto cuatrimestral de la asignatura <strong>Orientación a Objetos II</strong> correspondiente a la
+               carrera de Licenciatura en Sistemas de la <strong>Universidad Nacional de Lanús</strong></h2>
      </header>
      <main class="w-100 d-flex flex-column align-items-center">
           <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Universidad_Nacional_de_Lan%C3%BAs_logo.png"
-               alt="" class="rounded-circle border border-secondary" style="width: 15vmax;" />
+               alt="" class="rounded border border-secondary m-2" style="width: 10vmax;" />
      </main>
      <div th:replace="fragments/footer :: footer"></div>
-     <div th:replace="fragments/scripts :: scripts"></div>
+     <!-- BOOTSTRAP Scripts -->
+     <footer th:replace="fragments/scripts :: scripts"></footer>
 </body>
 
 </html>

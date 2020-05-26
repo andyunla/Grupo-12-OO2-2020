@@ -2,6 +2,7 @@ package com.sistema.application.controllers;
 
 import java.util.List;
 
+import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.LocalModel;
 import com.sistema.application.models.LoteModel;
@@ -13,6 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +45,11 @@ public class LoteController {
 
      @GetMapping("")
      public String lotes(Model modelo) {
+          User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+          modelo.addAttribute("username", user.getUsername());
+          boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
+          modelo.addAttribute("isGerente", isGerente);
+          
           modelo.addAttribute("lotes", loteService.getAllModel());
           modelo.addAttribute("lote", new LoteModel());
           modelo.addAttribute("locales", localService.getAll());

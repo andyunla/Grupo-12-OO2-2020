@@ -2,6 +2,10 @@ package com.sistema.application.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sistema.application.services.IProductoService;
+import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ProductoModel;
 
@@ -25,6 +30,11 @@ public class ProductoController {
 
 	@GetMapping("")
 	public String productos(Model modelo) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		modelo.addAttribute("username", user.getUsername());
+		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
+		modelo.addAttribute("isGerente", isGerente);
+		
 		modelo.addAttribute("productos", productoService.getAllModel());
 		modelo.addAttribute("producto", new ProductoModel());
 		return ViewRouteHelper.PRODUCTO_ABM;

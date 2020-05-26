@@ -6,6 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+
+import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ItemModel;
 import com.sistema.application.services.IItemService;
@@ -28,6 +34,10 @@ public class ItemController {
 	//Métodos
 	@GetMapping("")
 	public String items(Model modelo) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		modelo.addAttribute("username", user.getUsername());
+		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
+		modelo.addAttribute("isGerente", isGerente);
 		modelo.addAttribute("items", itemService.getAll() );
 		modelo.addAttribute("item", new ItemModel() );
 		return ViewRouteHelper.ITEM_ABM;
