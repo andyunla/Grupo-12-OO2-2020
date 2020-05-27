@@ -8,6 +8,8 @@ import java.util.List;
 public interface IItemService {
 
 	public ItemModel findByIdItem(long idItem);
+
+	public ItemModel findByChangoAndProducto(long idChango, long idProducto);
 	
 	public List<Item> getAll();
 	

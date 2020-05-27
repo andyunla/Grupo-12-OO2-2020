@@ -364,9 +364,8 @@ public class LocalModel {
 	////////////////////////////////////////////////////////////////////////////////////////////////////// LOCAL////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
-	public boolean crearPedidoStock(ProductoModel producto, int cantidad, EmpleadoModel solicitante){	
-		pedidoStockService.insertOrUpdate(new PedidoStockModel(producto, cantidad, solicitante));		
-		return true;
+	public PedidoStockModel crearPedidoStock(ProductoModel producto, int cantidad, EmpleadoModel solicitante){	
+		return pedidoStockService.insertOrUpdate(new PedidoStockModel(producto, cantidad, solicitante));		
 	}
 
 	/****************************************************************************************************/
