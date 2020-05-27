@@ -45,6 +45,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .and()
             .csrf().disable() // Configuración para permitir llamadas AJAX sin tokens
         .logout()
-            .logoutUrl("/logout").logoutSuccessUrl("/login").permitAll();
+            .logoutUrl("/logout").logoutSuccessUrl("/login?logout").permitAll();
     }
 }
