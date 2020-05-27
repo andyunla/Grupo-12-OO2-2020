@@ -22,7 +22,6 @@ import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 
 @Controller
-@PreAuthorize("hasRole('EMPLEADO') or hasRole('GERENTE')")
 @RequestMapping("/")
 public class HomeController {
 
