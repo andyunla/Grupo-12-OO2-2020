@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-     <head th:replace="fragments/head :: head(title='Producto')"></head>
+
+<head th:replace="fragments/head :: head(title='Producto')"></head>
+
 <body class="container-fluid m-0 p-0">
      <div th:replace="fragments/navbar :: navbar(active='abm')"></div>
      <header class="text-center m-3">
@@ -14,73 +16,73 @@
                     id="buttonAgregar">
                     Agregrar
                </button>
-               <form class="col-11 col-sm-8 col-md-7 m-1 p-2 mx-auto bg-light rounded collapse" id="collapseForm" action="#"
-                    th:action="@{/producto/agregar}" th:object="${producto}" method="post">
-                    <div class="form-group row">
-                         <label for="nombreNuevoProducto" class="col-md-2 col-3">Nombre</label>
-                         <input type="text" class="form-control col-md-9 col-8" id="nombreNuevoProducto"
-                              th:field="*{nombre}" />
-                    </div>
-                    <div class="form-group row">
-                         <label for="descripcionNuevoProducto" class="col-md-2 col-3">Descripción</label>
-                         <input type="text" class="form-control col-md-9 col-8" id="descripcionNuevoProducto"
-                              th:field="*{descripcion}" />
-                    </div>
-                    <div class="form-group row">
-                         <label for="precioNuevoProducto" class="col-md-2 col-3">Precio</label>
-                         <input type="number" min="0" step="0.01" class="form-control col-md-9 col-8"
-                              id="precioNuevoProducto" th:field="*{precio}" />
-                    </div>
-                    <div class="form-group row">
-                         <label for="talleNuevoProducto" class="col-md-2 col-3">Talle</label>
-                         <input type="number" min="0" class="form-control col-sm-4 col-5" id="talleNuevoProducto"
-                              th:field="*{talle}" />
-                    </div>
-                    <div class="text-center">
-                         <button type="submit" class="btn btn-primary">Guardar</button>
-                    </div>
-               </form>
-               <!-- MODAL EDIT PRODUCT -->
-               <div class="modal fade" id="modifyProduct" tabindex="-1" role="dialog">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                         <div class="modal-content">
-                              <div class="modal-header">
-                                   <h5 class="modal-title" id="tituloModificarProducto"></h5>
-                                   <button type="button" class="close" data-dismiss="modal">
-                                        <span aria-hidden="true">&times;</span>
-                                   </button>
-                              </div>
-                              <div class="modal-body">
-                                   <form class="col-12 m-1 p-2 mx-auto bg-light rounded" action="#"
-                                        th:action="@{/producto/modificar}" th:object="${producto}" method="post">
-                                        <input type="number" class="d-none" id="idModificarProducto"
-                                             th:field="*{idProducto}" />
-                                        <div class="form-group row">
-                                             <label for="nombreModificarProducto" class="col-sm-3 col-4">Nombre</label>
-                                             <input type="text" class="form-control col-md-8  col-7"
-                                                  id="nombreModificarProducto" th:field="*{nombre}" />
-                                        </div>
-                                        <div class="form-group row">
-                                             <label for="descripcionModificarProducto"
-                                                  class="col-sm-3 col-4">Descripcion</label>
-                                             <input type="text" class="form-control col-md-8 col-7"
-                                                  id="descripcionModificarProducto" th:field="*{descripcion}" />
-                                        </div>
-                                        <div class="form-group row">
-                                             <label for="precioModificarProducto" class="col-sm-3 col-4">Precio</label>
-                                             <input type="number" step="0.01" min="0" class="form-control col-md-8 col-7"
-                                                  id="precioModificarProducto" th:field="*{precio}" />
-                                        </div>
-                                        <div class="form-group row">
-                                             <label for="talleModificarProducto" class="col-sm-3 col-4">Talle</label>
-                                             <input type="number" min="0" class="form-control col-5"
-                                                  id="talleModificarProducto" th:field="*{talle}" />
-                                        </div>
-                                        <div class="text-center">
-                                             <button type="submit" class="btn btn-primary">Guardar</button>
-                                        </div>
-                                   </form>
-                              </div>
+          </div>
+          <form class="col-11 col-sm-8 col-md-7 m-1 p-2 mx-auto bg-light rounded collapse" id="collapseForm" action="#"
+               th:action="@{/producto/agregar}" th:object="${producto}" method="post">
+               <div class="form-group row">
+                    <label for="nombreNuevoProducto" class="col-md-2 col-3">Nombre</label>
+                    <input type="text" class="form-control col-md-9 col-8" id="nombreNuevoProducto"
+                         th:field="*{nombre}" />
+               </div>
+               <div class="form-group row">
+                    <label for="descripcionNuevoProducto" class="col-md-2 col-3">Descripción</label>
+                    <input type="text" class="form-control col-md-9 col-8" id="descripcionNuevoProducto"
+                         th:field="*{descripcion}" />
+               </div>
+               <div class="form-group row">
+                    <label for="precioNuevoProducto" class="col-md-2 col-3">Precio</label>
+                    <input type="number" min="0" step="0.01" class="form-control col-md-9 col-8"
+                         id="precioNuevoProducto" th:field="*{precio}" />
+               </div>
+               <div class="form-group row">
+                    <label for="talleNuevoProducto" class="col-md-2 col-3">Talle</label>
+                    <input type="number" min="0" class="form-control col-sm-4 col-5" id="talleNuevoProducto"
+                         th:field="*{talle}" />
+               </div>
+               <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+               </div>
+          </form>
+          <!-- MODAL EDIT PRODUCT -->
+          <div class="modal fade" id="modifyProduct" tabindex="-1" role="dialog">
+               <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                         <div class="modal-header">
+                              <h5 class="modal-title" id="tituloModificarProducto"></h5>
+                              <button type="button" class="close" data-dismiss="modal">
+                                   <span aria-hidden="true">&times;</span>
+                              </button>
+                         </div>
+                         <div class="modal-body">
+                              <form class="col-12 m-1 p-2 mx-auto bg-light rounded" action="#"
+                                   th:action="@{/producto/modificar}" th:object="${producto}" method="post">
+                                   <input type="number" class="d-none" id="idModificarProducto"
+                                        th:field="*{idProducto}" />
+                                   <div class="form-group row">
+                                        <label for="nombreModificarProducto" class="col-sm-3 col-4">Nombre</label>
+                                        <input type="text" class="form-control col-md-8  col-7"
+                                             id="nombreModificarProducto" th:field="*{nombre}" />
+                                   </div>
+                                   <div class="form-group row">
+                                        <label for="descripcionModificarProducto"
+                                             class="col-sm-3 col-4">Descripcion</label>
+                                        <input type="text" class="form-control col-md-8 col-7"
+                                             id="descripcionModificarProducto" th:field="*{descripcion}" />
+                                   </div>
+                                   <div class="form-group row">
+                                        <label for="precioModificarProducto" class="col-sm-3 col-4">Precio</label>
+                                        <input type="number" step="0.01" min="0" class="form-control col-md-8 col-7"
+                                             id="precioModificarProducto" th:field="*{precio}" />
+                                   </div>
+                                   <div class="form-group row">
+                                        <label for="talleModificarProducto" class="col-sm-3 col-4">Talle</label>
+                                        <input type="number" min="0" class="form-control col-5"
+                                             id="talleModificarProducto" th:field="*{talle}" />
+                                   </div>
+                                   <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                   </div>
+                              </form>
                          </div>
                     </div>
                </div>

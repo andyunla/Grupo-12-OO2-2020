@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-     <head th:replace="fragments/head :: head(title='Cliente')"></head>
+<head th:replace="fragments/head :: head(title='Cliente')"></head>
 
 <body class="container-fluid m-0 p-0">
      <nav th:replace="fragments/navbar :: navbar(active='abm')"></nav>
@@ -16,86 +16,86 @@
                     id="buttonAgregar">
                     Agregrar
                </button>
-               <form class="col-11 col-sm-8 col-md-7 m-1 p-2 mx-auto bg-light rounded collapse" id="collapseForm" action="#"
-                    th:action="@{/cliente/agregar}" th:object="${cliente}" method="post">
-                    <div class="form-group row">
-                         <label for="nombreNuevoCliente" class="col-md-2 col-3">Nombre</label>
-                         <input type="text" class="form-control col-md-9 col-8" id="nombreNuevoCliente"
-                              th:field="*{nombre}" />
-                    </div>
-                    <div class="form-group row">
-                         <label for="apellidoNuevoCliente" class="col-md-2 col-3">Apellido</label>
-                         <input type="text" class="form-control col-md-9 col-8" id="apellidoNuevoCliente"
-                              th:field="*{apellido}" />
-                    </div>
-                    <div class="form-group row">
-                         <label for="emailNuevoCliente" class="col-md-2 col-3">Email</label>
-                         <input type="email" class="form-control col-md-9 col-8" id="emailNuevoCliente"
-                              th:field="*{email}" />
-                    </div>
-                    <div class="form-group row">
-                         <label for="dniNuevoCliente" class="col-md-2 col-3">DNI</label>
-                         <input type="number" class="form-control col-sm-4 col-5" id="dniNuevoCliente" th:field="*{dni}"
-                              min="1000000" max="99999999" required/>
-                    	<p th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}">DNI tiene errores</p>
-                    </div>
-                    <div class="form-group row">
-                         <label for="fechaNacNuevoCliente" class="col-md-2 col-3">Fecha de Nac.</label>
-                         <input type="date" class="form-control col-sm-4 col-5" id="fechaNacNuevoCliente"
-                              th:field="*{fechaNacimiento}" />
-                    </div>
-                    <div class="text-center">
-                         <button type="submit" class="btn btn-primary">Guardar</button>
-                    </div>
-               </form>
-               <!-- MODAL EDIT CLIENT -->
-               <div class="modal fade" id="modifyClient" tabindex="-1" role="dialog">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                         <div class="modal-content">
-                              <div class="modal-header">
-                                   <h5 class="modal-title" id="tituloModificarCliente"></h5>
-                                   <button type="button" class="close" data-dismiss="modal">
-                                        <span aria-hidden="true">&times;</span>
-                                   </button>
-                              </div>
-                              <div class="modal-body">
-                                   <form class="col-12 m-1 p-2 mx-auto bg-light rounded" action="#"
-                                        th:action="@{/cliente/modificar}" th:object="${cliente}" method="post">
-                                        <input type="number" class="d-none" id="idClienteModificar"
-                                             th:field="*{id}" />
-                                        <input type="number" class="d-none" id="nroClienteModificar"
-                                             th:field="*{nroCliente}" />
-                                        <div class="form-group row">
-                                             <label for="nombreModificarCliente" class="col-sm-3 col-4">Nombre</label>
-                                             <input type="text" class="form-control col-md-8  col-7"
-                                                  id="nombreModificarCliente" th:field="*{nombre}" />
-                                        </div>
-                                        <div class="form-group row">
-                                             <label for="apellidomodificarCliente" class="col-sm-3 col-4">Apellido</label>
-                                             <input type="text" class="form-control col-md-8 col-7"
-                                                  id="apellidomodificarCliente" th:field="*{apellido}" />
-                                        </div>
-                                        <div class="form-group row">
-                                             <label for="emailmodificarCliente" class="col-sm-3 col-4">Email</label>
-                                             <input type="email" class="form-control col-md-8 col-7"
-                                                  id="emailmodificarCliente" th:field="*{email}" />
-                                        </div>
-                                        <div class="form-group row">
-                                             <label for="dnimodificarCliente" class="col-sm-3 col-4">DNI</label>
-                                             <input type="number" class="form-control col-5" id="dnimodificarCliente"
-                                                  th:field="*{dni}" min="1000000" max="99999999" required/>
-                                        </div>
-                                        <div class="form-group row">
-                                             <label for="fechaDeNacmodificarCliente" class="col-sm-3 col-4">Fecha de
-                                                  Nac.</label>
-                                             <input type="date" class="form-control col-5" id="fechaDeNacmodificarCliente"
-                                                  th:field="*{fechaNacimiento}" />
-                                        </div>
-                                        <div class="text-center">
-                                             <button type="submit" class="btn btn-primary">Guardar</button>
-                                        </div>
-                                   </form>
-                              </div>
+          </div>
+          <form class="col-11 col-sm-8 col-md-7 m-1 p-2 mx-auto bg-light rounded collapse" id="collapseForm" action="#"
+               th:action="@{/cliente/agregar}" th:object="${cliente}" method="post">
+               <div class="form-group row">
+                    <label for="nombreNuevoCliente" class="col-md-2 col-3">Nombre</label>
+                    <input type="text" class="form-control col-md-9 col-8" id="nombreNuevoCliente"
+                         th:field="*{nombre}" />
+               </div>
+               <div class="form-group row">
+                    <label for="apellidoNuevoCliente" class="col-md-2 col-3">Apellido</label>
+                    <input type="text" class="form-control col-md-9 col-8" id="apellidoNuevoCliente"
+                         th:field="*{apellido}" />
+               </div>
+               <div class="form-group row">
+                    <label for="emailNuevoCliente" class="col-md-2 col-3">Email</label>
+                    <input type="email" class="form-control col-md-9 col-8" id="emailNuevoCliente"
+                         th:field="*{email}" />
+               </div>
+               <div class="form-group row">
+                    <label for="dniNuevoCliente" class="col-md-2 col-3">DNI</label>
+                    <input type="number" class="form-control col-sm-4 col-5" id="dniNuevoCliente" th:field="*{dni}"
+                         min="1000000" max="99999999" required/>
+               	<p th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}">DNI tiene errores</p>
+               </div>
+               <div class="form-group row">
+                    <label for="fechaNacNuevoCliente" class="col-md-2 col-3">Fecha de Nac.</label>
+                    <input type="date" class="form-control col-sm-4 col-5" id="fechaNacNuevoCliente"
+                         th:field="*{fechaNacimiento}" />
+               </div>
+               <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+               </div>
+          </form>
+          <!-- MODAL EDIT CLIENT -->
+          <div class="modal fade" id="modifyClient" tabindex="-1" role="dialog">
+               <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                         <div class="modal-header">
+                              <h5 class="modal-title" id="tituloModificarCliente"></h5>
+                              <button type="button" class="close" data-dismiss="modal">
+                                   <span aria-hidden="true">&times;</span>
+                              </button>
+                         </div>
+                         <div class="modal-body">
+                              <form class="col-12 m-1 p-2 mx-auto bg-light rounded" action="#"
+                                   th:action="@{/cliente/modificar}" th:object="${cliente}" method="post">
+                                   <input type="number" class="d-none" id="idClienteModificar"
+                                        th:field="*{id}" />
+                                   <input type="number" class="d-none" id="nroClienteModificar"
+                                        th:field="*{nroCliente}" />
+                                   <div class="form-group row">
+                                        <label for="nombreModificarCliente" class="col-sm-3 col-4">Nombre</label>
+                                        <input type="text" class="form-control col-md-8  col-7"
+                                             id="nombreModificarCliente" th:field="*{nombre}" />
+                                   </div>
+                                   <div class="form-group row">
+                                        <label for="apellidomodificarCliente" class="col-sm-3 col-4">Apellido</label>
+                                        <input type="text" class="form-control col-md-8 col-7"
+                                             id="apellidomodificarCliente" th:field="*{apellido}" />
+                                   </div>
+                                   <div class="form-group row">
+                                        <label for="emailmodificarCliente" class="col-sm-3 col-4">Email</label>
+                                        <input type="email" class="form-control col-md-8 col-7"
+                                             id="emailmodificarCliente" th:field="*{email}" />
+                                   </div>
+                                   <div class="form-group row">
+                                        <label for="dnimodificarCliente" class="col-sm-3 col-4">DNI</label>
+                                        <input type="number" class="form-control col-5" id="dnimodificarCliente"
+                                             th:field="*{dni}" min="1000000" max="99999999" required/>
+                                   </div>
+                                   <div class="form-group row">
+                                        <label for="fechaDeNacmodificarCliente" class="col-sm-3 col-4">Fecha de
+                                             Nac.</label>
+                                        <input type="date" class="form-control col-5" id="fechaDeNacmodificarCliente"
+                                             th:field="*{fechaNacimiento}" />
+                                   </div>
+                                   <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                   </div>
+                              </form>
                          </div>
                     </div>
                </div>
