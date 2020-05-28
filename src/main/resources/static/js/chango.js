@@ -8,9 +8,11 @@ async function agregarItem(element) {
           if (response.status != 201) {
                throw new Error(response);
           }
-          let html = await response.text();
+          let htmlItem = await response.text();
           // Agrega el item a la tabla del chango
-          document.getElementById("tablaChango").innerHTML += html;
+          let template = document.createElement('template');
+          template.innerHTML =  htmlItem.trim();
+          document.getElementById("tablaChango").appendChild(template.content.firstChild);
           // Deshabilita el boton de agregar en la lista de productos
           element.innerText = "LISTO";
           element.disabled = true;
@@ -59,4 +61,13 @@ function actualizarTotal(element) {
           total += (precio * cantidad);
      }
      document.getElementById("total").innerText =  '$' + total;
+}
+
+function modificarCantidad(element, valor) {
+     let cantidadInput = document.getElementById("cantidad-item" + element.dataset.iditem);
+     let nuevaCantidad = parseInt(cantidadInput.value) + valor;
+     if(nuevaCantidad > 0) {
+          cantidadInput.value = nuevaCantidad;
+          actualizarTotal();
+     }
 }

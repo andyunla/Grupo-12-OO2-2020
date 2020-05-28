@@ -9,7 +9,10 @@
                          <button
                               class="btn btn-outline-info btn-sm btn-cart"
                               data-toggle="tooltip" data-placement="top"
-                              title="Restar" type="button">
+                              title="Restar" type="button"
+                              th:attr="'data-idItem' = ${item.idItem}"
+                              onclick="modificarCantidad(this, -1)"
+                         >
                               <svg th:replace="fragments/icons :: subtractIcon"></svg>
                          </button>
                     </div>
@@ -22,7 +25,10 @@
                          <button
                               class="btn btn-outline-info btn-sm btn-cart"
                               data-toggle="tooltip" data-placement="top"
-                              title="Agregar" type="button">
+                              title="Agregar" type="button"
+                              th:attr="'data-idItem' = ${item.idItem}"
+                              onclick="modificarCantidad(this, 1)"
+                         >
                               <svg th:replace="fragments/icons :: addIcon"></svg>
                          </button>
                          <button class="btn btn-outline-danger btn-sm"
