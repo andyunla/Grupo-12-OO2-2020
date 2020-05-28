@@ -129,22 +129,23 @@
                               <td th:text="${local.direccion}"></td>
                               <td th:text="${local.telefono}"></td>
                               <td th:text="${local.gerenteLegajo}"></td>
-                              <td class="d-flex justify-content-around">
-                                   <div data-toggle="tooltip" data-placement="top" title="Modificar">
-                                        <a href="#" data-toggle="modal" data-target="#modifyLocal" class="modifyButton">
-                                             <img th:src="@{/images/pencil.png}" alt="" class="list-icon edit-icon"
-                                                  th:attr="data-index=${localStat.index}" />
-                                        </a>
-                                   </div>
-                                   <form th:action="@{/local/eliminar/{idLocal}(idLocal = ${local.idLocal})}"
-                                        method="POST" data-toggle="tooltip" data-placement="top" title="Eliminar">
-                                        <button type="submit" class="delete-button">
-                                             <img th:src="@{/images/trashcan.png}" alt=""
-                                                  class="list-icon delete-icon" />
-                                        </button>
-                                   </form>
-                              </td>
-
+                              <div th:if="${isGerente}">
+                                   <td class="d-flex justify-content-around">
+                                        <div data-toggle="tooltip" data-placement="top" title="Modificar">
+                                             <a href="#" data-toggle="modal" data-target="#modifyLocal" class="modifyButton">
+                                                  <img th:src="@{/images/pencil.png}" alt="" class="list-icon edit-icon"
+                                                       th:attr="data-index=${localStat.index}" />
+                                             </a>
+                                        </div>
+                                        <form th:action="@{/local/eliminar/{idLocal}(idLocal = ${local.idLocal})}"
+                                             method="POST" data-toggle="tooltip" data-placement="top" title="Eliminar">
+                                             <button type="submit" class="delete-button">
+                                                  <img th:src="@{/images/trashcan.png}" alt=""
+                                                       class="list-icon delete-icon" />
+                                             </button>
+                                        </form>
+                                   </td>
+                              </div>
                          </tr>
                     </tbody>
                </table>
