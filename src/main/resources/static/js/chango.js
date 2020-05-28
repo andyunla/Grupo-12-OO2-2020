@@ -64,10 +64,34 @@ function actualizarTotal(element) {
 }
 
 function modificarCantidad(element, valor) {
+     // El valor es la cantidad a sumar o restar de la cantidad actual
      let cantidadInput = document.getElementById("cantidad-item" + element.dataset.iditem);
      let nuevaCantidad = parseInt(cantidadInput.value) + valor;
+     // Verifica que la cantidad no llegue a cero en caso de estar restando
      if(nuevaCantidad > 0) {
           cantidadInput.value = nuevaCantidad;
           actualizarTotal();
+     }
+}
+
+function buscar(){
+     let valorBuscado = document.querySelector('input[type=search]').value;
+     // Obtiene la lista <tr> de filas de la tabla
+     let elementosProducto = document.getElementById("productosDisponibles").children;    
+     if( valorBuscado != "" ) {
+          for(let filaProducto of elementosProducto) {
+               // Si el producto de la fila incluye el valor buscado se quitará si invisibilidad, en caso de tenerla
+               if( filaProducto.children[1].innerText.includes(valorBuscado) ) {
+                    filaProducto.classList.remove('d-none');
+               } else {
+                    // Si el producto de la fila no incluye el valor buscado se lo hará invisible
+                    filaProducto.classList.add('d-none');
+               }
+          }
+     //Si el valor buscado es una cadena vacía entonces visualizará todos los productos
+     } else {
+          for(let filaProducto of elementosProducto) {
+               filaProducto.classList.remove('d-none');
+          }
      }
 }
