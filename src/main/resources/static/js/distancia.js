@@ -3,16 +3,16 @@ const url = host + "/distancia/traer";
 //const url = host + "/api/v1/local/distancia/";
 
 window.onload = () => {
-     let localDesde = document.getElementById("localDesde");
+     let localActual = document.getElementById("localActual");
      let productoDeLotes = document.getElementById("productoDeLotes");
      let cantidadProducto = document.getElementById("cantidadProducto");
 
      function listarMasCercanos() {
-          if (localDesde.selectedIndex != 0 && productoDeLotes.selectedIndex != 0 && cantidadProducto.value > 0) {
-               let idLocalDesde = localDesde.options[localDesde.selectedIndex].value;
+          if (productoDeLotes.selectedIndex != 0 && cantidadProducto.value > 0) {
+               let idLocalActual = localActual.value;
                let idProductoDeLotes = productoDeLotes.options[productoDeLotes.selectedIndex].value;
                let cantidad = cantidadProducto.value;
-               fetch(url + "/" + idLocalDesde + "/" + idProductoDeLotes + "/" + cantidad)
+               fetch(url + "/" + idLocalActual + "/" + idProductoDeLotes + "/" + cantidad)
                     .then(response => response.text())
                     .then(html => {
                          document.querySelector("tbody").innerHTML = html;
@@ -23,7 +23,6 @@ window.onload = () => {
           }
      }
 
-     localDesde.addEventListener('change', listarMasCercanos);
      productoDeLotes.addEventListener('change', listarMasCercanos);
      cantidadProducto.addEventListener('input', listarMasCercanos);
 }

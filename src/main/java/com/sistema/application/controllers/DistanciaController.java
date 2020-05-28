@@ -3,10 +3,13 @@ package com.sistema.application.controllers;
 import com.sistema.application.converters.LocalConverter;
 import com.sistema.application.dto.LocalDistanciaDto;
 import com.sistema.application.dto.LocalDto;
+import com.sistema.application.entities.Empleado;
+import com.sistema.application.entities.Local;
 import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.LocalModel;
 import com.sistema.application.models.ProductoModel;
+import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.IProductoService;
 
@@ -33,6 +36,9 @@ public class DistanciaController {
 	@Qualifier("localConverter")
 	private LocalConverter localConverter;
 	@Autowired
+	@Qualifier("userRepository")
+	private IUserRepository userRepository;
+	@Autowired
 	@Qualifier("localService")
 	private ILocalService localService;
 	@Autowired
@@ -54,6 +60,9 @@ public class DistanciaController {
 		for (LocalModel model : localesModels) {
 			locales.add(localConverter.modelToDto(model));
 		}
+		// Obtenemos el local actual donde trabaja el usuario
+		LocalModel localActual = this.getLocalGivenUser(user.getUsername());
+		modelo.addAttribute("local", localActual);
 		modelo.addAttribute("locales", locales);
 		modelo.addAttribute("productos", productoService.getAllModel());
 		return ViewRouteHelper.DISTANCIA_ROOT;
@@ -77,5 +86,18 @@ public class DistanciaController {
 		}
 		mAV.addObject("localesCercanos", localesCercanos);
 		return mAV;
+	}
+	
+	/**
+	* Método que retorna el local donde trabaja el usuario
+	* que está logueado actualmente dado su username
+	* @param username Tipo String. Ej: 'empleado1'
+	* @return LocalModel
+	*/
+	private LocalModel getLocalGivenUser(String username) {
+		com.sistema.application.entities.User user = userRepository.findByUsernameAndFetchUserRolesEagerly(username);
+		Local local = user.getEmpleado().getLocal();
+		return localConverter.entityToModel(local);
+		
 	}
 }
