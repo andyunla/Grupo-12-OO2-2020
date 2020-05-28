@@ -12,57 +12,127 @@
           <h1 class="display-4">EMPLEADOS</h1>
      </header>
      <main class="w-100 d-flex flex-column align-items-center">
-          <!-- ADD MENU -->
-          <button class="btn btn-info m-3" type="button" data-toggle="collapse" data-target="#collapseForm"
-               id="buttonAgregar">
-               Agregrar
-          </button>
-          <form class="col-11 col-sm-8 col-md-7 m-1 p-2 mx-auto bg-light rounded collapse" id="collapseForm" action="#"
-               th:action="@{/empleado/agregar}" th:object="${empleado}" method="post">
-               <div class="form-group row">
-                    <label for="nombreNuevoEmpleado" class="col-md-2 col-3">Nombre</label>
-                    <input type="text" class="form-control col-md-9 col-8" id="nombreNuevoEmpleado"
-                         th:field="*{nombre}" />
+          <!-- Si el usuario es del tipo GERENTE -->
+          <div th:if="${isGerente}">
+               <!-- ADD MENU -->
+               <button class="btn btn-info m-3" type="button" data-toggle="collapse" data-target="#collapseForm"
+                    id="buttonAgregar">
+                    Agregrar
+               </button>
+               <form class="col-11 col-sm-8 col-md-7 m-1 p-2 mx-auto bg-light rounded collapse" id="collapseForm" action="#"
+                    th:action="@{/empleado/agregar}" th:object="${empleado}" method="post">
+                    <div class="form-group row">
+                         <label for="nombreNuevoEmpleado" class="col-md-2 col-3">Nombre</label>
+                         <input type="text" class="form-control col-md-9 col-8" id="nombreNuevoEmpleado"
+                              th:field="*{nombre}" />
+                    </div>
+                    <div class="form-group row">
+                         <label for="apellidoNuevoEmpleado" class="col-md-2 col-3">Apellido</label>
+                         <input type="text" class="form-control col-md-9 col-8" id="apellidoNuevoEmpleado"
+                              th:field="*{apellido}" />
+                    </div>
+                    <div class="form-group row">
+                         <label for="dniNuevoEmpleado" class="col-md-2 col-3">DNI</label>
+                         <input type="number" class="form-control col-sm-4 col-5" id="dniNuevoEmpleado" th:field="*{dni}" />
+                    </div>
+                    <div class="form-group row">
+                         <label for="fechaNacNuevoEmpleado" class="col-md-2 col-3">Fecha de Nac.</label>
+                         <input type="date" class="form-control col-sm-4 col-5" id="fechaNacNuevoEmpleado"
+                              th:field="*{fechaNacimiento}" />
+                    </div>
+                    <div class="form-group row">
+                         <label for="horaDesdeNuevoEmpleado" class="col-md-2 col-3">Horario de llegada</label>
+                         <input type="time" class="form-control col-sm-4 col-5" id="horaDesdeNuevoEmpleado"
+                              th:field="*{horaDesde}" />
+                    </div>
+                    <div class="form-group row">
+                         <label for="horaHastaNuevoEmpleado" class="col-md-2 col-3">Horario de salida</label>
+                         <input type="time" class="form-control col-sm-4 col-5" id="horaHastaNuevoEmpleado"
+                              th:field="*{horaHasta}" />
+                    </div>
+                    <div class="form-group row">
+                         <label for="sueldoNuevoEmpleado" class="col-md-2 col-3">Sueldo básico</label>
+                         <input type="number" class="form-control col-sm-4 col-5" id="sueldoNuevoEmpleado"
+                              th:field="*{sueldoBasico}" />
+                    </div>
+                    <div class="form-group row">
+                         <label for="localModificarEmpleado" class="col-md-2 col-3">Local</label>
+                         <select placeholder="Local" th:field="*{local.idLocal}" class="custom-select col-md-9 col-8" id="localModificarEmpleado">
+                              <option th:each="l: ${locales}" th:value="${l.idLocal}" th:text="${l.nombreLocal}"></option>
+                         </select>
+                    </div>
+                    <div class="text-center">
+                         <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+               </form>
+               <!-- MODAL EDIT EMPLOYEE -->
+               <div class="modal fade" id="modifyEmpleado" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                         <div class="modal-content">
+                              <div class="modal-header">
+                                   <h5 class="modal-title" id="tituloModificarEmpleado"></h5>
+                                   <button type="button" class="close" data-dismiss="modal">
+                                        <span aria-hidden="true">&times;</span>
+                                   </button>
+                              </div>
+                              <div class="modal-body">
+                                   <form class="col-12 m-1 p-2 mx-auto bg-light rounded" action="#"
+                                        th:action="@{/empleado/modificar}" th:object="${empleado}" method="post">
+                                        <input type="number" class="d-none" id="idEmpleadoModificar"
+                                             th:field="*{id}" />
+                                        <input type="number" class="d-none" id="legajoEmpleadoModificar"
+                                             th:field="*{legajo}" />
+                                        <div class="form-group row">
+                                             <label for="nombreModificarEmpleado" class="col-sm-3 col-4">Nombre</label>
+                                             <input type="text" class="form-control col-md-8  col-7"
+                                                  id="nombreModificarEmpleado" th:field="*{nombre}" />
+                                        </div>
+                                        <div class="form-group row">
+                                             <label for="apellidoModificarEmpleado" class="col-sm-3 col-4">Apellido</label>
+                                             <input type="text" class="form-control col-md-8 col-7"
+                                                  id="apellidoModificarEmpleado" th:field="*{apellido}" />
+                                        </div>
+                                        <div class="form-group row">
+                                             <label for="dniModificarEmpleado" class="col-sm-3 col-4">DNI</label>
+                                             <input type="number" class="form-control col-5" id="dniModificarEmpleado"
+                                                  th:field="*{dni}" />
+                                        </div>
+                                        <div class="form-group row">
+                                             <label for="fechaDeNacModificarEmpleado" class="col-sm-3 col-4">Fecha de
+                                                  Nac.</label>
+                                             <input type="date" class="form-control col-5" id="fechaDeNacModificarEmpleado"
+                                                  th:field="*{fechaNacimiento}" />
+                                        </div>
+                                        <div class="form-group row">
+                                             <label for="horaDesdeModificarEmpleado" class="col-sm-3 col-4">Horario de entrada</label>
+                                             <input type="time" class="form-control col-5" id="horaDesdeModificarEmpleado"
+                                                  th:field="*{horaDesde}" />
+                                        </div>
+                                        <div class="form-group row">
+                                             <label for="horaHastaModificarEmpleado" class="col-sm-3 col-4">Horario de salida</label>
+                                             <input type="time" class="form-control col-5" id="horaHastaModificarEmpleado"
+                                                  th:field="*{horaHasta}" />
+                                        </div>
+                                        <div class="form-group row">
+                                             <label for="sueldoModificarEmpleado" class="col-sm-3 col-4">Sueldo básico</label>
+                                             <input type="number" class="form-control col-5" id="sueldoModificarEmpleado"
+                                                  th:field="*{sueldoBasico}" />
+                                        </div>
+                                        <div class="form-group row">
+                                             <label for="localModificarEmpleado" class="col-sm-3 col-4">Local</label>
+                                             <select placeholder="Local" th:field="*{local.idLocal}" class="custom-select col-md-8 col-7" id="localModificarEmpleado">
+                                                  <option th:each="l: ${locales}" th:value="${l.idLocal}" th:text="${l.nombreLocal}"></option>
+                                             </select>
+                                        </div>
+                                        <div class="text-center">
+                                             <button type="submit" class="btn btn-primary">Guardar</button>
+                                        </div>
+                                   </form>
+                              </div>
+                         </div>
+                    </div>
                </div>
-               <div class="form-group row">
-                    <label for="apellidoNuevoEmpleado" class="col-md-2 col-3">Apellido</label>
-                    <input type="text" class="form-control col-md-9 col-8" id="apellidoNuevoEmpleado"
-                         th:field="*{apellido}" />
-               </div>
-               <div class="form-group row">
-                    <label for="dniNuevoEmpleado" class="col-md-2 col-3">DNI</label>
-                    <input type="number" class="form-control col-sm-4 col-5" id="dniNuevoEmpleado" th:field="*{dni}" />
-               </div>
-               <div class="form-group row">
-                    <label for="fechaNacNuevoEmpleado" class="col-md-2 col-3">Fecha de Nac.</label>
-                    <input type="date" class="form-control col-sm-4 col-5" id="fechaNacNuevoEmpleado"
-                         th:field="*{fechaNacimiento}" />
-               </div>
-               <div class="form-group row">
-                    <label for="horaDesdeNuevoEmpleado" class="col-md-2 col-3">Horario de llegada</label>
-                    <input type="time" class="form-control col-sm-4 col-5" id="horaDesdeNuevoEmpleado"
-                         th:field="*{horaDesde}" />
-               </div>
-               <div class="form-group row">
-                    <label for="horaHastaNuevoEmpleado" class="col-md-2 col-3">Horario de salida</label>
-                    <input type="time" class="form-control col-sm-4 col-5" id="horaHastaNuevoEmpleado"
-                         th:field="*{horaHasta}" />
-               </div>
-               <div class="form-group row">
-                    <label for="sueldoNuevoEmpleado" class="col-md-2 col-3">Sueldo básico</label>
-                    <input type="number" class="form-control col-sm-4 col-5" id="sueldoNuevoEmpleado"
-                         th:field="*{sueldoBasico}" />
-               </div>
-               <div class="form-group row">
-                    <label for="localModificarEmpleado" class="col-md-2 col-3">Local</label>
-                    <select placeholder="Local" th:field="*{local.idLocal}" class="custom-select col-md-9 col-8" id="localModificarEmpleado">
-                         <option th:each="l: ${locales}" th:value="${l.idLocal}" th:text="${l.nombreLocal}"></option>
-                    </select>
-               </div>
-               <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-               </div>
-          </form>
+          </div>
           <!-- LIST -->
           <div class="container-fluid col-12 col-md-11 text-center table-responsive">
                <table class="table w-100 shadow mb-3 bg-white rounded">
@@ -110,73 +180,6 @@
                          </tr>
                     </tbody>
                </table>
-          </div>
-          <!-- MODAL EDIT EMPLOYEE -->
-          <div class="modal fade" id="modifyEmpleado" tabindex="-1" role="dialog">
-               <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                         <div class="modal-header">
-                              <h5 class="modal-title" id="tituloModificarEmpleado"></h5>
-                              <button type="button" class="close" data-dismiss="modal">
-                                   <span aria-hidden="true">&times;</span>
-                              </button>
-                         </div>
-                         <div class="modal-body">
-                              <form class="col-12 m-1 p-2 mx-auto bg-light rounded" action="#"
-                                   th:action="@{/empleado/modificar}" th:object="${empleado}" method="post">
-                                   <input type="number" class="d-none" id="idEmpleadoModificar"
-                                        th:field="*{id}" />
-                                   <input type="number" class="d-none" id="legajoEmpleadoModificar"
-                                        th:field="*{legajo}" />
-                                   <div class="form-group row">
-                                        <label for="nombreModificarEmpleado" class="col-sm-3 col-4">Nombre</label>
-                                        <input type="text" class="form-control col-md-8  col-7"
-                                             id="nombreModificarEmpleado" th:field="*{nombre}" />
-                                   </div>
-                                   <div class="form-group row">
-                                        <label for="apellidoModificarEmpleado" class="col-sm-3 col-4">Apellido</label>
-                                        <input type="text" class="form-control col-md-8 col-7"
-                                             id="apellidoModificarEmpleado" th:field="*{apellido}" />
-                                   </div>
-                                   <div class="form-group row">
-                                        <label for="dniModificarEmpleado" class="col-sm-3 col-4">DNI</label>
-                                        <input type="number" class="form-control col-5" id="dniModificarEmpleado"
-                                             th:field="*{dni}" />
-                                   </div>
-                                   <div class="form-group row">
-                                        <label for="fechaDeNacModificarEmpleado" class="col-sm-3 col-4">Fecha de
-                                             Nac.</label>
-                                        <input type="date" class="form-control col-5" id="fechaDeNacModificarEmpleado"
-                                             th:field="*{fechaNacimiento}" />
-                                   </div>
-                                   <div class="form-group row">
-                                        <label for="horaDesdeModificarEmpleado" class="col-sm-3 col-4">Horario de entrada</label>
-                                        <input type="time" class="form-control col-5" id="horaDesdeModificarEmpleado"
-                                             th:field="*{horaDesde}" />
-                                   </div>
-                                   <div class="form-group row">
-                                        <label for="horaHastaModificarEmpleado" class="col-sm-3 col-4">Horario de salida</label>
-                                        <input type="time" class="form-control col-5" id="horaHastaModificarEmpleado"
-                                             th:field="*{horaHasta}" />
-                                   </div>
-                                   <div class="form-group row">
-                                        <label for="sueldoModificarEmpleado" class="col-sm-3 col-4">Sueldo básico</label>
-                                        <input type="number" class="form-control col-5" id="sueldoModificarEmpleado"
-                                             th:field="*{sueldoBasico}" />
-                                   </div>
-                                   <div class="form-group row">
-                                        <label for="localModificarEmpleado" class="col-sm-3 col-4">Local</label>
-                                        <select placeholder="Local" th:field="*{local.idLocal}" class="custom-select col-md-8 col-7" id="localModificarEmpleado">
-                                             <option th:each="l: ${locales}" th:value="${l.idLocal}" th:text="${l.nombreLocal}"></option>
-                                        </select>
-                                   </div>
-                                   <div class="text-center">
-                                        <button type="submit" class="btn btn-primary">Guardar</button>
-                                   </div>
-                              </form>
-                         </div>
-                    </div>
-               </div>
           </div>
      </main>
      <footer th:replace="fragments/footer :: footer"></footer>
