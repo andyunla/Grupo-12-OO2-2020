@@ -1,5 +1,4 @@
-<tr th:if="${item}">
-     <td class="d-none" th:text="${item.getProductoModel().idProducto}"></td>
+<tr th:if="${item}" class="item" th:id="'item' + ${item.idItem}" >
      <td class="width-30" th:text="${item.getProductoModel().nombre}"></td>
      <td class="width-10" th:text="${item.getProductoModel().talle}"></td>
      <td class="width-20" th:text="${item.getProductoModel().precio}"></td>
@@ -16,7 +15,9 @@
                     </div>
                     <input type="number" th:value="${item.cantidad}" min="1"
                          class="form-control text-center border-info no-arrows"
-                         style="min-width: 2em !important; padding: 0;">
+                         style="min-width: 2em !important; padding: 0;"
+                         th:id="'cantidad-item' + ${item.idItem}"
+                         onchange="actualizarTotal(this)">
                     <div class="input-group-append">
                          <button
                               class="btn btn-outline-info btn-sm btn-cart"
