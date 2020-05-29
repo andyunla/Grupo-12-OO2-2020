@@ -9,14 +9,11 @@
           <h1 class="display-4">CLIENTES</h1>
      </header>
      <main class="w-100 d-flex flex-column align-items-center">
-          <!-- Si el usuario es del tipo GERENTE -->
-          <div th:if="${isGerente}">
-               <!-- ADD MENU -->
-               <button class="btn btn-info m-3" type="button" data-toggle="collapse" data-target="#collapseForm"
-                    id="buttonAgregar">
-                    Agregrar
-               </button>
-          </div>
+          <!-- ADD MENU -->
+          <button class="btn btn-info m-3" type="button" data-toggle="collapse" data-target="#collapseForm"
+               id="buttonAgregar">
+               Agregrar
+          </button>
           <form class="col-11 col-sm-8 col-md-7 m-1 p-2 mx-auto bg-light rounded collapse" id="collapseForm" action="#"
                th:action="@{/cliente/agregar}" th:object="${cliente}" method="post">
                <div class="form-group row">
@@ -124,24 +121,22 @@
                               <td th:text="${cliente.fechaNacimiento}"></td>
                               <td th:text="${cliente.email}"></td>
                               <td th:text="${cliente.nroCliente}"></td>
-                              <div th:if="${isGerente}">
-                                   <td class="d-flex justify-content-around">
-                                        <div data-toggle="tooltip" data-placement="top" title="Modificar">
-                                             <a href="#" data-toggle="modal" data-target="#modifyClient"
-                                                  class="modifyButton">
-                                                  <img th:src="@{/images/pencil.png}" alt="" class="list-icon edit-icon"
-                                                       th:attr="data-index=${clienteStat.index}" />
-                                             </a>
-                                        </div>
-                                        <form th:action="@{/cliente/eliminar/{id}(id = ${cliente.id})}"
-                                             method="POST" data-toggle="tooltip" data-placement="top" title="Eliminar">
-                                             <button type="submit" class="delete-button">
-                                                  <img th:src="@{/images/trashcan.png}" alt=""
-                                                       class="list-icon delete-icon" />
-                                             </button>
-                                        </form>
-                                   </td>
-                              </div>
+                              <td class="d-flex justify-content-around">
+                                   <div data-toggle="tooltip" data-placement="top" title="Modificar">
+                                        <a href="#" data-toggle="modal" data-target="#modifyClient"
+                                             class="modifyButton">
+                                             <img th:src="@{/images/pencil.png}" alt="" class="list-icon edit-icon"
+                                                  th:attr="data-index=${clienteStat.index}" />
+                                        </a>
+                                   </div>
+                                   <form th:action="@{/cliente/eliminar/{id}(id = ${cliente.id})}"
+                                        method="POST" data-toggle="tooltip" data-placement="top" title="Eliminar">
+                                        <button type="submit" class="delete-button">
+                                             <img th:src="@{/images/trashcan.png}" alt=""
+                                                  class="list-icon delete-icon" />
+                                        </button>
+                                   </form>
+                              </td>
                          </tr>
                     </tbody>
                </table>
