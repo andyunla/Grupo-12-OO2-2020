@@ -16,11 +16,14 @@
                               <svg th:replace="fragments/icons :: subtractIcon"></svg>
                          </button>
                     </div>
-                    <input type="number" th:value="${item.cantidad}" min="1"
-                         class="form-control text-center border-info no-arrows"
-                         style="min-width: 2em !important; padding: 0;"
-                         th:id="'cantidad-item' + ${item.idItem}"
-                         onchange="actualizarTotal(this)">
+                    <form onsubmit="return false">
+                         <input type="number" th:value="${item.cantidad}" min="1"
+                              class="form-control text-center border-info no-arrows"
+                              style="min-width: 2em !important; padding: 0;"
+                              th:id="'cantidad-item' + ${item.idItem}"
+                              th:attr="'data-idItem' = ${item.idItem}"
+                              onchange="modificarCantidad(this)">
+                    </form>
                     <div class="input-group-append">
                          <button
                               class="btn btn-outline-info btn-sm btn-cart"

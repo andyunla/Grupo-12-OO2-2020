@@ -7,7 +7,6 @@ import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.ItemModel;
 import com.sistema.application.models.LocalModel;
-import com.sistema.application.models.PedidoStockModel;
 import com.sistema.application.models.ProductoModel;
 import com.sistema.application.services.IChangoService;
 import com.sistema.application.services.IItemService;
@@ -22,7 +21,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,69 +57,88 @@ public class ChangoController {
      /* NUEVO CHANGO */
      @GetMapping("")
      public String chango(Model modelo) {
-          // Uso un local que será extraido del empleado logueado
+          //TODO: Usar un local que será extraido del empleado logueado
           LocalModel localActual = localService.findByIdLocal(1);
-          // Establezco los atributos de la instancia del local actual a la instancia componente
           localModel.setInstance(localActual);
-          // Selecciono de todos los productos solo los que tienen por lo menos 1 en stock en este local 
+          // Selecciono de todos los productos solo los que tienen por lo menos 1 en stock en el local
           List<ProductoModel> productosConStock = new ArrayList<ProductoModel>();
           for (ProductoModel p : productoService.getAllModel()) {
                if (localModel.validarStock(p, 1)) {
-                    productosConStock.add(p);    
+                    productosConStock.add(p);
                }
           }
-          // Se envía a la vista un chango nuevo y la lista de productos con stock del local
           ChangoModel nuevoChango = localModel.crearChango();
           modelo.addAttribute("productos", productosConStock);
-          modelo.addAttribute("chango", nuevoChango);  
+          modelo.addAttribute("chango", nuevoChango);
           return ViewRouteHelper.CHANGO_ROOT;
-          //TODO Buscar donde se auto eliminarán aquellos changos guardados sin items
-     }  
-        
+     }
+
      // Agrega un nuevo item al chango, su cantidad será 1
-     @PostMapping("nuevo-item/{idChango}/{idProducto}") 
-     public ModelAndView agregar(@PathVariable("idChango") long idChango,
-          @PathVariable("idProducto") long idProducto) 
-     {
+     @PostMapping("nuevo-item/{idChango}/{idProducto}")
+     public ModelAndView agregarItem(@PathVariable("idChango") long idChango, @PathVariable("idProducto") long idProducto) {
+          localModel.setInstance(localService.findByIdLocal(1));
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.ITEM);
           // Verifico que el producto elegido no esté ya en un item del chango
-          if( itemService.findByChangoAndProducto(idChango, idProducto) == null){
-               ItemModel item = itemService.insertOrUpdate( 
-                    new ItemModel(1, productoService.findByIdProducto(idProducto), changoService.findByIdChango(idChango) ));
-               mAV.addObject("item", item);  
-               mAV.setStatus(HttpStatus.CREATED);
+          if (itemService.findByChangoAndProducto(idChango, idProducto) == null) {
+               ItemModel newItem = new ItemModel(1, productoService.findByIdProducto(idProducto), changoService.findByIdChango(idChango));
+               ItemModel item = itemService.insertOrUpdate(newItem);
+               mAV.addObject("item", item);
+               mAV.setStatus(HttpStatus.CREATED); 
+               localModel.restarLote(item.getProductoModel(), 1);
           } else {
                mAV.setStatus(HttpStatus.NOT_ACCEPTABLE);
-          }  
-          return mAV;              
+          }
+          return mAV;
      }
- 
+
      // Elimina un item de un chango abierto
      @PostMapping("eliminar-item/{idItem}")
      public ResponseEntity<String> eliminarItem(@PathVariable("idItem") long idItem) {
-          if(itemService.remove(idItem)){
+          localModel.setInstance(localService.findByIdLocal(1));
+          ItemModel item = itemService.findByIdItem(idItem);
+          ProductoModel producto = item.getProductoModel();
+          if (itemService.remove(idItem)) {
+               localModel.devolverLote(producto, item.getCantidad());
                return new ResponseEntity<String>(HttpStatus.OK);
           } else {
                return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
-
           }
-          /* TODO:  
-           * Al eliminar un item verificar primero si tiene un pedidoStock con este item de este chango,
-           * de tenerlo eliminar el pedido del chango y luego eliminar el pedido
-           */
-     }
-          
-     // Agrega o resta la cantidad al item 
-     @PostMapping("modificar-item/{idProducto}/{cantidad}")
-     public ModelAndView modificar(@ModelAttribute("chango") ChangoModel chango,
-               @PathVariable("idProducto") long idProducto, @PathVariable("cantidad") int cantidad) {
-          //TODO: a determinar
-          return null;
      }
 
-     /* CHANGO ABIERTO: Vista para permitir retomar un chango creado pero aun sin pedido aprobado ni facturado */
+     // Cambia la cantidad de un item
+     @PostMapping("modificar-item/{idItem}/{nuevaCantidad}")
+     public ResponseEntity<String> modificar(@PathVariable("idItem") long idItem,
+               @PathVariable("nuevaCantidad") int nuevaCantidad) {
+          ItemModel item = itemService.findByIdItem(idItem);
+          localModel.setInstance(localService.findByIdLocal(1));
+          // Verifico si estoy agregando cantidad al item   
+          if (item.getCantidad() < nuevaCantidad) {
+               // Verifico si hay stock en el local
+               if (localModel.validarStock(item.getProductoModel(), nuevaCantidad - item.getCantidad())) {
+                    // Resto a los lotes del local la diferencia entre la nueva cantidad que se sumó
+                    localModel.restarLote(item.getProductoModel(), nuevaCantidad - item.getCantidad());
+               } else {
+                    // No se realizan cambios y devuelvo el una respuesta con la cantidad actual del item
+                    return ResponseEntity.badRequest().body(String.valueOf(item.getCantidad()));
+               }      
+          } else { 
+               // Sumo a los lotes del local la diferencia entre la nueva cantidad que se restó
+               localModel.devolverLote(item.getProductoModel(), item.getCantidad() - nuevaCantidad);
+          }
+          item.setCantidad(nuevaCantidad);
+          itemService.insertOrUpdate(item);
+          return new ResponseEntity<String>(HttpStatus.OK); 
+     }
+
+     /*
+      * CHANGO ABIERTO: Vista para permitir retomar un chango creado pero aun sin
+      * pedido aprobado ni facturado
+      */
 
      /* CHANGOS: Vista de la lista de changos abiertos y cerrados */
 
      /* CHANGO CERRADO: Vista de un chango cerrado, no permite modificar */
+
+     // TODO Buscar donde se auto eliminarán aquellos changos guardados sin items
+
 }

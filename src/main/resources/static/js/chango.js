@@ -1,7 +1,7 @@
-const url = 'http://localhost:8080/chango/';
+const host = 'http://localhost:8080/chango/';
 
 async function agregarItem(element) {
-     let urlNewItem = url + 'nuevo-item/' + element.dataset.idchango + '/' + element.dataset.idproducto;
+     let urlNewItem = host + 'nuevo-item/' + element.dataset.idchango + '/' + element.dataset.idproducto;
      try {
           let response = await fetch(urlNewItem, { method: 'POST' });
           // Verifica si el item fue creado, puede que no si ya existía
@@ -26,7 +26,7 @@ async function agregarItem(element) {
 }
 
 async function eliminarItem(e) {
-     let urlDeleteItem = url + 'eliminar-item/' + e.dataset.iditem;
+     let urlDeleteItem = host + 'eliminar-item/' + e.dataset.iditem;
      try {
           let response = await fetch(urlDeleteItem, { method: 'POST' });
           if (response.status == 200) {
@@ -63,7 +63,42 @@ function actualizarTotal(element) {
      document.getElementById("total").innerText =  '$' + total;
 }
 
-function modificarCantidad(element, valor) {
+async function modificarCantidad(element, valor = 0) {
+     // El valor es la cantidad a sumar o restar de la cantidad actual
+     let cantidadInput = document.getElementById("cantidad-item" + element.dataset.iditem);
+     let nuevaCantidad = parseInt(cantidadInput.value) + valor;
+     // Verifica que la cantidad no llegue a cero en caso de estar restando
+     if(nuevaCantidad > 0) {
+          let url = host + 'modificar-item/' + element.dataset.iditem + '/' + nuevaCantidad;
+          // Desabilita los botones y el campo de modificación hasta obtener una respuesta del servidor
+          element.disabled = true;
+          try {
+               let response = await fetch(url, {method: 'POST'});
+               if(response.status == 200) {
+                    cantidadInput.value = nuevaCantidad;
+               } else {
+                    // Si el servidor no responde OK se asume que es por falta de stock
+                    let htmlAlert = 
+                         '<div class="p-4 alert alert-success alert-dismissible fade show" role="alert">' +
+                              '<strong>STOCK SUPERADO:</strong> No se pudo modificar cantidad' + 
+                              '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                                   '<span aria-hidden="true">&times;</span>' + 
+                              '</button>' + 
+                         '</div> ';
+                    document.getElementById("alertContainer").innerHTML = htmlAlert;
+                    // Se reestablece la cantidad en la vista a la cantidad que tiene en la base de datos
+                    cantidadInput.value = await response.json();
+               }
+               actualizarTotal();
+          } catch(e){
+               console.error(e);
+          } finally {
+               element.disabled = false;
+          }
+     }
+}
+
+function cambiarUnidad(element, valor) {
      // El valor es la cantidad a sumar o restar de la cantidad actual
      let cantidadInput = document.getElementById("cantidad-item" + element.dataset.iditem);
      let nuevaCantidad = parseInt(cantidadInput.value) + valor;
