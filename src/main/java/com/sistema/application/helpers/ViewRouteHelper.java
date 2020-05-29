@@ -20,6 +20,10 @@ public class ViewRouteHelper {
 	public final static String DISTANCIA_ROOT = "cu/distancia";
 	public final static String CHANGO_ROOT = "cu/chango";
 
+	// USER
+	public final static String USER_LOGIN = "user/login";
+	public final static String USER_LOGOUT = "user/logout";
+
 	/**** Redirects *****************************************/
 	public final static String HOME_ROOT = "index";
 	public final static String CLIENTE_ROOT = "cliente";
