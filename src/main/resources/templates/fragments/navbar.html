@@ -12,13 +12,11 @@
                <li class="nav-item" th:classappend="${active=='home'} ? active : ''">
                     <a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
                </li>
-               <!-- Si el usuario es del tipo GERENTE -->
-               <div th:if="${isGerente}">
+               <!-- Si es un GERENTE tiene el permiso de realizar los ABMs del resto de las cosas -->
+               <span th:if="${isGerente}">
                     <li class="nav-item dropdown" th:classappend="${active=='abm'} ? active : ''">
-                         <a class="nav-link dropdown-toggle"
-                              href="#" id="navbarDropdown" role="button"
-                              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                         >
+                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               ABMs
                          </a>
                          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -27,10 +25,13 @@
                               <a class="dropdown-item" th:href="@{/empleado}">Empleados</a>
                               <a class="dropdown-item" th:href="@{/cliente}">Clientes</a>
                               <a class="dropdown-item" th:href="@{/lote}">Lotes</a>
-
                          </div>
                     </li>
-               </div>
+               </span>
+               <span th:unless="${isGerente}">
+                    <a class="nav-link" th:href="@{/cliente}">Clientes</a>
+                    <vr>
+               </span>
                <li class="nav-item" th:classappend="${active=='distancia'} ? active : ''">
                     <a class="nav-link" th:href="@{/distancia}">Distancia</a>
                </li>

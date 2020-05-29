@@ -84,6 +84,8 @@ public class DistanciaController {
 					localModel.calcularStockLocal(model, producto));
 			localesCercanos.add(dto);
 		}
+		// Lista de locales más cercanos dependiendo del stock que tengan disponible dichos locales
+		// respecto a la cantidad que se necesita.
 		mAV.addObject("localesCercanos", localesCercanos);
 		return mAV;
 	}

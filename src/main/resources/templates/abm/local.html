@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-     <head th:replace="fragments/head :: head(title='Local')"></head>
-     <title>Locales</title>
-</head>
+<head th:replace="fragments/head :: head(title='Local')"></head>
 
 <body class="container-fluid m-0 p-0">
      <nav th:replace="fragments/navbar :: navbar(active='abm')"></nav>
@@ -12,11 +9,14 @@
           <h1 class="display-4">LOCALES</h1>
      </header>
      <main class="w-100 d-flex flex-column align-items-center">
-
-          <button class="btn btn-info m-3" type="button" data-toggle="collapse" data-target="#collapseForm"
-               id="buttonAgregar">
-               Agregrar
-          </button>
+          <!-- Si el usuario es del tipo GERENTE -->
+          <div th:if="${isGerente}">
+               <!-- ADD MENU -->
+               <button class="btn btn-info m-3" type="button" data-toggle="collapse" data-target="#collapseForm"
+                    id="buttonAgregar">
+                    Agregrar
+               </button>
+          </div>
           <form class="col-11 col-sm-8 col-md-7 m-1 p-2 mx-auto bg-light rounded collapse" id="collapseForm" action="#"
                th:action="@{/local/agregar}" th:object="${local}" method="post">
                <div class="form-group row">
@@ -48,51 +48,7 @@
                     <button type="submit" class="btn btn-primary">Guardar</button>
                </div>
           </form>
-          <!-- LIST -->
-          <div class="container-fluid col-12 col-md-11 text-center table-responsive">
-               <table class="table w-100 shadow mb-3 bg-white rounded">
-                    <thead class="thead-dark">
-                         <tr>
-                              <th scope="col">ID</th>
-                              <th scope="col">Nombre</th>
-                              <th scope="col">Latitud</th>
-                              <th scope="col">Longitud</th>
-                              <th scope="col">Dirección</th>
-                              <th scope="col">Telefono</th>
-                              <th scope="col">Leg. Gerente</th>
-                              <th></th>
-                         </tr>
-                    </thead>
-                    <tbody>
-                         <tr th:each="local :${locales}">
-                              <td th:text="${local.idLocal}"></td>
-                              <td th:text="${local.nombreLocal}"></td>
-                              <td th:text="${local.latitud}"></td>
-                              <td th:text="${local.longitud}"></td>
-                              <td th:text="${local.direccion}"></td>
-                              <td th:text="${local.telefono}"></td>
-                              <td th:text="${local.gerenteLegajo}"></td>
-                              <td class="d-flex justify-content-around">
-                                   <div data-toggle="tooltip" data-placement="top" title="Modificar">
-                                        <a href="#" data-toggle="modal" data-target="#modifyLocal" class="modifyButton">
-                                             <img th:src="@{/images/pencil.png}" alt="" class="list-icon edit-icon"
-                                                  th:attr="data-index=${localStat.index}" />
-                                        </a>
-                                   </div>
-                                   <form th:action="@{/local/eliminar/{idLocal}(idLocal = ${local.idLocal})}"
-                                        method="POST" data-toggle="tooltip" data-placement="top" title="Eliminar">
-                                        <button type="submit" class="delete-button">
-                                             <img th:src="@{/images/trashcan.png}" alt=""
-                                                  class="list-icon delete-icon" />
-                                        </button>
-                                   </form>
-                              </td>
-
-                         </tr>
-                    </tbody>
-               </table>
-          </div>
-
+          <!-- MODAL EDIT LOCAL -->
           <div class="modal fade" id="modifyLocal" tabindex="-1" role="dialog">
                <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -145,6 +101,51 @@
                          </div>
                     </div>
                </div>
+          </div>
+          <!-- LIST -->
+          <div class="container-fluid col-12 col-md-11 text-center table-responsive">
+               <table class="table w-100 shadow mb-3 bg-white rounded">
+                    <thead class="thead-dark">
+                         <tr>
+                              <th scope="col">ID</th>
+                              <th scope="col">Nombre</th>
+                              <th scope="col">Latitud</th>
+                              <th scope="col">Longitud</th>
+                              <th scope="col">Dirección</th>
+                              <th scope="col">Telefono</th>
+                              <th scope="col">Leg. Gerente</th>
+                              <th></th>
+                         </tr>
+                    </thead>
+                    <tbody>
+                         <tr th:each="local :${locales}">
+                              <td th:text="${local.idLocal}"></td>
+                              <td th:text="${local.nombreLocal}"></td>
+                              <td th:text="${local.latitud}"></td>
+                              <td th:text="${local.longitud}"></td>
+                              <td th:text="${local.direccion}"></td>
+                              <td th:text="${local.telefono}"></td>
+                              <td th:text="${local.gerenteLegajo}"></td>
+                              <div th:if="${isGerente}">
+                                   <td class="d-flex justify-content-around">
+                                        <div data-toggle="tooltip" data-placement="top" title="Modificar">
+                                             <a href="#" data-toggle="modal" data-target="#modifyLocal" class="modifyButton">
+                                                  <img th:src="@{/images/pencil.png}" alt="" class="list-icon edit-icon"
+                                                       th:attr="data-index=${localStat.index}" />
+                                             </a>
+                                        </div>
+                                        <form th:action="@{/local/eliminar/{idLocal}(idLocal = ${local.idLocal})}"
+                                             method="POST" data-toggle="tooltip" data-placement="top" title="Eliminar">
+                                             <button type="submit" class="delete-button">
+                                                  <img th:src="@{/images/trashcan.png}" alt=""
+                                                       class="list-icon delete-icon" />
+                                             </button>
+                                        </form>
+                                   </td>
+                              </div>
+                         </tr>
+                    </tbody>
+               </table>
           </div>
      </main>
      <footer th:replace="fragments/footer :: footer"></footer>
