@@ -6,6 +6,7 @@ ___Nota:___ Si faltan otras tareas agregarlas en las secciones que parecen perti
 
 ### **[HIGH]**
 + Generar ventas/facturas.
++ Al editar un _local_ se debe indicar el _gerente_ que trabaja porque cuando se edita nuevamente siempre elije el 1° de la lista.
 
 
 ### **[NORMAL]**
