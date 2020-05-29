@@ -7,12 +7,21 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class EmpleadoModel extends PersonaModel {
 	@NumberFormat(style = Style.NUMBER)
 	private long legajo;
+	@NotNull
 	private String horaDesde;
+	@NotNull
 	private String horaHasta;
+	@Min(1000)
 	private double sueldoBasico;
+	@NotNull
 	private LocalModel local; // El local donde trabaja
 	private boolean tipoGerente; // Para determinar si administra el local; true=gerente
 	
