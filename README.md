@@ -10,7 +10,6 @@ ___Nota:___ Si faltan otras tareas agregarlas en las secciones que parecen perti
 
 
 ### **[NORMAL]**
-+ Generar vista para error 403.
 + Validaciones del lado del cliente para los formularios
 + Generar más datos para cargar en la BD.
 + Corregir errores en el controlador del Item.
