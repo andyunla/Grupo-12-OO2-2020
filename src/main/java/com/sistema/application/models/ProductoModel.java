@@ -1,10 +1,17 @@
 package com.sistema.application.models;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 public class ProductoModel {
 	private long idProducto;
+	@NotNull
 	private String nombre;
+	@NotNull
 	private String descripcion;
+	@Min(1)
 	private double precio;
+	@Min(1)
 	private int talle;
 	
 	public ProductoModel() {};

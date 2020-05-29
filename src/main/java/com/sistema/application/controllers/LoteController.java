@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
-import com.sistema.application.models.LocalModel;
 import com.sistema.application.models.LoteModel;
 import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.ILoteService;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -26,6 +24,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import javax.validation.Valid;
+import org.springframework.validation.BindingResult;
+
 
 @Controller
 @RequestMapping("lote")
@@ -58,9 +59,15 @@ public class LoteController {
      }
 
      @PostMapping("agregar")
-     public String agregar(@ModelAttribute("lote") LoteModel nuevoLote) {
+     public String agregar(@Valid @ModelAttribute("lote") LoteModel nuevoLote, BindingResult bindingResult) {
           nuevoLote.setCantidadActual(nuevoLote.getCantidadInicial());
-          loteService.insertOrUpdate(nuevoLote);
+          
+	      if(bindingResult.hasErrors()) {
+	    	  return ViewRouteHelper.LOTE_ABM;
+	  	  }else {
+	  		  loteService.insertOrUpdate(nuevoLote);
+	  	  }
+	      
           return "redirect:/" + ViewRouteHelper.LOTE_ROOT;
      }
 

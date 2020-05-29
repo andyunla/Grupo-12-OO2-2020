@@ -52,17 +52,20 @@
                <div class="form-group row">
                     <label for="cantidadNuevoItem" class="col-md-2 col-3">Cantidad</label>
                     <input type="text" class="form-control col-md-9 col-8" id="cantidadNuevoItem"
-                         th:field="*{cantidad}" />
+                         th:field="*{cantidad}" min="1" required/>
+                    <p th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}">Cantidad tiene que ser 1 o mayor</p>
                </div>
                <div class="form-group row">
                     <label for="productoNuevoItem" class="col-md-2 col-3">Producto</label>
                     <input type="number" class="form-control col-sm-4 col-5" id="productoNuevoItem"
-                         th:field="*{producto}" />
+                         th:field="*{producto}" required/>
+                    <p th:if="${#fields.hasErrors('producto')}" th:errors="*{producto}">Producto tiene errores/p>
                </div>
                <div class="form-group row">
                     <label for="changoNuevoItem" class="col-md-2 col-3">Chango</label>
                     <input type="number" class="form-control col-sm-4 col-5" id="changoNuevoItem"
-                         th:field="*{chango}" />
+                         th:field="*{chango}" required/>
+                    <p th:if="${#fields.hasErrors('chango')}" th:errors="*{chango}">Chango tiene errores/p>
                </div>
                <div class="text-center">
                     <button type="submit" class="btn btn-primary">Guardar</button>

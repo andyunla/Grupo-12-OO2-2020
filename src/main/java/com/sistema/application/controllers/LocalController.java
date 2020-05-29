@@ -14,7 +14,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -26,6 +25,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import javax.validation.Valid;
+import org.springframework.validation.BindingResult;
 
 @Controller
 @RequestMapping("local")
@@ -59,7 +60,13 @@ public class LocalController {
 	}
 	
 	@PostMapping("agregar")
-	public String agregar(@ModelAttribute("local") LocalModel nuevoLocal) {
+	public String agregar(@Valid @ModelAttribute("local") LocalModel nuevoLocal, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return ViewRouteHelper.LOCAL_ABM;
+		}else {
+			localService.insertOrUpdate(nuevoLocal);
+		}
+		
 		localService.insertOrUpdate(nuevoLocal);
 		return "redirect:/" + ViewRouteHelper.LOCAL_ROOT;
 	}

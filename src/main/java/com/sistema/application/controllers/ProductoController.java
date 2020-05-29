@@ -2,7 +2,6 @@ package com.sistema.application.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -14,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import javax.validation.Valid;
+import org.springframework.validation.BindingResult;
 
 import com.sistema.application.services.IProductoService;
 import com.sistema.application.helpers.UtilHelper;
@@ -41,8 +42,14 @@ public class ProductoController {
 	}
 	
 	@PostMapping("agregar")
-	public String agregarProducto(@ModelAttribute("producto") ProductoModel nuevoProducto) {
-		productoService.insertOrUpdate(nuevoProducto);
+	public String agregarProducto(@Valid @ModelAttribute("producto") ProductoModel nuevoProducto, BindingResult bindingResult) {
+		
+		if(bindingResult.hasErrors()) {
+			return ViewRouteHelper.PRODUCTO_ABM;
+		}else {
+			productoService.insertOrUpdate(nuevoProducto);
+		}
+		
 		return "redirect:/" + ViewRouteHelper.PRODUCTO_ROOT;
 	}
 	

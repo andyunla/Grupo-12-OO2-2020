@@ -19,28 +19,32 @@
                <div class="form-group row">
                     <label for="nombreNuevoCliente" class="col-md-2 col-3">Nombre</label>
                     <input type="text" class="form-control col-md-9 col-8" id="nombreNuevoCliente"
-                         th:field="*{nombre}" />
+                         th:field="*{nombre}" required/>
+                    <p th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Nombre no puede ir vacio</p>
                </div>
                <div class="form-group row">
                     <label for="apellidoNuevoCliente" class="col-md-2 col-3">Apellido</label>
                     <input type="text" class="form-control col-md-9 col-8" id="apellidoNuevoCliente"
-                         th:field="*{apellido}" />
+                         th:field="*{apellido}" required/>
+                    <p th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}">Apellido no puede ir vacio</p>
                </div>
                <div class="form-group row">
                     <label for="emailNuevoCliente" class="col-md-2 col-3">Email</label>
                     <input type="email" class="form-control col-md-9 col-8" id="emailNuevoCliente"
-                         th:field="*{email}" />
+                         th:field="*{email}" required/>
+                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email no puede ir vacio</p>
                </div>
                <div class="form-group row">
                     <label for="dniNuevoCliente" class="col-md-2 col-3">DNI</label>
                     <input type="number" class="form-control col-sm-4 col-5" id="dniNuevoCliente" th:field="*{dni}"
                          min="1000000" max="99999999" required/>
-               	<p th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}">DNI tiene errores</p>
+               		<p th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}">DNI tiene errores</p>
                </div>
                <div class="form-group row">
                     <label for="fechaNacNuevoCliente" class="col-md-2 col-3">Fecha de Nac.</label>
                     <input type="date" class="form-control col-sm-4 col-5" id="fechaNacNuevoCliente"
-                         th:field="*{fechaNacimiento}" />
+                         th:field="*{fechaNacimiento}" required/>
+                    <p th:if="${#fields.hasErrors('fechaNacimiento')}" th:errors="*{fechaNacimiento}">Fecha de Nac. tiene errores</p>
                </div>
                <div class="text-center">
                     <button type="submit" class="btn btn-primary">Guardar</button>

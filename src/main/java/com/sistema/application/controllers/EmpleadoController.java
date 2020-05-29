@@ -2,6 +2,7 @@ package com.sistema.application.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -58,7 +59,7 @@ public class EmpleadoController {
 	}
 	
 	@PostMapping("agregar")
-	public String agregar(@ModelAttribute("empleado") EmpleadoModel nuevoEmpleado, BindingResult bindingResult) {
+	public String agregar(@Valid @ModelAttribute("empleado") EmpleadoModel nuevoEmpleado, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
         	return ViewRouteHelper.EMPLEADO_ROOT;
       	}

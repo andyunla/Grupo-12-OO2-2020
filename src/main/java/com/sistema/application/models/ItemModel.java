@@ -1,11 +1,17 @@
 package com.sistema.application.models;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 public class ItemModel {
 
 	//Atributos
 	private long idItem;
+	@Min(1)
 	private int cantidad;
+	@NotNull
 	private ProductoModel productoModel;
+	@NotNull
 	private ChangoModel changoModel;
 	
 	

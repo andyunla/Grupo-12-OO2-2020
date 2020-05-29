@@ -22,27 +22,32 @@
                <div class="form-group row">
                     <label for="nombreNuevoLocal" class="col-md-2 col-3">Nombre</label>
                     <input type="text" class="form-control col-md-9 col-8" id="nombreNuevoLocal"
-                         th:field="*{nombreLocal}" />
+                         th:field="*{nombreLocal}" required/>
+                    <p th:if="${#fields.hasErrors('nombreLocal')}" th:errors="*{nombreLocal}">Nombre no puede ir vacio</p>
                </div>
                <div class="form-group row">
                     <label for="latitudNuevoLocal" class="col-md-2 col-3">Latitud</label>
-                    <input type="number" min="-90" max="90" step="0.0001" class="form-control col-md-9 col-8"
-                         id="latitudNuevoLocal" th:field="*{latitud}" />
+                    <input type="number" step="0.0001" class="form-control col-md-9 col-8"
+                         id="latitudNuevoLocal" th:field="*{latitud}" min="-90" max="90" required/>
+                    <p th:if="${#fields.hasErrors('latitud')}" th:errors="*{latitud}">Latitud tiene que estar entre -90 y 90</p>
                </div>
                <div class="form-group row">
                     <label for="longitudNuevoLocal" class="col-md-2 col-3">Longitud</label>
-                    <input type="number" min="-180" max="180" step="0.0001" class="form-control col-md-9 col-8"
-                         id="longitudNuevoLocal" th:field="*{longitud}" />
+                    <input type="number" step="0.0001" class="form-control col-md-9 col-8"
+                         id="longitudNuevoLocal" th:field="*{longitud}" min="-180" max="180" required/>
+                    <p th:if="${#fields.hasErrors('longitud')}" th:errors="*{longitud}">Longitud tiene que estar entre -180 y 180</p>
                </div>
                <div class="form-group row">
                     <label for="direccionNuevoLocal" class="col-md-2 col-3">Dirección</label>
                     <input type="text" class="form-control col-sm-4 col-5" id="direccionNuevoLocal"
-                         th:field="*{direccion}" />
+                         th:field="*{direccion}" required/>
+                    <p th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}">Direccion no puede ir vacio</p>
                </div>
                <div class="form-group row">
                     <label for="telefonoNuevoLocal" class="col-md-2 col-3">Telefono</label>
                     <input type="number" min="0" max="2147483646" class="form-control col-sm-4 col-5"
-                         id="telefonoNuevoLocal" th:field="*{telefono}" />
+                         id="telefonoNuevoLocal" th:field="*{telefono}" required/>
+                    <p th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">Telefono no puede ir vacio</p>
                </div>
                <div class="text-center">
                     <button type="submit" class="btn btn-primary">Guardar</button>
