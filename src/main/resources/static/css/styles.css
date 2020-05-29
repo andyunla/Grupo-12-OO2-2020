@@ -74,3 +74,10 @@ footer {
 #distancia {
     font-size: large;
 }
+
+/* PROFILE MENU */
+/*Para solucionar problema que el menú no se salga de los límites de la pantalla*/
+li.dropdown:last-child .dropdown-menu {
+  right: 0;
+  left: auto;
+}
