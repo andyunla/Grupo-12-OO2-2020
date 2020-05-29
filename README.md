@@ -16,6 +16,7 @@ ___Nota:___ Si faltan otras tareas agregarlas en las secciones que parecen perti
 
 
 ### **[LOW]**
++ Mover contenido de Funciones1 a Funciones
 + Darle estilo a la vista de errores.
 + Personalizar botón _logout_ para que tenga ícono de usuario y corregir desplegable.
 + Generar vista del usuario conectado:
