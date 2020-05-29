@@ -20,16 +20,26 @@ import com.sistema.application.services.ILoteService;
 import com.sistema.application.services.IPedidoStockService;
 import com.sistema.application.services.IProductoService;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+
 @Component("localModel")
 public class LocalModel {
 
 	// Atributos
 	private long idLocal;
+	@NotNull
 	private String nombreLocal;
+	@Min(-90)  @Max(90)
 	private double latitud;
+	@Min(-180) @Max(180)
 	private double longitud;
+	@NotNull
 	private String direccion;
+	@NotNull
 	private int telefono;
+	@NotNull
 	private EmpleadoModel gerente;
 	private Set<LoteModel> listaLotes;
 	private Set<EmpleadoModel> listaEmpleados;

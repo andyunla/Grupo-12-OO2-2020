@@ -3,15 +3,19 @@ package com.sistema.application.models;
 import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 public class LoteModel {
 
 	// Atributos 
 	private long idLote;
-	private int cantidadInicial;  
+	@Min(1)
+	private int cantidadInicial;
 	private int cantidadActual;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")    
 	private LocalDate fechaIngreso;
+	@NotNull
 	private ProductoModel producto;
 	private boolean activo;
 	private LocalModel local;

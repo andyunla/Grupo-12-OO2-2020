@@ -6,10 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.validation.BindingResult;
+import javax.validation.Valid;
+
 
 import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
@@ -44,7 +46,13 @@ public class ItemController {
 	}
 	
 	@PostMapping("agregar")
-	public String agregar(@ModelAttribute("item") ItemModel nuevoItem) {
+	public String agregar(@Valid @ModelAttribute("item") ItemModel nuevoItem, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return ViewRouteHelper.ITEM_ABM;
+		}else {
+		itemService.insertOrUpdate(nuevoItem);
+	}
+		
 		System.out.print("\n\n" + nuevoItem + "\n\n");
 		return "redirect:/" + ViewRouteHelper.ITEM_ROOT;
 	}

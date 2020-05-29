@@ -42,8 +42,7 @@ public class ClienteController {
 	}  
 	
 	@PostMapping("agregar")
-	public String agregar(@Valid @ModelAttribute("cliente") ClienteModel nuevoCliente,
-	BindingResult bindingResult) {
+	public String agregar(@Valid @ModelAttribute("cliente") ClienteModel nuevoCliente, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
 			return ViewRouteHelper.CLIENTE_ABM;
 		}else {

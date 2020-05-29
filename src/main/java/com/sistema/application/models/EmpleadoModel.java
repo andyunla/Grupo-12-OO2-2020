@@ -1,16 +1,12 @@
 package com.sistema.application.models;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 public class EmpleadoModel extends PersonaModel {
 	@NumberFormat(style = Style.NUMBER)
