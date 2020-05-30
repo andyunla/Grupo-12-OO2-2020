@@ -1,6 +1,6 @@
 package com.sistema.application.dto;
-import java.lang.*;
-public abstract class ProductoRankingDto implements Comparable<ProductoRankingDto> {
+
+public class ProductoRankingDto  {
 	private long idProducto;
 	private String nombre;
 	private String descripcion;
@@ -69,13 +69,6 @@ public abstract class ProductoRankingDto implements Comparable<ProductoRankingDt
 		this.cantidad = cantidad;
 	}
 
-	@Override
-	public int compareTo(ProductoRankingDto o) {
-		// TODO Auto-generated method stub
-		Integer i= new Integer(cantidad);
-		return i.compareTo(o.getCantidad());
-	}
-	
 	
 	
 }
