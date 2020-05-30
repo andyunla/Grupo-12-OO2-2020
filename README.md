@@ -11,13 +11,11 @@ ___Nota:___ Si faltan otras tareas agregarlas en las secciones que parecen perti
 
 ### **[NORMAL]**
 + Validaciones del lado del cliente para los formularios
-+ Generar más datos para cargar en la BD.
 + Corregir errores en el controlador del Item.
 + Las URL que corresponden a _GERENTE_ no deben ser accedidas por un _EMPLEADO_
 
 
 ### **[LOW]**
-+ Mover contenido de Funciones1 a Funciones
 + Darle estilo a la vista de errores.
 + Personalizar botón _logout_ para que tenga ícono de usuario y corregir desplegable.
 + Generar vista del usuario conectado:
