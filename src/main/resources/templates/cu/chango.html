@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+     <head th:replace="fragments/head :: head(title='Chango')"></head>
+     <title>Distancia</title>
+</head>
+
+<body class="container-fluid m-0 p-0">
+     <nav th:replace="fragments/navbar :: navbar(active='chango')"></nav>
+     <header class="text-center m-3">
+          <h1 class="display-4">CHANGO</h1>
+     </header>
+     <!-- MAIN CONTENT -->
+     <main class="w-100 d-flex flex-column align-items-center">
+          <!-- TABLAS DE PRODUCTOS DISPONIBLES Y DEL CHANGO -->
+          <div class="container-fluid w-100 text-center table-responsive d-flex flex-wrap justify-content-around">
+               <!-- TABLAS DE PRODUCTOS DISPONIBLES -->
+               <div class="chango-table m-0 p-0">
+                    <p class="text-center quick-sand text-secondary p-0 m-0">PRODUCTOS DISPONIBLES</p>
+                    <!-- BUSCADOR DE PRODUCTOS -->
+                    <div class="input-group input-group-sm search-bar m-1">
+                         <input type="search" class="form-control" placeholder="Producto..." onsearch="buscar()">
+                         <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="buscar()">
+                                   <svg th:replace="fragments/icons :: searchIcon"></svg>
+                              </button>
+                         </div>
+                    </div>
+                    <table class="table shadow mb-3 bg-white rounded w-100">
+                         <tr class="m-0 p-0">
+                              <td class="m-0 p-0">
+                                   <table class="table shadow bg-white rounded m-0 p-0">
+                                        <thead class="thead-dark">
+                                             <th class="d-none"></th>
+                                             <th scope="col" class="width-30">Nombre</th>
+                                             <th scope="col" class="width-20">Talle</th>
+                                             <th scope="col" class="width-20">Precio</th>
+                                             <th scope="col" class="width-10 just-in-big-screen">Stock</th>
+                                             <th class="width-20"></th>
+                                        </thead>
+                                   </table>
+                              </td>
+                         </tr>
+                         <tr class="m-0 p-0">
+                              <td class="m-0 p-0">
+                                   <div style="height:40vh; overflow:auto;">
+                                        <table class="table shadow bg-white rounded">
+                                             <tbody id="productosDisponibles">
+                                                  <tr th:each="producto :${productos}">
+                                                       <td class="d-none" th:text="${producto.idProducto}"></td>
+                                                       <td scope="col" class="width-30" th:text="${producto.nombre}">
+                                                       </td>
+                                                       <td scope="col" class="width-20" th:text="${producto.talle}">
+                                                       </td>
+                                                       <td scope="col" class="width-20"
+                                                            th:text="${'$' + producto.precio}"></td>
+                                                       <td scope="col" class="width-10 text-secondary smaller-text just-in-big-screen"
+                                                            th:text="${producto.stock}"></td>
+                                                       <td class="width-20 p-0 align-middle">
+                                                            <button class="btn btn-info btn-sm boton-agregar-poducto m-0"
+                                                                 th:attr="data-idProducto = ${producto.idProducto},
+                                                                 data-idChango = ${chango.idChango}"
+                                                                 th:id="'producto' + ${producto.idProducto}"
+                                                                 onclick="agregarItem(this)">
+                                                                 AGREGAR
+                                                            </button>
+                                                       </td>
+                                                  </tr>
+                                             </tbody>
+                                        </table>
+                                   </div>
+                              </td>
+                         </tr>
+                    </table>
+               </div>
+               <!-- TABLA DE PRODUCTOS EN EL CHANGO-->
+               <div class="chango-table">
+                    <!-- RELLENO INVISIBLE PARA QUE QUEDE A LA MISMA ALTURA DE LA OTRA TABLA... -->
+                    <div class="input-group input-group-sm  m-1 invisible">
+                         <input type="text" class="form-control">
+                    </div>
+                    <p class="text-center quick-sand text-secondary p-0 m-0" th:text="${'CHANGO #' + chango.idChango}">
+                         CHANGO</p>
+                    <table class="table chango-table shadow mb-3 bg-white rounded">
+                         <tr class="m-0 p-0">
+                              <td class="m-0 p-0">
+                                   <table class="table shadow bg-white rounded m-0">
+                                        <thead class="thead-dark">
+                                             <th scope="col" class="width-30">Nombre</th>
+                                             <th scope="col" class="width-10">Talle</th>
+                                             <th scope="col" class="width-20 just-in-big-screen">Precio</th>
+                                             <th scope="col" class="width-40">Cantidad</th>
+                                        </thead>
+                                   </table>
+                              </td>
+                         </tr>
+                         <tr class="m-0 p-0">
+                              <td class="m-0 p-0">
+                                   <div style="height:40vh; overflow:auto;">
+                                        <table class="table shadow bg-white rounded" id="tablaChango"></table>
+                                   </div>
+                              </td>
+                         </tr>
+                    </table>
+               </div>
+               <!-- TOTAL -->
+               <div class="d-flex w-100 justify-content-center">
+                    <div class="col-8 col-sm-3 col-md-2 pb-1 bg-dark text-light border border-info rounded">
+                         <p class="m-0 p-0 quicksand"><small><u>Total</u></small></p>
+                         <p class="m-0 p-0 bigger-text quicksand" id="total">$0</p>
+                    </div>
+               </div>
+               <!-- BOTTON -->
+               <div class="d-flex w-100 justify-content-center flex-wrap mt-3 align-items-center">
+                    <form th:action="@{/chango/eliminar/{idChango}(idChango = ${chango.idChango})}" method="POST">
+                         <button class="btn btn-danger btn-sm m-1">CANCELAR</button>
+                    </form>
+                    <form th:action="@{/}">
+                         <button class="btn btn-primary m-1">FACTURAR</button>
+                    </form>
+                    <form th:action="@{/}">
+                         <button class="btn btn-secondary btn-sm m-1">GUARDAR</button>
+                    </form>
+               </div>
+     </main>
+     <footer th:replace="fragments/footer :: footer"></footer>
+     <div class="p-1 col-11 col-sm-7 col-md-6 col-lg-4" id="alertContainer"></div>
+     <div th:replace="fragments/scripts :: scripts"></div>
+     <script th:src="@{js/chango.js}"></script>
+</body>
+
+</html>

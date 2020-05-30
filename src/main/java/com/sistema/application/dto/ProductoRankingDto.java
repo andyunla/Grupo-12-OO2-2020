@@ -1,6 +1,6 @@
 package com.sistema.application.dto;
 
-public class ProductoRankingDto {
+public class ProductoRankingDto implements Comparable<ProductoRankingDto> {
 	private long idProducto;
 	private String nombre;
 	private String descripcion;
@@ -68,6 +68,14 @@ public class ProductoRankingDto {
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
+
+	@Override
+	public int compareTo(ProductoRankingDto o) {
+		// TODO Auto-generated method stub
+		Integer i = new Integer(cantidad);
+		return i.compareTo(o.getCantidad());
+	}
+
 	
 	
 }
