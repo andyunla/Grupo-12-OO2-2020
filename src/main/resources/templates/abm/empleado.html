@@ -10,7 +10,7 @@
      </header>
      <main class="w-100 d-flex flex-column align-items-center">
           <!-- Si el usuario es del tipo GERENTE -->
-          <div th:if="${isGerente}">
+          <div th:if="${currentUser.tipoGerente}">
                <!-- ADD MENU -->
                <button class="btn btn-info m-3" type="button" data-toggle="collapse" data-target="#collapseForm"
                     id="buttonAgregar">
@@ -166,7 +166,7 @@
                               <td th:text="${empleado.horaHasta}"></td>
                               <td th:text="${empleado.sueldoBasico}"></td>
                               <td th:text="${empleado.legajo}"></td>
-                              <div th:if="${isGerente}">
+                              <div th:if="${currentUser.tipoGerente}">
                                    <td class="d-flex justify-content-around">
                                         <div data-toggle="tooltip" data-placement="top" title="Modificar">
                                              <a href="#" data-toggle="modal" data-target="#modifyEmpleado"

@@ -1,11 +1,14 @@
 package com.sistema.application.controllers;
 
 import com.sistema.application.converters.LocalConverter;
+import com.sistema.application.converters.UserConverter;
 import com.sistema.application.dto.LocalDto;
+import com.sistema.application.dto.UserDto;
 import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.LocalModel;
+import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IEmpleadoService;
 import com.sistema.application.services.ILocalService;
 
@@ -35,19 +38,25 @@ public class LocalController {
 	@Qualifier("localConverter")
 	private LocalConverter localConverter;
 	@Autowired
+	@Qualifier("userConverter")
+	private UserConverter userConverter;
+	@Autowired
 	@Qualifier("localService")
 	private ILocalService localService;
 	@Autowired
 	@Qualifier("empleadoService")
 	private IEmpleadoService empleadoService;
+	@Autowired
+    @Qualifier("userRepository")
+    private IUserRepository userRepository;
 
 	@GetMapping("")
 	public String locales(Model modelo) {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		modelo.addAttribute("username", user.getUsername());
+		UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
 		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
-		modelo.addAttribute("isGerente", isGerente);
-		
+		userDto.setTipoGerente(isGerente);
+		modelo.addAttribute("currentUser", userDto);
 		List<LocalModel> localesModel = localService.getAllModel();
 		List<LocalDto> locales = new ArrayList<LocalDto>();
 		for(LocalModel model: localesModel) {

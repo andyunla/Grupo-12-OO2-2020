@@ -2,9 +2,12 @@ package com.sistema.application.controllers;
 
 import java.util.List;
 
+import com.sistema.application.converters.UserConverter;
+import com.sistema.application.dto.UserDto;
 import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.LoteModel;
+import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.ILoteService;
 import com.sistema.application.services.IProductoService;
@@ -31,7 +34,9 @@ import org.springframework.validation.BindingResult;
 @Controller
 @RequestMapping("lote")
 public class LoteController {
-
+     @Autowired
+     @Qualifier("userConverter")
+     private UserConverter userConverter;
      @Autowired
      @Qualifier("loteService")
      private ILoteService loteService;
@@ -43,14 +48,18 @@ public class LoteController {
      @Autowired
      @Qualifier("productoService")
      private IProductoService productoService;
+     
+     @Autowired
+     @Qualifier("userRepository")
+     private IUserRepository userRepository;
 
      @GetMapping("")
      public String lotes(Model modelo) {
           User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-          modelo.addAttribute("username", user.getUsername());
+          UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
           boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
-          modelo.addAttribute("isGerente", isGerente);
-          
+          userDto.setTipoGerente(isGerente);
+          modelo.addAttribute("currentUser", userDto);
           modelo.addAttribute("lotes", loteService.getAllModel());
           modelo.addAttribute("lote", new LoteModel());
           modelo.addAttribute("locales", localService.getAll());

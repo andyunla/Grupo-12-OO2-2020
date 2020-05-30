@@ -19,10 +19,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.sistema.application.converters.UserConverter;
+import com.sistema.application.dto.UserDto;
 import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.LocalModel;
+import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IEmpleadoService;
 import com.sistema.application.services.ILocalService;
 
@@ -30,20 +33,25 @@ import com.sistema.application.services.ILocalService;
 @RequestMapping("empleado")
 public class EmpleadoController {
 	@Autowired
+	@Qualifier("userConverter")
+	private UserConverter userConverter;
+	@Autowired
 	@Qualifier("empleadoService")
 	private IEmpleadoService empleadoService;
-	
 	@Autowired
 	@Qualifier("localService")
 	private ILocalService localService;
+	@Autowired
+    @Qualifier("userRepository")
+    private IUserRepository userRepository;
 	
 	@GetMapping("")
 	public String empleados(Model modelo) {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		modelo.addAttribute("username", user.getUsername());
+		UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
 		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
-		modelo.addAttribute("isGerente", isGerente);
-		
+		userDto.setTipoGerente(isGerente);
+		modelo.addAttribute("currentUser", userDto);
 		List<EmpleadoModel> empleados = empleadoService.getAllModel();
 		for(EmpleadoModel e: empleados) {
 			e.getLocal().setGerente(null);

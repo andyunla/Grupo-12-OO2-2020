@@ -17,9 +17,12 @@ import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.helpers.UtilHelper;
+import com.sistema.application.helpers.ViewRouteHelper;
+import com.sistema.application.converters.UserConverter;
+import com.sistema.application.dto.UserDto;
 import com.sistema.application.models.ClienteModel;
+import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IClienteService;
 
 
@@ -27,15 +30,22 @@ import com.sistema.application.services.IClienteService;
 @RequestMapping("cliente")
 public class ClienteController {
 	@Autowired
+	@Qualifier("userConverter")
+	private UserConverter userConverter;
+	@Autowired
+    @Qualifier("userRepository")
+    private IUserRepository userRepository;
+	@Autowired
 	@Qualifier("clienteService")
 	private IClienteService clienteService;
 	
 	@GetMapping("")
 	public String clientes(Model modelo) {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		modelo.addAttribute("username", user.getUsername());
+		UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
 		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
-		modelo.addAttribute("isGerente", isGerente);
+		userDto.setTipoGerente(isGerente);
+		modelo.addAttribute("currentUser", userDto);
 		modelo.addAttribute("clientes", clienteService.getAllModel());
 		modelo.addAttribute("cliente", new ClienteModel());
 		return ViewRouteHelper.CLIENTE_ABM;

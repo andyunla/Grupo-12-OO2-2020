@@ -17,25 +17,33 @@ import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
 
 import com.sistema.application.services.IProductoService;
+import com.sistema.application.converters.UserConverter;
+import com.sistema.application.dto.UserDto;
 import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ProductoModel;
+import com.sistema.application.repositories.IUserRepository;
 
 @Controller
 @RequestMapping("producto")
 public class ProductoController {
-	
+	@Autowired
+	@Qualifier("userConverter")
+	private UserConverter userConverter;
 	@Autowired
 	@Qualifier("productoService")
 	private IProductoService productoService;
+	@Autowired
+	@Qualifier("userRepository")
+	private IUserRepository userRepository;
 
 	@GetMapping("")
 	public String productos(Model modelo) {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		modelo.addAttribute("username", user.getUsername());
+		UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
 		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
-		modelo.addAttribute("isGerente", isGerente);
-		
+		userDto.setTipoGerente(isGerente);
+		modelo.addAttribute("currentUser", userDto);
 		modelo.addAttribute("productos", productoService.getAllModel());
 		modelo.addAttribute("producto", new ProductoModel());
 		return ViewRouteHelper.PRODUCTO_ABM;

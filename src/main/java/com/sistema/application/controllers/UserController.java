@@ -26,12 +26,9 @@ import com.sistema.application.entities.User;
 import com.sistema.application.exception.CustomeFieldValidationException;
 import com.sistema.application.exception.UsernameOrIdNotFound;
 import com.sistema.application.helpers.ViewRouteHelper;
-import com.sistema.application.services.IUserService;
 
 @Controller
 public class UserController {
-	@Autowired
-	IUserService userService;
 
 	@GetMapping("/login")
 	public String login(Model model,
@@ -51,4 +48,12 @@ public class UserController {
 	public String loginCheck() {
 		return "redirect:/" + ViewRouteHelper.HOME_ROOT;
 	}
+	/*
+	@GetMapping("/user/{username}")
+	public String getUserDetails() {
+		boolean eliminado = clienteService.remove(id);
+		redirectAttributes.addFlashAttribute("clienteEliminado", eliminado);
+		return "redirect:/" + ViewRouteHelper.CLIENTE_ROOT;
+	}
+	*/
 }
