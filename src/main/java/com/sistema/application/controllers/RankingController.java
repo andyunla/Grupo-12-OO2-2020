@@ -23,7 +23,7 @@ public class RankingController {
 	
 	@GetMapping("")
 	public ModelAndView productoRanking() {
-		ModelAndView mAV = new ModelAndView(ViewRouteHelper.LISTA_LOCALES_CERCANOS); //cambiar ruta
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.RANKIG_ROOT); 
 		List<ProductoRankingDto> productoRanking = localModel.ranking();	
 		mAV.addObject("productoRanking", productoRanking);		
 		return mAV;
