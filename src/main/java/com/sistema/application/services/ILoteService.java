@@ -18,10 +18,11 @@ public interface ILoteService {
 	
 	public boolean remove(long id);
 	
-	public Set<LoteModel> findByLoteProductoActivo(long idProducto, long idLocal);
+	public List<LoteModel> findByLoteProductoActivo(long idProducto, long idLocal);
 	
 	public Set<LoteModel> findByLoteProductoBaja(long idProducto, long idLocal);
 	
 	public List<LoteModel> findByLocalProductoAndActivo(long idLocal, long idProducto, boolean soloActivos);
 
+	public List<LoteModel> findByLoteProductoNoNuevo(long idProducto, long idLocal);
 }
