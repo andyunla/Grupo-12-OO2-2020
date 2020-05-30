@@ -5,7 +5,9 @@ import java.util.List;
 
 import com.sistema.application.converters.LocalConverter;
 import com.sistema.application.converters.ProductoConverter;
+import com.sistema.application.converters.UserConverter;
 import com.sistema.application.dto.ProductoStockDto;
+import com.sistema.application.dto.UserDto;
 import com.sistema.application.entities.Local;
 import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
@@ -38,7 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class ChangoController {
 
      @Autowired
-	@Qualifier("userRepository")
+     @Qualifier("userRepository")
      private IUserRepository userRepository;
      
      @Autowired
@@ -46,8 +48,12 @@ public class ChangoController {
      private IProductoService productoService;
      
      @Autowired
-	@Qualifier("localConverter")
-	private LocalConverter localConverter;
+     @Qualifier("localConverter")
+     private LocalConverter localConverter;
+     
+     @Autowired
+     @Qualifier("userConverter")
+     private UserConverter userConverter;
 
      @Autowired
      @Qualifier("localModel")
@@ -69,16 +75,17 @@ public class ChangoController {
      public String chango(Model modelo) {
           // Obtengo el usuario de la sesión
           User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		modelo.addAttribute("username", user.getUsername());
-		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
-          modelo.addAttribute("isGerente", isGerente);
-		// Obtenemos el local actual donde trabaja el usuario
+          UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
+          boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
+          userDto.setTipoGerente(isGerente);
+          modelo.addAttribute("currentUser", userDto);
+          // Obtenemos el local actual donde trabaja el usuario
           LocalModel localActual = this.getLocalGivenUser(user.getUsername());
           localModel.setInstance(localActual);
           // Selecciono de todos los productos solo los que tienen por lo menos 1 en stock en el local
           List<ProductoStockDto> productosConStock = new ArrayList<ProductoStockDto>();
           for (ProductoModel p : productoService.getAllModel()) {
-		     int stock = localModel.calcularStockLocal(p);
+               int stock = localModel.calcularStockLocal(p);
                if ( stock > 0) {
                     productosConStock.add( productoConverter.modelToDTO(p, stock) );
                }
@@ -171,14 +178,14 @@ public class ChangoController {
      // TODO Buscar donde se auto eliminarán aquellos changos guardados sin items
 
      /**
-	* Método que retorna el local donde trabaja el usuario
-	* que está logueado actualmente dado su username
-	* @param username Tipo String. Ej: 'empleado1'
-	* @return LocalModel
-	*/
-	private LocalModel getLocalGivenUser(String username) {
-		com.sistema.application.entities.User user = userRepository.findByUsernameAndFetchUserRolesEagerly(username);
-		Local local = user.getEmpleado().getLocal();
-		return localConverter.entityToModel(local);
-	}
+     * Método que retorna el local donde trabaja el usuario
+     * que está logueado actualmente dado su username
+     * @param username Tipo String. Ej: 'empleado1'
+     * @return LocalModel
+     */
+     private LocalModel getLocalGivenUser(String username) {
+          com.sistema.application.entities.User user = userRepository.findByUsernameAndFetchUserRolesEagerly(username);
+          Local local = user.getEmpleado().getLocal();
+          return localConverter.entityToModel(local);
+     }
 }
