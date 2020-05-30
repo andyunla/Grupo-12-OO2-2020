@@ -51,4 +51,12 @@ public class UserController {
 	public String loginCheck() {
 		return "redirect:/" + ViewRouteHelper.HOME_ROOT;
 	}
+	/*
+	@GetMapping("/user/{username}")
+	public String getUserDetails() {
+		boolean eliminado = clienteService.remove(id);
+		redirectAttributes.addFlashAttribute("clienteEliminado", eliminado);
+		return "redirect:/" + ViewRouteHelper.CLIENTE_ROOT;
+	}
+	*/
 }
