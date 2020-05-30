@@ -27,13 +27,13 @@
                </div>
                <div class="form-group row">
                     <label for="latitudNuevoLocal" class="col-md-2 col-3">Latitud</label>
-                    <input type="number" step="0.0001" class="form-control col-md-9 col-8"
+                    <input type="number" step="0.000001" class="form-control col-md-9 col-8"
                          id="latitudNuevoLocal" th:field="*{latitud}" min="-90" max="90" required/>
                     <p th:if="${#fields.hasErrors('latitud')}" th:errors="*{latitud}">Latitud tiene que estar entre -90 y 90</p>
                </div>
                <div class="form-group row">
                     <label for="longitudNuevoLocal" class="col-md-2 col-3">Longitud</label>
-                    <input type="number" step="0.0001" class="form-control col-md-9 col-8"
+                    <input type="number" step="0.000001" class="form-control col-md-9 col-8"
                          id="longitudNuevoLocal" th:field="*{longitud}" min="-180" max="180" required/>
                     <p th:if="${#fields.hasErrors('longitud')}" th:errors="*{longitud}">Longitud tiene que estar entre -180 y 180</p>
                </div>
@@ -74,13 +74,13 @@
                                    </div>
                                    <div class="form-group row">
                                         <label for="latitudModificarLocal" class="col-sm-3 col-4">Latitud</label>
-                                        <input type="number" step="0.0001" class="form-control col-md-8 col-7"
-                                             id="latitudModificarLocal" th:field="*{latitud}" />
+                                        <input type="number" step="0.000001" class="form-control col-md-8 col-7"
+                                             id="latitudModificarLocal" th:field="*{latitud}" min="-180" max="180" />
                                    </div>
                                    <div class="form-group row">
                                         <label for="longitudModificarLocal" class="col-sm-3 col-4">Longitud</label>
-                                        <input type="number" step="0.0001" class="form-control col-md-8 col-7"
-                                             id="longitudModificarLocal" th:field="*{longitud}" />
+                                        <input type="number" step="0.000001" class="form-control col-md-8 col-7"
+                                             id="longitudModificarLocal" th:field="*{longitud}" min="-180" max="180" />
                                    </div>
                                    <div class="form-group row">
                                         <label for="direccionModificarLocal" class="col-sm-3 col-4">Dirección</label>
