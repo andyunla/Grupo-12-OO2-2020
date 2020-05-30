@@ -113,7 +113,17 @@
                     </div>
                </div>
                <!-- BOTTON -->
-               <button class="btn btn-primary mt-3">CONTINUAR</button>
+               <div class="d-flex w-100 justify-content-center flex-wrap mt-3 align-items-center">
+                    <form th:action="@{/chango/eliminar/{idChango}(idChango = ${chango.idChango})}" method="POST">
+                         <button class="btn btn-danger btn-sm m-1">CANCELAR</button>
+                    </form>
+                    <form th:action="@{/}">
+                         <button class="btn btn-primary m-1">FACTURAR</button>
+                    </form>
+                    <form th:action="@{/}">
+                         <button class="btn btn-secondary btn-sm m-1">GUARDAR</button>
+                    </form>
+               </div>
      </main>
      <footer th:replace="fragments/footer :: footer"></footer>
      <div class="p-1 col-11 col-sm-7 col-md-6 col-lg-4" id="alertContainer"></div>

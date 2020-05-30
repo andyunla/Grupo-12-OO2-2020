@@ -131,6 +131,19 @@ public class ChangoController {
           return new ResponseEntity<String>(HttpStatus.OK); 
      }
 
+     @PostMapping("eliminar/{idChango}")
+     public String eliminarChango(@PathVariable("idChango") long idChango) {
+          // Traer items del chango, devolverlos a sus lotes y eliminarlos
+          localModel.setInstance(localService.findByIdLocal(1));
+          List<ItemModel> items = itemService.findByChango(idChango);
+          for(ItemModel item: items) {
+               localModel.devolverLote(item.getProductoModel(), item.getCantidad());
+               itemService.remove(item.getIdItem());
+          }
+          // Eliminar chango
+          changoService.remove(idChango);
+          return ViewRouteHelper.HOME_ROOT;
+     }
      /*
       * CHANGO ABIERTO: Vista para permitir retomar un chango creado pero aun sin
       * pedido aprobado ni facturado

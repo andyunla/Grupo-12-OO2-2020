@@ -40,6 +40,15 @@ public class ItemService implements IItemService {
 	}
 
 	@Override
+	public List<ItemModel> findByChango(long idChango) {
+		List<ItemModel> items = new ArrayList<ItemModel>();
+		for(Item item : itemRepository.findByChango(idChango)) {
+			items.add( itemConverter.entityToModel(item));
+		}
+		return items;
+	}
+
+	@Override
 	public List<Item> getAll() {
 		return itemRepository.findAll();
 	}
