@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.sistema.application.converters.ProductoConverter;
 import com.sistema.application.dto.ProductoRankingDto;
-import com.sistema.application.funciones.Funciones1;
+import com.sistema.application.funciones.Funciones;
 import com.sistema.application.services.IChangoService;
 import com.sistema.application.services.IFacturaService;
 import com.sistema.application.services.ILocalService;
@@ -242,7 +242,7 @@ public class LocalModel {
 			id[i] = listaLocales.get(i).getIdLocal();
 			distancia[i] = calcularDistancia(listaLocales.get(i));
 		}
-		Funciones1.orden(id, distancia);// este método ordena los dos vectores de mayor a menor usando el valor de la
+		Funciones.orden(id, distancia);// este método ordena los dos vectores de mayor a menor usando el valor de la
 										// distancia
 		for (long l : id) {
 			lista.add(localService.findByIdLocal(l));//agrego a la lista los productos con ID en orden
@@ -304,13 +304,13 @@ public class LocalModel {
 				lo.setCantidadActual(lo.getCantidadActual()- cantidad);
 				loteService.insertOrUpdate(lo);// actualizo el lote en la base de datos
 				cantidad =0;// seteo en cero para salir del bucle, ya no hay mas que restar
-			}			
+			}
 		}		
 		return true;
 	}
 
 	public boolean sumarLote(ProductoModel producto, int cantidad) {
-		int i =0;
+		
 		//traigo la lista de lotes del producto en el local
 		Set<LoteModel> lista = loteService.findByLoteProductoBaja(producto.getIdProducto(), this.idLocal);
 		Iterator<LoteModel> itr = lista.iterator();
@@ -329,7 +329,7 @@ public class LocalModel {
 				loteService.insertOrUpdate(lo);// actualizo el lote en la base de datos
 				cantidad =0;// seteo en cero para salir del bucle, ya no hay mas que sumar
 			}			
-		i++;	
+	
 		}		
 		return true;
 	}
