@@ -25,6 +25,7 @@ import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.LocalModel;
+import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IEmpleadoService;
 import com.sistema.application.services.ILocalService;
 
@@ -40,6 +41,9 @@ public class EmpleadoController {
 	@Autowired
 	@Qualifier("localService")
 	private ILocalService localService;
+	@Autowired
+    @Qualifier("userRepository")
+    private IUserRepository userRepository;
 	
 	@GetMapping("")
 	public String empleados(Model modelo) {

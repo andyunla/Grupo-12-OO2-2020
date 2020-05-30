@@ -8,6 +8,7 @@ import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.LocalModel;
+import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IEmpleadoService;
 import com.sistema.application.services.ILocalService;
 
@@ -45,6 +46,9 @@ public class LocalController {
 	@Autowired
 	@Qualifier("empleadoService")
 	private IEmpleadoService empleadoService;
+	@Autowired
+    @Qualifier("userRepository")
+    private IUserRepository userRepository;
 
 	@GetMapping("")
 	public String locales(Model modelo) {

@@ -17,6 +17,7 @@ import com.sistema.application.dto.UserDto;
 import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ItemModel;
+import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IItemService;
 
 import org.springframework.ui.Model;
@@ -34,7 +35,9 @@ public class ItemController {
 	@Autowired
 	@Qualifier("itemService")
 	private IItemService itemService;
-	
+	@Autowired
+    @Qualifier("userRepository")
+    private IUserRepository userRepository;	
 
 	//Métodos
 	@GetMapping("")

@@ -7,6 +7,7 @@ import com.sistema.application.dto.UserDto;
 import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.LoteModel;
+import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.ILoteService;
 import com.sistema.application.services.IProductoService;
@@ -47,6 +48,10 @@ public class LoteController {
      @Autowired
      @Qualifier("productoService")
      private IProductoService productoService;
+     
+     @Autowired
+     @Qualifier("userRepository")
+     private IUserRepository userRepository;
 
      @GetMapping("")
      public String lotes(Model modelo) {
