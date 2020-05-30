@@ -1,6 +1,7 @@
 package com.sistema.application.converters;
 
 import com.sistema.application.entities.Empleado;
+import com.sistema.application.entities.User;
 import com.sistema.application.repositories.IEmpleadoRepository;
 import com.sistema.application.dto.UserDto;
 
@@ -14,15 +15,15 @@ public class UserConverter {
 	@Qualifier("empleadoRepository")
 	private static IEmpleadoRepository empleadoRepository;
 	
-	public UserDto entityToDto(com.sistema.application.entities.User user) {
+	public UserDto entityToDto(User user) {
 		Empleado empleado = user.getEmpleado();
 		String nombreCompleto = empleado.getNombre() + " " + empleado.getApellido();
 		return new UserDto(user.getId(), nombreCompleto, user.getUsername(), user.getEmail(), empleado.getLegajo(),
 						   empleado.getLocal().getIdLocal());
 	}
 
-	public com.sistema.application.entities.User dtoToEntity(UserDto userDto) {
+	public User dtoToEntity(UserDto userDto) {
 		Empleado empleado = empleadoRepository.findByLegajo(userDto.getLegajo());
-		return new com.sistema.application.entities.User(userDto.getIdUser(), empleado, userDto.getEmailUser(), userDto.getUsername());
+		return new User(userDto.getIdUser(), empleado, userDto.getEmailUser(), userDto.getUsername());
 	}
 }
