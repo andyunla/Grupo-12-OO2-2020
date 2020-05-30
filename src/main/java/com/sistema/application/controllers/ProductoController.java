@@ -2,7 +2,6 @@ package com.sistema.application.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -17,6 +16,8 @@ import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
 
 import com.sistema.application.services.IProductoService;
+import com.sistema.application.converters.UserConverter;
+import com.sistema.application.dto.UserDto;
 import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ProductoModel;
@@ -24,18 +25,17 @@ import com.sistema.application.models.ProductoModel;
 @Controller
 @RequestMapping("producto")
 public class ProductoController {
-	
+	@Autowired
+	@Qualifier("userConverter")
+	private UserConverter userConverter;
 	@Autowired
 	@Qualifier("productoService")
 	private IProductoService productoService;
 
 	@GetMapping("")
 	public String productos(Model modelo) {
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		modelo.addAttribute("username", user.getUsername());
-		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
-		modelo.addAttribute("isGerente", isGerente);
-		
+		UserDto userDto = userConverter.userDetailsToDto((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		modelo.addAttribute("currentUser", userDto);
 		modelo.addAttribute("productos", productoService.getAllModel());
 		modelo.addAttribute("producto", new ProductoModel());
 		return ViewRouteHelper.PRODUCTO_ABM;

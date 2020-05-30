@@ -26,12 +26,9 @@ import com.sistema.application.entities.User;
 import com.sistema.application.exception.CustomeFieldValidationException;
 import com.sistema.application.exception.UsernameOrIdNotFound;
 import com.sistema.application.helpers.ViewRouteHelper;
-import com.sistema.application.services.IUserService;
 
 @Controller
 public class UserController {
-	@Autowired
-	IUserService userService;
 
 	@GetMapping("/login")
 	public String login(Model model,

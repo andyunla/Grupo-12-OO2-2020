@@ -12,7 +12,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.BindingResult;
 import javax.validation.Valid;
 
-
+import com.sistema.application.converters.UserConverter;
+import com.sistema.application.dto.UserDto;
 import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ItemModel;
@@ -27,7 +28,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/item")
 public class ItemController {
-	
+	@Autowired
+	@Qualifier("userConverter")
+	private UserConverter userConverter;
 	@Autowired
 	@Qualifier("itemService")
 	private IItemService itemService;
@@ -36,10 +39,8 @@ public class ItemController {
 	//Métodos
 	@GetMapping("")
 	public String items(Model modelo) {
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		modelo.addAttribute("username", user.getUsername());
-		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
-		modelo.addAttribute("isGerente", isGerente);
+		UserDto userDto = userConverter.userDetailsToDto((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		modelo.addAttribute("currentUser", userDto);
 		modelo.addAttribute("items", itemService.getAll() );
 		modelo.addAttribute("item", new ItemModel() );
 		return ViewRouteHelper.ITEM_ABM;

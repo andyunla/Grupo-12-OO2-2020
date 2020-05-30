@@ -15,7 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -85,6 +84,15 @@ public class User implements Serializable {
 		this.password = password;
 		this.enabled = enabled;
 		this.userRoles = userRoles;
+	}
+	
+	// Constructor usado por el Converter
+	public User(Long id, Empleado empleado, String email, String username) {
+		super();
+		this.id = id;
+		this.empleado = empleado;
+		this.email = email;
+		this.username = username;
 	}
 
 	public Long getId() {

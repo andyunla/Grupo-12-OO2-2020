@@ -1,8 +1,10 @@
 package com.sistema.application.controllers;
 
 import com.sistema.application.converters.LocalConverter;
+import com.sistema.application.converters.UserConverter;
 import com.sistema.application.dto.LocalDistanciaDto;
 import com.sistema.application.dto.LocalDto;
+import com.sistema.application.dto.UserDto;
 import com.sistema.application.entities.Empleado;
 import com.sistema.application.entities.Local;
 import com.sistema.application.helpers.UtilHelper;
@@ -18,8 +20,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -36,6 +36,9 @@ public class DistanciaController {
 	@Qualifier("localConverter")
 	private LocalConverter localConverter;
 	@Autowired
+	@Qualifier("userConverter")
+	private UserConverter userConverter;
+	@Autowired
 	@Qualifier("userRepository")
 	private IUserRepository userRepository;
 	@Autowired
@@ -50,18 +53,15 @@ public class DistanciaController {
 
 	@GetMapping("")
 	public String distancia(Model modelo) {
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		modelo.addAttribute("username", user.getUsername());
-		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
-		modelo.addAttribute("isGerente", isGerente);
-		
+		UserDto userDto = userConverter.userDetailsToDto((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		modelo.addAttribute("currentUser", userDto);
 		List<LocalModel> localesModels = localService.getAllModel();
 		List<LocalDto> locales = new ArrayList<LocalDto>();
 		for (LocalModel model : localesModels) {
 			locales.add(localConverter.modelToDto(model));
 		}
 		// Obtenemos el local actual donde trabaja el usuario
-		LocalModel localActual = this.getLocalGivenUser(user.getUsername());
+		LocalModel localActual = this.getLocalGivenUser(userDto.getUsername());
 		modelo.addAttribute("local", localActual);
 		modelo.addAttribute("locales", locales);
 		modelo.addAttribute("productos", productoService.getAllModel());
@@ -100,6 +100,5 @@ public class DistanciaController {
 		com.sistema.application.entities.User user = userRepository.findByUsernameAndFetchUserRolesEagerly(username);
 		Local local = user.getEmpleado().getLocal();
 		return localConverter.entityToModel(local);
-		
 	}
 }
