@@ -48,7 +48,10 @@ public class LocalController {
 
 	@GetMapping("")
 	public String locales(Model modelo) {
-		UserDto userDto = userConverter.userDetailsToDto((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
+		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
+		userDto.setTipoGerente(isGerente);
 		modelo.addAttribute("currentUser", userDto);
 		List<LocalModel> localesModel = localService.getAllModel();
 		List<LocalDto> locales = new ArrayList<LocalDto>();

@@ -50,7 +50,10 @@ public class LoteController {
 
      @GetMapping("")
      public String lotes(Model modelo) {
-          UserDto userDto = userConverter.userDetailsToDto((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+          User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+          UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
+          boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
+          userDto.setTipoGerente(isGerente);
           modelo.addAttribute("currentUser", userDto);
           modelo.addAttribute("lotes", loteService.getAllModel());
           modelo.addAttribute("lote", new LoteModel());

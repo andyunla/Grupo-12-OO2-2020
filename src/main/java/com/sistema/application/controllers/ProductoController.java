@@ -2,6 +2,7 @@ package com.sistema.application.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import com.sistema.application.dto.UserDto;
 import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ProductoModel;
+import com.sistema.application.repositories.IUserRepository;
 
 @Controller
 @RequestMapping("producto")
@@ -31,10 +33,16 @@ public class ProductoController {
 	@Autowired
 	@Qualifier("productoService")
 	private IProductoService productoService;
+	@Autowired
+	@Qualifier("userRepository")
+	private IUserRepository userRepository;
 
 	@GetMapping("")
 	public String productos(Model modelo) {
-		UserDto userDto = userConverter.userDetailsToDto((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
+		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
+		userDto.setTipoGerente(isGerente);
 		modelo.addAttribute("currentUser", userDto);
 		modelo.addAttribute("productos", productoService.getAllModel());
 		modelo.addAttribute("producto", new ProductoModel());

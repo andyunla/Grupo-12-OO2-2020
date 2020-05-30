@@ -41,7 +41,10 @@ public class HomeController {
 	@GetMapping("/index")
 	public ModelAndView index() {
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.INDEX);
-		UserDto userDto = userConverter.userDetailsToDto((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
+		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
+		userDto.setTipoGerente(isGerente);
 		modelAndView.addObject("currentUser", userDto);
 		return modelAndView;
 	}
