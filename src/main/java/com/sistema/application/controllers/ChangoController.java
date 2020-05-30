@@ -3,6 +3,7 @@ package com.sistema.application.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sistema.application.converters.ProductoConverter;
 import com.sistema.application.dto.ProductoStockDto;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ChangoModel;
@@ -54,6 +55,10 @@ public class ChangoController {
      @Autowired
      @Qualifier("changoService")
      private IChangoService changoService;
+
+     @Autowired
+     @Qualifier("productoConverter")
+     private ProductoConverter productoConverter;
      
      @GetMapping("")
      public String chango(Model modelo) {
@@ -65,7 +70,7 @@ public class ChangoController {
           for (ProductoModel p : productoService.getAllModel()) {
 		     int stock = localModel.calcularStockLocal(p);
                if ( stock > 0) {
-                    productosConStock.add( new ProductoStockDto(p.getIdProducto(), p.getNombre(), p.getTalle(), p.getPrecio(), stock) );
+                    productosConStock.add( productoConverter.modelToDTO(p, stock) );
                }
           }
           ChangoModel nuevoChango = localModel.crearChango();
