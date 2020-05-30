@@ -2,6 +2,7 @@ package com.sistema.application.models;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.sistema.application.converters.ProductoConverter;
+import com.sistema.application.dto.ProductoRankingDto;
 import com.sistema.application.funciones.Funciones1;
 import com.sistema.application.services.IChangoService;
 import com.sistema.application.services.IFacturaService;
@@ -515,24 +517,15 @@ public class LocalModel {
 	////////////////////////////////////////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
-	public LinkedHashMap<ProductoModel, Integer> ranking() {
+	public List<ProductoRankingDto> ranking() {
 		List<ProductoModel> listaProductos = productoService.getAllModel();
-		LinkedHashMap<ProductoModel, Integer> rankingProductos = new LinkedHashMap<ProductoModel, Integer>();
-		int[] cantidadList = new int[listaProductos.size()];// vector para guardar el valor de cantidadProductoVendido
-		long[] idList = new long[listaProductos.size()];// vector para guardar el valor ID del producto
-		for (int i = 0; i < listaProductos.size(); i++) {
-			idList[i] = listaProductos.get(i).getIdProducto();
-			cantidadList[i] = cantidadProductoVendido(listaProductos.get(i));
+		List<ProductoRankingDto> productoRanking = new ArrayList<ProductoRankingDto>();
+		
+		for (ProductoModel pro : listaProductos) {			
+			productoRanking.add(productoConverter.modelToDto(pro, cantidadProductoVendido(pro)));
 		}
-		Funciones1.orden(idList, cantidadList);// este método ordena los dos vectores de mayor a menor usando el valor de la
-									   // cantidad
-		int cont = 0;
-		for (long id : idList) {
-			// agrego a la lista los productos con ID en orden
-			rankingProductos.put(productoService.findByIdProducto(id), cantidadList[cont]);
-			cont++;
-		}
-		return rankingProductos;
+		Collections.sort(productoRanking, Collections.reverseOrder());		
+		return productoRanking;
 	}
 
 	public int cantidadProductoVendido(ProductoModel producto) {
