@@ -13,7 +13,7 @@
                     <a class="nav-link" th:href="@{/}"><i class="fa fa-fw fa-home"></i> Home <span class="sr-only">(current)</span></a>
                </li>
                <!-- Si es un GERENTE tiene el permiso de realizar los ABMs del resto de las cosas -->
-               <span th:if="${isGerente}">
+               <span th:if="${currentUser.tipoGerente}">
                     <li class="nav-item dropdown" th:classappend="${active=='abm'} ? active : ''">
                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -28,7 +28,7 @@
                          </div>
                     </li>
                </span>
-               <span th:unless="${isGerente}">
+               <span th:unless="${currentUser.tipoGerente}">
                     <a class="nav-link" th:href="@{/cliente}">Clientes</a>
                     <vr>
                </span>
