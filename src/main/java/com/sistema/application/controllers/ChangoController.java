@@ -3,23 +3,28 @@ package com.sistema.application.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sistema.application.converters.LocalConverter;
 import com.sistema.application.converters.ProductoConverter;
 import com.sistema.application.dto.ProductoStockDto;
+import com.sistema.application.entities.Local;
+import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.ItemModel;
 import com.sistema.application.models.LocalModel;
 import com.sistema.application.models.ProductoModel;
+import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IChangoService;
 import com.sistema.application.services.IItemService;
-import com.sistema.application.services.ILocalService;
-import com.sistema.application.services.IPedidoStockService;
 import com.sistema.application.services.IProductoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,12 +38,16 @@ import org.springframework.web.servlet.ModelAndView;
 public class ChangoController {
 
      @Autowired
+	@Qualifier("userRepository")
+     private IUserRepository userRepository;
+     
+     @Autowired
      @Qualifier("productoService")
      private IProductoService productoService;
-
+     
      @Autowired
-     @Qualifier("localService")
-     private ILocalService localService;
+	@Qualifier("localConverter")
+	private LocalConverter localConverter;
 
      @Autowired
      @Qualifier("localModel")
@@ -47,10 +56,6 @@ public class ChangoController {
      @Autowired
      @Qualifier("itemService")
      private IItemService itemService;
-
-     @Autowired
-     @Qualifier("pedidoStockService")
-     private IPedidoStockService pedidoStockService;
 
      @Autowired
      @Qualifier("changoService")
@@ -62,8 +67,13 @@ public class ChangoController {
      
      @GetMapping("")
      public String chango(Model modelo) {
-          //TODO: Usar un local que será extraido del empleado logueado
-          LocalModel localActual = localService.findByIdLocal(1);    
+          // Obtengo el usuario de la sesión
+          User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		modelo.addAttribute("username", user.getUsername());
+		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
+          modelo.addAttribute("isGerente", isGerente);
+		// Obtenemos el local actual donde trabaja el usuario
+          LocalModel localActual = this.getLocalGivenUser(user.getUsername());
           localModel.setInstance(localActual);
           // Selecciono de todos los productos solo los que tienen por lo menos 1 en stock en el local
           List<ProductoStockDto> productosConStock = new ArrayList<ProductoStockDto>();
@@ -82,7 +92,7 @@ public class ChangoController {
      // Agrega un nuevo item al chango, su cantidad será 1
      @PostMapping("nuevo-item/{idChango}/{idProducto}")
      public ModelAndView agregarItem(@PathVariable("idChango") long idChango, @PathVariable("idProducto") long idProducto) {
-          localModel.setInstance(localService.findByIdLocal(1));
+          //localModel.setInstance(localService.findByIdLocal(1));
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.ITEM);
           // Verifico que el producto elegido no esté ya en un item del chango
           if (itemService.findByChangoAndProducto(idChango, idProducto) == null) {
@@ -100,7 +110,7 @@ public class ChangoController {
      // Elimina un item de un chango abierto
      @PostMapping("eliminar-item/{idItem}")
      public ResponseEntity<String> eliminarItem(@PathVariable("idItem") long idItem) {
-          localModel.setInstance(localService.findByIdLocal(1));
+          //localModel.setInstance(localService.findByIdLocal(1));
           ItemModel item = itemService.findByIdItem(idItem);
           ProductoModel producto = item.getProductoModel();
           if (itemService.remove(idItem)) {
@@ -116,7 +126,7 @@ public class ChangoController {
      public ResponseEntity<String> modificar(@PathVariable("idItem") long idItem,
                @PathVariable("nuevaCantidad") int nuevaCantidad) {
           ItemModel item = itemService.findByIdItem(idItem);
-          localModel.setInstance(localService.findByIdLocal(1));
+          //localModel.setInstance(localService.findByIdLocal(1));
           // Verifico si estoy agregando cantidad al item   
           if (item.getCantidad() < nuevaCantidad) {
                // Verifico si hay stock en el local
@@ -139,7 +149,7 @@ public class ChangoController {
      @PostMapping("eliminar/{idChango}")
      public String eliminarChango(@PathVariable("idChango") long idChango) {
           // Traer items del chango, devolverlos a sus lotes y eliminarlos
-          localModel.setInstance(localService.findByIdLocal(1));
+          //localModel.setInstance(localService.findByIdLocal(1));
           List<ItemModel> items = itemService.findByChango(idChango);
           for(ItemModel item: items) {
                localModel.devolverLote(item.getProductoModel(), item.getCantidad());
@@ -160,4 +170,15 @@ public class ChangoController {
 
      // TODO Buscar donde se auto eliminarán aquellos changos guardados sin items
 
+     /**
+	* Método que retorna el local donde trabaja el usuario
+	* que está logueado actualmente dado su username
+	* @param username Tipo String. Ej: 'empleado1'
+	* @return LocalModel
+	*/
+	private LocalModel getLocalGivenUser(String username) {
+		com.sistema.application.entities.User user = userRepository.findByUsernameAndFetchUserRolesEagerly(username);
+		Local local = user.getEmpleado().getLocal();
+		return localConverter.entityToModel(local);
+	}
 }
