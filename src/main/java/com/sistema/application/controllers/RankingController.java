@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -12,7 +14,8 @@ import com.sistema.application.dto.ProductoRankingDto;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.LocalModel;
 import com.sistema.application.services.IProductoService;
-
+@Controller
+@RequestMapping("ranking")
 public class RankingController {
 	@Autowired
 	@Qualifier("productoService")
