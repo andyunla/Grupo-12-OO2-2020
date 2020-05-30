@@ -74,6 +74,7 @@ async function modificarCantidad(element, valor = 0) {
                let response = await fetch(url, {method: 'POST'});
                if(response.status == 200) {
                     cantidadInput.value = nuevaCantidad;
+                    cantidadInput.dataset.lastvalue = nuevaCantidad;
                } else {
                     // Si el servidor no responde OK se asume que es por falta de stock
                     let htmlAlert = 
@@ -87,7 +88,6 @@ async function modificarCantidad(element, valor = 0) {
                     // Se reestablece la cantidad en la vista a la cantidad que tiene en la base de datos
                     cantidadInput.value = await response.json();
                }
-               cantidadInput.dataset.lastvalue = nuevaCantidad;
                actualizarTotal();
           } catch(e){
                console.error(e);
@@ -114,8 +114,9 @@ function buscar(){
      let elementosProducto = document.getElementById("productosDisponibles").children;    
      if( valorBuscado != "" ) {
           for(let filaProducto of elementosProducto) {
-               // Si el producto de la fila incluye el valor buscado se quitará si invisibilidad, en caso de tenerla
-               if( filaProducto.children[1].innerText.includes(valorBuscado) ) {
+               // Si el producto de la fila incluye el valor buscado será visible
+               let nombreProducto = filaProducto.children[1].innerText;
+               if( nombreProducto.toUpperCase().includes(valorBuscado.toUpperCase()) ) {
                     filaProducto.classList.remove('d-none');
                } else {
                     // Si el producto de la fila no incluye el valor buscado se lo hará invisible
