@@ -5,6 +5,15 @@
 .bigger-text{
     font-size: 1.3em;
 }
+.smaller-text {
+    font-size: 0.9em;
+}
+
+@media (max-width: 400px) {
+    .just-in-big-screen{
+        display: none;
+    }
+}
 
 /* ELIMINAR FLECHAS DE INPUT TYPE NUMBER */
 /* Chrome, Safari, Edge, Opera */

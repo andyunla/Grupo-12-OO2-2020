@@ -33,10 +33,11 @@
                               <td class="m-0 p-0">
                                    <table class="table shadow bg-white rounded m-0 p-0">
                                         <thead class="thead-dark">
-                                             <th scope="col" class="width-10">#</th>
+                                             <th class="d-none"></th>
                                              <th scope="col" class="width-30">Nombre</th>
                                              <th scope="col" class="width-20">Talle</th>
                                              <th scope="col" class="width-20">Precio</th>
+                                             <th scope="col" class="width-10 just-in-big-screen">Stock</th>
                                              <th class="width-20"></th>
                                         </thead>
                                    </table>
@@ -48,16 +49,17 @@
                                         <table class="table shadow bg-white rounded">
                                              <tbody id="productosDisponibles">
                                                   <tr th:each="producto :${productos}">
-                                                       <td scope="col" class="width-10"
-                                                            th:text="${producto.idProducto}"></td>
+                                                       <td class="d-none" th:text="${producto.idProducto}"></td>
                                                        <td scope="col" class="width-30" th:text="${producto.nombre}">
                                                        </td>
                                                        <td scope="col" class="width-20" th:text="${producto.talle}">
                                                        </td>
                                                        <td scope="col" class="width-20"
                                                             th:text="${'$' + producto.precio}"></td>
-                                                       <td class="width-20">
-                                                            <button class="btn btn-info btn-sm boton-agregar-poducto"
+                                                       <td scope="col" class="width-10 text-secondary smaller-text just-in-big-screen"
+                                                            th:text="${producto.stock}"></td>
+                                                       <td class="width-20 p-0 align-middle">
+                                                            <button class="btn btn-info btn-sm boton-agregar-poducto m-0"
                                                                  th:attr="data-idProducto = ${producto.idProducto},
                                                                  data-idChango = ${chango.idChango}"
                                                                  th:id="'producto' + ${producto.idProducto}"
@@ -88,7 +90,7 @@
                                         <thead class="thead-dark">
                                              <th scope="col" class="width-30">Nombre</th>
                                              <th scope="col" class="width-10">Talle</th>
-                                             <th scope="col" class="width-20">Precio</th>
+                                             <th scope="col" class="width-20 just-in-big-screen">Precio</th>
                                              <th scope="col" class="width-40">Cantidad</th>
                                         </thead>
                                    </table>

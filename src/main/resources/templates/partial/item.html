@@ -1,7 +1,7 @@
 <tr th:if="${item}" class="item" th:id="'item' + ${item.idItem}" >
      <td class="width-30" th:text="${item.getProductoModel().nombre}"></td>
      <td class="width-10" th:text="${item.getProductoModel().talle}"></td>
-     <td class="width-20" th:text="${item.getProductoModel().precio}"></td>
+     <td class="width-20 just-in-big-screen" th:text="${'$' + item.getProductoModel().precio}"></td>
      <td class="width-40 pt-1 pb-1">
           <div class="d-flex w-100 justify-content-center">
                <div class="input-group w-75 flex-nowrap">
@@ -16,14 +16,13 @@
                               <svg th:replace="fragments/icons :: subtractIcon"></svg>
                          </button>
                     </div>
-                    <form onsubmit="return false">
-                         <input type="number" th:value="${item.cantidad}" min="1"
-                              class="form-control text-center border-info no-arrows"
-                              style="min-width: 2em !important; padding: 0;"
-                              th:id="'cantidad-item' + ${item.idItem}"
-                              th:attr="'data-idItem' = ${item.idItem}"
-                              onchange="modificarCantidad(this)">
-                    </form>
+                    <input type="number" th:value="${item.cantidad}"
+                         class="form-control text-center border-info no-arrows"
+                         style="min-width: 2em !important; padding: 0;"
+                         th:id="'cantidad-item' + ${item.idItem}"
+                         th:attr="'data-idItem' = ${item.idItem}"
+                         data-lastValue = "1"
+                         onchange="modificarCantidad(this)">
                     <div class="input-group-append">
                          <button
                               class="btn btn-outline-info btn-sm btn-cart"

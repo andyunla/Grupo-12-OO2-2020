@@ -3,6 +3,7 @@ package com.sistema.application.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sistema.application.dto.ProductoStockDto;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.ItemModel;
@@ -53,18 +54,18 @@ public class ChangoController {
      @Autowired
      @Qualifier("changoService")
      private IChangoService changoService;
-
-     /* NUEVO CHANGO */
+     
      @GetMapping("")
      public String chango(Model modelo) {
           //TODO: Usar un local que será extraido del empleado logueado
-          LocalModel localActual = localService.findByIdLocal(1);
+          LocalModel localActual = localService.findByIdLocal(1);    
           localModel.setInstance(localActual);
           // Selecciono de todos los productos solo los que tienen por lo menos 1 en stock en el local
-          List<ProductoModel> productosConStock = new ArrayList<ProductoModel>();
+          List<ProductoStockDto> productosConStock = new ArrayList<ProductoStockDto>();
           for (ProductoModel p : productoService.getAllModel()) {
-               if (localModel.validarStock(p, 1)) {
-                    productosConStock.add(p);
+		     int stock = localModel.calcularStockLocal(p);
+               if ( stock > 0) {
+                    productosConStock.add( new ProductoStockDto(p.getIdProducto(), p.getNombre(), p.getTalle(), p.getPrecio(), stock) );
                }
           }
           ChangoModel nuevoChango = localModel.crearChango();
@@ -72,7 +73,7 @@ public class ChangoController {
           modelo.addAttribute("chango", nuevoChango);
           return ViewRouteHelper.CHANGO_ROOT;
      }
-
+         
      // Agrega un nuevo item al chango, su cantidad será 1
      @PostMapping("nuevo-item/{idChango}/{idProducto}")
      public ModelAndView agregarItem(@PathVariable("idChango") long idChango, @PathVariable("idProducto") long idProducto) {
@@ -89,7 +90,7 @@ public class ChangoController {
                mAV.setStatus(HttpStatus.NOT_ACCEPTABLE);
           }
           return mAV;
-     }
+     }     
 
      // Elimina un item de un chango abierto
      @PostMapping("eliminar-item/{idItem}")
@@ -103,7 +104,7 @@ public class ChangoController {
           } else {
                return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
           }
-     }
+     }              
 
      // Cambia la cantidad de un item
      @PostMapping("modificar-item/{idItem}/{nuevaCantidad}")

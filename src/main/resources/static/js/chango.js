@@ -47,16 +47,12 @@ async function eliminarItem(e) {
      }
 }
 
-function actualizarTotal(element) {
-     if( element != undefined && element.value < 1) {
-          element.value = 1;
-          actualizarTotal();
-          return 0;
-     }
+function actualizarTotal() {
      let itemsElements = document.getElementsByClassName("item");
      let total = 0;
      for (let element of itemsElements) {
-          let precio = element.children[2].innerText;
+          // Obtengo el precio de la lista de items en chango y lo multiplico por la cantidad
+          let precio = element.children[2].innerText.substring(1);
           let cantidad = document.getElementById('cantidad-' + element.id).value;
           total += (precio * cantidad);
      }
@@ -67,8 +63,10 @@ async function modificarCantidad(element, valor = 0) {
      // El valor es la cantidad a sumar o restar de la cantidad actual
      let cantidadInput = document.getElementById("cantidad-item" + element.dataset.iditem);
      let nuevaCantidad = parseInt(cantidadInput.value) + valor;
-     // Verifica que la cantidad no llegue a cero en caso de estar restando
-     if(nuevaCantidad > 0) {
+     // Verifica si hay un valor negativo o cero, de ser así lo devuelve a su valor ultimo
+     if(nuevaCantidad < 1) {
+          cantidadInput.value = cantidadInput.dataset.lastvalue;
+     } else {
           let url = host + 'modificar-item/' + element.dataset.iditem + '/' + nuevaCantidad;
           // Desabilita los botones y el campo de modificación hasta obtener una respuesta del servidor
           element.disabled = true;
@@ -79,7 +77,7 @@ async function modificarCantidad(element, valor = 0) {
                } else {
                     // Si el servidor no responde OK se asume que es por falta de stock
                     let htmlAlert = 
-                         '<div class="p-4 alert alert-success alert-dismissible fade show" role="alert">' +
+                         '<div class="p-4 alert alert-danger alert-dismissible fade show" role="alert">' +
                               '<strong>STOCK SUPERADO:</strong> No se pudo modificar cantidad' + 
                               '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
                                    '<span aria-hidden="true">&times;</span>' + 
@@ -89,6 +87,7 @@ async function modificarCantidad(element, valor = 0) {
                     // Se reestablece la cantidad en la vista a la cantidad que tiene en la base de datos
                     cantidadInput.value = await response.json();
                }
+               cantidadInput.dataset.lastvalue = nuevaCantidad;
                actualizarTotal();
           } catch(e){
                console.error(e);
