@@ -6,6 +6,8 @@ import java.time.LocalTime;
 import java.time.temporal.TemporalAmount;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 public class Funciones {
 	/**
@@ -1001,5 +1003,137 @@ public class Funciones {
 		}
 		return array;
 	}
+	
+	
+	/********************************************************************************************/
+
+	//Metodos
+
+	public static String traerHoraCorta(LocalTime hora) {  //Retorna �hh:mm�
+		return (hora.getHour() + ":" + hora.getMinute() );
+	}
+
+	public static boolean esDiaHabil(LocalDate fecha) {  //Consideramos h�bil de lunes a viernes
+		if(fecha.getDayOfWeek().getValue() >=1 && fecha.getDayOfWeek().getValue() <= 5) {
+			return true;
+		}else{return false;}
+
+	}
+
+	public static String traerDiaDeLaSemana(LocalDate fecha) {
+		return fecha.getDayOfWeek().getDisplayName(TextStyle.SHORT,Locale.ENGLISH);
+	}	
+
+
+	public static String traerMesEnLetras(LocalDate fecha) {
+		return fecha.getMonth().getDisplayName(TextStyle.SHORT,Locale.ENGLISH);
+	}
+
+	public static String traerFechaLarga(LocalDate fecha) {  //Ejemplo: �S�bado 20 de Agosto del 2016�
+
+		String dia = fecha.getDayOfWeek().getDisplayName(TextStyle.SHORT,Locale.ENGLISH);
+		int diaDelMes = fecha.getDayOfMonth();
+		String mes = fecha.getMonth().getDisplayName(TextStyle.SHORT,Locale.ENGLISH);
+		int anio = fecha.getYear();
+
+		return (dia + " " + diaDelMes + " de " + mes + " del " + anio);
+	}
+
+
+	
+	public static boolean esCadenaNros (String cadena) {
+
+		boolean resultado;
+
+		try {
+			Integer.parseInt(cadena);	//Se intenta convertir los caracteres a numeros
+			resultado = true;
+		} catch (NumberFormatException excepcion) { //Si no se puede es porque es la cadena de caracteres
+			resultado = false;						//tiene solo caracteres
+		}
+
+		return resultado;
+	}
+
+	
+
+	public static boolean esLetra(char c) {
+
+		boolean resultado;
+
+		if(Character.isDigit(c) ) {
+			resultado = true;
+		}else {
+			resultado = false;
+		}
+
+		return resultado;
+	}
+
+	
+
+	public static boolean esCadenaLetras (String cadena) {
+
+		boolean resultado;
+
+		try {
+			Integer.parseInt(cadena);	//Se intenta convertir los caracteres a numeros
+			resultado = true;
+		} catch (NumberFormatException excepcion) { //Si no se puede es porque es la cadena de caracteres
+			resultado = false;						//tiene solo caracteres
+		}
+
+		return resultado;
+	}
+	
+	
+	public static void orden(long[] id, int[] cantidad) {			
+		int cantidadAux = 0;
+		long idAux = 0;
+		boolean ordene = true;
+		while (ordene){
+			ordene = false;
+			for (int i = 0; i < cantidad.length; i++) {
+				if(cantidad[i]< cantidad[i+1]) {
+					// ordenamos la cantidad
+					cantidadAux = cantidad[i];
+					cantidad[i] = cantidad[i+1];
+					cantidad[i+1] = cantidadAux;
+					//y hacemos lo mismo con el ID
+					idAux = id[i];
+					id[i] = id[i+1];
+					id[i+1] = idAux;
+					//y ponemos la bandera en true, porque hubo un cambio
+					ordene = true;
+				}
+			}
+		}
+	}
+	
+	
+	public static void orden(long[] id, double[] distancia) {			
+		double distanciaAux = 0;
+		long idAux = 0;
+		boolean ordene = true;
+		while (ordene){
+			ordene = false;
+			for (int i = 0; i < distancia.length - 1; i++) {
+				if(distancia[i]> distancia[i+1]) {
+					// ordenamos la distancia
+					distanciaAux = distancia[i];
+					distancia[i] = distancia[i+1];
+					distancia[i+1] = distanciaAux;
+					//y hacemos lo mismo con el ID
+					idAux = id[i];
+					id[i] = id[i+1];
+					id[i+1] = idAux;
+					//y ponemos la bandera en true, porque hubo un cambio
+					ordene = true;
+				}
+			}
+		}
+	}
+
+	
 }
 
