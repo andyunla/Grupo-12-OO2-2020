@@ -17,7 +17,7 @@
                     <li class="nav-item dropdown" th:classappend="${active=='abm'} ? active : ''">
                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              ABMs
+                              <i class="fa fa-bars" aria-hidden="true"></i> ABMs
                          </a>
                          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                               <a class="dropdown-item" th:href="@{/producto}">Productos</a>
@@ -29,17 +29,17 @@
                     </li>
                </span>
                <span th:unless="${currentUser.tipoGerente}">
-                    <a class="nav-link" th:href="@{/cliente}">Clientes</a>
+                    <a class="nav-link" th:href="@{/cliente}"><i class="fa fa-bars" aria-hidden="true"></i> Clientes</a>
                     <vr>
                </span>
                <li class="nav-item" th:classappend="${active=='distancia'} ? active : ''">
-                    <a class="nav-link" th:href="@{/distancia}">Distancia</a>
+                    <a class="nav-link" th:href="@{/distancia}"><i class="fa fa-random" aria-hidden="true"></i> Distancia</a>
                </li>
                <li class="nav-item" th:classappend="${active=='ranking'} ? active : ''">
-                    <a class="nav-link" th:href="@{/ranking}">Ranking</a>
+                    <a class="nav-link" th:href="@{/ranking}"><i class="fa fa-line-chart" aria-hidden="true"></i> Ranking</a>
                </li>
                <li class="nav-item" th:classappend="${active=='chango'} ? active : ''">
-                    <a class="nav-link" th:href="@{/chango}">Chango</a>
+                    <a class="nav-link" th:href="@{/chango}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Chango</a>
                </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
