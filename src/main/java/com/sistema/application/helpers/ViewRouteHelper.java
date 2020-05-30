@@ -14,8 +14,13 @@ public class ViewRouteHelper {
 	// Parciales
 	public final static String LISTA_LOTES = "partial/listaLotes";
 	public final static String LISTA_LOCALES_CERCANOS = "partial/listaLocalesCercanos";
+	public final static String ITEM = "partial/item";
+
 	// CASOS DE USO
 	public final static String DISTANCIA_ROOT = "cu/distancia";
+	public final static String CHANGO_ROOT = "cu/chango";
+	public final static String RANKIG_ROOT = "cu/ranking";
+
 	// USER
 	public final static String USER_LOGIN = "user/login";
 	public final static String USER_LOGOUT = "user/logout";

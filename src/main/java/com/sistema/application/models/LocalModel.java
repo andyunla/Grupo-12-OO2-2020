@@ -2,6 +2,7 @@ package com.sistema.application.models;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,7 +13,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.sistema.application.converters.ProductoConverter;
-import com.sistema.application.funciones.Funciones1;
+import com.sistema.application.dto.ProductoRankingDto;
+import com.sistema.application.funciones.Funciones;
 import com.sistema.application.services.IChangoService;
 import com.sistema.application.services.IFacturaService;
 import com.sistema.application.services.ILocalService;
@@ -240,7 +242,7 @@ public class LocalModel {
 			id[i] = listaLocales.get(i).getIdLocal();
 			distancia[i] = calcularDistancia(listaLocales.get(i));
 		}
-		Funciones1.orden(id, distancia);// este método ordena los dos vectores de mayor a menor usando el valor de la
+		Funciones.orden(id, distancia);// este método ordena los dos vectores de mayor a menor usando el valor de la
 										// distancia
 		for (long l : id) {
 			lista.add(localService.findByIdLocal(l));//agrego a la lista los productos con ID en orden
@@ -286,9 +288,8 @@ public class LocalModel {
 	}
 
 	public boolean restarLote(ProductoModel producto, int cantidad) {
-		int i =0;
 		//traigo la lista de lotes del producto en el local
-		Set<LoteModel> lista = loteService.findByLoteProductoActivo(producto.getIdProducto(), this.idLocal);
+		List<LoteModel> lista = loteService.findByLoteProductoActivo(producto.getIdProducto(), this.idLocal);
 		Iterator<LoteModel> itr = lista.iterator();
 		LoteModel lo = null;// creo un LoteModel objeto vacio
 		while (cantidad > 0 && itr.hasNext()) {// mientras haya cantidad que restar
@@ -299,18 +300,17 @@ public class LocalModel {
 				//lo.setActivo(false); //esta validación la agregué dentor del set cantidadActual
 				loteService.insertOrUpdate(lo);// actualizo el lote en la base de datos
 				}
-			else if (lo.getCantidadActual() - cantidad >=1) {
+			else {
 				lo.setCantidadActual(lo.getCantidadActual()- cantidad);
 				loteService.insertOrUpdate(lo);// actualizo el lote en la base de datos
 				cantidad =0;// seteo en cero para salir del bucle, ya no hay mas que restar
-			}			
-		i++;	
+			}
 		}		
 		return true;
 	}
 
 	public boolean sumarLote(ProductoModel producto, int cantidad) {
-		int i =0;
+		
 		//traigo la lista de lotes del producto en el local
 		Set<LoteModel> lista = loteService.findByLoteProductoBaja(producto.getIdProducto(), this.idLocal);
 		Iterator<LoteModel> itr = lista.iterator();
@@ -329,7 +329,27 @@ public class LocalModel {
 				loteService.insertOrUpdate(lo);// actualizo el lote en la base de datos
 				cantidad =0;// seteo en cero para salir del bucle, ya no hay mas que sumar
 			}			
-		i++;	
+	
+		}		
+		return true;
+	}
+
+	// Método similar a sumarLote pero que también recarga los lotes activos que no estén llenos/nuevos
+	public boolean devolverLote(ProductoModel producto, int cantidad) {
+		List<LoteModel> lista = loteService.findByLoteProductoNoNuevo(producto.getIdProducto(), this.idLocal);   
+		Iterator<LoteModel> itr = lista.iterator();
+		LoteModel lo;
+		while (cantidad > 0 && itr.hasNext()) {
+			lo = itr.next();
+			if (lo.getCantidadActual() + cantidad >= lo.getCantidadInicial()) {
+				cantidad = lo.getCantidadInicial() - lo.getCantidadActual(); 
+				lo.setCantidadActual(lo.getCantidadInicial());
+				loteService.insertOrUpdate(lo);
+			} else {
+				lo.setCantidadActual(lo.getCantidadActual()+ cantidad);
+				loteService.insertOrUpdate(lo); 
+				cantidad =0;
+			}			
 		}		
 		return true;
 	}
@@ -342,7 +362,7 @@ public class LocalModel {
 	/****************************************************************************************************/
 	public int calcularStockLocal(ProductoModel producto) {		
 		int cantidadStock = 0;		
-		Set<LoteModel> lista = loteService.findByLoteProductoActivo( producto.getIdProducto(), this.idLocal );
+		List<LoteModel> lista = loteService.findByLoteProductoActivo( producto.getIdProducto(), this.idLocal );
 		for(LoteModel lo : lista) {
 			cantidadStock = cantidadStock + lo.getCantidadActual();			
 		}		
@@ -356,7 +376,7 @@ public class LocalModel {
 	/* MÉTODO QUE USAN PARA CALCULAR EL STOCK DE UN LOCAL QUE NO ES ESTA INSTANCIA (SE LO RECIBE POR PARAMETRO) */
 	public int calcularStockLocal(LocalModel local, ProductoModel producto) {		
 		int cantidadStock = 0;		
-		Set<LoteModel> lista = loteService.findByLoteProductoActivo( producto.getIdProducto(), local.idLocal );
+		List<LoteModel> lista = loteService.findByLoteProductoActivo( producto.getIdProducto(), local.idLocal );
 		for(LoteModel lo : lista) {
 			cantidadStock = cantidadStock + lo.getCantidadActual();			
 		}		
@@ -374,9 +394,8 @@ public class LocalModel {
 	////////////////////////////////////////////////////////////////////////////////////////////////////// LOCAL////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
-	public boolean crearPedidoStock(ProductoModel producto, int cantidad, EmpleadoModel solicitante){	
-		pedidoStockService.insertOrUpdate(new PedidoStockModel(producto, cantidad, solicitante));		
-		return true;
+	public PedidoStockModel crearPedidoStock(ProductoModel producto, int cantidad, EmpleadoModel solicitante){	
+		return pedidoStockService.insertOrUpdate(new PedidoStockModel(producto, cantidad, solicitante));		
 	}
 
 	/****************************************************************************************************/
@@ -389,7 +408,6 @@ public class LocalModel {
 		PedidoStockModel pedidoStockModel = pedidoStockService.findByIdPedidoStock(idPedidoStock); //traiugo el Pedido de la base de datos
 		pedidoStockModel.setEmpleadoOferente(oferente); //seteo el oferente
 		pedidoStockModel.setAceptado(aceptado); //seteo el estado del pedido
-		
 		if (pedidoStockModel.isAceptado()) {// si es un pedidoStock aceptado
 			pedidoStockService.insertOrUpdate(pedidoStockModel); // lo actualizo en la base de datos
 			pedidoStockModel.getEmpleadoOferente().getLocal().restarLote(pedidoStockModel.getProducto(), pedidoStockModel.getCantidad());			
@@ -515,24 +533,15 @@ public class LocalModel {
 	////////////////////////////////////////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
-	public LinkedHashMap<ProductoModel, Integer> ranking() {
+	public List<ProductoRankingDto> ranking() {
 		List<ProductoModel> listaProductos = productoService.getAllModel();
-		LinkedHashMap<ProductoModel, Integer> rankingProductos = new LinkedHashMap<ProductoModel, Integer>();
-		int[] cantidadList = new int[listaProductos.size()];// vector para guardar el valor de cantidadProductoVendido
-		long[] idList = new long[listaProductos.size()];// vector para guardar el valor ID del producto
-		for (int i = 0; i < listaProductos.size(); i++) {
-			idList[i] = listaProductos.get(i).getIdProducto();
-			cantidadList[i] = cantidadProductoVendido(listaProductos.get(i));
+		List<ProductoRankingDto> productoRanking = new ArrayList<ProductoRankingDto>();
+		
+		for (ProductoModel pro : listaProductos) {			
+			productoRanking.add(productoConverter.modelToDto(pro, cantidadProductoVendido(pro)));
 		}
-		Funciones1.orden(idList, cantidadList);// este método ordena los dos vectores de mayor a menor usando el valor de la
-									   // cantidad
-		int cont = 0;
-		for (long id : idList) {
-			// agrego a la lista los productos con ID en orden
-			rankingProductos.put(productoService.findByIdProducto(id), cantidadList[cont]);
-			cont++;
-		}
-		return rankingProductos;
+		Collections.sort(productoRanking, Collections.reverseOrder());		
+		return productoRanking;
 	}
 
 	public int cantidadProductoVendido(ProductoModel producto) {

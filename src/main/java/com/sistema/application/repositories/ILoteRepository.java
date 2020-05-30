@@ -1,4 +1,5 @@
 package com.sistema.application.repositories;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
@@ -14,13 +15,18 @@ public interface ILoteRepository extends JpaRepository<Lote, Serializable> {
 	
 	public abstract Lote findByIdLote(long idLote);
 	
-	@Query("FROM Lote  WHERE id_local = (:idLocal) and id_producto=(:idProducto) and activo = true")
-	public abstract Set<Lote> findByLoteProductoActivo(long idProducto, long idLocal);
+	@Query("FROM Lote  WHERE id_local = (:idLocal) AND id_producto=(:idProducto) AND activo = true ORDER BY fecha_ingreso ASC")
+	public abstract List<Lote> findByLoteProductoActivo(long idProducto, long idLocal);
 	
-	@Query("FROM Lote  WHERE id_local = (:idLocal) and id_producto=(:idProducto) and activo = false order by fecha_ingreso desc")
+	@Query("FROM Lote  WHERE id_local = (:idLocal) AND id_producto=(:idProducto) AND activo = false ORDER BY fecha_ingreso desc")
 	public abstract Set<Lote> findByLoteProductoBaja(long idProducto, long idLocal);
 
 	@Query("FROM Lote WHERE id_local = CASE(:idLocal) WHEN 0 THEN id_local ELSE (:idLocal) END AND id_producto = CASE(:idProducto) WHEN 0 THEN id_producto ELSE (:idProducto) END AND activo = CASE(:soloActivos) WHEN 0 THEN activo ELSE (true) END")
 	public abstract List<Lote> findByLocalProductoAndActivo(long idLocal, long idProducto, boolean soloActivos);
+	
+	// Devuelve una lista de lotes cuya cantidad actual no sea la inicial, es decir no nuevos
+	@Query("FROM Lote  WHERE id_local = (:idLocal) AND id_producto=(:idProducto) AND cantidad_inicial != cantidad_actual ORDER BY fecha_ingreso DESC")
+	public abstract List<Lote> findByLoteProductoNoNuevo(long idProducto, long idLocal);
+
 }
   

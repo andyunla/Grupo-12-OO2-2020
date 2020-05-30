@@ -2,6 +2,31 @@
 .quicksand {
     font-family: 'Quicksand', sans-serif;
 }
+.bigger-text{
+    font-size: 1.3em;
+}
+.smaller-text {
+    font-size: 0.9em;
+}
+
+@media (max-width: 400px) {
+    .just-in-big-screen{
+        display: none;
+    }
+}
+
+/* ELIMINAR FLECHAS DE INPUT TYPE NUMBER */
+/* Chrome, Safari, Edge, Opera */
+.no-arrows::-webkit-outer-spin-button,
+.no-arrows::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.no-arrows {
+  -moz-appearance: textfield;
+}
 
 /* FOOTER */
 
@@ -80,4 +105,46 @@ footer {
 li.dropdown:last-child .dropdown-menu {
   right: 0;
   left: auto;
+}
+
+/* CHANGO */
+
+@media (min-width: 1000px){
+    .chango-table{
+        width: 45vw !important;
+    } 
+}
+
+@media (max-width: 1000px){
+    .chango-table {
+        width: 80vw !important;
+    }
+}
+
+.width-10{
+    width: 9% !important;
+}
+.width-20{
+    width: 19% !important;
+}
+.width-30{
+    width: 29% !important;
+}
+.width-40{
+    width: 39% !important;
+}
+
+.delete-item:hover{
+    fill: white !important;
+}
+
+.search-bar{
+    width: 40% !important;
+    min-width: 250px !important;
+}
+
+@media (max-width: 550px){
+    .btn-cart{
+        display: none !important;
+    }
 }
