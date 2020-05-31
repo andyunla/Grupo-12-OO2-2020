@@ -223,3 +223,9 @@ public class ChangoController {
           return localConverter.entityToModel(local);
      }
 }
+
+/* A HACER en 'chango/id'
+* Controlar que no se accedan a editar changos de otros locales
+* Controlar que no se editen changos facturados
+* Controlar acceso a changos eliminados
+*/
