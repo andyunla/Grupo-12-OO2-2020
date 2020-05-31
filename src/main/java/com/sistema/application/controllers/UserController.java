@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,14 +27,20 @@ import com.sistema.application.entities.User;
 import com.sistema.application.exception.CustomeFieldValidationException;
 import com.sistema.application.exception.UsernameOrIdNotFound;
 import com.sistema.application.helpers.ViewRouteHelper;
+import com.sistema.application.models.ChangoModel;
 
 @Controller
 public class UserController {
+
+	@Autowired
+	@Qualifier("changoSesion")
+	private ChangoModel changoSesion;
 
 	@GetMapping("/login")
 	public String login(Model model,
 						@RequestParam(name="error",required=false) String error,
 						@RequestParam(name="logout", required=false) String logout) {
+		changoSesion.clear();
 		model.addAttribute("error", error);
 		model.addAttribute("logout", logout);
 		return ViewRouteHelper.USER_LOGIN;

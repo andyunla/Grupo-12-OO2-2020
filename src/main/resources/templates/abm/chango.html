@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-
-     <head th:replace="fragments/head :: head(title='Chango')"></head>
-     <title>Distancia</title>
-</head>
+<head th:replace="fragments/head :: head(title='Chango')"></head>
 
 <body class="container-fluid m-0 p-0">
      <nav th:replace="fragments/navbar :: navbar(active='chango')"></nav>
@@ -21,7 +17,7 @@
                     <p class="text-center quick-sand text-secondary p-0 m-0">PRODUCTOS DISPONIBLES</p>
                     <!-- BUSCADOR DE PRODUCTOS -->
                     <div class="input-group input-group-sm search-bar m-1">
-                         <input type="search" class="form-control" placeholder="Producto..." oninput="buscar()">
+                         <input type="search" class="form-control" placeholder="Producto..." onsearch="buscar()">
                          <div class="input-group-append">
                               <button class="btn btn-outline-secondary" type="button" onclick="buscar()">
                                    <svg th:replace="fragments/icons :: searchIcon"></svg>
@@ -59,7 +55,16 @@
                                                        <td scope="col" class="width-10 text-secondary smaller-text just-in-big-screen"
                                                             th:text="${producto.stock}"></td>
                                                        <td class="width-20 p-0 align-middle">
-                                                            <button class="btn btn-info btn-sm boton-agregar-poducto m-0"
+                                                            <button th:if="${producto.enChango}"
+                                                                 class="btn btn-success btn-sm boton-agregar-poducto m-0"
+                                                                 th:attr="data-idProducto = ${producto.idProducto},
+                                                                 data-idChango = ${chango.idChango}"
+                                                                 th:id="'producto' + ${producto.idProducto}"
+                                                                 onclick="agregarItem(this)" disabled>
+                                                                 LISTO
+                                                            </button>
+                                                            <button th:unless="${producto.enChango}"
+                                                                 class="btn btn-info btn-sm boton-agregar-poducto m-0"
                                                                  th:attr="data-idProducto = ${producto.idProducto},
                                                                  data-idChango = ${chango.idChango}"
                                                                  th:id="'producto' + ${producto.idProducto}"
@@ -99,7 +104,59 @@
                          <tr class="m-0 p-0">
                               <td class="m-0 p-0">
                                    <div style="height:40vh; overflow:auto;">
-                                        <table class="table shadow bg-white rounded" id="tablaChango"></table>
+                                        <table class="table shadow bg-white rounded" id="tablaChango">
+                                             <!--  ITEMS EN CASO DE QUE EL CHANGO NO SEA NUEVO -->
+                                             <tr th:each="item :${items}" class="item" th:id="'item' + ${item.idItem}" >
+                                                  <td class="width-30" th:text="${item.getProductoModel().nombre}"></td>
+                                                  <td class="width-10" th:text="${item.getProductoModel().talle}"></td>
+                                                  <td class="width-20 just-in-big-screen" th:text="${'$' + item.getProductoModel().precio}"></td>
+                                                  <td class="width-40 pt-1 pb-1">
+                                                       <div class="d-flex w-100 justify-content-center">
+                                                            <div class="input-group w-75 flex-nowrap">
+                                                                 <div class="input-group-prepend">
+                                                                      <button
+                                                                           class="btn btn-outline-info btn-sm btn-cart"
+                                                                           data-toggle="tooltip" data-placement="top"
+                                                                           title="Restar" type="button"
+                                                                           th:attr="'data-idItem' = ${item.idItem}"
+                                                                           onclick="modificarCantidad(this, -1)"
+                                                                      >
+                                                                           <svg th:replace="fragments/icons :: subtractIcon"></svg>
+                                                                      </button>
+                                                                 </div>
+                                                                 <input type="number" th:value="${item.cantidad}"
+                                                                      class="form-control text-center border-info no-arrows"
+                                                                      style="min-width: 2em !important; padding: 0;"
+                                                                      th:id="'cantidad-item' + ${item.idItem}"
+                                                                      th:attr="'data-idItem' = ${item.idItem}"
+                                                                      data-lastValue = "1"
+                                                                      onchange="modificarCantidad(this)">
+                                                                 <div class="input-group-append">
+                                                                      <button
+                                                                           class="btn btn-outline-info btn-sm btn-cart"
+                                                                           data-toggle="tooltip" data-placement="top"
+                                                                           title="Agregar" type="button"
+                                                                           th:attr="'data-idItem' = ${item.idItem}"
+                                                                           onclick="modificarCantidad(this, 1)"
+                                                                      >
+                                                                           <svg th:replace="fragments/icons :: addIcon"></svg>
+                                                                      </button>
+                                                                      <button class="btn btn-outline-danger btn-sm"
+                                                                           data-toggle="tooltip" data-placement="top"
+                                                                           title="Eliminar Item" type="button" 
+                                                                           th:attr = "data-idItem= ${item.idItem},
+                                                                                data-idProducto= ${item.getProductoModel().idProducto}"
+                                                                           onclick="eliminarItem(this)"
+                                                                      >
+                                                                           <svg th:replace="fragments/icons :: deleteIcon"></svg>    
+                                                                      </button>
+                                                                 </div>
+                                                            </div>
+                                                       </div>
+                                                  </td>
+                                             </tr>
+                                             <!--   -->
+                                        </table>
                                    </div>
                               </td>
                          </tr>
@@ -128,7 +185,7 @@
      <footer th:replace="fragments/footer :: footer"></footer>
      <div class="p-1 col-11 col-sm-7 col-md-6 col-lg-4" id="alertContainer"></div>
      <div th:replace="fragments/scripts :: scripts"></div>
-     <script th:src="@{js/chango.js}"></script>
+     <script th:src="@{/js/chango.js}"></script>
 </body>
 
 </html>

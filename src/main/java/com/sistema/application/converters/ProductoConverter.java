@@ -1,7 +1,7 @@
 package com.sistema.application.converters;
 
 import com.sistema.application.dto.ProductoRankingDto;
-import com.sistema.application.dto.ProductoStockDto;
+import com.sistema.application.dto.ProductoDisponibleDto;
 import com.sistema.application.entities.Producto;
 import com.sistema.application.models.ProductoModel;
 
@@ -27,8 +27,8 @@ public class ProductoConverter {
 	}
 	
 
-	public ProductoStockDto modelToDTO(ProductoModel producto, int stock) {
-		return new ProductoStockDto(producto.getIdProducto(), producto.getNombre(),
-			 producto.getTalle(), producto.getPrecio(), stock);
+	public ProductoDisponibleDto modelToDTO(ProductoModel producto, int stock, boolean enChango) {
+		return new ProductoDisponibleDto(producto.getIdProducto(), producto.getNombre(),
+			 producto.getTalle(), producto.getPrecio(), stock, enChango);
 	}
 }

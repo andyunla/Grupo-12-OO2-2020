@@ -6,7 +6,7 @@ import java.util.List;
 import com.sistema.application.converters.LocalConverter;
 import com.sistema.application.converters.ProductoConverter;
 import com.sistema.application.converters.UserConverter;
-import com.sistema.application.dto.ProductoStockDto;
+import com.sistema.application.dto.ProductoDisponibleDto;
 import com.sistema.application.dto.UserDto;
 import com.sistema.application.entities.Local;
 import com.sistema.application.helpers.UtilHelper;
@@ -48,18 +48,6 @@ public class ChangoController {
      private IProductoService productoService;
 
      @Autowired
-     @Qualifier("localConverter")
-     private LocalConverter localConverter;
-
-     @Autowired
-     @Qualifier("userConverter")
-     private UserConverter userConverter;
-
-     @Autowired
-     @Qualifier("localModel")
-     private LocalModel localModel;
-
-     @Autowired
      @Qualifier("itemService")
      private IItemService itemService;
 
@@ -68,8 +56,24 @@ public class ChangoController {
      private IChangoService changoService;
 
      @Autowired
+     @Qualifier("localConverter")
+     private LocalConverter localConverter;
+
+     @Autowired
+     @Qualifier("userConverter")
+     private UserConverter userConverter;
+
+     @Autowired
      @Qualifier("productoConverter")
      private ProductoConverter productoConverter;
+
+     @Autowired
+     @Qualifier("localModel")
+     private LocalModel localModel;
+
+     @Autowired
+     @Qualifier("changoSesion")
+     private ChangoModel changoSesion;
 
      @GetMapping("")
      public String chango(Model modelo) {
@@ -84,19 +88,60 @@ public class ChangoController {
           localModel.setInstance(localActual);
           // Selecciono de todos los productos solo los que tienen por lo menos 1 en stock
           // en el local
-          List<ProductoStockDto> productosConStock = new ArrayList<ProductoStockDto>();
+          if( changoSesion.hasInstance() ) {
+               return "redirect:/chango/" + changoSesion.getIdChango();
+          }
+          List<ProductoDisponibleDto> productosConStock = new ArrayList<ProductoDisponibleDto>();
           for (ProductoModel p : productoService.getAllModel()) {
                int stock = localModel.calcularStockLocal(p);
                if (stock > 0) {
-                    productosConStock.add(productoConverter.modelToDTO(p, stock));
+                    productosConStock.add(productoConverter.modelToDTO(p, stock, false));
                }
           }
           ChangoModel nuevoChango = localModel.crearChango();
+          changoSesion.setInstance(nuevoChango);
           modelo.addAttribute("productos", productosConStock);
           modelo.addAttribute("chango", nuevoChango);
-          return ViewRouteHelper.CHANGO_ROOT;
-     }
+          modelo.addAttribute("items", new ArrayList<ItemModel>());
+          return ViewRouteHelper.CHANGO;
+     } 
 
+     @GetMapping("{idChango}")
+     public ModelAndView editarChango(@PathVariable("idChango") long idChango) {
+          ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHANGO);
+          User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+          UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
+          boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
+          userDto.setTipoGerente(isGerente);
+          mAV.addObject("currentUser", userDto);   
+          // Obtenemos el local actual donde trabaja el usuario
+          LocalModel localActual = this.getLocalGivenUser(userDto.getUsername());
+          localModel.setInstance(localActual);
+          // Si la id recibida no pertenece al chango abierto en sesión, se lo establece como tal
+          if(changoSesion.getIdChango() != idChango ) {
+               changoSesion.setInstance( changoService.findByIdChango(idChango) );
+          }
+          List<ProductoDisponibleDto> productosConStock = new ArrayList<ProductoDisponibleDto>();
+          // Paso como productos disponibles aquellos que tienen stock o que no tienen stock
+          // pero están como item del chango
+          for (ProductoModel p : productoService.getAllModel()) {
+               int stock = localModel.calcularStockLocal(p);
+               ItemModel item = itemService.findByChangoAndProducto(idChango, p.getIdProducto());
+               // Verifica si hay stock o si el producto está como item
+               if (stock > 0 || item != null) {
+                    // Si el producto está como item sumo su cantidad al stock que se visualizará
+                    if(item != null) {
+                         stock += item.getCantidad();
+                    }
+                    productosConStock.add(productoConverter.modelToDTO(p, stock, item != null));
+               }
+          }
+          mAV.addObject("productos", productosConStock);
+          mAV.addObject("chango", changoSesion);
+          mAV.addObject("items", itemService.findByChango(idChango) );
+          return mAV;
+     }
+ 
      // Agrega un nuevo item al chango, su cantidad será 1
      @PostMapping("nuevo-item/{idChango}/{idProducto}")
      public ModelAndView agregarItem(@PathVariable("idChango") long idChango,
@@ -168,29 +213,19 @@ public class ChangoController {
           }
           // Eliminar chango
           changoService.remove(idChango);
+          changoSesion.clear();
           return "redirect:/" + ViewRouteHelper.HOME_ROOT;
      }
-     /*
-      * CHANGO ABIERTO: Vista para permitir retomar un chango creado pero aun sin
-      * pedido aprobado ni facturado
-      */
 
-     /* CHANGOS: Vista de la lista de changos abiertos y cerrados */
-
-     /* CHANGO CERRADO: Vista de un chango cerrado, no permite modificar */
-
-     // TODO Buscar donde se auto eliminarán aquellos changos guardados sin items
-
-     /**
-      * Método que retorna el local donde trabaja el usuario que está logueado
-      * actualmente dado su username
-      * 
-      * @param username Tipo String. Ej: 'empleado1'
-      * @return LocalModel
-      */
      private LocalModel getLocalGivenUser(String username) {
           com.sistema.application.entities.User user = userRepository.findByUsernameAndFetchUserRolesEagerly(username);
           Local local = user.getEmpleado().getLocal();
           return localConverter.entityToModel(local);
      }
 }
+
+/* A HACER en 'chango/id'
+* Controlar que no se accedan a editar changos de otros locales
+* Controlar que no se editen changos facturados
+* Controlar acceso a changos eliminados
+*/
