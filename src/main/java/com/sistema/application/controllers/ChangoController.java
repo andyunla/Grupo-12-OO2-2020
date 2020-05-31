@@ -6,7 +6,7 @@ import java.util.List;
 import com.sistema.application.converters.LocalConverter;
 import com.sistema.application.converters.ProductoConverter;
 import com.sistema.application.converters.UserConverter;
-import com.sistema.application.dto.ProductoStockDto;
+import com.sistema.application.dto.ProductoDisponibleDto;
 import com.sistema.application.dto.UserDto;
 import com.sistema.application.entities.Local;
 import com.sistema.application.helpers.UtilHelper;
@@ -91,11 +91,11 @@ public class ChangoController {
           if( changoSesion.hasInstance() ) {
                return "redirect:/chango/" + changoSesion.getIdChango();
           }
-          List<ProductoStockDto> productosConStock = new ArrayList<ProductoStockDto>();
+          List<ProductoDisponibleDto> productosConStock = new ArrayList<ProductoDisponibleDto>();
           for (ProductoModel p : productoService.getAllModel()) {
                int stock = localModel.calcularStockLocal(p);
                if (stock > 0) {
-                    productosConStock.add(productoConverter.modelToDTO(p, stock));
+                    productosConStock.add(productoConverter.modelToDTO(p, stock, false));
                }
           }
           ChangoModel nuevoChango = localModel.crearChango();
@@ -121,7 +121,7 @@ public class ChangoController {
           if(changoSesion.getIdChango() != idChango ) {
                changoSesion.setInstance( changoService.findByIdChango(idChango) );
           }
-          List<ProductoStockDto> productosConStock = new ArrayList<ProductoStockDto>();
+          List<ProductoDisponibleDto> productosConStock = new ArrayList<ProductoDisponibleDto>();
           // Paso como productos disponibles aquellos que tienen stock o que no tienen stock
           // pero están como item del chango
           for (ProductoModel p : productoService.getAllModel()) {
@@ -133,7 +133,7 @@ public class ChangoController {
                     if(item != null) {
                          stock += item.getCantidad();
                     }
-                    productosConStock.add(productoConverter.modelToDTO(p, stock));
+                    productosConStock.add(productoConverter.modelToDTO(p, stock, item != null));
                }
           }
           mAV.addObject("productos", productosConStock);
@@ -217,13 +217,6 @@ public class ChangoController {
           return "redirect:/" + ViewRouteHelper.HOME_ROOT;
      }
 
-     /**
-      * Método que retorna el local donde trabaja el usuario que está logueado
-      * actualmente dado su username
-      * 
-      * @param username Tipo String. Ej: 'empleado1'
-      * @return LocalModel
-      */
      private LocalModel getLocalGivenUser(String username) {
           com.sistema.application.entities.User user = userRepository.findByUsernameAndFetchUserRolesEagerly(username);
           Local local = user.getEmpleado().getLocal();

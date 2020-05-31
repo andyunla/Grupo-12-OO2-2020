@@ -17,7 +17,7 @@
                     <p class="text-center quick-sand text-secondary p-0 m-0">PRODUCTOS DISPONIBLES</p>
                     <!-- BUSCADOR DE PRODUCTOS -->
                     <div class="input-group input-group-sm search-bar m-1">
-                         <input type="search" class="form-control" placeholder="Producto..." oninput="buscar()">
+                         <input type="search" class="form-control" placeholder="Producto..." onsearch="buscar()">
                          <div class="input-group-append">
                               <button class="btn btn-outline-secondary" type="button" onclick="buscar()">
                                    <svg th:replace="fragments/icons :: searchIcon"></svg>
@@ -55,7 +55,16 @@
                                                        <td scope="col" class="width-10 text-secondary smaller-text just-in-big-screen"
                                                             th:text="${producto.stock}"></td>
                                                        <td class="width-20 p-0 align-middle">
-                                                            <button class="btn btn-info btn-sm boton-agregar-poducto m-0"
+                                                            <button th:if="${producto.enChango}"
+                                                                 class="btn btn-success btn-sm boton-agregar-poducto m-0"
+                                                                 th:attr="data-idProducto = ${producto.idProducto},
+                                                                 data-idChango = ${chango.idChango}"
+                                                                 th:id="'producto' + ${producto.idProducto}"
+                                                                 onclick="agregarItem(this)" disabled>
+                                                                 LISTO
+                                                            </button>
+                                                            <button th:unless="${producto.enChango}"
+                                                                 class="btn btn-info btn-sm boton-agregar-poducto m-0"
                                                                  th:attr="data-idProducto = ${producto.idProducto},
                                                                  data-idChango = ${chango.idChango}"
                                                                  th:id="'producto' + ${producto.idProducto}"
@@ -96,7 +105,7 @@
                               <td class="m-0 p-0">
                                    <div style="height:40vh; overflow:auto;">
                                         <table class="table shadow bg-white rounded" id="tablaChango">
-                                             <!--   -->
+                                             <!--  ITEMS EN CASO DE QUE EL CHANGO NO SEA NUEVO -->
                                              <tr th:each="item :${items}" class="item" th:id="'item' + ${item.idItem}" >
                                                   <td class="width-30" th:text="${item.getProductoModel().nombre}"></td>
                                                   <td class="width-10" th:text="${item.getProductoModel().talle}"></td>
