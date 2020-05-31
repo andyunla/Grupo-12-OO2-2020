@@ -130,3 +130,7 @@ function buscar(){
           }
      }
 }
+
+window.onload = () => {
+     actualizarTotal();
+}
