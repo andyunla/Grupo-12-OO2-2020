@@ -67,8 +67,8 @@ public class PedidoStockService implements IPedidoStockService{
 		@Override
 		public Set<PedidoStockModel> findByEmpleadoSolicitante(EmpleadoModel empleadoSolicitante) {
 			Set<PedidoStockModel> pedidoStock = new HashSet<PedidoStockModel>();
-			for(PedidoStock p: pedidoStockRepository.findByEmpleadoSolicitante(empleadoSolicitante.getLegajo()) ) {
-				pedidoStock.add(pedidoStockConverter.entityToModel(p) );
+			for(PedidoStock p: pedidoStockRepository.findByEmpleadoSolicitante(empleadoSolicitante.getId()) ) {
+				pedidoStock.add(pedidoStockConverter.entityToModel(p));
 			}
 			
 			return pedidoStock;
