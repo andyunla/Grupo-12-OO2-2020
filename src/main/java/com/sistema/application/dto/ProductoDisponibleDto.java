@@ -1,18 +1,21 @@
 package com.sistema.application.dto;
 
-public class ProductoStockDto {
+/* Producto disponible para agregar a un chango */
+public class ProductoDisponibleDto {
      private long idProducto;
      private String nombre;
      private int talle;
      private double precio;
-     private int stock;
+     private int stock;  // Indica la cantidad de stock actual, incluyendo la cantidad que está cargada en un item del chango
+     private boolean enChango;     // Indica si este producto ya se encuentra en el chango
 
-     public ProductoStockDto(long idProducto, String nombre, int talle, double precio, int stock) {
+     public ProductoDisponibleDto(long idProducto, String nombre, int talle, double precio, int stock, boolean enChango) {
           this.idProducto = idProducto;
           this.nombre = nombre;
           this.talle = talle;
           this.setPrecio(precio);
           this.stock = stock;
+          this.enChango = enChango;
      }
 
      public long getIdProducto() {
@@ -55,6 +58,14 @@ public class ProductoStockDto {
           this.stock = stock;
      }
 
+     public boolean getEnChango() {
+          return this.enChango;
+     }
+
+     public void setEnChango(boolean enChango) {
+          this.enChango = enChango;
+     }
+
      @Override
      public String toString() {
           return "{" +
@@ -63,6 +74,7 @@ public class ProductoStockDto {
                ", talle='" + getTalle() + "'" +
                ", precio='" + getPrecio() + "'" +
                ", stock='" + getStock() + "'" +
+               ", enChango='" + getEnChango() + "'" +
                "}";
      }
 

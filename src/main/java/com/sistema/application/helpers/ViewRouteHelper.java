@@ -11,6 +11,8 @@ public class ViewRouteHelper {
 	public final static String LOCAL_ABM = "abm/local";
 	public final static String ITEM_ABM = "abm/item";
 	public static final String LOTE_ABM = "abm/lote";
+	public final static String CHANGO = "abm/chango";
+
 	// Parciales
 	public final static String LISTA_LOTES = "partial/listaLotes";
 	public final static String LISTA_LOCALES_CERCANOS = "partial/listaLocalesCercanos";
@@ -18,7 +20,6 @@ public class ViewRouteHelper {
 
 	// CASOS DE USO
 	public final static String DISTANCIA_ROOT = "cu/distancia";
-	public final static String CHANGO_ROOT = "cu/chango";
 	public final static String RANKIG_ROOT = "cu/ranking";
 	public final static String PEDIDO_VIEW = "cu/pedido";
 

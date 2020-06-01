@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.sistema.application.services.IItemService;
 
-@Component("changoModel")
+@Component("changoSesion")
 public class ChangoModel {
 
 	// Atributos
@@ -47,6 +47,17 @@ public class ChangoModel {
 		this.pedidoStock = chango.pedidoStock;
 		this.local = chango.local;
 		this.listaItems = new HashSet<ItemModel>();
+	}
+
+	public void clear(){
+		this.idChango =0;
+		this.pedidoStock = null;
+		this.local =null;
+		this.listaItems = null;
+	}
+
+	public boolean hasInstance(){
+		return idChango != 0;
 	}
 
 	// Getters y Setters
