@@ -19,6 +19,8 @@ import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ItemModel;
 import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IItemService;
+import com.sistema.application.services.IProductoService;
+import com.sistema.application.services.IChangoService;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,12 +31,24 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/item")
 public class ItemController {
+	
+	//Atributos
 	@Autowired
 	@Qualifier("userConverter")
 	private UserConverter userConverter;
+	
 	@Autowired
 	@Qualifier("itemService")
 	private IItemService itemService;
+	
+	@Autowired
+    @Qualifier("productoService")
+    private IProductoService productoService;
+	
+	@Autowired
+    @Qualifier("changoService")
+    private IChangoService changoService;
+	
 	@Autowired
     @Qualifier("userRepository")
     private IUserRepository userRepository;	
@@ -49,18 +63,20 @@ public class ItemController {
 		modelo.addAttribute("currentUser", userDto);
 		modelo.addAttribute("items", itemService.getAll() );
 		modelo.addAttribute("item", new ItemModel() );
+		modelo.addAttribute("productos", productoService.getAll());
+		modelo.addAttribute("changos", changoService.getAll());
 		return ViewRouteHelper.ITEM_ABM;
 	}
 	
 	@PostMapping("agregar")
 	public String agregar(@Valid @ModelAttribute("item") ItemModel nuevoItem, BindingResult bindingResult) {
+		
 		if(bindingResult.hasErrors()) {
 			return ViewRouteHelper.ITEM_ABM;
 		}else {
-		itemService.insertOrUpdate(nuevoItem);
-	}
+			itemService.insertOrUpdate(nuevoItem);
+		}
 		
-		System.out.print("\n\n" + nuevoItem + "\n\n");
 		return "redirect:/" + ViewRouteHelper.ITEM_ROOT;
 	}
 	
