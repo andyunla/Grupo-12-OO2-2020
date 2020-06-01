@@ -227,6 +227,17 @@ public class LocalModel {
 				+ listaFacturas + "]";
 	}
 
+	@Override
+    public boolean equals(Object o) {
+	   if (o == this)
+		  return true;
+	   if (!(o instanceof LocalModel)) {
+		  return false;
+	   }
+	   LocalModel localModel = (LocalModel) o;
+	   return idLocal == localModel.idLocal;
+	}
+
 	/****************************************************************************************************/
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 6) CALCULO DE DIISTANCIA ENTRE

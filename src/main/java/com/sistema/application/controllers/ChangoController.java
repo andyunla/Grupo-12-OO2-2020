@@ -19,6 +19,7 @@ import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IChangoService;
 import com.sistema.application.services.IItemService;
 import com.sistema.application.services.IProductoService;
+import com.sistema.application.services.implementations.FacturaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -74,6 +75,10 @@ public class ChangoController {
      @Qualifier("changoSesion")
      private ChangoModel changoSesion;
 
+     @Autowired
+     @Qualifier("facturaService")
+     private FacturaService facturaService;
+
      @GetMapping("")
      public ModelAndView chango() {
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHANGO);
@@ -103,10 +108,18 @@ public class ChangoController {
      public ModelAndView editarChango(@PathVariable("idChango") long idChango) {
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHANGO);
           setUserAndLocal(mAV);
-          // Si la id recibida no pertenece al chango abierto en sesión, se lo establece como tal
-          if(changoSesion.getIdChango() != idChango ) {
-               changoSesion.setInstance( changoService.findByIdChango(idChango) );
+          ChangoModel chango = changoService.findByIdChango(idChango);
+          // Verifico si el chango fue eliminado o no existe
+          if(chango == null) {
+               mAV.setViewName("error/404");
+               return mAV;
           }
+          // Verifico si el chango fue facturado o es un chango de otro local
+          if(facturaService.findByChango(chango) != null || !chango.getLocal().equals(localModel) ){
+               mAV.setViewName("error/403");
+               return mAV;
+          }
+          changoSesion.setInstance( chango );
           List<ProductoDisponibleDto> productosConStock = new ArrayList<ProductoDisponibleDto>();
           // Paso como productos disponibles aquellos que tienen stock o que no tienen stock
           // pero están como item del chango
@@ -222,9 +235,3 @@ public class ChangoController {
           return localConverter.entityToModel(local);
      }
 }
-
-/* A HACER en 'chango/id'
-* Controlar que no se accedan a editar changos de otros locales
-* Controlar que no se editen changos facturados
-* Controlar acceso a changos eliminados
-*/
