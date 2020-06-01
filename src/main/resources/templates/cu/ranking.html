@@ -17,8 +17,8 @@
 			<h2>Rankig de productos más vendidos.</h2>
 			<table class="w-100 shadow mb-3 bg-white rounded table-hover table-bordered">
 				<tr th:each="producto :${productoRanking}" class="fila-producto ">
-					<td th:text="producto.nombre"></td>
-					<td th:text="producto.cantidad"></td>
+					<td th:text="${producto.nombre}"></td>
+					<td th:text="${producto.cantidad} +' Und.'"></td>
 				</tr>
 			</table>
 		</div>
