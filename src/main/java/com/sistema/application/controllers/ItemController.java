@@ -82,15 +82,15 @@ public class ItemController {
 	
 	@PostMapping("modificar")
 	public String modificar(@ModelAttribute("item") ItemModel itemModificado) {
-		System.out.print("\n\n" + itemModificado + "\n\n");
-		return "redirect:/" + ViewRouteHelper.CLIENTE_ROOT;
+		itemService.insertOrUpdate(itemModificado);
+		return "redirect:/" + ViewRouteHelper.ITEM_ROOT;
 	}
 	
-	@PostMapping("eliminar/{id}")
+	@PostMapping("eliminar/{idItem}")
 	public String eliminar(@PathVariable("idItem") long idItem, RedirectAttributes redirectAttributes) {
-		redirectAttributes.addFlashAttribute("localEliminado", true);
-        System.out.print("\n\n" + idItem + "\n\n");      // DEBUG: Cambiar lógica apropiada
-		return "redirect:/" + ViewRouteHelper.CLIENTE_ROOT;
+		boolean eliminado = itemService.remove(idItem);
+		redirectAttributes.addFlashAttribute("itemEliminado", eliminado);
+		return "redirect:/" + ViewRouteHelper.ITEM_ROOT;
 	}
 	
 }

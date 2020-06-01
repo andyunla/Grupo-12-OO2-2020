@@ -44,7 +44,7 @@
 				</select>
 			</div>
 
-			<!-- BOTON AGREGAR -->
+			<!-- BOTON GUARDAR -->
 			<div class="text-center">
 				<button type="submit" class="btn btn-primary">Guardar</button>
 			</div>
@@ -61,15 +61,18 @@
 						<th scope="col">Cantidad</th>
 						<th scope="col">Producto</th>
 						<th scope="col">Chango</th>
+						<th scope="col"> </th>
 					</tr>
-				</thead> <!-- HASTA ACA ANDA BIEN -->
+				</thead>
 				<tbody>
 					<tr th:each="item :${items}">
 						<td th:text="${item.idItem}"></td>
 						<td th:text="${item.cantidad}"></td>
 						<td th:text="${item.producto.nombre}"></td>
 						<td th:text="${item.chango.idChango}"></td>
-						<button class="btn-danger btn botonEliminar" th:attr="data-idItem=${item.idItem}">Eliminar</button>
+						<td>
+							<button class="btn-danger btn botonEliminar" th:attr="data-idItem=${item.idItem}">Eliminar</button>
+						</td>
 					</tr>
 				</tbody>
 			</table>
