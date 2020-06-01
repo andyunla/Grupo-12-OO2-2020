@@ -1,5 +1,8 @@
 package com.sistema.application.dto;
 
+
+
+
 public class ProductoRankingDto implements Comparable<ProductoRankingDto> {
 	private long idProducto;
 	private String nombre;
