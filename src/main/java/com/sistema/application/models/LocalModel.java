@@ -547,9 +547,10 @@ public class LocalModel {
 	public List<ProductoRankingDto> ranking() {
 		List<ProductoModel> listaProductos = productoService.getAllModel();
 		List<ProductoRankingDto> productoRanking = new ArrayList<ProductoRankingDto>();
-		
-		for (ProductoModel pro : listaProductos) {			
-			productoRanking.add(productoConverter.modelToDto(pro, cantidadProductoVendido(pro)));
+		int i= 2;
+		for (ProductoModel pro : listaProductos) {		
+			
+			productoRanking.add(productoConverter.modelToDto(pro, i++));
 		}
 		Collections.sort(productoRanking, Collections.reverseOrder());		
 		return productoRanking;
