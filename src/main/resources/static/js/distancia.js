@@ -1,5 +1,4 @@
 const host = "http://localhost:8080";
-const url = host + "/distancia/";
 
 window.onload = () => {
      let legajoUser = document.getElementById("legajoUser");
@@ -15,13 +14,14 @@ window.onload = () => {
                let idLocal2 = e.target.dataset.idlocal;
                let idProducto = productoDeLotes.value;
                let cantidad = cantidadProducto.value;
-               fetch(host + "/api/v1/pedido/solicitar/" + legajo + "/" + idLocal2 + "/"  + idProducto + "/" + cantidad, { method: 'GET' })
+               let urlSolicitud = host + "/pedido/solicitar/" + legajo + "/" + idLocal2 + "/"  + idProducto + "/" + cantidad;
+               fetch(urlSolicitud, { method: 'POST' })
                     .then(res => {
-                         if (res.status == 200) {
+                         if (res.status == 200 || res.status == 201) {
                               // let estado = await res.json();
                               listarMasCercanos(); // Refrescamos la lista de locales cercanos
                          }
-                         alertarResultadoDeSolicitud(res.status == 200);
+                         alertarResultadoDeSolicitud(res.status);
                     })
                     .catch(e => { console.error(e) });
           }));
@@ -31,7 +31,7 @@ window.onload = () => {
      function alertarResultadoDeSolicitud(resultado) {
           let alertCloseButton = '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
                '<span aria-hidden="true">&times;</span></button>';
-          let htmlAlert = (resultado) ?
+          let htmlAlert = (resultado == 201) ?
                '<div class="p-4 alert alert-success alert-dismissible fade show" role="alert">' +
                '<strong>EXITO</strong> El pedido se agregó correctamente' + alertCloseButton + '</div> '
                :
@@ -45,6 +45,7 @@ window.onload = () => {
                let idLocalActual = localActual.value;
                let idProductoDeLotes = productoDeLotes.options[productoDeLotes.selectedIndex].value;
                let cantidad = cantidadProducto.value;
+               let url = host + "/distancia/";
                fetch(url + "traer/" + idLocalActual + "/" + idProductoDeLotes + "/" + cantidad)
                     .then(response => response.text())
                     .then(html => {
