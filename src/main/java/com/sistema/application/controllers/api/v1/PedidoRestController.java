@@ -61,12 +61,14 @@ public class PedidoRestController {
 	public Boolean solicitar(@PathVariable("legajo") long legajo, @PathVariable("idLocal2") long idLocal2,
 							 @PathVariable("idProducto") long idProducto, @PathVariable("cantidad") int cantidad) 
 	{
+        System.out.println("BEFOREEEEE: \n\n" );
         ProductoModel producto = productoService.findByIdProducto(idProducto);
+        System.out.println("PRODUCT: " + producto);
         boolean aceptado = false;
         EmpleadoModel solicitante = empleadoService.findByLegajo(legajo);
+        System.out.println("SOLICITANTE: " + solicitante);
         // Tratamos de buscar aleatoriamente a cualquier empleado del otro local
-        LocalModel local2 = localService.findByIdLocal(idLocal2);
-        List<EmpleadoModel> listaEmpleados = new ArrayList<EmpleadoModel>(local2.getListaEmpleados());
+        List<EmpleadoModel> listaEmpleados = empleadoService.findByIdLocal(idLocal2);
         Random rand = new Random();
         int randIndex = rand.nextInt(listaEmpleados.size());
         EmpleadoModel oferente = listaEmpleados.get(randIndex);
