@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.sistema.application.services.IFacturaService;
 import com.sistema.application.repositories.IFacturaRepository;
+import com.sistema.application.converters.ChangoConverter;
 import com.sistema.application.converters.FacturaConverter;
-import com.sistema.application.entities.Chango;
 import com.sistema.application.entities.Factura;
 import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.FacturaModel;
@@ -28,6 +28,10 @@ public class FacturaService implements IFacturaService {
 	@Autowired
 	@Qualifier("facturaConverter")
 	private FacturaConverter facturaConverter;
+
+	@Autowired
+	@Qualifier("changoConverter")
+	private ChangoConverter changoConverter;
 
 
 	//Métodos
@@ -83,5 +87,15 @@ public class FacturaService implements IFacturaService {
 			lista.add(facturaConverter.entityToModel(fa));// las agrego a la lista model
 		}
 		return lista;
+	}
+
+	@Override
+	public FacturaModel findByChango(ChangoModel chango) {
+		try{
+			Factura factura = facturaRepository.findByChango(changoConverter.modelToEntity(chango));
+			return facturaConverter.entityToModel(factura);  
+		}catch(Exception e) {
+			return null;
+		}
 	}
 }
