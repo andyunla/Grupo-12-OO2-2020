@@ -5,4 +5,7 @@
      <td th:text="${local.distancia + ' Km'}"></td>
      <td th:text="${local.telefono}"></td>
      <td th:text="${local.stock}"></td>
+     <td>
+          <button class="btn-primary btn botonSolicitar" th:attr="data-idLocal=${local.idLocal}">Solicitar</button>
+     </td>
 </tr>

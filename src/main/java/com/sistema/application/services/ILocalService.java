@@ -7,7 +7,7 @@ import com.sistema.application.models.LocalModel;
 
 public interface ILocalService {
 	
-	public LocalModel findByIdLocal(long iLocal);
+	public LocalModel findByIdLocal(long idLocal);
     
     public List<Local> getAll();
 	

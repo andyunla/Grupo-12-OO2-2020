@@ -36,11 +36,11 @@ public class PedidoStock implements Serializable {
 	private boolean aceptado;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="solicitante_legajo", nullable=false)
+	@JoinColumn(name="solicitante_id", nullable=false)
 	private Empleado empleadoSolicitante;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="oferente_legajo", nullable=true)
+	@JoinColumn(name="oferente_id", nullable=true)
 	private Empleado empleadoOferente;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="pedidoStock")

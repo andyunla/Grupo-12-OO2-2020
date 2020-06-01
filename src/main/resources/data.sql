@@ -106,7 +106,7 @@ VALUES
 	
 -- PEDIDO STOCK
 INSERT INTO pedido_stock
-	(cantidad, aceptado, solicitante_legajo, oferente_legajo, id_producto)
+	(cantidad, aceptado, solicitante_id, oferente_id, id_producto)
 VALUES
 	( 2, 1, 7, null, 1),
 	( 5, 1, 7, null, 2),
