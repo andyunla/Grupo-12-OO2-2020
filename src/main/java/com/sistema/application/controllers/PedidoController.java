@@ -133,7 +133,6 @@ public class PedidoController {
 				i++;
 			}
 			local.setListaLotes(new HashSet<LoteModel>(listaLotes)); // List -> Set
-            System.out.println("LISTA LOTES: " + local.getListaLotes());
 			// Persistiendo los datos
 			chango = changoService.insertOrUpdate(chango);
 			local = localService.insertOrUpdate(local);
