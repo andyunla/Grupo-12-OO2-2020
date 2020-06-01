@@ -5,26 +5,35 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.sistema.application.entities.Factura;
+import com.sistema.application.models.ChangoModel;
+import com.sistema.application.models.ClienteModel;
+import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.FacturaModel;
+import com.sistema.application.models.LocalModel;
 
 @Component("facturaConverter")
 public class FacturaConverter {
 	@Autowired
 	@Qualifier("clienteConverter")
-	private static ClienteConverter clienteConverter;
+	private  ClienteConverter clienteConverter;
 	@Autowired
 	@Qualifier("empleadoConverter")
-	private static EmpleadoConverter empleadoConverter;
+	private  EmpleadoConverter empleadoConverter;
 	@Autowired
 	@Qualifier("changoConverter")
-	private static ChangoConverter changoConverter;
+	private  ChangoConverter changoConverter;
+	@Autowired
+	private LocalModel localModel;
 	@Autowired
 	@Qualifier("localConverter")
-	private static LocalConverter localConverter;
+	private  LocalConverter localConverter;
 	public FacturaModel entityToModel(Factura factura) {
-		return new FacturaModel(factura.getIdFactura(), clienteConverter.entityToModel(factura.getCliente()),
-				changoConverter.entityToModel(factura.getChango()), factura.getFechaFactura(), factura.getCosteTotal()
-				,empleadoConverter.entityToModel(factura.getEmpleado()), localConverter.entityToModel(factura.getLocal()) );
+		ClienteModel cli = clienteConverter.entityToModel(factura.getCliente());
+		ChangoModel chango =changoConverter.entityToModel(factura.getChango());
+		EmpleadoModel empleado = empleadoConverter.entityToModel(factura.getEmpleado());
+		LocalModel local = localConverter.entityToModel(factura.getLocal());
+		return new FacturaModel(factura.getIdFactura(),cli ,chango, factura.getFechaFactura(), factura.getCosteTotal()
+				,empleado,local  );
 	}
 	
 	public Factura modelToEntity(FacturaModel facturaModel) {
