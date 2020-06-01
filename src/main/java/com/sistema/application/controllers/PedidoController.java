@@ -117,19 +117,23 @@ public class PedidoController {
 			int acumStock = 0;
 			List<LoteModel> listaLotes = loteService.findByLoteProductoNoNuevo(producto.getIdProducto(), local.getIdLocal());
 			while (continuar && i < listaLotes.size()) {
-				int cantActual = listaLotes.get(i).getCantidadActual();
+				LoteModel lote = listaLotes.get(i);
+				int cantActual = lote.getCantidadActual();
 				if (acumStock + cantActual <= cantidad) { // Para no descontar de más
-					listaLotes.get(i).setCantidadActual(0); // Adquirimos todos los productos
+					lote.setCantidadActual(0); // Adquirimos todos los productos
+					lote.setActivo(false);
 				} else {
 					int diff = cantidad - acumStock;
 					int restante = cantActual - diff;
-					listaLotes.get(i).setCantidadActual(restante); // Establecemos la cantidad que sobra
+					lote.setCantidadActual(restante); // Establecemos la cantidad que sobra
 					continuar = false;
 				}
+				loteService.insertOrUpdate(lote);
 				acumStock = acumStock + cantActual;
 				i++;
 			}
 			local.setListaLotes(new HashSet<LoteModel>(listaLotes)); // List -> Set
+            System.out.println("LISTA LOTES: " + local.getListaLotes());
 			// Persistiendo los datos
 			chango = changoService.insertOrUpdate(chango);
 			local = localService.insertOrUpdate(local);
