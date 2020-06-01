@@ -145,7 +145,6 @@ public class ChangoController {
      @PostMapping("nuevo-item/{idChango}/{idProducto}")
      public ModelAndView agregarItem(@PathVariable("idChango") long idChango,
                @PathVariable("idProducto") long idProducto) {
-          // localModel.setInstance(localService.findByIdLocal(1));
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.ITEM);
           // Verifico que el producto elegido no esté ya en un item del chango
           if (itemService.findByChangoAndProducto(idChango, idProducto) == null) {
@@ -164,7 +163,6 @@ public class ChangoController {
      // Elimina un item de un chango abierto
      @PostMapping("eliminar-item/{idItem}")
      public ResponseEntity<String> eliminarItem(@PathVariable("idItem") long idItem) {
-          // localModel.setInstance(localService.findByIdLocal(1));
           ItemModel item = itemService.findByIdItem(idItem);
           ProductoModel producto = item.getProductoModel();
           if (itemService.remove(idItem)) {
@@ -180,7 +178,6 @@ public class ChangoController {
      public ResponseEntity<String> modificar(@PathVariable("idItem") long idItem,
                @PathVariable("nuevaCantidad") int nuevaCantidad) {
           ItemModel item = itemService.findByIdItem(idItem);
-          // localModel.setInstance(localService.findByIdLocal(1));
           // Verifico si estoy agregando cantidad al item
           if (item.getCantidad() < nuevaCantidad) {
                // Verifico si hay stock en el local
@@ -201,18 +198,14 @@ public class ChangoController {
           return new ResponseEntity<String>(HttpStatus.OK);
      }
 
-     @PostMapping("eliminar/{idChango}")
-     public String eliminarChango(@PathVariable("idChango") long idChango) {
+     @PostMapping("cancelar/{idChango}")
+     public String cancelarChango(@PathVariable("idChango") long idChango) {
           // Traer items del chango, devolverlos a sus lotes y eliminarlos
-          // localModel.setInstance(localService.findByIdLocal(1));
           List<ItemModel> items = itemService.findByChango(idChango);
           for (ItemModel item : items) {
                localModel.devolverLote(item.getProductoModel(), item.getCantidad());
                itemService.remove(item.getIdItem());
           }
-          // Eliminar chango
-          changoService.remove(idChango);
-          changoSesion.clear();
           return "redirect:/" + ViewRouteHelper.HOME_ROOT;
      }
 
@@ -233,5 +226,5 @@ public class ChangoController {
           com.sistema.application.entities.User user = userRepository.findByUsernameAndFetchUserRolesEagerly(username);
           Local local = user.getEmpleado().getLocal();
           return localConverter.entityToModel(local);
-     }
+     }  
 }
