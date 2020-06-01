@@ -15,9 +15,8 @@ public class PedidoStockModel {
 	//Constructores
 	public PedidoStockModel() {}
 	
-	
 	public PedidoStockModel(long idPedidoStock, ProductoModel producto, int cantidad, boolean aceptado,
-			 EmpleadoModel empleadoSolicitante,EmpleadoModel empleadoOferente) {
+			 				EmpleadoModel empleadoSolicitante, EmpleadoModel empleadoOferente) {
 		super();
 		this.idPedidoStock = idPedidoStock;
 		this.producto = producto;
@@ -27,7 +26,17 @@ public class PedidoStockModel {
 		this.empleadoOferente = empleadoOferente;
 	}
 
-		//para pedir stock de otro local, sin oferente con el estado en false
+	public PedidoStockModel(ProductoModel producto, int cantidad, boolean aceptado,
+			 				EmpleadoModel empleadoSolicitante, EmpleadoModel empleadoOferente) {
+		super();
+		this.producto = producto;
+		this.cantidad = cantidad;
+		this.aceptado = aceptado;		
+		this.empleadoSolicitante = empleadoSolicitante;
+		this.empleadoOferente = empleadoOferente;
+	}
+
+	//para pedir stock de otro local, sin oferente con el estado en false
 	public PedidoStockModel(ProductoModel producto, int cantidad, EmpleadoModel empleadoSolicitante) {
 		super();		
 		this.producto = producto;
@@ -37,7 +46,6 @@ public class PedidoStockModel {
 		this.empleadoOferente = null;
 	}
 
-	
 	//Getters y Setters
 	public long getIdPedidoStock() {
 		return idPedidoStock;
