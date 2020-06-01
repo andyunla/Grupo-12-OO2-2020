@@ -12,7 +12,6 @@ ___Nota:___ Si faltan otras tareas agregarlas en las secciones que parecen perti
 
 ### **[NORMAL]**
 + Validaciones del lado del cliente para los formularios
-+ Corregir errores en el controlador del Item.
 + Las URL que corresponden a _GERENTE_ no deben ser accedidas por un _EMPLEADO_
 
 
