@@ -20,6 +20,7 @@ public class ViewRouteHelper {
 	public final static String DISTANCIA_ROOT = "cu/distancia";
 	public final static String CHANGO_ROOT = "cu/chango";
 	public final static String RANKIG_ROOT = "cu/ranking";
+	public final static String PEDIDO_VIEW = "cu/pedido";
 
 	// USER
 	public final static String USER_LOGIN = "user/login";
@@ -33,4 +34,5 @@ public class ViewRouteHelper {
 	public final static String LOCAL_ROOT = "local";
 	public final static String ITEM_ROOT = "item";
 	public static final String LOTE_ROOT = "lote";
+	public static final String PEDIDO_ROOT = "pedido";
 }
