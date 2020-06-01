@@ -171,7 +171,7 @@
                </div>
                <!-- BOTTON -->
                <div class="d-flex w-100 justify-content-center flex-wrap mt-3 align-items-center">
-                    <form th:action="@{/chango/eliminar/{idChango}(idChango = ${chango.idChango})}" method="POST">
+                    <form th:action="@{/chango/cancelar/{idChango}(idChango = ${chango.idChango})}" method="POST">
                          <button class="btn btn-danger btn-sm m-1">CANCELAR</button>
                     </form>
                     <form th:action="@{/}">
