@@ -17,6 +17,7 @@ import com.sistema.application.dto.ProductoRankingDto;
 import com.sistema.application.funciones.Funciones;
 import com.sistema.application.services.IChangoService;
 import com.sistema.application.services.IFacturaService;
+import com.sistema.application.services.IItemService;
 import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.ILoteService;
 import com.sistema.application.services.IPedidoStockService;
@@ -63,6 +64,9 @@ public class LocalModel {
 	@Autowired
 	@Qualifier("productoService")
 	IProductoService productoService;
+	@Autowired
+	@Qualifier("itemService")
+	IItemService itemService;
 	@Autowired
 	@Qualifier("localService")
 	private ILocalService localService;
@@ -545,13 +549,17 @@ public class LocalModel {
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
 	public List<ProductoRankingDto> ranking() {
+		// traigo la lista de productos
 		List<ProductoModel> listaProductos = productoService.getAllModel();
+		// creo una lista de ProductoRankingDto en el que puedo guardar la variable de cantidad
 		List<ProductoRankingDto> productoRanking = new ArrayList<ProductoRankingDto>();
-		int i= 2;
-		for (ProductoModel pro : listaProductos) {		
-			
-			productoRanking.add(productoConverter.modelToDto(pro, i++));
+		//recorro la lista de productos y voy agregando cada producto a la lista ProductoRankingDto
+		for (ProductoModel pro : listaProductos) {
+			// se llama al método cantidad de producto vendido para asignar la variable cantidad en ProductoRankingDto
+			productoRanking.add(productoConverter.modelToDto(pro, cantidadProductoVendido(pro)));
 		}
+		
+		//orden de mayor a menor
 		Collections.sort(productoRanking, Collections.reverseOrder());		
 		return productoRanking;
 	}
@@ -562,8 +570,10 @@ public class LocalModel {
 			// de cada factura obtengo el chango y traigo el item que tenga el producto que
 			// estamos evaluando
 			// si el producto está en la factura, se suma la cantidad correspondiente
-			if (fa.getChango().traerItem(producto) != null)
-				cantidad = cantidad + fa.getChango().traerItem(producto).getCantidad();
+			ItemModel it = itemService.findByChangoAndProducto(fa.getChango().getIdChango(), producto.getIdProducto());
+			if (it != null) {
+				cantidad = cantidad + it.getCantidad();
+			}				
 		}
 		return cantidad;
 	}
