@@ -209,6 +209,13 @@ public class ChangoController {
           return "redirect:/" + ViewRouteHelper.HOME_ROOT;
      }
 
+     @PostMapping("guardar")
+     public String guardarChango() {
+          // Saca al chango de la sesión posponiendo su facturación para así poder crear otro
+          changoSesion.clear();
+          return "redirect:/" + ViewRouteHelper.HOME_ROOT;
+     }
+
      // Setea el usario actual en el ModelAndView y setea su local en la instancia de localModel
      protected ModelAndView setUserAndLocal(ModelAndView mAV) {
           User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
