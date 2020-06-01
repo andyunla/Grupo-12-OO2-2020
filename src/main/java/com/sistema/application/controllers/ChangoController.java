@@ -28,7 +28,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -76,20 +75,14 @@ public class ChangoController {
      private ChangoModel changoSesion;
 
      @GetMapping("")
-     public String chango(Model modelo) {
-          // Obtengo el usuario de la sesión
-          User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-          UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
-          boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
-          userDto.setTipoGerente(isGerente);
-          modelo.addAttribute("currentUser", userDto);
-          // Obtenemos el local actual donde trabaja el usuario
-          LocalModel localActual = this.getLocalGivenUser(userDto.getUsername());
-          localModel.setInstance(localActual);
+     public ModelAndView chango() {
+          ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHANGO);
+          setUserAndLocal(mAV);
           // Selecciono de todos los productos solo los que tienen por lo menos 1 en stock
           // en el local
           if( changoSesion.hasInstance() ) {
-               return "redirect:/chango/" + changoSesion.getIdChango();
+               mAV.setViewName("redirect:/chango/" + changoSesion.getIdChango());
+               return mAV;
           }
           List<ProductoDisponibleDto> productosConStock = new ArrayList<ProductoDisponibleDto>();
           for (ProductoModel p : productoService.getAllModel()) {
@@ -100,23 +93,16 @@ public class ChangoController {
           }
           ChangoModel nuevoChango = localModel.crearChango();
           changoSesion.setInstance(nuevoChango);
-          modelo.addAttribute("productos", productosConStock);
-          modelo.addAttribute("chango", nuevoChango);
-          modelo.addAttribute("items", new ArrayList<ItemModel>());
-          return ViewRouteHelper.CHANGO;
+          mAV.addObject("productos", productosConStock);
+          mAV.addObject("chango", nuevoChango);
+          mAV.addObject("items", new ArrayList<ItemModel>());
+          return mAV;
      } 
 
      @GetMapping("{idChango}")
      public ModelAndView editarChango(@PathVariable("idChango") long idChango) {
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHANGO);
-          User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-          UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
-          boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
-          userDto.setTipoGerente(isGerente);
-          mAV.addObject("currentUser", userDto);   
-          // Obtenemos el local actual donde trabaja el usuario
-          LocalModel localActual = this.getLocalGivenUser(userDto.getUsername());
-          localModel.setInstance(localActual);
+          setUserAndLocal(mAV);
           // Si la id recibida no pertenece al chango abierto en sesión, se lo establece como tal
           if(changoSesion.getIdChango() != idChango ) {
                changoSesion.setInstance( changoService.findByIdChango(idChango) );
@@ -216,6 +202,19 @@ public class ChangoController {
           changoSesion.clear();
           return "redirect:/" + ViewRouteHelper.HOME_ROOT;
      }
+
+     // Setea el usario actual en el ModelAndView y setea su local en la instancia de localModel
+     protected ModelAndView setUserAndLocal(ModelAndView mAV) {
+          User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+          UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
+          boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
+          userDto.setTipoGerente(isGerente);
+          mAV.addObject("currentUser", userDto); 
+          LocalModel localActual = this.getLocalGivenUser(userDto.getUsername());
+          localModel.setInstance(localActual);
+          return mAV;  
+     }
+
 
      private LocalModel getLocalGivenUser(String username) {
           com.sistema.application.entities.User user = userRepository.findByUsernameAndFetchUserRolesEagerly(username);
