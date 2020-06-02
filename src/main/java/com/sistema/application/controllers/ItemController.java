@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.BindingResult;
 import javax.validation.Valid;
 
+
 import com.sistema.application.converters.UserConverter;
 import com.sistema.application.dto.UserDto;
 import com.sistema.application.helpers.UtilHelper;
@@ -19,6 +20,7 @@ import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ItemModel;
 import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IItemService;
+import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.IProductoService;
 import com.sistema.application.services.IChangoService;
 
@@ -48,11 +50,16 @@ public class ItemController {
 	@Autowired
     @Qualifier("changoService")
     private IChangoService changoService;
+
+	@Autowired
+    @Qualifier("localService")
+    private ILocalService localService;
 	
 	@Autowired
     @Qualifier("userRepository")
     private IUserRepository userRepository;	
-
+	
+	
 	//Métodos
 	@GetMapping("")
 	public String items(Model modelo) {
@@ -65,6 +72,7 @@ public class ItemController {
 		modelo.addAttribute("item", new ItemModel() );
 		modelo.addAttribute("productos", productoService.getAll());
 		modelo.addAttribute("changos", changoService.getAll());
+		modelo.addAttribute("locales", localService.getAll());
 		return ViewRouteHelper.ITEM_ABM;
 	}
 	

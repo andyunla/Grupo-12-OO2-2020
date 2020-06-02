@@ -118,18 +118,20 @@ VALUES
 INSERT INTO chango 
 	(id_local)
 VALUES 
-	(3),	
+	(1),	
+	(2),
 	(3),
-	(1),
-    (1);
+    (4);
 	
 -- ITEM
 INSERT INTO item 
 	(cantidad, id_chango, id_producto)
 VALUES
-	(2, 1, 1),	
+	(2, 1, 1),
+	(5, 1, 2),
 	(5, 2, 2),
 	(3, 3, 3),
+    (3, 3, 2),
 	(2, 4, 4);
 	
     
