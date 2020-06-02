@@ -12,8 +12,10 @@ public class ViewRouteHelper {
 	public final static String ITEM_ABM = "abm/item";
 	public static final String LOTE_ABM = "abm/lote";
 	public final static String CHANGO = "abm/chango";
+	public final static String CHANGOS = "abm/changos";
+	public final static String CHANGO_FACTURADO = "abm/changoFacturado";
 
-	// Parciales
+	// Parciales   
 	public final static String LISTA_LOTES = "partial/listaLotes";
 	public final static String LISTA_LOCALES_CERCANOS = "partial/listaLocalesCercanos";
 	public final static String ITEM = "partial/item";
@@ -36,4 +38,5 @@ public class ViewRouteHelper {
 	public final static String ITEM_ROOT = "item";
 	public static final String LOTE_ROOT = "lote";
 	public static final String PEDIDO_ROOT = "pedido";
+	public final static String CHANGOS_ROOT = "changos";
 }
