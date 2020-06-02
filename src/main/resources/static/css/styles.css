@@ -148,3 +148,8 @@ li.dropdown:last-child .dropdown-menu {
         display: none !important;
     }
 }
+
+/* LISTA DE CHANGOS */
+.chango-row:hover {
+    cursor: pointer;
+}

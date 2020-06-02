@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="fragments/head :: head(title='Chango Facturado')"></head>
+
+<body class="container-fluid m-0 p-0">
+     <nav th:replace="fragments/navbar :: navbar(active='chango')"></nav>
+     <header class="text-center m-3">
+          <h1 class="display-4" th:text="'CHANGO N° ' + ${chango.idChango}"></h1>
+     </header>
+     <!-- MAIN CONTENT -->
+     <main class="w-100 d-flex flex-column justify-content-center align-items-center">
+          <table class="table shadow bg-white rounded col-12 col-sm-8 col-md-6 text-center">
+               <thead class="thead-dark">
+                    <th>Producto</th>
+                    <th>Talle</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+               </thead>
+               <tbody>
+                    <tr th:each="item :${items}" class="item">
+                         <td th:text="${item.getProductoModel().nombre}"></td>
+                         <td th:text="${item.getProductoModel().talle}"></td>
+                         <td th:text="${'$' + item.getProductoModel().precio}"></td>
+                         <td th:text="${item.cantidad}"></td>
+                    </tr>
+               </tbody>
+          </table>
+          <!-- TOTAL -->
+          <div class="d-flex w-100 justify-content-center mt-2">
+               <div class="col-8 col-sm-3 col-md-2 pb-1 bg-dark text-light border border-info roundedr text-center">
+                    <p class="m-0 p-0 quicksand"><small><u>Total</u></small></p>
+                    <p class="m-0 p-0 bigger-text quicksand" th:text="${'$'+ chango.calcularTotalChango()}"></p>
+               </div>
+          </div>
+     </main>
+     <footer th:replace="fragments/footer :: footer"></footer>
+     <div th:replace="fragments/scripts :: scripts"></div>
+</body>
+
+</html>

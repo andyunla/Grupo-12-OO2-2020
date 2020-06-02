@@ -1,11 +1,13 @@
 package com.sistema.application.controllers;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import com.sistema.application.converters.LocalConverter;
 import com.sistema.application.converters.ProductoConverter;
 import com.sistema.application.converters.UserConverter;
+import com.sistema.application.dto.ChangoDetalleDto;
 import com.sistema.application.dto.ProductoDisponibleDto;
 import com.sistema.application.dto.UserDto;
 import com.sistema.application.entities.Local;
@@ -141,6 +143,34 @@ public class ChangoController {
           return mAV;
      }
  
+     @GetMapping("ver/{idChango}")
+     public ModelAndView verChango(@PathVariable("idChango") long idChango) {
+          ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHANGO_FACTURADO);
+          setUserAndLocal(mAV);
+          ChangoModel chango = changoService.findByIdChango(idChango);
+          // Verifica si el chango que se intenta acceder existe
+          if(chango == null) {
+               mAV.setViewName("error/404");
+               return mAV;
+          }
+          if(! chango.getLocal().equals(localModel) ){
+               mAV.setViewName("error/403");
+               return mAV;
+          }
+          // Verifica que se intenta ver sea del local del cual está logueado
+          if(! chango.getLocal().equals(localModel) ){
+               mAV.setViewName("error/403");
+               return mAV;
+          }
+          List<ItemModel> items = itemService.findByChango(idChango);
+          chango.setListaItems(new HashSet<ItemModel>(items));
+          mAV.addObject("chango", chango);
+          mAV.addObject("items", items);
+          return mAV;
+     }
+ 
+
+
      // Agrega un nuevo item al chango, su cantidad será 1
      @PostMapping("nuevo-item/{idChango}/{idProducto}")
      public ModelAndView agregarItem(@PathVariable("idChango") long idChango,
@@ -206,6 +236,8 @@ public class ChangoController {
                localModel.devolverLote(item.getProductoModel(), item.getCantidad());
                itemService.remove(item.getIdItem());
           }
+          changoService.remove(idChango);
+          changoSesion.clear();
           return "redirect:/" + ViewRouteHelper.HOME_ROOT;
      }
 
@@ -213,7 +245,25 @@ public class ChangoController {
      public String guardarChango() {
           // Saca al chango de la sesión posponiendo su facturación para así poder crear otro
           changoSesion.clear();
-          return "redirect:/" + ViewRouteHelper.HOME_ROOT;
+          return "redirect:/chango/todos";
+     }  
+
+     @GetMapping("todos")
+     public ModelAndView traerTodos() {
+          // Devuelve una vista con todos los changos del local actual
+          ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHANGOS);
+          setUserAndLocal(mAV);
+          List<ChangoDetalleDto> changos = new ArrayList<ChangoDetalleDto>();
+          for(ChangoModel chango: changoService.findByLocal(localModel)) {
+               // Llena los detalles que se pasaran a la vista de la lista de los changos
+               chango.setListaItems( new HashSet<>( itemService.findByChango(chango.getIdChango())));
+               int cantidadDeItems = chango.getListaItems().size();
+               double total = chango.calcularTotalChango();
+               boolean facturado = ( facturaService.findByChango(chango) != null );
+               changos.add( new ChangoDetalleDto(chango.getIdChango(), cantidadDeItems, total, facturado));
+          }
+          mAV.addObject("changos", changos);
+          return mAV; 
      }
 
      // Setea el usario actual en el ModelAndView y setea su local en la instancia de localModel

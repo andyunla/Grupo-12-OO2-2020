@@ -8,11 +8,14 @@ import com.sistema.application.services.IChangoService;
 import com.sistema.application.services.IItemService;
 import com.sistema.application.repositories.IChangoRepository;
 import com.sistema.application.converters.ChangoConverter;
+import com.sistema.application.converters.LocalConverter;
 import com.sistema.application.entities.Chango;
 import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.ItemModel;
+import com.sistema.application.models.LocalModel;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -27,6 +30,10 @@ public class ChangoService implements IChangoService{
 		@Autowired
 		@Qualifier("changoConverter")
 		private ChangoConverter changoConverter;
+		
+		@Autowired
+		@Qualifier("localConverter")
+		private LocalConverter localConverter;
 
 		@Autowired
 		@Qualifier("itemService")
@@ -41,7 +48,15 @@ public class ChangoService implements IChangoService{
 				return null;
 			}
 		}
-		
+		@Override
+		public List<ChangoModel> findByLocal(LocalModel local){
+			List<ChangoModel> changos = new ArrayList<ChangoModel>();
+			for(Chango chango: changoRepository.findByLocalOrderByIdChangoDesc(localConverter.modelToEntity(local))){
+				changos.add( changoConverter.entityToModel(chango));  
+			}
+			return changos;
+		} 
+  
 		@Override
 		public List<Chango> getAll(){
 			return changoRepository.findAll();
