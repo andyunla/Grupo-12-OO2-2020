@@ -52,11 +52,11 @@ INSERT INTO empleado
 	(id_persona, horario_desde, horario_hasta, sueldo_basico, id_local, tipo_gerente)
 VALUES
 	(7, '08:00:00', '16:00:00', 30000, 1, 0),	-- Empleados
-	(8, '16:00:00', '20:00:00', 30000, 1, 0),
-	(9, '08:00:00', '16:00:00', 30000, 2, 0),
-	(10, '16:00:00', '20:00:00', 30000, 2, 0),
-	(11, '08:00:00', '16:00:00', 30000, 3, 0),
-	(12, '16:00:00', '20:00:00', 30000, 3, 0),
+	(8, '16:00:00', '20:00:00', 30000, 2, 0),
+	(9, '08:00:00', '16:00:00', 30000, 3, 0),
+	(10, '16:00:00', '20:00:00', 30000, 4, 0),
+	(11, '08:00:00', '16:00:00', 30000, 5, 0),
+	(12, '16:00:00', '20:00:00', 30000, 6, 0),
 	(13, '10:00:00', '18:00:00', 80000, 1, 1),	-- Gerentes
 	(14, '10:00:00', '18:00:00', 80000, 2, 1),
 	(15, '10:00:00', '18:00:00', 80000, 3, 1),
@@ -155,7 +155,11 @@ VALUES
 	(6, 'empleado6@email.com', '$2a$04$RDzik0PX9JzDyIV/T8I0aO9szIJ2pRGHT7YW9ReEb6QmiKrMQ7K/G', 'empleado6'),
 	(7, 'gerente1@admin.com', '$2a$04$zZOGoK8FTWSWoIExeppysOQGN/12JBKVsfVORvdetGTWm/.UNn5li', 'gerente1'),
 	(8, 'gerente2@admin.com', '$2a$04$qFAWDaf8.ktsAdEp2qHF.eZ31SGdSagROxQkeXjaRPaWJfffeVJ7y', 'gerente2'),
-	(9, 'gerente3@admin.com', '$2a$04$9CW3bFRuXHd8OL5qszw0zejxAMYIYeCNzzXTKXudHVjceyKIxDuv2', 'gerente3');
+	(9, 'gerente3@admin.com', '$2a$04$9CW3bFRuXHd8OL5qszw0zejxAMYIYeCNzzXTKXudHVjceyKIxDuv2', 'gerente3'),
+    (10, 'gerente4@admin.com', '$2a$08$BFQ5a8SinZUvyDIAEAKlWezbn51SM1UmuVsXpphQIEIL/8rwBrINK', 'gerente4'),
+    (11, 'gerente5@admin.com', '$2a$08$ICxjiMaKObhnfHUUEKsIwOBd0dDJV6t9SmoOBE56aTAdpkY/nLPIW', 'gerente5'),
+    (12, 'gerente6@admin.com', '$2a$08$8cSy/583wKmwkJadGlFU7uVZIEXLQoJQFubzj3QJdCQ5w4hZeK9hu', 'gerente6');
+    
 
 INSERT INTO `user_role` (user_id, role) VALUES ('1', 'EMPLEADO');
 INSERT INTO `user_role` (user_id, role) VALUES ('2', 'EMPLEADO');
@@ -166,3 +170,6 @@ INSERT INTO `user_role` (user_id, role) VALUES ('6', 'EMPLEADO');
 INSERT INTO `user_role` (user_id, role) VALUES ('7', 'GERENTE');
 INSERT INTO `user_role` (user_id, role) VALUES ('8', 'GERENTE');
 INSERT INTO `user_role` (user_id, role) VALUES ('9', 'GERENTE');
+INSERT INTO `user_role` (user_id, role) VALUES ('10', 'GERENTE');
+INSERT INTO `user_role` (user_id, role) VALUES ('11', 'GERENTE');
+INSERT INTO `user_role` (user_id, role) VALUES ('12', 'GERENTE');
