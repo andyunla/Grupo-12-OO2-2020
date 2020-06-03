@@ -15,8 +15,8 @@ function connect() {
 function disconnect() {
     if (stompClient !== null) {
        stompClient.disconnect();
+       console.log("Disconnected");
     }
-    console.log("Disconnected");
 }
 
 function enviarRespuesta(msg) {
