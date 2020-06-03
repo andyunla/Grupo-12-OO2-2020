@@ -6,15 +6,18 @@ public class ProductoDisponibleDto {
      private String nombre;
      private int talle;
      private double precio;
-     private int stock;  // Indica la cantidad de stock actual, incluyendo la cantidad que está cargada en un item del chango
+     private int stockTotal;  // Indica la cantidad de stockTotal actual, incluyendo la cantidad que está cargada en un item del chango
+     private int stockDisponible;  // Indica la cantidad de stock disponible, excluyendo la cantidad cargada en el item, si hubiese
      private boolean enChango;     // Indica si este producto ya se encuentra en el chango
 
-     public ProductoDisponibleDto(long idProducto, String nombre, int talle, double precio, int stock, boolean enChango) {
+     public ProductoDisponibleDto(long idProducto, String nombre, int talle, double precio, int stockTotal, 
+               int stockDisponible, boolean enChango) {
           this.idProducto = idProducto;
           this.nombre = nombre;
           this.talle = talle;
-          this.setPrecio(precio);
-          this.stock = stock;
+          this.precio = precio;
+          this.stockTotal = stockTotal;
+          this.stockDisponible = stockDisponible;
           this.enChango = enChango;
      }
 
@@ -47,15 +50,15 @@ public class ProductoDisponibleDto {
      }
 
      public void setPrecio(double precio) {
-          this.precio = Math.floor(precio * 100) / 100;
+          this.precio = precio;
      }
 
-     public int getStock() {
-          return this.stock;
+     public int getStockTotal() {
+          return this.stockTotal;
      }
 
-     public void setStock(int stock) {
-          this.stock = stock;
+     public void setStockTotal(int stockTotal) {
+          this.stockTotal = stockTotal;
      }
 
      public boolean getEnChango() {
@@ -66,6 +69,14 @@ public class ProductoDisponibleDto {
           this.enChango = enChango;
      }
 
+     public int getStockDisponible() {
+          return this.stockDisponible;
+     }
+
+     public void setStockDisponible(int stockDisponible) {
+          this.stockDisponible = stockDisponible;
+     }
+
      @Override
      public String toString() {
           return "{" +
@@ -73,7 +84,8 @@ public class ProductoDisponibleDto {
                ", nombre='" + getNombre() + "'" +
                ", talle='" + getTalle() + "'" +
                ", precio='" + getPrecio() + "'" +
-               ", stock='" + getStock() + "'" +
+               ", stockTotal='" + getStockTotal() + "'" +
+               ", stockDisponible='" + getStockDisponible()+ "'" +
                ", enChango='" + getEnChango() + "'" +
                "}";
      }

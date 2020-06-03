@@ -31,11 +31,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("chango")
@@ -73,29 +75,33 @@ public class ChangoController {
      @Qualifier("localModel")
      private LocalModel localModel;
 
+     /* Instancia de changoModel que se mantiene abierta en la pestaña 'Chango' */
+     /* Siempre se mantiene el ultimo chango que se está modificando o creando */
+     /* Se cambia la instancia cuando se decide facturarlo, cancelarlo o guardarlo */
      @Autowired
      @Qualifier("changoSesion")
-     private ChangoModel changoSesion;
+     private ChangoModel changoSesion; 
 
      @Autowired
      @Qualifier("facturaService")
      private FacturaService facturaService;
 
+     /* CREACION DE UN CHANGO */
      @GetMapping("")
      public ModelAndView chango() {
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHANGO);
           setUserAndLocal(mAV);
-          // Selecciono de todos los productos solo los que tienen por lo menos 1 en stock
-          // en el local
+          // Verifico si ya hay un chango abierto, si es así se redirecciona a la modificación
           if( changoSesion.hasInstance() ) {
                mAV.setViewName("redirect:/chango/" + changoSesion.getIdChango());
                return mAV;
-          }
+          }   
+          // Selecciono de todos los productos solo los que tienen stock en el local
           List<ProductoDisponibleDto> productosConStock = new ArrayList<ProductoDisponibleDto>();
           for (ProductoModel p : productoService.getAllModel()) {
                int stock = localModel.calcularStockLocal(p);
                if (stock > 0) {
-                    productosConStock.add(productoConverter.modelToDTO(p, stock, false));
+                    productosConStock.add(productoConverter.modelToDTO(p, stock, stock, false));
                }
           }
           ChangoModel nuevoChango = localModel.crearChango();
@@ -106,6 +112,7 @@ public class ChangoController {
           return mAV;
      } 
 
+     /* MODIFICACIÓN DE UN CHANGO */
      @GetMapping("{idChango}")
      public ModelAndView editarChango(@PathVariable("idChango") long idChango) {
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHANGO);
@@ -131,10 +138,8 @@ public class ChangoController {
                // Verifica si hay stock o si el producto está como item
                if (stock > 0 || item != null) {
                     // Si el producto está como item sumo su cantidad al stock que se visualizará
-                    if(item != null) {
-                         stock += item.getCantidad();
-                    }
-                    productosConStock.add(productoConverter.modelToDTO(p, stock, item != null));
+                    int stockTotal = stock  + ((item != null) ? item.getCantidad() : 0);
+                    productosConStock.add(productoConverter.modelToDTO(p, stockTotal, stock, item != null));
                }
           }
           mAV.addObject("productos", productosConStock);
@@ -143,6 +148,7 @@ public class ChangoController {
           return mAV;
      }
  
+     /* VISTA DE LOS ITEMS DE UN CHANGO */
      @GetMapping("ver/{idChango}")
      public ModelAndView verChango(@PathVariable("idChango") long idChango) {
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHANGO_FACTURADO);
@@ -151,10 +157,6 @@ public class ChangoController {
           // Verifica si el chango que se intenta acceder existe
           if(chango == null) {
                mAV.setViewName("error/404");
-               return mAV;
-          }
-          if(! chango.getLocal().equals(localModel) ){
-               mAV.setViewName("error/403");
                return mAV;
           }
           // Verifica que se intenta ver sea del local del cual está logueado
@@ -168,10 +170,8 @@ public class ChangoController {
           mAV.addObject("items", items);
           return mAV;
      }
- 
 
-
-     // Agrega un nuevo item al chango, su cantidad será 1
+     // Agrega un nuevo item al chango, su cantidad inicial será 1
      @PostMapping("nuevo-item/{idChango}/{idProducto}")
      public ModelAndView agregarItem(@PathVariable("idChango") long idChango,
                @PathVariable("idProducto") long idProducto) {
@@ -183,6 +183,7 @@ public class ChangoController {
                ItemModel item = itemService.insertOrUpdate(newItem);
                mAV.addObject("item", item);
                mAV.setStatus(HttpStatus.CREATED);
+               // Resta la cantidad agregada del/de los lote/s
                localModel.restarLote(item.getProductoModel(), 1);
           } else {
                mAV.setStatus(HttpStatus.NOT_ACCEPTABLE);
@@ -193,9 +194,11 @@ public class ChangoController {
      // Elimina un item de un chango abierto
      @PostMapping("eliminar-item/{idItem}")
      public ResponseEntity<String> eliminarItem(@PathVariable("idItem") long idItem) {
+          System.out.println("\n\nELIMINADO");
           ItemModel item = itemService.findByIdItem(idItem);
           ProductoModel producto = item.getProductoModel();
           if (itemService.remove(idItem)) {
+               // Devuelve la cantidad del item eliminado a el/los lote/s
                localModel.devolverLote(producto, item.getCantidad());
                return new ResponseEntity<String>(HttpStatus.OK);
           } else {
@@ -212,15 +215,14 @@ public class ChangoController {
           if (item.getCantidad() < nuevaCantidad) {
                // Verifico si hay stock en el local
                if (localModel.validarStock(item.getProductoModel(), nuevaCantidad - item.getCantidad())) {
-                    // Resto a los lotes del local la diferencia entre la nueva cantidad que se sumó
+                    // Resto a los lotes del local la cantidad que se sumó
                     localModel.restarLote(item.getProductoModel(), nuevaCantidad - item.getCantidad());
                } else {
-                    // No se realizan cambios y devuelvo el una respuesta con la cantidad actual del
-                    // item
+                    // No se realizan cambios y devuelvo el una respuesta con la cantidad actual del item
                     return ResponseEntity.badRequest().body(String.valueOf(item.getCantidad()));
                }
           } else {
-               // Sumo a los lotes del local la diferencia entre la nueva cantidad que se restó
+               // Sumo a los lotes la cantidad que se restó
                localModel.devolverLote(item.getProductoModel(), item.getCantidad() - nuevaCantidad);
           }
           item.setCantidad(nuevaCantidad);
@@ -228,30 +230,40 @@ public class ChangoController {
           return new ResponseEntity<String>(HttpStatus.OK);
      }
 
+     /* Elimina un chango y sus items */
      @PostMapping("cancelar/{idChango}")
-     public String cancelarChango(@PathVariable("idChango") long idChango) {
+     public ModelAndView cancelarChango(@PathVariable("idChango") long idChango, 
+               RedirectAttributes redirectAttributes) {
+          ModelAndView mAV = new ModelAndView("redirect:/chango/todos");
           // Traer items del chango, devolverlos a sus lotes y eliminarlos
           List<ItemModel> items = itemService.findByChango(idChango);
           for (ItemModel item : items) {
                localModel.devolverLote(item.getProductoModel(), item.getCantidad());
                itemService.remove(item.getIdItem());
           }
-          changoService.remove(idChango);
-          changoSesion.clear();
-          return "redirect:/" + ViewRouteHelper.HOME_ROOT;
+          if( changoService.remove(idChango) ) {  // Elimina al chango
+               redirectAttributes.addFlashAttribute("changoEliminado", true);
+               changoSesion.clear();    //Saca al chango de la sesion
+          }
+          return mAV;
      }
 
+     /* SACA AL CHANGO DE LA SESIÓN */
      @PostMapping("guardar")
      public String guardarChango() {
-          // Saca al chango de la sesión posponiendo su facturación para así poder crear otro
           changoSesion.clear();
           return "redirect:/chango/todos";
      }  
 
+     /* VISTA DE TODOS LOS CHANGOS CREADOS, DIFERENCIANDOLOS POR FACTURADOS O NO */
      @GetMapping("todos")
-     public ModelAndView traerTodos() {
+     public ModelAndView traerTodos(Model modelo) {
           // Devuelve una vista con todos los changos del local actual
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHANGOS);
+          // Agrega el objeto changoEliminado en caso de ser redireccionado tras cancelar uno
+          if(modelo.containsAttribute("changoEliminado")){
+               mAV.addObject("changoEliminado", modelo.getAttribute("changoEliminado"));
+          }
           setUserAndLocal(mAV);
           List<ChangoDetalleDto> changos = new ArrayList<ChangoDetalleDto>();
           for(ChangoModel chango: changoService.findByLocal(localModel)) {
@@ -266,7 +278,7 @@ public class ChangoController {
           return mAV; 
      }
 
-     // Setea el usario actual en el ModelAndView y setea su local en la instancia de localModel
+     // Establece el usario actual en el ModelAndView y a su local en la instancia de localModel
      protected ModelAndView setUserAndLocal(ModelAndView mAV) {
           User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
           UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
@@ -278,7 +290,7 @@ public class ChangoController {
           return mAV;  
      }
 
-
+     /* Obtiene el local del usuario logueado*/
      private LocalModel getLocalGivenUser(String username) {
           com.sistema.application.entities.User user = userRepository.findByUsernameAndFetchUserRolesEagerly(username);
           Local local = user.getEmpleado().getLocal();
