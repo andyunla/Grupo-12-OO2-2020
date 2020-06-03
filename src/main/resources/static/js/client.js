@@ -23,7 +23,7 @@ function enviarRespuesta(msg) {
     // Transformamos el JSON a un string para poder enviarlo
     stompClient.send("/app/peticion", {}, JSON.stringify(msg));
 }
-current-idLocal
+
 function loadNotifications(json) {
     if(json.type == "respuesta") { // Si lo que me llega es una respuesta
         if(json.to == document.getElementById("current-username").value) // Si son mensajes para el usuario actual
@@ -44,11 +44,11 @@ function agregarListenerABotonesAceptar() {
     botonesAceptar.forEach(boton => boton.addEventListener('click', (e) => {
         // Se construye un Objeto msg que contiene la información que el servidor necesita procesar del cliente.
         var msg = {
-            id: e.target.dataset.userFrom + 1,
+            id: e.target.dataset.id + 1,
             type: "respuesta",
             status: true, // true = aceptado
             text: "ACEPTADO",
-            from: document.getElementById("current-user"), // El username del usuario actual
+            from: document.getElementById("current-username").value, // El username del usuario actual
             to: e.target.dataset.userFrom // El dueño que envío la solicitud; le devolvemos la respuesta
         };
         // Se realiza la factura
@@ -74,11 +74,11 @@ function agregarListenerABotonesRechazar() {
     botonesRechazar.forEach(boton => boton.addEventListener('click', (e) => {
         // Se construye un Objeto msg que contiene la información que el servidor necesita procesar del cliente.
         var msg = {
-            id: e.target.dataset.userFrom + 1,
+            id: e.target.dataset.id + 1,
             type: "respuesta",
             status: false, // true = aceptado
             text: "RECHAZADO",
-            from: document.getElementById("current-username"), // El username del usuario actual
+            from: document.getElementById("current-username").value, // El username del usuario actual
             to: e.target.dataset.userFrom // El dueño que envío la solicitud; le devolvemos la respuesta
         };
         enviarRespuesta(msg);
@@ -87,8 +87,8 @@ function agregarListenerABotonesRechazar() {
 
 function renderizarAHTML(json) {
     html = '<div class="dropdown-item">' + 
-             '<a class="dropdown-item botonAceptar" data-id="' + json.id + '" data-user-from="' + json.userFrom + '" href="#"> Aceptar</a>' +
-             '<a class="dropdown-item botonRechazar" data-id="' + json.id + '" data-user-from="' + json.userFrom + '" href="#"> Rechazar</a>' +
+             '<a class="dropdown-item botonAceptar" data-id="' + json.id + '" data-user-from="' + json.from + '" href="#"> Aceptar</a>' +
+             '<a class="dropdown-item botonRechazar" data-id="' + json.id + '" data-user-from="' + json.from + '" href="#"> Rechazar</a>' +
            '</div>' +
            '<div class="dropdown-divider"></div>'
     return html;
