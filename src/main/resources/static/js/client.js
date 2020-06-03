@@ -23,14 +23,13 @@ function enviarRespuesta(msg) {
     // Transformamos el JSON a un string para poder enviarlo
     stompClient.send("/app/peticion", {}, JSON.stringify(msg));
 }
-
+current-idLocal
 function loadNotifications(json) {
     if(json.type == "respuesta") { // Si lo que me llega es una respuesta
-        if(json.to == document.getElementById("current-user")) // Si son mensajes para el usuario actual
+        if(json.to == document.getElementById("current-username").value) // Si son mensajes para el usuario actual
             alertarResultadoDeSolicitud(json.text);
     } else { // Solicitud
-        const currentUser = document.querySelector('#current-user');
-        var idLocal = currentUser.dataset.idLocal;
+        let idLocal = document.getElementById('current-idLocal').value;
         if(json.toLocal == idLocal) { // Si la solicitud es para este local
             html = renderizarAHTML(json);
             document.querySelector("notificationContainer").innerHTML = html;
@@ -52,6 +51,7 @@ function agregarListenerABotonesAceptar() {
             from: document.getElementById("current-user"), // El username del usuario actual
             to: e.target.dataset.userFrom // El dueño que envío la solicitud; le devolvemos la respuesta
         };
+        // Se realiza la factura
         let urlSolicitud = host + "/pedido/solicitar/" + legajo + "/" + idLocal2 + "/"  + idProducto + "/" + cantidad;
             fetch(urlSolicitud, { method: 'POST' })
                 .then(res => {
@@ -78,7 +78,7 @@ function agregarListenerABotonesRechazar() {
             type: "respuesta",
             status: false, // true = aceptado
             text: "RECHAZADO",
-            from: document.getElementById("current-user"), // El username del usuario actual
+            from: document.getElementById("current-username"), // El username del usuario actual
             to: e.target.dataset.userFrom // El dueño que envío la solicitud; le devolvemos la respuesta
         };
         enviarRespuesta(msg);
@@ -116,7 +116,7 @@ function alertarResultadoDeSolicitud(respuesta) {
 }
 
 window.onload = () => {
-    connect();
+    setTimeout(() => { connect(); }, 3000);
     agregarListenerABotonesAceptar();
     agregarListenerABotonesRechazar();
 }

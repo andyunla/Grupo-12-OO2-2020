@@ -11,7 +11,7 @@ window.onload = () => {
           let botonesSolicitar = document.querySelectorAll('.botonSolicitar');
           botonesSolicitar.forEach(boton => boton.addEventListener('click', (e) => {
                connect();
-               let username = "empleado3";
+               let username = document.getElementById('current-user').value;
                var msg = {
                     id: 1,
                     type: "solicitud",
