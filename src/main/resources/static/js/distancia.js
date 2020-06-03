@@ -10,20 +10,20 @@ window.onload = () => {
      function agregarListenerABotonesSolicitar() {
           let botonesSolicitar = document.querySelectorAll('.botonSolicitar');
           botonesSolicitar.forEach(boton => boton.addEventListener('click', (e) => {
-               let legajo = legajoUser.value;
-               let idLocal2 = e.target.dataset.idlocal;
-               let idProducto = productoDeLotes.value;
-               let cantidad = cantidadProducto.value;
-               let urlSolicitud = host + "/pedido/solicitar/" + legajo + "/" + idLocal2 + "/"  + idProducto + "/" + cantidad;
-               fetch(urlSolicitud, { method: 'POST' })
-                    .then(res => {
-                         if (res.status == 200 || res.status == 201) {
-                              // let estado = await res.json();
-                              listarMasCercanos(); // Refrescamos la lista de locales cercanos
-                         }
-                         alertarResultadoDeSolicitud(res.status);
-                    })
-                    .catch(e => { console.error(e) });
+               connect();
+               let username = "empleado3";
+               var msg = {
+                    id: 1,
+                    type: "solicitud",
+                    from: username, // El username del usuario actual
+                    toLocal: e.target.dataset.idlocal, // El id del local; de esa manera llegará a cualquier usuario de ese local
+                    detallePedido: { // El pedido para que lo procese en caso de aceptar
+                         legajoSolicitante: legajoUser.value,
+                         idProducto: productoDeLotes.value,
+                         cantidad: cantidadProducto.value,
+                    }
+               };
+               enviarRespuesta(msg);
           }));
      }
 
