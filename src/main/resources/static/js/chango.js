@@ -94,15 +94,17 @@ async function modificarCantidad(element, valor = 0) {
                } else {
                     // Si el servidor no responde OK se asume que es por falta de stock
                     let htmlAlert =
-                         '<div class="p-4 alert alert-danger alert-dismissible fade show" role="alert">' +
+                         '<div id="alert" class="p-4 alert alert-danger alert-dismissible fade show" role="alert">' +
                          '<strong>STOCK SUPERADO:</strong> No se pudo modificar cantidad' +
                          '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
                          '<span aria-hidden="true">&times;</span>' +
                          '</button>' +
                          '</div> ';
-                    document.getElementById("alertContainer").innerHTML = htmlAlert;
+                    document.getElementById("alertContainer").innerHTML = htmlAlert;;
                     // Se reestablece la cantidad en la vista a la cantidad que tiene en la base de datos
                     cantidadInput.value = await response.json();
+                    let alert = document.getElementById("alert");
+                    fadeOutEffect(alert);
                }
                actualizarTotal();
           } catch (e) {
@@ -150,3 +152,20 @@ function buscar() {
 window.onload = () => {
      actualizarTotal();
 }
+
+function fadeOutEffect(fadeTarget) {
+     let escala = 0.003;
+     var fadeEffect = setInterval(function () {
+         if (!fadeTarget.style.opacity) {
+             fadeTarget.style.opacity = 1;
+         }
+         if (fadeTarget.style.opacity > 0) {
+             fadeTarget.style.opacity -= escala;
+             if(fadeTarget.style.opacity < 0.9) {
+                  escala = 0.07;
+             }
+         } else {
+             clearInterval(fadeEffect);
+         }
+     }, 100);
+ }
