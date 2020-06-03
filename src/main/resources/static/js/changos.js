@@ -32,12 +32,14 @@ window.onload = async () => {
                }
           }
      });
-     fadeOutEffect();
+     // Difumina el alert de chango eliminado, en caso que hubiese
+     var fadeTarget = document.getElementById("alertChangoEliminado");
+     if(fadeTarget != null) {
+          fadeOutEffect(fadeTarget);
+     }
 }
 
-// Difumina el alert de chango eliminado, en caso que hubiese
-function fadeOutEffect() {
-     var fadeTarget = document.getElementById("alertChangoEliminado");
+function fadeOutEffect(fadeTarget) {
      let escala = 0.002;
      var fadeEffect = setInterval(function () {
          if (!fadeTarget.style.opacity) {
