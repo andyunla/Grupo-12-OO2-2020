@@ -42,10 +42,8 @@ async function eliminarItem(e) {
                botonProducto.classList.add('btn-info');
                botonProducto.innerText = "AGREGAR";
                botonProducto.disabled = false;
-               
                // Recalculo el total
                actualizarTotal();
-               
           } else {
                console.log("Aca termina")
           }
@@ -69,13 +67,7 @@ function actualizarTotal() {
 
 function actualizarStock(idProducto, cantidadEnItem) {
     let filaProducto = document.getElementById("producto" + idProducto);
-    console.log("FILA DEL PRODUCTO:");
-    console.log(filaProducto);
-
     let columnaStock = filaProducto.children[4];
-    console.log("STOCK");
-    console.log(columnaStock);
-    console.log("cant en item" + cantidadEnItem);
     columnaStock.innerText = parseInt(columnaStock.dataset.stockinicial) - cantidadEnItem;
 }
 
@@ -96,10 +88,8 @@ async function modificarCantidad(element, valor = 0) {
                     cantidadInput.value = nuevaCantidad;
                     cantidadInput.dataset.lastvalue = nuevaCantidad;
                      // Actualizo el stock
-                    let filaItemx = document.getElementById("item" + element.dataset.iditem);
-                    console.log(filaItemx)
-                    let idProductoDelItem = filaItemx.dataset.idproducto;
-                    console.log(idProductoDelItem)
+                    let filaDelItem = document.getElementById("item" + element.dataset.iditem);
+                    let idProductoDelItem = filaDelItem.dataset.idproducto;
                     actualizarStock(idProductoDelItem, nuevaCantidad);
                } else {
                     // Si el servidor no responde OK se asume que es por falta de stock
