@@ -42,6 +42,22 @@
           </div>
      </main>
      <footer th:replace="fragments/footer :: footer"></footer>
+     <div class="p-1 col-11 col-sm-7 col-md-6 col-lg-4" id="alertContainer">
+          <div th:if="${changoEliminado}" class="p-4 alert alert-success alert-dismissible fade show" 
+                    role="alert" id="alertChangoEliminado">
+               <strong class="quicksand">Chango eliminado correctamente</strong>
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+               </button>
+          </div>
+          <div th:if="${changoEliminado!= null && !changoEliminado}" class="p-4 alert alert-danger alert-dismissible fade show"
+                     role="alert" id="alertChangoEliminado">
+               <strong class="quicksand">El chango no pudo ser eliminado</strong>
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+               </button>
+          </div>
+     </div>
      <div th:replace="fragments/scripts :: scripts"></div>
      <script th:src="@{/js/changos.js}"></script>
 </body>
