@@ -45,8 +45,15 @@ public class ClienteModel extends PersonaModel {
 
 	@Override
 	public String toString() {
-		return "ClienteModel [email=" + email + ", nroCliente=" + nroCliente + ", getDni()=" + getDni()
-				+ ", getNombre()=" + getNombre() + ", getApellido()=" + getApellido() + ", getFechaNacimiento()="
-				+ getFechaNacimiento() + "]";
+		return "ClienteModel:{" +
+			" id=" + this.getId() +
+			" nombre=" + this.getNombre() +
+			" apellido=" + this.getApellido() + 
+			" dni=" + this.getDni() + 
+			" fecha=" + this.getFechaNacimiento() + 
+			" email='" + email + "'" +
+			", nroCliente='" + nroCliente + "'" +
+			"}";
 	}
+
 }

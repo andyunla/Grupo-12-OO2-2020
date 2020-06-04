@@ -15,9 +15,7 @@ import com.sistema.application.models.ItemModel;
 import com.sistema.application.models.LocalModel;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service("changoService")
 public class ChangoService implements IChangoService{
@@ -56,7 +54,7 @@ public class ChangoService implements IChangoService{
 			}
 			return changos;
 		} 
-  
+
 		@Override
 		public List<Chango> getAll(){
 			return changoRepository.findAll();
@@ -85,6 +83,16 @@ public class ChangoService implements IChangoService{
 			}catch(Exception e) {
 				return false;
 			}
+		}
+
+		@Override 
+		public double calcularTotal(long idChango) {
+			List<ItemModel> itemsDelChango = itemService.findByChango(idChango);
+			double total = 0;
+			for(ItemModel item: itemsDelChango){
+				total += item.getCantidad() * item.getProductoModel().getPrecio();
+			}
+			return total;
 		}
 	
 }
