@@ -79,12 +79,20 @@ public class FacturaService implements IFacturaService {
 		}
 		return lista;
 	}
-	
+	/*
 	@Override
 	public  Set<FacturaModel> findByFechaFacturaBetween(LocalDate fecha1, LocalDate fecha2){
 		Set<FacturaModel> lista = null;// crei una lista de facturas
 		for (Factura fa : facturaRepository.findByFechaFacturaBetween(fecha1, fecha2 )) {//traigo la lista de facturas entre fechas d eun local
 			lista.add(facturaConverter.entityToModel(fa));// las agrego a la lista model
+		}
+		return lista;
+	}*/
+	@Override
+	public  List<Factura> findByFechaFacturaBetween(LocalDate fecha1, LocalDate fecha2){
+		List<Factura> lista = new ArrayList<Factura>();// crei una lista de facturas
+		for (Factura fa : facturaRepository.findByFechaFacturaBetween(fecha1, fecha2 )) {//traigo la lista de facturas entre fechas d eun local
+			lista.add(fa);
 		}
 		return lista;
 	}

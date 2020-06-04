@@ -23,6 +23,9 @@ import com.sistema.application.services.ILoteService;
 import com.sistema.application.services.IPedidoStockService;
 import com.sistema.application.services.IProductoService;
 
+import com.sistema.application.entities.Empleado;
+import com.sistema.application.entities.Factura;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
@@ -487,29 +490,29 @@ public class LocalModel {
 	////////////////////////////////////////////////////////////////////////////////////////////////////// EMPLEADOS//////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
-	public double calcularSueldo(EmpleadoModel empleado) {
+	public double calcularSueldo(Empleado empleado) {
 		double comisionCompleta = 0;
-		for (FacturaModel fa : traerFacturaMesPasado()) {// para cada factura del mes pasado
+		for (Factura fa : traerFacturaMesPasado()) {// para cada factura del mes pasado
 			if (fa.getEmpleado().equals(empleado)) { // si la factura pertenece a este empleado
-				if (fa.getChango().getPedidoStock() != null) { // el chango de la factura tiene un pedido stock, esta
+				if (fa.getChango().getPedidostock() != null) { // el chango de la factura tiene un pedido stock, esta
 																// factura es con stock de otro local
 					// si el empleado solicito stock de otro local se calcula la comision de 3%
-					if (fa.getChango().getPedidoStock().getEmpleadoSolicitante().equals(empleado))
+					if (fa.getChango().getPedidostock().getEmpleadoSolicitante().equals(empleado))
 						comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 3) / 100);
 				} else {// si este empleado no pidio stock se calcula la comision del 5%
 					comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 5) / 100);
 				}
 			} else {// si la factura no es de este empleado y si este empleado ofreció stock se el
 					// calcula el 2%
-				if (fa.getChango().getPedidoStock() != null
-						&& fa.getChango().getPedidoStock().getEmpleadoOferente().equals(empleado))
+				if (fa.getChango().getPedidostock() != null
+						&& fa.getChango().getPedidostock().getEmpleadoOferente().equals(empleado))
 					comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 2) / 100);
 			}
 		}
 		return (empleado.getSueldoBasico() + comisionCompleta);
 	}
 
-	public Set<FacturaModel> traerFacturaMesPasado() {
+	public List<Factura> traerFacturaMesPasado() {
 		LocalDate fecha1 = LocalDate.now().minusMonths(1).withDayOfMonth(1);// mes pasado dia 1
 		LocalDate fecha2 = LocalDate.now().minusMonths(1).withDayOfMonth(fecha1.lengthOfMonth());// último día del mes pasado
 		return facturaService.findByFechaFacturaBetween(fecha1, fecha2);// retorno la lista de facturas

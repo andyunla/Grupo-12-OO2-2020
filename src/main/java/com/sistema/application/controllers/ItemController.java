@@ -6,22 +6,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.BindingResult;
 import javax.validation.Valid;
 
 
 import com.sistema.application.converters.UserConverter;
 import com.sistema.application.dto.UserDto;
-import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ItemModel;
 import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IItemService;
-import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.IProductoService;
+import com.sistema.application.services.implementations.UserService;
 import com.sistema.application.services.IChangoService;
 
 import org.springframework.ui.Model;
@@ -50,29 +46,26 @@ public class ItemController {
 	@Autowired
     @Qualifier("changoService")
     private IChangoService changoService;
-
-	@Autowired
-    @Qualifier("localService")
-    private ILocalService localService;
 	
 	@Autowired
     @Qualifier("userRepository")
     private IUserRepository userRepository;	
 	
+	@Autowired
+    @Qualifier("userService")
+    private UserService userService;
 	
 	//Métodos
 	@GetMapping("")
 	public String items(Model modelo) {
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
-		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
-		userDto.setTipoGerente(isGerente);
+		// Obtenemos el usuario de la sesión
+		UserDto userDto = userService.getCurrentUser();
 		modelo.addAttribute("currentUser", userDto);
 		modelo.addAttribute("items", itemService.getAll() );
 		modelo.addAttribute("item", new ItemModel() );
 		modelo.addAttribute("productos", productoService.getAll());
 		modelo.addAttribute("changos", changoService.getAll());
-		modelo.addAttribute("locales", localService.getAll());
+		//modelo.addAttribute("changos", changoService.getAllLocal(userDto.getIdLocal() ) );
 		return ViewRouteHelper.ITEM_ABM;
 	}
 	

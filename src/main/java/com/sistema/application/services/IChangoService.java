@@ -14,6 +14,8 @@ public interface IChangoService {
 	
 	public List<Chango> getAll();
 	
+	public List<Chango> getAllLocal(long IdLocal);
+	
 	public List<ChangoModel> getAllModel();
 	
 	public ChangoModel insertOrUpdate(ChangoModel changoModel);

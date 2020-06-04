@@ -8,7 +8,7 @@
 	<!-- TITULO -->
 	<nav th:replace="fragments/navbar :: navbar(active='abm')"></nav>
 	<header class="text-center m-3">
-		<h1 class="display-4">ITEMS</h1>
+		<h1 class="display-4">Items de los changos de nuestro local</h1>
 	</header>
 		
 	<!-- MUESTRA LOS ITEMS -->
@@ -19,8 +19,6 @@
 						<th scope="col">Cantidad</th>
 						<th scope="col">Producto</th>
 						<th scope="col">Chango</th>
-						
-						<th scope="col">Local</th>
 						<th scope="col"> </th>
 					</tr>
 				</thead>
@@ -29,7 +27,6 @@
 						<td th:text="${item.cantidad}"></td>
 						<td th:text="${item.producto.nombre}"></td>
 						<td th:text="${item.chango.idChango}"></td>
-						<td th:text="${item.chango.local.nombreLocal}"></td>
 					</tr>
 				</tbody>
 			</table>
