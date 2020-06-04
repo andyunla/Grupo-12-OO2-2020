@@ -11,7 +11,6 @@ import com.sistema.application.dto.ChangoDetalleDto;
 import com.sistema.application.dto.ProductoDisponibleDto;
 import com.sistema.application.dto.UserDto;
 import com.sistema.application.entities.Local;
-import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.ItemModel;
@@ -22,14 +21,12 @@ import com.sistema.application.services.IChangoService;
 import com.sistema.application.services.IItemService;
 import com.sistema.application.services.IProductoService;
 import com.sistema.application.services.implementations.FacturaService;
+import com.sistema.application.services.implementations.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,6 +59,10 @@ public class ChangoController {
      @Autowired
      @Qualifier("localConverter")
      private LocalConverter localConverter;
+     
+     @Autowired
+     @Qualifier("userService")
+     private UserService userService;
 
      @Autowired
      @Qualifier("userConverter")

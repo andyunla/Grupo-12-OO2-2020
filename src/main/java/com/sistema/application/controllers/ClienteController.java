@@ -2,9 +2,6 @@ package com.sistema.application.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,13 +14,13 @@ import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.converters.UserConverter;
 import com.sistema.application.dto.UserDto;
 import com.sistema.application.models.ClienteModel;
 import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IClienteService;
+import com.sistema.application.services.implementations.UserService;
 
 
 @Controller
@@ -35,6 +32,9 @@ public class ClienteController {
 	@Autowired
     @Qualifier("userRepository")
     private IUserRepository userRepository;
+	@Autowired
+    @Qualifier("userService")
+    private UserService userService;
 	@Autowired
 	@Qualifier("clienteService")
 	private IClienteService clienteService;

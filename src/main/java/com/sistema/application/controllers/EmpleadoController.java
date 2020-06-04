@@ -5,10 +5,6 @@ import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,13 +17,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sistema.application.converters.UserConverter;
 import com.sistema.application.dto.UserDto;
-import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.LocalModel;
 import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IEmpleadoService;
 import com.sistema.application.services.ILocalService;
+import com.sistema.application.services.implementations.UserService;
 
 @Controller
 @RequestMapping("empleado")
@@ -41,6 +37,9 @@ public class EmpleadoController {
 	@Autowired
 	@Qualifier("localService")
 	private ILocalService localService;
+	@Autowired
+    @Qualifier("userService")
+    private UserService userService;
 	@Autowired
     @Qualifier("userRepository")
     private IUserRepository userRepository;

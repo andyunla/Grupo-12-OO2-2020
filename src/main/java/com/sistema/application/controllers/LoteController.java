@@ -4,21 +4,18 @@ import java.util.List;
 
 import com.sistema.application.converters.UserConverter;
 import com.sistema.application.dto.UserDto;
-import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.LoteModel;
 import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.ILoteService;
 import com.sistema.application.services.IProductoService;
+import com.sistema.application.services.implementations.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,6 +45,10 @@ public class LoteController {
      @Autowired
      @Qualifier("productoService")
      private IProductoService productoService;
+     
+     @Autowired
+     @Qualifier("userService")
+     private UserService userService;
      
      @Autowired
      @Qualifier("userRepository")
