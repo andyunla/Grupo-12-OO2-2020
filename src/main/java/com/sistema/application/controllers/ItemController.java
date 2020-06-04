@@ -50,10 +50,6 @@ public class ItemController {
 	@Autowired
     @Qualifier("changoService")
     private IChangoService changoService;
-
-	@Autowired
-    @Qualifier("localService")
-    private ILocalService localService;
 	
 	@Autowired
     @Qualifier("userRepository")
@@ -72,7 +68,7 @@ public class ItemController {
 		modelo.addAttribute("item", new ItemModel() );
 		modelo.addAttribute("productos", productoService.getAll());
 		modelo.addAttribute("changos", changoService.getAll());
-		modelo.addAttribute("locales", localService.getAll());
+		//modelo.addAttribute("changos", changoService.getAllLocal(userDto.getIdLocal() ) );
 		return ViewRouteHelper.ITEM_ABM;
 	}
 	

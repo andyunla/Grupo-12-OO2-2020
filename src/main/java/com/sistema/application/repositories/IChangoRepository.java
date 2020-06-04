@@ -13,5 +13,7 @@ import com.sistema.application.entities.Local;
 public interface IChangoRepository extends JpaRepository<Chango, Serializable> {
 	public abstract Chango findByIdChango(long idChango);
 
-	public abstract List<Chango> findByLocalOrderByIdChangoDesc(Local local);  
+	public abstract List<Chango> findByLocalOrderByIdChangoDesc(Local local); 
+	
+	public abstract List<Chango> findByLocal(Local local);
 }
