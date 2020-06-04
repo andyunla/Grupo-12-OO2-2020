@@ -101,7 +101,6 @@ public class Chango implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "\n\nCHANGO: " + idChango + listaItems.toString();
-		//return "Chango [idChango=" + idChango + ", pedidoStock=" + pedidoStock + "]";
+		return "Chango [idChango=" + idChango + ", pedidoStock=" + pedidoStock + "]";
 	}
 }
