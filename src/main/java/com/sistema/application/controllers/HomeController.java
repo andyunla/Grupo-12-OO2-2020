@@ -25,6 +25,7 @@ import com.sistema.application.dto.UserDto;
 import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.repositories.IUserRepository;
+import com.sistema.application.services.implementations.UserService;
 
 @Controller
 @RequestMapping("/")
@@ -36,15 +37,16 @@ public class HomeController {
 	@Autowired
 	@Qualifier("userRepository")
 	private IUserRepository userRepository;
+	@Autowired
+	@Qualifier("userService")
+	private UserService userService;
 	
 	// GET Example: SERVER/index
 	@GetMapping("/index")
 	public ModelAndView index() {
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.INDEX);
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
-		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
-		userDto.setTipoGerente(isGerente);
+		// Obtenemos el usuario de la sesión
+		UserDto userDto = userService.getCurrentUser();
 		modelAndView.addObject("currentUser", userDto);
 		return modelAndView;
 	}

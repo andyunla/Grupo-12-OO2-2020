@@ -71,11 +71,8 @@ public class PedidoController {
 
 	@GetMapping("")
 	public String pedidos(Model modelo) {
-		// Obtengo el usuario de la sesión
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
-		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
-		userDto.setTipoGerente(isGerente);
+		// Obtenemos el usuario de la sesión
+		UserDto userDto = userService.getCurrentUser();
 		modelo.addAttribute("currentUser", userDto);
 		Set<PedidoStockModel> pedidos = pedidoStockService.getAllModel();
 		modelo.addAttribute("pedidos", pedidos);

@@ -59,10 +59,8 @@ public class ItemController {
 	//Métodos
 	@GetMapping("")
 	public String items(Model modelo) {
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
-		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
-		userDto.setTipoGerente(isGerente);
+		// Obtenemos el usuario de la sesión
+		UserDto userDto = userService.getCurrentUser();
 		modelo.addAttribute("currentUser", userDto);
 		modelo.addAttribute("items", itemService.getAll() );
 		modelo.addAttribute("item", new ItemModel() );

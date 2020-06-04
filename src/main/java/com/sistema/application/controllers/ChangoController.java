@@ -280,10 +280,8 @@ public class ChangoController {
 
      // Establece el usario actual en el ModelAndView y a su local en la instancia de localModel
      protected ModelAndView setUserAndLocal(ModelAndView mAV) {
-          User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-          UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
-          boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
-          userDto.setTipoGerente(isGerente);
+          // Obtenemos el usuario de la sesión
+          UserDto userDto = userService.getCurrentUser();
           mAV.addObject("currentUser", userDto); 
           LocalModel localActual = this.getLocalGivenUser(userDto.getUsername());
           localModel.setInstance(localActual);
