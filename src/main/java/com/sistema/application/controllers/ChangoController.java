@@ -14,6 +14,7 @@ import com.sistema.application.entities.Local;
 import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ChangoModel;
+import com.sistema.application.models.ClienteModel;
 import com.sistema.application.models.ItemModel;
 import com.sistema.application.models.LocalModel;
 import com.sistema.application.models.ProductoModel;
@@ -22,6 +23,8 @@ import com.sistema.application.services.IChangoService;
 import com.sistema.application.services.IItemService;
 import com.sistema.application.services.IProductoService;
 import com.sistema.application.services.implementations.FacturaService;
+import com.sistema.application.services.IClienteService;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -54,6 +57,10 @@ public class ChangoController {
      @Autowired
      @Qualifier("itemService")
      private IItemService itemService;
+
+     @Autowired
+     @Qualifier("clienteService")
+     private IClienteService clienteService;
 
      @Autowired
      @Qualifier("changoService")
@@ -109,6 +116,8 @@ public class ChangoController {
           mAV.addObject("productos", productosConStock);
           mAV.addObject("chango", nuevoChango);
           mAV.addObject("items", new ArrayList<ItemModel>());
+          mAV.addObject("clientes", clienteService.getAllModel());
+          mAV.addObject("cliente", new ClienteModel());
           return mAV;
      } 
 
@@ -145,6 +154,8 @@ public class ChangoController {
           mAV.addObject("productos", productosConStock);
           mAV.addObject("chango", changoSesion);
           mAV.addObject("items", itemService.findByChango(idChango) );
+          mAV.addObject("clientes", clienteService.getAllModel());
+          mAV.addObject("cliente", new ClienteModel()); 
           return mAV;
      }
  

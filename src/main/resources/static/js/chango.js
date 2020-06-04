@@ -1,5 +1,9 @@
 const host = 'http://localhost:8080/chango/';
+/* Flags para detectar si ya se puede habilitar la facturación */
+var clienteElegido = false;
+var changoConItem = false;
 
+/* AGREGA UN ITEM DE LA TABLA DE PRODUCTOS DISPONIBLES AL CHANGO */
 async function agregarItem(element) {
      let urlNewItem = host + 'nuevo-item/' + element.dataset.idchango + '/' + element.dataset.idproducto;
      try {
@@ -26,6 +30,7 @@ async function agregarItem(element) {
      }
 }
 
+/* ELIMINA UN ITEM DE LA TABLA DEL CHANGO */
 async function eliminarItem(e) {
      let urlDeleteItem = host + 'eliminar-item/' + e.dataset.iditem;
      try {
@@ -45,32 +50,15 @@ async function eliminarItem(e) {
                // Recalculo el total
                actualizarTotal();
           } else {
-               console.log("Aca termina")
+               throw new Error();
           }
      }
      catch (e) {
-          console.log("Error, no se pudo eliminar");
+          alert("Error, no se pudo eliminar");    // TODO: A cambiar por un alert con con estilos
      }
 }
 
-function actualizarTotal() {
-     let itemsElements = document.getElementsByClassName("item");
-     let total = 0;
-     for (let element of itemsElements) {
-          // Obtengo el precio de la lista de items en chango y lo multiplico por la cantidad
-          let precio = element.children[2].innerText.substring(1);
-          let cantidad = document.getElementById('cantidad-' + element.id).value;
-          total += (precio * cantidad);
-     }
-     document.getElementById("total").innerText = '$' + total;
-}
-
-function actualizarStock(idProducto, cantidadEnItem) {
-    let filaProducto = document.getElementById("producto" + idProducto);
-    let columnaStock = filaProducto.children[4];
-    columnaStock.innerText = parseInt(columnaStock.dataset.stockinicial) - cantidadEnItem;
-}
-
+/* MODIFICA LA CANTIDAD DE UN ITEM */
 async function modificarCantidad(element, valor = 0) {
      // El valor es la cantidad a sumar o restar de la cantidad actual
      let cantidadInput = document.getElementById("cantidad-item" + element.dataset.iditem);
@@ -115,6 +103,7 @@ async function modificarCantidad(element, valor = 0) {
      }
 }
 
+/* AGREGA O RESTA UNA UNIDAD A UN ITEM */
 function cambiarUnidad(element, valor) {
      // El valor es la cantidad a sumar o restar de la cantidad actual
      let cantidadInput = document.getElementById("cantidad-item" + element.dataset.iditem);
@@ -126,6 +115,30 @@ function cambiarUnidad(element, valor) {
      }
 }
 
+/* ACTUALIZA EL TOTAL QUE SE MUESTRA */
+function actualizarTotal() {
+     let itemsElements = document.getElementsByClassName("item");
+     let total = 0;
+     for (let element of itemsElements) {
+          // Obtengo el precio de la lista de items en chango y lo multiplico por la cantidad
+          let precio = element.children[2].innerText.substring(1);
+          let cantidad = document.getElementById('cantidad-' + element.id).value;
+          total += (precio * cantidad);
+     }
+     document.getElementById("total").innerText = '$' + total;
+     // Habilita el boton de confirmar la factura si ya hay un chango cargado y un cliente elegido
+     changoConItem = total != 0;
+     document.getElementById("botonConfirmar").disabled = !(changoConItem && clienteElegido);
+}
+
+/* ACTUALIZA EL STOCK QUE SE MUESTRA EN LA TABLA PRODUCTOS */
+function actualizarStock(idProducto, cantidadEnItem) {
+    let filaProducto = document.getElementById("producto" + idProducto);
+    let columnaStock = filaProducto.children[4];
+    columnaStock.innerText = parseInt(columnaStock.dataset.stockinicial) - cantidadEnItem;
+}
+
+/* BUSCA UN PRODUCTO POR SU NOMBRE */
 function buscar() {
      let valorBuscado = document.querySelector('input[type=search]').value;
      // Obtiene la lista <tr> de filas de la tabla
@@ -149,10 +162,7 @@ function buscar() {
      }
 }
 
-window.onload = () => {
-     actualizarTotal();
-}
-
+// Efecto de desvanecido
 function fadeOutEffect(fadeTarget) {
      let escala = 0.003;
      var fadeEffect = setInterval(function () {
@@ -169,3 +179,13 @@ function fadeOutEffect(fadeTarget) {
          }
      }, 100);
  }
+
+ window.onload = () => {
+     actualizarTotal();
+     // Deteca si se elegió un cliente para permitir confirmar generar la factura
+     document.getElementById("clienteFactura").addEventListener("change", () => {
+          clienteElegido = true;
+          // Habilita el boton de confirmar la factura si ya hay un chango cargado y un cliente elegido
+          document.getElementById("botonConfirmar").disabled = !(changoConItem && clienteElegido);
+     });
+}
