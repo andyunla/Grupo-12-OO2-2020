@@ -66,16 +66,22 @@ public class SueldoController {
 		userDto.setTipoGerente(isGerente);
 		modelAndView.addObject("currentUser", userDto);
 		
-		
+		/*
 		//Recorro la lista de empleados y les calculo el sueldo
 		for(EmpleadoModel emp: empleadoService.getAllModel() ) {
 			emp.setSueldoBasico(localModel.calcularSueldo(emp) );
 		}
+		*/
 		
+		//Lo mismo del comentario de arriba pero trabaja con las entidades
+		for(Empleado emp: empleadoService.getAll() ) {
+			emp.setSueldoBasico(localModel.calcularSueldo(emp) );
+		}
 		
 		//Mando atributos al modelo
 		modelAndView.addObject("empleados", empleadoService.getAll() );
-
+		
+		
 		//Muestro en pantalla
 		return modelAndView;
 	}
