@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.sistema.application.converters.UserConverter;
 import com.sistema.application.dto.ProductoRankingDto;
 import com.sistema.application.dto.UserDto;
+import com.sistema.application.funciones.Funciones;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.LocalModel;
 import com.sistema.application.repositories.IUserRepository;
@@ -41,13 +42,14 @@ public class ReporteController {
 	@Qualifier("localService")
 	private ILocalService localService;
 	
-	@PostMapping("{fecha1}/{fecha2}")
-	public ModelAndView solicitar(@PathVariable("fecha1") LocalDate fecha1, @PathVariable("fecha2") LocalDate fecha2) {
+	@GetMapping("{fecha1}/{fecha2}")
+	public ModelAndView solicitar(@PathVariable("fecha1") String fecha1, @PathVariable("fecha2") String fecha2) {
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.RANKING_REPORTE_PRODUCTOS);
 		// Obtenemos el usuario de la sesión
 		UserDto userDto = userService.getCurrentUser();
 		modelAndView.addObject("currentUser", userDto);
-		List<ProductoRankingDto> productoReporte = localService.reporte(fecha1, fecha2, userDto.getLocal().getIdLocal());
+		List<ProductoRankingDto> productoReporte = localService.reporte(Funciones.traerFecha(fecha1), Funciones.traerFecha(fecha2), 
+																		userDto.getLocal().getIdLocal());
 		modelAndView.addObject("listaProductos", productoReporte);
 		return modelAndView;
 	}
