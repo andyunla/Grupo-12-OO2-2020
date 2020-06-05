@@ -14,6 +14,7 @@ public class ViewRouteHelper {
 	public final static String CHANGO = "abm/chango";
 	public final static String CHANGOS = "abm/changos";
 	public final static String CHANGO_FACTURADO = "abm/changoFacturado";
+	public final static String FACTURA = "abm/facturaA";
 
 	// Parciales   
 	public final static String LISTA_LOTES = "partial/listaLotes";

@@ -14,10 +14,12 @@ import com.sistema.application.services.IEmpleadoService;
 import com.sistema.application.services.IFacturaService;
 import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.implementations.UserService;
+import com.sistema.application.helpers.ViewRouteHelper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -83,6 +85,14 @@ public class FacturaController {
                );
           FacturaModel facturaGuradada = facturaService.insertOrUpdate(nuevaFactura);
           changoSesion.clear();
+          return mAV; 
+     }
+
+     @GetMapping("ver/{idFactura}")
+     public ModelAndView traerFactura(@PathVariable ("idFactura") long id) {
+          UserDto userDto = userService.getCurrentUser();
+          ModelAndView mAV = new ModelAndView(ViewRouteHelper.FACTURA);
+          mAV.addObject("currentUser", userDto); 
           return mAV;
      }
 }

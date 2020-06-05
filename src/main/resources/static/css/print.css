@@ -259,39 +259,20 @@ tr {
      margin-bottom: 0;
 }
 
-.ie body {
-     background-color: blueviolet;
+footer, nav, header, button {
+     display: none !important;
 }
-/*
-@media print {
-     body * {
-          visibility: hidden;
-     }
 
-     #factura-container {
-          visibility: visible !important;
-          display: block;
-          position: absolute;
-          top: 0;
-          left: 14px;
-     }
-
-     #factura-container * {
-          visibility: visible;
-     }
-     
-     html {
-          transform: scale(1.9);
-          transform-origin: 0 0;
-     }
-
-     footer, nav, header, main {
-          display: none !important;
-     }
-     * {
-          display: none;
-     }
-     #factura-container {
-          display: block;
-     }
-}*/
+#container-container  {
+     position: absolute;
+     top:0;
+     left: 0;
+     transform-origin: 0 0;
+     transform: scale(0);
+     /* CHROME Y FIREFOX */
+     -webkit-transform-origin: 0 0;
+     -webkit-transform: scale(1.9);
+     /* EDGE  */
+     -ms-transform-origin: 0,0;
+     -ms-transform: scale(1.1);
+}
