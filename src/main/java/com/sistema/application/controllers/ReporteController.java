@@ -42,12 +42,22 @@ public class ReporteController {
 	@Qualifier("localService")
 	private ILocalService localService;
 	
-	@GetMapping("{fecha1Ranking}/{fecha2Ranking}")
-	public ModelAndView solicitar(@PathVariable("fecha1Ranking") String fecha1, @PathVariable("fecha2Ranking") String fecha2) {
-		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.RANKING_REPORTE_PRODUCTOS);
+	@GetMapping("")
+	public ModelAndView productoRanking() {
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.REPORTE_ROOT);
 		// Obtenemos el usuario de la sesión
 		UserDto userDto = userService.getCurrentUser();
 		modelAndView.addObject("currentUser", userDto);
+		List<ProductoRankingDto> productoRanking = localService.ranking();
+		modelAndView.addObject("listaProductos", productoRanking);
+		return modelAndView;
+	}
+
+	@GetMapping("{fecha1}/{fecha2}")
+	public ModelAndView productoEntreFechas(@PathVariable("fecha1") String fecha1, @PathVariable("fecha2") String fecha2) {
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.RANKING_REPORTE_PRODUCTOS);
+		// Obtenemos el usuario de la sesión
+		UserDto userDto = userService.getCurrentUser();
 		List<ProductoRankingDto> productoReporte = localService.reporte(Funciones.traerFecha(fecha1), Funciones.traerFecha(fecha2), 
 																		userDto.getLocal().getIdLocal());
 		modelAndView.addObject("listaProductos", productoReporte);
