@@ -40,12 +40,12 @@ public class RankingController {
 	
 	@GetMapping("")
 	public ModelAndView productoRanking() {
-		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.RANKIG_ROOT);
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.RANKING_ROOT);
 		// Obtenemos el usuario de la sesión
 		UserDto userDto = userService.getCurrentUser();
 		modelAndView.addObject("currentUser", userDto);
 		List<ProductoRankingDto> productoRanking = localService.ranking();
-		modelAndView.addObject("productoRanking", productoRanking);
+		modelAndView.addObject("listaProductos", productoRanking);
 		return modelAndView;
 	}
 }

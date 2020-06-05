@@ -18,11 +18,12 @@ public class ViewRouteHelper {
 	// Parciales   
 	public final static String LISTA_LOTES = "partial/listaLotes";
 	public final static String LISTA_LOCALES_CERCANOS = "partial/listaLocalesCercanos";
+	public final static String RANKING_REPORTE_PRODUCTOS = "partial/listaProductosRanking";
 	public final static String ITEM = "partial/item";
 
 	// CASOS DE USO
 	public final static String DISTANCIA_ROOT = "cu/distancia";
-	public final static String RANKIG_ROOT = "cu/ranking";
+	public final static String RANKING_ROOT = "cu/ranking";
 	public final static String REPORTE_ROOT = "cu/reporte";
 	public final static String PEDIDO_VIEW = "cu/pedido";
 	public final static String SUELDO_ROOT = "cu/sueldo";

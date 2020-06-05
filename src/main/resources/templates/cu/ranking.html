@@ -1,37 +1,49 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="ISO-8859-1">
 
 <head th:replace="fragments/head :: head(title='Ranking')"></head>
-<title>Ranking</title></head>
 
 <body class="container-fluid m-0 p-0">
-	<nav th:replace="fragments/navbar :: navbar(active='ranking')"></nav>
-	<header class="text-center m-3">
+    <nav th:replace="fragments/navbar :: navbar(active='ranking')"></nav>
+    <header class="text-center m-3">
           <h1 class="display-4">Ranking de productos</h1>
      </header>
-	<main class="w-100 d-flex flex-column align-items-center">
-	
-		<div class="container  ">
-			<table class="w-100 shadow mb-3 bg-white rounded table-hover table-bordered">
-				<thead class="bg-dark text-center text-white  ">
-					<tr>
-						<th scope="col">Producto</th>
-						<th scope="col">Cantidad</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="producto :${productoRanking}" class="fila-producto ">
-						<td th:text="${producto.nombre}"></td>
-						<td th:text="${producto.cantidad} +' Und.'"></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</main>
+    <main class="w-100 d-flex flex-column align-items-center">
+    
+        <div class="container  ">
+            <!-- OPCIONES DE VISUALIZACION DE LOCALES -->
+            <div class="w-100 d-flex flex-column align-items-center">
+                <section class="col-12 col-sm-11 pl-1 pr-1 d-flex justify-content-start flex-wrap">
+                    <div class="form-group row">
+                        <label for="fecha1Ranking">Fecha desde: </label>
+                        <input type="date" class="form-control" id="fecha1Ranking" required/>
+                    </div>
+                    <vr>
+                    <div class="form-group row">
+                        <label for="fecha2Ranking">Fecha hasta: </label>
+                        <input type="date" class="form-control" id="fecha2Ranking" required/>
+                    </div>
+                </section>
+            </div>
+            <table class="w-100 shadow mb-3 bg-white rounded table-hover table-bordered">
+                <thead class="bg-dark text-center text-white  ">
+                    <tr>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    <tr th:each="producto :${listaProductos}" class="fila-producto ">
+                        <td th:text="${producto.nombre}"></td>
+                        <td th:text="${producto.cantidad} +' unidades.'"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
 
-	<footer th:replace="fragments/footer :: footer"></footer>
-	<div th:replace="fragments/scripts :: scripts"></div>
+    <footer th:replace="fragments/footer :: footer"></footer>
+    <script th:src="@{/js/ranking.js}"></script>
+    <div th:replace="fragments/scripts :: scripts"></div>
 </body>
 </html>
