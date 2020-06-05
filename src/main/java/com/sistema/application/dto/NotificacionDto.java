@@ -98,4 +98,10 @@ public class NotificacionDto {
 	public void setDetallePedido(DetallePedidoDto detallePedido) {
 		this.detallePedido = detallePedido;
 	}
+
+	@Override
+	public String toString() {
+		return "NotificacionDto [id=" + id + ", type=" + type + ", status=" + status + ", text=" + text + ", from="
+				+ from + ", to=" + to + ", toLocal=" + toLocal + ", detallePedido=" + detallePedido + "]";
+	}
 }

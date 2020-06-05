@@ -37,4 +37,10 @@ public class DetallePedidoDto {
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
+
+	@Override
+	public String toString() {
+		return "DetallePedidoDto [legajoSolicitante=" + legajoSolicitante + ", idProducto=" + idProducto + ", cantidad="
+				+ cantidad + "]";
+	}
 }
