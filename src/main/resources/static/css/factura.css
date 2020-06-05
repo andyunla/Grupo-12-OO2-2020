@@ -35,6 +35,12 @@ body {
      display: flex;
 }
 
+.remitente-info small {
+     position: absolute;
+     top: 60px;
+     left: 385px;
+}
+
 /* DATOS DE SUCURSAL */
 
 #sucursal-info {
@@ -218,7 +224,7 @@ tr {
 
 #total {
      font-size: 27px;
-     margin: 20px 30px 10px 30px;
+     margin: 20px 30px 5px 30px;
      padding: 15px;
      background-color: grey;
      text-align: center;
@@ -228,7 +234,6 @@ tr {
 #total-seccion img {
      width: 120px;
      margin: 0;
-
 }
 
 /* SALUDO */
@@ -236,9 +241,9 @@ tr {
      margin: 0;
      text-align: center;
      height: 20px;
-     font-family: 'Courier New';
      font-size: 17px;
      vertical-align: middle;
+     color: rgb(207, 113, 24);
 }
 
 .barra-final {
