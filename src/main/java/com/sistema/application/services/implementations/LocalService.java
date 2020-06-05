@@ -99,9 +99,15 @@ public class LocalService implements ILocalService {
      public LocalModel findByDireccion(String direccion) {
     	 return localConverter.entityToModel(localRepository.findByDireccion(direccion) );
      }
+    /****************************************************************************************************/
+ 	//////////////////////////////////////////////////////////////////////////////////////////////////////
+ 	// 14) EMITIR REPORTE DE PRODUCTOS VENDIDOS ENTRE FECHAS POR LOCAL////////////////////////////////////
+ 	////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ 	//////////////////////////////////////////////////////////////////////////////////////////////////////
+ 	/****************************************************************************************************/
      public List<ProductoRankingDto> reporte(LocalDate fecha1, LocalDate fecha2, long idLocal){
     	 List<ProductoRankingDto> productoReporte = new ArrayList<ProductoRankingDto>();
-    	 Set<FacturaModel> listaFacturas = facturaService.findByFechaFacturaBetweenAndIdLocal(fecha1, fecha2, idLocal);
+    	 List<FacturaModel> listaFacturas = facturaService.findByFechaFacturaBetweenAndIdLocal(fecha1, fecha2, idLocal);
     	 List<ProductoModel> productos = productoService.getAllModel();
     	 for (ProductoModel pro : productos ) {
     		int cantidad = cantidadProductoVendido(pro, listaFacturas);
@@ -111,9 +117,15 @@ public class LocalService implements ILocalService {
  		Collections.sort(productoReporte, Collections.reverseOrder());	
     	return productoReporte;
      }
+    /****************************************************************************************************/
+ 	//////////////////////////////////////////////////////////////////////////////////////////////////////
+ 	// 15) RANKING DE PRODUCTOS MÁS VENDIDOS////////////////////////////////////////////////////////////// 
+ 	//////////////////////////////////////////////////////////////////////////////////////////////////////
+ 	//////////////////////////////////////////////////////////////////////////////////////////////////////
+ 	/****************************************************************************************************/
      public List<ProductoRankingDto> ranking(){
     	 List<ProductoRankingDto> productoRanking = new ArrayList<ProductoRankingDto>();
-    	 Set<FacturaModel> listaFacturas = (Set<FacturaModel>) facturaService.getAllModel();
+    	 List<FacturaModel> listaFacturas =  facturaService.getAllModel();
     	 List<ProductoModel> productos = productoService.getAllModel();
     	 for (ProductoModel pro : productos ) {
     		int cantidad = cantidadProductoVendido(pro, listaFacturas);
@@ -123,7 +135,7 @@ public class LocalService implements ILocalService {
  		Collections.sort(productoRanking, Collections.reverseOrder());	
     	return productoRanking;
      }
-     public int cantidadProductoVendido(ProductoModel producto, Set<FacturaModel> listaFacturas) {
+     public int cantidadProductoVendido(ProductoModel producto, List<FacturaModel> listaFacturas) {
  		int cantidad = 0;
  		for (FacturaModel fa : listaFacturas) {
  			// de cada factura obtengo el chango y traigo el item que tenga el producto que

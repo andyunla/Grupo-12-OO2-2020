@@ -8,6 +8,7 @@ import com.sistema.application.services.IFacturaService;
 import com.sistema.application.repositories.IFacturaRepository;
 import com.sistema.application.converters.ChangoConverter;
 import com.sistema.application.converters.FacturaConverter;
+import com.sistema.application.dto.ProductoRankingDto;
 import com.sistema.application.entities.Factura;
 import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.FacturaModel;
@@ -71,11 +72,12 @@ public class FacturaService implements IFacturaService {
 		}
 	}
 	
-	@Override
-	public  Set<FacturaModel> findByFechaFacturaBetweenAndIdLocal(LocalDate fecha1, LocalDate fecha2, long idLocal){
-		Set<FacturaModel> lista = null;// crei una lista de facturas
+	@Override	
+	public List<FacturaModel> findByFechaFacturaBetweenAndIdLocal(LocalDate fecha1, LocalDate fecha2, long idLocal){
+		List<FacturaModel> lista = new ArrayList<FacturaModel>();// creo una lista de facturas
 		for (Factura fa : facturaRepository.findByFechaFacturaBetweenAndIdLocal(fecha1, fecha2, idLocal)) {//traigo la lista de facturas entre fechas d eun local
-			lista.add(facturaConverter.entityToModel(fa));// las agrego a la lista model
+			FacturaModel factura = facturaConverter.entityToModel(fa);
+			lista.add(factura);// las agrego a la lista model
 		}
 		return lista;
 	}

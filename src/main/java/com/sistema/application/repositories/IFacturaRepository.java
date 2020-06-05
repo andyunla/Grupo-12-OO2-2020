@@ -16,7 +16,7 @@ import com.sistema.application.entities.Factura;
 public interface IFacturaRepository  extends JpaRepository<Factura, Serializable>{
 	public abstract Factura findByIdFactura(long idFactura);
 	@Query("FROM Factura  WHERE id_local = :idLocal AND fecha_factura BETWEEN :fecha1 AND :fecha2")
-	public abstract Set<Factura> findByFechaFacturaBetweenAndIdLocal(LocalDate fecha1, LocalDate fecha2, long idLocal);
+	public abstract List<Factura> findByFechaFacturaBetweenAndIdLocal(LocalDate fecha1, LocalDate fecha2, long idLocal);
 	@Query("FROM Factura  WHERE fecha_factura BETWEEN :fecha1 AND :fecha2")
 	public abstract List<Factura> findByFechaFacturaBetween(LocalDate fecha1, LocalDate fecha2);
 	//public abstract Set<Factura> findByFechaFacturaBetween(LocalDate fecha1, LocalDate fecha2);

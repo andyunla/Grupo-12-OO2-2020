@@ -20,7 +20,7 @@ public interface IFacturaService {
 	
 	public boolean remove(long id);	
 	
-	public  Set<FacturaModel> findByFechaFacturaBetweenAndIdLocal(LocalDate fecha1, LocalDate fecha2, long idLocal);
+	public  List<FacturaModel> findByFechaFacturaBetweenAndIdLocal(LocalDate fecha1, LocalDate fecha2, long idLocal);
 	//public  Set<FacturaModel> findByFechaFacturaBetween(LocalDate fecha1, LocalDate fecha2);
 	public  List<Factura> findByFechaFacturaBetween(LocalDate fecha1, LocalDate fecha2);
 

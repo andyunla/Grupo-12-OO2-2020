@@ -23,6 +23,7 @@ public class ViewRouteHelper {
 	// CASOS DE USO
 	public final static String DISTANCIA_ROOT = "cu/distancia";
 	public final static String RANKIG_ROOT = "cu/ranking";
+	public final static String REPORTE_ROOT = "cu/reporte";
 	public final static String PEDIDO_VIEW = "cu/pedido";
 	public final static String SUELDO_ROOT = "cu/sueldo";
 	
