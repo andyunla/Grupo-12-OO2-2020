@@ -8,7 +8,7 @@ window.onload = () => {
         if (fecha1Select.value != "" && fecha2Select.value != "") {
             var fecha1 = new Date(fecha1Select.value);
             var fecha2 = new Date(fecha2Select.value);
-            if(fecha1 >= fecha2) {
+            if(fecha1 <= fecha2) {
                 let url = host + "/reporte/" + fecha1 + "/" + fecha2;
                 fetch(url)
                 .then(response => response.text())
