@@ -1,5 +1,6 @@
 package com.sistema.application.controllers;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,10 @@ import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.IProductoService;
 import com.sistema.application.services.implementations.UserService;
+
 @Controller
-@RequestMapping("ranking")
-public class RankingController {
+@RequestMapping("reporte")
+public class ReporteController {
 	@Autowired
     @Qualifier("userConverter")
     private UserConverter userConverter;
@@ -33,19 +35,20 @@ public class RankingController {
 	@Autowired
     @Qualifier("userService")
     private UserService userService;
-	
 	@Autowired
 	@Qualifier("localService")
 	private ILocalService localService;
 	
 	@GetMapping("")
-	public ModelAndView productoRanking() {
-		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.RANKIG_ROOT);
+	public ModelAndView productoReporte(LocalDate fecha1, LocalDate fecha2) {
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.REPORTE_ROOT);
 		// Obtenemos el usuario de la sesión
 		UserDto userDto = userService.getCurrentUser();
 		modelAndView.addObject("currentUser", userDto);
-		List<ProductoRankingDto> productoRanking = localService.ranking();
-		modelAndView.addObject("productoRanking", productoRanking);
+		List<ProductoRankingDto> productoReporte = localService.reporte(fecha1, fecha2, userDto.getLocal().getIdLocal());
+		modelAndView.addObject("productoReporte", productoReporte);
 		return modelAndView;
 	}
+	
+	
 }
