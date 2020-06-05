@@ -28,7 +28,7 @@ public class Local implements Serializable {
 	@Column(name="id_local")
 	private long idLocal;
 
-	@Column(name="nombre_local", nullable=false, length=50)
+	@Column(name="nombre_local", nullable=false, length=10)
 	private String nombreLocal;
 
 	@Column(name="latitud", nullable=false)
