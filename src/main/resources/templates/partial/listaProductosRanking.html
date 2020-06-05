@@ -1,6 +1,4 @@
-
-<tr th:each="producto :${productoRanking}" class="fila-producto">
-     <td th:text="${producto.nombre}"></td>
-     <td th:text="${producto.cantidad}"></td>     
+<tr th:each="producto :${listaProductos}" class="fila-producto">
+	<td th:text="${producto.nombre}"></td>
+	<td th:text="${producto.cantidad} +' unidades.'"></td>   
 </tr>
-
