@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -39,16 +41,14 @@ public class ReporteController {
 	@Qualifier("localService")
 	private ILocalService localService;
 	
-	@GetMapping("")
-	public ModelAndView productoReporte(LocalDate fecha1, LocalDate fecha2) {
-		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.REPORTE_ROOT);
+	@PostMapping("{fecha1}/{fecha2}")
+	public ModelAndView solicitar(@PathVariable("fecha1") LocalDate fecha1, @PathVariable("fecha2") LocalDate fecha2) {
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.RANKING_REPORTE_PRODUCTOS);
 		// Obtenemos el usuario de la sesión
 		UserDto userDto = userService.getCurrentUser();
 		modelAndView.addObject("currentUser", userDto);
 		List<ProductoRankingDto> productoReporte = localService.reporte(fecha1, fecha2, userDto.getLocal().getIdLocal());
-		modelAndView.addObject("productoReporte", productoReporte);
+		modelAndView.addObject("listaProductos", productoReporte);
 		return modelAndView;
 	}
-	
-	
 }

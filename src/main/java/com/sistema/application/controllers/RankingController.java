@@ -45,7 +45,7 @@ public class RankingController {
 		UserDto userDto = userService.getCurrentUser();
 		modelAndView.addObject("currentUser", userDto);
 		List<ProductoRankingDto> productoRanking = localService.ranking();
-		modelAndView.addObject("productoRanking", productoRanking);
+		modelAndView.addObject("listaProductos", productoRanking);
 		return modelAndView;
 	}
 }
