@@ -42,8 +42,8 @@ public class ReporteController {
 	@Qualifier("localService")
 	private ILocalService localService;
 	
-	@GetMapping("{fecha1}/{fecha2}")
-	public ModelAndView solicitar(@PathVariable("fecha1") String fecha1, @PathVariable("fecha2") String fecha2) {
+	@GetMapping("{fecha1Ranking}/{fecha2Ranking}")
+	public ModelAndView solicitar(@PathVariable("fecha1Ranking") String fecha1, @PathVariable("fecha2Ranking") String fecha2) {
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.RANKING_REPORTE_PRODUCTOS);
 		// Obtenemos el usuario de la sesión
 		UserDto userDto = userService.getCurrentUser();
