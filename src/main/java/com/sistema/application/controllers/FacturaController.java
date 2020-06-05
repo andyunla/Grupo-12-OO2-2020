@@ -79,7 +79,7 @@ public class FacturaController {
                LocalDate.now(),
                changoService.calcularTotal(idChango),
                empleadoService.findByLegajo(userDto.getLegajo()),
-               localService.findByIdLocal(userDto.getIdLocal())
+               localService.findByIdLocal(userDto.getLocal().getIdLocal())
                );
           FacturaModel facturaGuradada = facturaService.insertOrUpdate(nuevaFactura);
           changoSesion.clear();
