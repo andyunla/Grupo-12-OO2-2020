@@ -518,6 +518,102 @@ public class LocalModel {
 		return facturaService.findByFechaFacturaBetween(fecha1, fecha2);// retorno la lista de facturas
 	}
 	
+	public double calcularComisionVentaCompleta(Empleado empleado) {
+		double comisionVentaCompleta = 0;
+		for (Factura fa : traerFacturaMesPasado()) {
+			if (fa.getEmpleado().equals(empleado)) { 
+				if (fa.getChango().getPedidostock() == null) comisionVentaCompleta = comisionVentaCompleta + ((fa.getCosteTotal() * 5) / 100);
+			}
+		}
+		return (comisionVentaCompleta);
+	}
+
+	
+	public double calcularComisionVentaExterna(Empleado empleado) {
+		double comisionVentaExterna = 0;
+		for (Factura fa : traerFacturaMesPasado()) {
+			if (fa.getEmpleado().equals(empleado)) {
+				if (fa.getChango().getPedidostock() != null && fa.getChango().getPedidostock().getEmpleadoSolicitante().equals(empleado) ){ 
+					comisionVentaExterna = comisionVentaExterna + ((fa.getCosteTotal() * 3) / 100);
+				}
+			}
+		}
+		return (comisionVentaExterna);
+	}
 	
 	
+	public double calcularComisionStockCedido(Empleado empleado) {
+		double comisionStockCedido = 0;
+		for (Factura fa : traerFacturaMesPasado()) {
+			if (fa.getEmpleado().equals(empleado)) {
+				if (fa.getChango().getPedidostock() != null &&  fa.getChango().getPedidostock().getEmpleadoOferente().equals(empleado) ){ 
+					comisionStockCedido = comisionStockCedido + ((fa.getCosteTotal() * 2) / 100);
+				}
+			}
+		}
+		return (comisionStockCedido);
+	}
+	
+	/****************************************************************************************************/
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 14) EMITIR REPORTE DE PRODUCTOS VENDIDOS ENTRE FECHAS POR
+	////////////////////////////////////////////////////////////////////////////////////////////////////// LOCAL/////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	/****************************************************************************************************/
+	public LinkedHashMap<ProductoModel, Integer> reporte(LocalDate fecha1, LocalDate fecha2) {
+		LinkedHashMap<ProductoModel, Integer> listaReporte = new LinkedHashMap<ProductoModel, Integer>();
+		// Para cada producto de la lista de productos
+		for (ProductoModel pro : productoService.getAllModel()) {
+			int cantidad = 0;
+			// Traigo la lista de facturas del local entre fechas
+			Set<FacturaModel> listaFacturas = facturaService.findByFechaFacturaBetweenAndIdLocal(fecha1, fecha2,
+					this.idLocal);
+
+			for (FacturaModel fa : listaFacturas) {
+				// de cada factura obtengo el chango y traigo el item que tenga el producto que
+				// estamos evaluando
+				// si el producto está en la factura, se suma la cantidad correspondiente
+				if (fa.getChango().traerItem(pro) != null)
+					cantidad = cantidad + fa.getChango().traerItem(pro).getCantidad();
+			}
+			listaReporte.put(pro, cantidad);
+		}
+		return listaReporte;
+	}
+
+	/****************************************************************************************************/
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 15) RANKING DE PRODUCTOS MÁS VENDIDOS
+	////////////////////////////////////////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	/****************************************************************************************************/
+	public List<ProductoRankingDto> ranking() {
+		// traigo la lista de productos
+		List<ProductoModel> listaProductos = productoService.getAllModel();
+		// creo una lista de ProductoRankingDto en el que puedo guardar la variable de cantidad
+		List<ProductoRankingDto> productoRanking = new ArrayList<ProductoRankingDto>();
+		//recorro la lista de productos y voy agregando cada producto a la lista ProductoRankingDto
+		for (ProductoModel pro : listaProductos) {
+			// se llama al método cantidad de producto vendido para asignar la variable cantidad en ProductoRankingDto
+			productoRanking.add(productoConverter.modelToDto(pro, cantidadProductoVendido(pro)));
+		}
+		
+		//orden de mayor a menor
+		Collections.sort(productoRanking, Collections.reverseOrder());		
+		return productoRanking;
+	}
+
+	public int cantidadProductoVendido(ProductoModel producto) {
+		int cantidad = 0;
+		for (FacturaModel fa : facturaService.getAllModel()) {
+			// de cada factura obtengo el chango y traigo el item que tenga el producto que
+			// estamos evaluando
+			// si el producto está en la factura, se suma la cantidad correspondiente
+			ItemModel it = itemService.findByChangoAndProducto(fa.getChango().getIdChango(), producto.getIdProducto());
+			if (it != null) {
+				cantidad = cantidad + it.getCantidad();
+			}				
+		}
+		return cantidad;
+	}
 }
