@@ -10,13 +10,13 @@ public class LocalDto implements Serializable {
 	private double longitud;
 	private String direccion;
 	private int telefono;
-	private long gerenteLegajo;
+	private Long gerenteLegajo;
 	private Set<EmpleadoDto> listaEmpleados;
 	
 	public LocalDto() {}
 
 	public LocalDto(long idLocal, String nombreLocal, double latitud, double longitud, String direccion, int telefono,
-			long gerenteLegajo) {
+			Long gerenteLegajo) {
 		super();
 		this.idLocal = idLocal;
 		this.nombreLocal = nombreLocal;
@@ -28,7 +28,7 @@ public class LocalDto implements Serializable {
 	}
 
 	public LocalDto(long idLocal, String nombreLocal, double latitud, double longitud, String direccion, int telefono,
-			long gerenteLegajo, Set<EmpleadoDto> listaEmpleados) {
+			Long gerenteLegajo, Set<EmpleadoDto> listaEmpleados) {
 		super();
 		this.idLocal = idLocal;
 		this.nombreLocal = nombreLocal;
@@ -88,11 +88,11 @@ public class LocalDto implements Serializable {
 		this.telefono = telefono;
 	}
 
-	public long getGerenteLegajo() {
+	public Long getGerenteLegajo() {
 		return gerenteLegajo;
 	}
 
-	public void setGerenteLegajo(long gerenteLegajo) {
+	public void setGerenteLegajo(Long gerenteLegajo) {
 		this.gerenteLegajo = gerenteLegajo;
 	}
 

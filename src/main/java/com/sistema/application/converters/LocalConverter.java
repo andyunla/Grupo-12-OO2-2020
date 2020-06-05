@@ -60,8 +60,12 @@ public class LocalConverter {
 	// Entities to DTO
 	// *******************************************************
 	public LocalDto entityToDto(Local local) {
+		Long legajoGerente = null;
+		if(local.getGerente() != null) {
+			legajoGerente = local.getGerente().getLegajo();
+		}
 		return new LocalDto(local.getIdLocal(), local.getNombreLocal(), local.getLatitud(), local.getLongitud(),
-							local.getDireccion(), local.getTelefono(), local.getGerente().getLegajo());
+							local.getDireccion(), local.getTelefono(), legajoGerente);
 	}
 	public Local dtoToEntity(LocalDto localDto) {
 		Empleado gerente = empleadoRepository.findByLegajo(localDto.getGerenteLegajo());

@@ -10,19 +10,18 @@ public class UserDto implements Serializable {
 	private String emailUser;
 	private long legajo;
 	private boolean tipoGerente = false; // Por defecto es un empleado normal
-	private long idLocal; // ID del local donde trabaja
+	private LocalDto local;
 
 	public UserDto() {}
 
-	public UserDto(long idUser, String nombreCompleto, String username, String emailUser, long legajo,
-			long idLocal) {
+	public UserDto(long idUser, String nombreCompleto, String username, String emailUser, long legajo, LocalDto local) {
 		super();
 		this.idUser = idUser;
 		this.nombreCompleto = nombreCompleto;
 		this.username = username;
 		this.emailUser = emailUser;
 		this.legajo = legajo;
-		this.idLocal = idLocal;
+		this.local = local;
 	}
 
 	public long getIdUser() {
@@ -73,11 +72,11 @@ public class UserDto implements Serializable {
 		this.tipoGerente = tipoGerente;
 	}
 
-	public long getIdLocal() {
-		return idLocal;
+	public LocalDto getLocal() {
+		return local;
 	}
 
-	public void setIdLocal(long idLocal) {
-		this.idLocal = idLocal;
+	public void setLocal(LocalDto local) {
+		this.local = local;
 	}
 }
