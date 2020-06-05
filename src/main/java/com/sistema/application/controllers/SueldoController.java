@@ -82,7 +82,7 @@ public class SueldoController {
 			double comisionStockCedido = localModel.calcularComisionStockCedido(emp);
 			
 			
-			if(!emp.isTipoGerente() && userDto.getIdLocal() == emp.getLocal().getIdLocal() ) {
+			if(!emp.isTipoGerente() && userDto.getLocal().getIdLocal() == emp.getLocal().getIdLocal() ) {
 				vendedores.add(empleadoConverter.entityToDto(emp) );
 				vendedores.get(i).setSueldoFinal(sueldoFinal);
 				vendedores.get(i).setComisionVentaCompleta(comisionVentaCompleta);
