@@ -24,7 +24,7 @@
                         <div th:unless="${currentUser.tipoGerente}"><strong>ROL: </strong><span>EMPLEADO</span></div>
                         <br><hr>
                         <div class="card-text">
-                            <strong>Local: </strong><span span th:text="${currentUser.idLocal}" /><br>
+                            <strong>Local: </strong><span th:text="${currentUser.local.idLocal} + ' - ' + ${currentUser.local.nombreLocal}"></span><br>
                         </div>
                     </div>
               </div>
