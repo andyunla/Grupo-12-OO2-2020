@@ -1,0 +1,261 @@
+body {
+     background-color: rgb(19, 27, 27);
+}
+
+.roboto {
+     font-family: 'Roboto', sans-serif;
+}
+
+* {
+     box-sizing: border-box;
+     -moz-box-sizing: border-box;
+     /* Firefox */
+     -webkit-box-sizing: border-box;
+     /* Safari */
+     zoom: 100%;
+}
+
+#factura-container {
+     width: 800px;
+     height: 1132px;
+     background-color: white;
+     margin: 0;
+}
+
+.barraNaranja {
+     background-color: rgb(255, 166, 0);     /* luego cambiar */
+     height: 45px;
+     width: 100%;
+}
+
+.remitente-info {
+     background-color: rgb(221, 220, 219);
+     height: 160px;
+     width: 100%;
+     display: flex;
+}
+
+/* DATOS DE SUCURSAL */
+
+#sucursal-info {
+     width: 400px;
+     height: 100%;
+     display: flex;
+     flex-direction: row;
+     justify-content: start;
+     align-items: center;
+}
+
+#sucursal-info img {
+     width: 95px;
+     height: 95px;
+     padding: 0;
+     margin: 5px 5px 5px 10px;
+     border-radius: 50%;
+}
+
+#sucursal-info div {
+     width: 100%;
+     margin: 5px;
+     height: 100%;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: flex-start;
+}
+
+.sucursal-title {
+     font-size: 19px;
+     margin: 1px 0 2px 0;
+}
+
+.sucursal-text {
+     font-size: 12px;
+     margin: 1px 0 2px 0;
+}
+
+/* DATOS DE  FACTURA */
+
+#factura-info {
+     width: 400px;
+     height: 100%;
+     display: flex;
+     flex-direction: column;
+     justify-content: flex-start;
+     align-items: flex-end;
+}
+
+#factura-info div {
+     width: 280px;
+     height: 100%;
+}
+
+#factura-title {
+     font-size: 40px;
+     text-align: center;
+     background-color: rgb(153, 153, 153);
+     margin: 0;
+     padding: 13px 35px 13px 35px;
+}
+
+.factura-text {
+     font-size: 14px;
+     font-weight: bold;
+     margin: 5px 0 6px 3px;
+}
+
+.factura-text span{
+     font-weight: normal;
+}
+
+/* DATOS DE CLIENTE */
+
+#cliente-info {
+     width: 100%;
+     margin-top: 15px;
+     height: 140px;
+     border-style: solid;
+     border-width: 1px;
+     display: flex;
+     flex-direction: row;
+     justify-content:start;
+}
+
+#cliente-info div {
+     margin-left: 10px;
+}
+#cliente {
+     width: 50%;
+     padding: 5px;
+}
+
+#vendedor {
+     width: 50%;
+     padding: 5px;
+}
+
+.rol {
+     font-size: 17px;
+     font-weight: bold;
+     margin: 10px 0 5px 0;
+}
+
+.datos {
+     margin: 3px 0 6px 10px;
+     font-size: 16px;
+}
+
+/* DATOS DEL CHANGO */
+
+#changoContainer {
+     margin-top: 15px;
+     width: 100%;
+     min-height: 500px;
+     border: 1px;
+     border-style: solid;
+}
+
+table{
+     width: 100%;
+     border: 1px;
+     border-style: solid;
+     text-align: center;
+     border-collapse: collapse;
+}
+
+th {
+     background-color: rgb(248, 204, 157);
+     font-size: 17px;
+}
+
+th, td, tr {
+     vertical-align: middle;
+}
+
+tr {
+     height: 36px;
+     border-bottom: solid;
+     border-width: 1px;
+     border-color: rgb(168, 167, 167);
+}
+
+.column-250px {
+     width: 250px;
+     overflow-x: hidden;
+}
+
+/* SECCIÓN DEL TOTAL E INFO */
+
+#ultimaSeccion {
+     width: 100%;
+     height: 176px;
+     display: flex;
+     flex-direction: row;
+     justify-content: start;
+}
+
+#ultimaSeccion div {
+     width: 50%;
+     
+}
+
+#QR-seccion{
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+}
+
+#QR-seccion img{
+     width: 100px;
+}
+
+#total-seccion {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+}
+
+#total {
+     font-size: 27px;
+     margin: 20px 30px 10px 30px;
+     padding: 15px;
+     background-color: grey;
+     text-align: center;
+     border-radius: 5px;
+}
+
+#total-seccion img {
+     width: 120px;
+     margin: 0;
+
+}
+
+/* SALUDO */
+#saludo {
+     margin: 0;
+     text-align: center;
+     height: 20px;
+     font-family: 'Courier New';
+     font-size: 17px;
+     vertical-align: middle;
+}
+
+.barra-final {
+     top: 1095px;
+     width: 800px;
+     position: absolute;
+}
+
+@media print {
+     body {
+          padding: 0;
+          margin: 0;
+          background-color: white;
+     }
+     #factura-container {
+          width: 99vw;
+          height: 140.085vw;
+     }
+     
+}
