@@ -23,7 +23,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private UserService userService;
 
     String[] resources = new String[]{
-        "/css/**", "/icons/**", "/images/**", "/js/**"
+        "/css/**", "/icons/**", "/images/**", "/js/**", "/webjars/**", "/notificaciones/**"
     };
 	
     @Autowired
