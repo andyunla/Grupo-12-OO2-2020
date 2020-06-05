@@ -17,15 +17,21 @@
 				<thead class="thead-dark">
 					<tr>
 						<th scope="col">Empleado</th>
-						<th scope="col">Sueldo</th>
-						<th scope="col">Local</th>
+						<th scope="col">Sueldo Base</th>
+						<th scope="col">Bono Venta Completa</th>
+						<th scope="col">Bono Venta con Stock externo</th>
+						<th scope="col">Bono por Stock cedido</th>
+						<th scope="col">Sueldo Final</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="empleado :${empleados}">
 						<td th:text="${empleado.nombre}"></td>
 						<td th:text="${empleado.sueldoBasico}"></td>
-						<td th:text="${empleado.local.nombreLocal}"></td>
+						<td th:text="${empleado.comisionVentaCompleta}"></td>
+						<td th:text="${empleado.comisionVentaExterna}"></td>
+						<td th:text="${empleado.comisionStockCedido}"></td>
+						<td th:text="${empleado.sueldoFinal}"></td>
 					</tr>
 				</tbody>
 			</table>

@@ -517,7 +517,43 @@ public class LocalModel {
 		LocalDate fecha2 = LocalDate.now().minusMonths(1).withDayOfMonth(fecha1.lengthOfMonth());// último día del mes pasado
 		return facturaService.findByFechaFacturaBetween(fecha1, fecha2);// retorno la lista de facturas
 	}
+	
+	public double calcularComisionVentaCompleta(Empleado empleado) {
+		double comisionVentaCompleta = 0;
+		for (Factura fa : traerFacturaMesPasado()) {
+			if (fa.getEmpleado().equals(empleado)) { 
+				if (fa.getChango().getPedidostock() == null) comisionVentaCompleta = comisionVentaCompleta + ((fa.getCosteTotal() * 5) / 100);
+			}
+		}
+		return (comisionVentaCompleta);
+	}
 
+	
+	public double calcularComisionVentaExterna(Empleado empleado) {
+		double comisionVentaExterna = 0;
+		for (Factura fa : traerFacturaMesPasado()) {
+			if (fa.getEmpleado().equals(empleado)) {
+				if (fa.getChango().getPedidostock() != null && fa.getChango().getPedidostock().getEmpleadoSolicitante().equals(empleado) ){ 
+					comisionVentaExterna = comisionVentaExterna + ((fa.getCosteTotal() * 3) / 100);
+				}
+			}
+		}
+		return (comisionVentaExterna);
+	}
+	
+	
+	public double calcularComisionStockCedido(Empleado empleado) {
+		double comisionStockCedido = 0;
+		for (Factura fa : traerFacturaMesPasado()) {
+			if (fa.getEmpleado().equals(empleado)) {
+				if (fa.getChango().getPedidostock() != null &&  fa.getChango().getPedidostock().getEmpleadoOferente().equals(empleado) ){ 
+					comisionStockCedido = comisionStockCedido + ((fa.getCosteTotal() * 2) / 100);
+				}
+			}
+		}
+		return (comisionStockCedido);
+	}
+	
 	/****************************************************************************************************/
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 14) EMITIR REPORTE DE PRODUCTOS VENDIDOS ENTRE FECHAS POR
