@@ -40,7 +40,7 @@ DROP TABLE IF EXISTS `Grupo-12-BDD-OO2-2020`.`empleado` ;
 
 CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`empleado` (
   `id_persona` INT(11) NOT NULL,
-  `legajo` INT(11) NULL AUTO_INCREMENT,
+  `legajo` INT(11) NOT NULL AUTO_INCREMENT,
   `horario_desde` TIME NULL,
   `horario_hasta` TIME NULL,
   `sueldo_basico` DOUBLE NULL,
@@ -69,7 +69,7 @@ DROP TABLE IF EXISTS `Grupo-12-BDD-OO2-2020`.`locales` ;
 
 CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`locales` (
   `id_local` INT(11) NOT NULL AUTO_INCREMENT,
-  `nombre_local` VARCHAR(45) NULL,
+  `nombre_local` VARCHAR(10) NULL,
   `latitud` DOUBLE NULL,
   `longitud` DOUBLE NULL,
   `direccion` VARCHAR(45) NULL,

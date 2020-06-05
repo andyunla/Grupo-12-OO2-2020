@@ -21,4 +21,7 @@ public interface IChangoService {
 	public ChangoModel insertOrUpdate(ChangoModel changoModel);
 	
 	public boolean remove(long id);
+
+	public double calcularTotal(long idChango);
+
 }
