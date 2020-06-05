@@ -15,10 +15,18 @@
 	
 		<div class="container  ">
 			<table class="w-100 shadow mb-3 bg-white rounded table-hover table-bordered">
-				<tr th:each="producto :${productoRanking}" class="fila-producto ">
-					<td th:text="${producto.nombre}"></td>
-					<td th:text="${producto.cantidad} +' Und.'"></td>
-				</tr>
+				<thead class="bg-dark text-center text-white  ">
+					<tr>
+						<th scope="col">Producto</th>
+						<th scope="col">Cantidad</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="producto :${productoRanking}" class="fila-producto ">
+						<td th:text="${producto.nombre}"></td>
+						<td th:text="${producto.cantidad} +' Und.'"></td>
+					</tr>
+				</tbody>
 			</table>
 		</div>
 	</main>
