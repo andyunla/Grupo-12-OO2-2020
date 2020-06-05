@@ -1,9 +1,11 @@
+let socket = new SockJS('/notificaciones');
 let stompClient = null;
 
 function connect() {
-    disconnect();
-    var socket = new SockJS('/notificaciones');
     stompClient = Stomp.over(socket);
+    while(socket.readyState !== SockJS.OPEN) {
+        setTimeout(() => { }, 100);
+    }
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/respuesta', function (json) {
