@@ -16,33 +16,6 @@ public class NotificationController {
 	@SendTo("/topic/respuesta")
 	public NotificacionDto procesar(NotificacionDto notificacion) throws Exception {
 		Thread.sleep(1000); // simulated delay
-		NotificacionDto newNotificacion = null;
-		if(notificacion.getType().equals("solicitud")) {
-			newNotificacion = buildSolicitud(notificacion);
-		} else {
-			newNotificacion = buildRespuesta(notificacion);
-		}
-		return newNotificacion;
-	}
-
-	// Solicitudes
-	public NotificacionDto buildSolicitud(NotificacionDto notificacion) {
-		long id = notificacion.getId();
-		String type = notificacion.getType();
-		String from = notificacion.getFrom();
-		long toLocal = notificacion.getToLocal();
-		DetallePedidoDto detallePedido = notificacion.getDetallePedido();
-		return new NotificacionDto(id, type, from, toLocal, detallePedido);
-	}
-	
-	// Respuestas
-	public NotificacionDto buildRespuesta(NotificacionDto notificacion) {
-		long id = notificacion.getId();
-		String type = notificacion.getType();
-		boolean status = notificacion.isStatus();
-		String text = notificacion.getText();
-		String from = notificacion.getFrom();
-		String to = notificacion.getTo();
-		return new NotificacionDto(id, type, status, text, from, to);
+		return notificacion;
 	}
 }
