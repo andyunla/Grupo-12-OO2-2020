@@ -17,7 +17,6 @@ import com.sistema.application.services.INotificacionService;
 
 @Service("notificacionService")
 public class NotificacionService implements INotificacionService {
-    //Atributos
 	@Autowired
     @Qualifier("notificacionRepository")
     private INotificacionReporitory notificacionRepository;
@@ -31,10 +30,9 @@ public class NotificacionService implements INotificacionService {
     private NotificacionConverter notificacionConverter;
     
     @Autowired
-    @Qualifier("notificacionConverter")
+    @Qualifier("userService")
     private UserService userService;
     
-    //Métodos
     @Override
     public NotificacionDto findById(long id) {
         return notificacionConverter.entityToDto(notificacionRepository.findById(id) );

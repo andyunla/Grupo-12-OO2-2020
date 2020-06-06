@@ -16,7 +16,7 @@ import com.sistema.application.repositories.ILocalRepository;
 import com.sistema.application.repositories.IProductoRepository;
 import com.sistema.application.repositories.IUserRepository;
 
-@Component("loteConverter")
+@Component("notificacionConverter")
 public class NotificacionConverter {
     @Autowired
 	@Qualifier("productoRepository")

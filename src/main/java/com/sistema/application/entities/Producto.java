@@ -44,7 +44,7 @@ public class Producto implements Serializable {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="producto")
 	private Set<PedidoStock> listaPedidoStock;
 
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="detalleNotificacion")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="producto")
 	private Set<DetalleNotificacion> listaDetallesNotificaciones;
 
 	public Producto() {}
