@@ -216,10 +216,11 @@ tr {
      flex-direction: column;
      justify-content: center;
      align-items: center;
+     text-align: center;
 }
 
 #QR-seccion img {
-     width: 100px;
+     width: 110px;
 }
 
 #total-seccion {
@@ -262,36 +263,3 @@ tr {
 .ie body {
      background-color: blueviolet;
 }
-/*
-@media print {
-     body * {
-          visibility: hidden;
-     }
-
-     #factura-container {
-          visibility: visible !important;
-          display: block;
-          position: absolute;
-          top: 0;
-          left: 14px;
-     }
-
-     #factura-container * {
-          visibility: visible;
-     }
-     
-     html {
-          transform: scale(1.9);
-          transform-origin: 0 0;
-     }
-
-     footer, nav, header, main {
-          display: none !important;
-     }
-     * {
-          display: none;
-     }
-     #factura-container {
-          display: block;
-     }
-}*/
