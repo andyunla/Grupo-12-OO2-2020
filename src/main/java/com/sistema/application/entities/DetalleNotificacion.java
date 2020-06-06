@@ -32,9 +32,6 @@ public class DetalleNotificacion implements Serializable {
 	@Column(name="cantidad", nullable=false)
 	private int cantidad;
 
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="detalleNotificacion")
-	private Set<Notificacion> listaNotifaciones;
-
 	public DetalleNotificacion() {}
 
 	public DetalleNotificacion(Long id, Producto producto, int cantidad) {
@@ -42,14 +39,6 @@ public class DetalleNotificacion implements Serializable {
 		this.id = id;
 		this.producto = producto;
 		this.cantidad = cantidad;
-	}
-
-	public DetalleNotificacion(Long id, Producto producto, int cantidad, Set<Notificacion> listaNotifaciones) {
-		super();
-		this.id = id;
-		this.producto = producto;
-		this.cantidad = cantidad;
-		this.listaNotifaciones = listaNotifaciones;
 	}
 
 	public Long getId() {
@@ -74,13 +63,5 @@ public class DetalleNotificacion implements Serializable {
 
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
-	}
-
-	public Set<Notificacion> getListaNotifaciones() {
-		return listaNotifaciones;
-	}
-
-	public void setListaNotifaciones(Set<Notificacion> listaNotifaciones) {
-		this.listaNotifaciones = listaNotifaciones;
 	}
 }
