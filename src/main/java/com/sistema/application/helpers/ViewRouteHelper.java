@@ -23,6 +23,8 @@ public class ViewRouteHelper {
 	public final static String LISTA_LOCALES_CERCANOS = "partial/listaLocalesCercanos";
 	public final static String RANKING_REPORTE_PRODUCTOS = "partial/listaProductosRanking";
 	public final static String ITEM = "partial/item";
+	public final static String LISTA_FACTURAS = "partial/listaFacturas";
+
 
 	// CASOS DE USO
 	public final static String DISTANCIA_ROOT = "cu/distancia";

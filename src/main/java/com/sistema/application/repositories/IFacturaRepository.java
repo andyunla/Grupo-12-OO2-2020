@@ -23,4 +23,6 @@ public interface IFacturaRepository  extends JpaRepository<Factura, Serializable
 	public abstract Factura findByChango(Chango chango);
 	@Query("FROM Factura  WHERE id_local = (:idLocal) ORDER BY fecha_factura DESC")
 	public abstract List<Factura> findByIdLocal(long idLocal);
+	@Query("FROM Factura  WHERE id_local = (:idLocal) AND empleado_legajo = (:legajo) ORDER BY fecha_factura DESC")
+	public abstract List<Factura> findByIdLocalAndByLegajoEmpleado(long idLocal, long legajo);
 }
