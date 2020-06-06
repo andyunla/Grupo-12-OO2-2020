@@ -33,3 +33,5 @@ build/
 .vscode/
 */*.class
 **/*.class
+# Backup DER
+docs/*.bak
