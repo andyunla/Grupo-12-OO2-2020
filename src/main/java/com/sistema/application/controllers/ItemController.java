@@ -90,8 +90,14 @@ public class ItemController {
 	}
 	
 	@PostMapping("modificar")
-	public String modificar(@ModelAttribute("item") ItemModel itemModificado) {
-		itemService.insertOrUpdate(itemModificado);
+	public String modificar(@Valid @ModelAttribute("item") ItemModel itemModificado, BindingResult bindingResult) {
+		
+		if(bindingResult.hasErrors()) {
+			return ViewRouteHelper.ITEM_ABM;
+		}else {
+			itemService.insertOrUpdate(itemModificado);
+		}
+		
 		return "redirect:/" + ViewRouteHelper.ITEM_ROOT;
 	}
 	
