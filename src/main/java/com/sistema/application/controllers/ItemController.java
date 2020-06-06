@@ -15,6 +15,7 @@ import com.sistema.application.dto.UserDto;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ItemModel;
 import com.sistema.application.repositories.IUserRepository;
+import com.sistema.application.entities.Item;
 import com.sistema.application.services.IItemService;
 import com.sistema.application.services.IProductoService;
 import com.sistema.application.services.implementations.UserService;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/item")
@@ -61,11 +64,16 @@ public class ItemController {
 		// Obtenemos el usuario de la sesión
 		UserDto userDto = userService.getCurrentUser();
 		modelo.addAttribute("currentUser", userDto);
-		modelo.addAttribute("items", itemService.getAll() );
-		modelo.addAttribute("item", new ItemModel() );
-		modelo.addAttribute("productos", productoService.getAll());
-		modelo.addAttribute("changos", changoService.getAll());
-		//modelo.addAttribute("changos", changoService.getAllLocal(userDto.getIdLocal() ) );
+		
+		List<Item> listaItems = itemService.getAll();
+		List<Item> itemsLocales = new ArrayList<Item>();
+		
+		for(Item it: listaItems) {
+			if(it.getChango().getLocal().getIdLocal() == userDto.getLocal().getIdLocal() ) itemsLocales.add(it);
+		}
+		
+		modelo.addAttribute("items", itemsLocales);
+		
 		return ViewRouteHelper.ITEM_ABM;
 	}
 	

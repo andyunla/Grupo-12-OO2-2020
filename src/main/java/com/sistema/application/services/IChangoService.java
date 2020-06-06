@@ -5,6 +5,7 @@ import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.LocalModel;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IChangoService {
 
@@ -13,8 +14,6 @@ public interface IChangoService {
 	public List<ChangoModel> findByLocal(LocalModel local);
 	
 	public List<Chango> getAll();
-	
-	public List<Chango> getAllLocal(long IdLocal);
 	
 	public List<ChangoModel> getAllModel();
 	

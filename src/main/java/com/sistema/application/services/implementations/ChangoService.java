@@ -18,6 +18,7 @@ import com.sistema.application.models.LocalModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service("changoService")
 public class ChangoService implements IChangoService{
@@ -66,27 +67,8 @@ public class ChangoService implements IChangoService{
 			}
 			return changos;
 		} 
-		/*
-		@Override
-		public List<ChangoModel> getAllModelLocal(long IdLocal){
-			List<ChangoModel> changos = new ArrayList<ChangoModel>();
-			Local local = localConverter.modelToEntity(localService.findByIdLocal(IdLocal) );
-			for(Chango chango: changoRepository.findByLocal(local) ){
-				changos.add( changoConverter.entityToModel(chango));  
-			}
-			return changos;
-		} 
-		*/
-		@Override
-		public List<Chango> getAllLocal(long IdLocal){
-			List<Chango> changos = new ArrayList<Chango>();
-			Local local = localConverter.modelToEntity(localService.findByIdLocal(IdLocal) ); //Local del usuario
-			for(Chango chango: changoRepository.findByLocal(local) ){
-				changos.add(chango);  
-			}
-			return changos;
-		} 
-		
+	
+	
 		@Override
 		public List<Chango> getAll(){
 			return changoRepository.findAll();
