@@ -9,7 +9,15 @@
           <h1 class="display-4">FACTURAS</h1>
      </header>
      <main class="w-100 d-flex flex-column align-items-center">
-          <!-- AGREGAR FILTRO POR EMPLEADO Y/O CLIENTE -->
+          <div class="form-group col-9 col-md-5 col-lg-3 d-flex flex-row align-items-center">
+               <select class="custom-select" id="filtro-empleado" onchange="filtrarPorEmpleado()">
+                    <option value="0" selected>Todos los empleados</option>
+                    <option th:each="e: ${empleados}" th:value="${e.legajo}"
+                         th:text="${e.getLegajo() + ' - ' +  e.getNombreCompleto()}">
+                    </option>
+               </select>
+          </div>
+          <!---->
           <div class="container-fluid col-12 col-md-9 col-lg-7 col-xl-6 text-center table-responsive">
                <table class="table w-100 shadow mb-3 bg-white table-hover rounded">
                     <thead class="thead-dark">
@@ -22,13 +30,7 @@
                          </tr>
                     </thead>
                     <tbody>
-                         <tr th:each="factura : ${facturas}" onclick="abrirFactura(this)" class="factura-row">
-                              <td th:text="${factura.getIdFactura()}"></td>
-                              <td th:text="${factura.getEmpleado().getLegajo()}"></td>
-                              <td th:text="${factura.getCliente().getDni()}"></td>
-                              <td th:text="${factura.getCosteTotal()}"></td>
-                              <td th:text="${factura.getFechaCorta()}"></td>
-                         </tr>
+                         <tr th:replace="partial/listaFacturas :: facturas"></tr>
                     </tbody>
                </table>
      </main>

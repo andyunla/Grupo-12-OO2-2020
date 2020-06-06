@@ -1,6 +1,7 @@
 package com.sistema.application.controllers;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.sistema.application.converters.LocalConverter;
@@ -8,6 +9,7 @@ import com.sistema.application.converters.UserConverter;
 import com.sistema.application.dto.UserDto;
 import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.ClienteModel;
+import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.FacturaModel;
 import com.sistema.application.models.ItemModel;
 import com.sistema.application.services.IChangoService;
@@ -113,8 +115,27 @@ public class FacturaController {
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.FACTURAS);
           UserDto userDto = userService.getCurrentUser();
           List <FacturaModel> facturas = facturaService.findByIdLocal(userDto.getLocal().getIdLocal());
+          List <EmpleadoModel> empleados = empleadoService.findByIdLocal(userDto.getLocal().getIdLocal());
           mAV.addObject("currentUser", userDto); 
+          mAV.addObject("facturas", facturas);
+          mAV.addObject("empleados", empleados);
+          return mAV;
+     }
+
+     @GetMapping("empleado/{legajo}")
+     public ModelAndView traerFacturaPorEmpleado(@PathVariable("legajo") long legajo) {
+          ModelAndView mAV = new ModelAndView(ViewRouteHelper.LISTA_FACTURAS);
+          UserDto userDto = userService.getCurrentUser();
+          List <FacturaModel> facturas = new ArrayList<FacturaModel>();
+          // Si el legajo es 0 no se filtrará por empleado
+          if(legajo == 0 ) {
+               facturas = facturaService.findByIdLocal(userDto.getLocal().getIdLocal());
+          } else {
+               facturas = facturaService.findByIdLocalAndByLegajoEmpleado(userDto.getLocal().getIdLocal(), legajo);
+          }
           mAV.addObject("facturas", facturas);
           return mAV;
      }
+
+     // AGREGAR FILTRO POR MES ?
 }

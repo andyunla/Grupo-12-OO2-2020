@@ -131,4 +131,13 @@ public class FacturaService implements IFacturaService {
 		}
 		return facturas;
 	}
+
+	@Override
+	public List<FacturaModel> findByIdLocalAndByLegajoEmpleado(long idLocal, long legajo) {
+		List <FacturaModel> facturas = new ArrayList <FacturaModel> ();
+		for(Factura factura: facturaRepository.findByIdLocalAndByLegajoEmpleado(idLocal, legajo)) {
+			facturas.add( facturaConverter.entityToModel(factura));
+		}
+		return facturas;
+	}
 }

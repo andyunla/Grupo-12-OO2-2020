@@ -27,4 +27,6 @@ public interface IFacturaService {
 	public FacturaModel findByChango(ChangoModel chango);
 
 	public List<FacturaModel> findByIdLocal(long idLocal);
+
+	public List<FacturaModel> findByIdLocalAndByLegajoEmpleado(long idLocal, long legajo);
 }
