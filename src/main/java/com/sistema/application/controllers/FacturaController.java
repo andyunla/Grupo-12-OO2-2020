@@ -97,7 +97,7 @@ public class FacturaController {
      @GetMapping("ver/{idFactura}")
      public ModelAndView traerFactura(@PathVariable ("idFactura") long idFactura) {
           //TODO: Controlar el caso en que se necesiten dos hojas
-          //TODO: Generar codigo de barra
+          //TODO: Controlar que solo se accedan a facturas del local
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.FACTURA);
           FacturaModel factura = facturaService.findByIdFactura(idFactura);
           UserDto userDto = userService.getCurrentUser();
@@ -105,6 +105,16 @@ public class FacturaController {
           mAV.addObject("currentUser", userDto); 
           mAV.addObject("factura", factura);
           mAV.addObject("items", items);
+          return mAV;
+     }
+
+     @GetMapping("todas")
+     public ModelAndView traerFactura() {
+          ModelAndView mAV = new ModelAndView(ViewRouteHelper.FACTURAS);
+          UserDto userDto = userService.getCurrentUser();
+          List <FacturaModel> facturas = facturaService.findByIdLocal(userDto.getLocal().getIdLocal());
+          mAV.addObject("currentUser", userDto); 
+          mAV.addObject("facturas", facturas);
           return mAV;
      }
 }
