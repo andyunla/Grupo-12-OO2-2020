@@ -73,7 +73,10 @@ public class EmpleadoController {
 	}
 	
 	@PostMapping("modificar")
-	public String modificar(@ModelAttribute("empleado") EmpleadoModel empleadoModificado) {
+	public String modificar(@Valid @ModelAttribute("empleado") EmpleadoModel empleadoModificado, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+        	return ViewRouteHelper.EMPLEADO_ROOT;
+      	}
 		empleadoService.insertOrUpdate(empleadoModificado);
 		return "redirect:/" + ViewRouteHelper.EMPLEADO_ROOT;
 	}

@@ -69,29 +69,34 @@
                                         th:field="*{nroCliente}" />
                                    <div class="form-group row">
                                         <label for="nombreModificarCliente" class="col-sm-3 col-4">Nombre</label>
-                                        <input type="text" class="form-control col-md-8  col-7"
-                                             id="nombreModificarCliente" th:field="*{nombre}" />
+                                        <input type="text" class="form-control col-md-9 col-8" id="nombreNuevoCliente"
+                         					th:field="*{nombre}" required/>
+                    					<p th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Nombre no puede ir vacio</p>
                                    </div>
                                    <div class="form-group row">
                                         <label for="apellidomodificarCliente" class="col-sm-3 col-4">Apellido</label>
-                                        <input type="text" class="form-control col-md-8 col-7"
-                                             id="apellidomodificarCliente" th:field="*{apellido}" />
+                                        <input type="text" class="form-control col-md-9 col-8" id="apellidoNuevoCliente"
+                         					th:field="*{apellido}" required/>
+                    					<p th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}">Apellido no puede ir vacio</p>
                                    </div>
                                    <div class="form-group row">
                                         <label for="emailmodificarCliente" class="col-sm-3 col-4">Email</label>
-                                        <input type="email" class="form-control col-md-8 col-7"
-                                             id="emailmodificarCliente" th:field="*{email}" />
+                                        <input type="email" class="form-control col-md-9 col-8" id="emailNuevoCliente"
+                         					th:field="*{email}" required/>
+                    					<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email no puede ir vacio</p>
                                    </div>
                                    <div class="form-group row">
                                         <label for="dnimodificarCliente" class="col-sm-3 col-4">DNI</label>
-                                        <input type="number" class="form-control col-5" id="dnimodificarCliente"
-                                             th:field="*{dni}" min="1000000" max="99999999" required/>
+                                        <input type="number" class="form-control col-sm-4 col-5" id="dniNuevoCliente" th:field="*{dni}"
+                         					min="1000000" max="99999999" required/>
+               							<p th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}">DNI tiene errores</p>
                                    </div>
                                    <div class="form-group row">
                                         <label for="fechaDeNacmodificarCliente" class="col-sm-3 col-4">Fecha de
                                              Nac.</label>
-                                        <input type="date" class="form-control col-5" id="fechaDeNacmodificarCliente"
-                                             th:field="*{fechaNacimiento}" />
+                                        <input type="date" class="form-control col-sm-4 col-5" id="fechaNacNuevoCliente"
+                         					th:field="*{fechaNacimiento}" required/>
+                    					<p th:if="${#fields.hasErrors('fechaNacimiento')}" th:errors="*{fechaNacimiento}">Fecha de Nac. tiene errores</p>
                                    </div>
                                    <div class="text-center">
                                         <button type="submit" class="btn btn-primary">Guardar</button>

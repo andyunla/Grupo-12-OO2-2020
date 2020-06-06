@@ -68,18 +68,20 @@ public class LocalController {
 	
 	@PostMapping("agregar")
 	public String agregar(@Valid @ModelAttribute("local") LocalModel nuevoLocal, BindingResult bindingResult) {
+		
 		if(bindingResult.hasErrors()) {
 			return ViewRouteHelper.LOCAL_ABM;
 		}else {
 			localService.insertOrUpdate(nuevoLocal);
 		}
 		
-		localService.insertOrUpdate(nuevoLocal);
+		
 		return "redirect:/" + ViewRouteHelper.LOCAL_ROOT;
 	}
 	
 	@PostMapping("modificar")
-	public String modificar(@ModelAttribute("local") LocalModel localModificado) {
+	public String modificar(@Valid @ModelAttribute("local") LocalModel localModificado, BindingResult bindingResult) {
+		
 		// Modifico el empleado gerente anterior si es que se eligió un nuevo gerente
 		if(localModificado.getGerente() != null) {
 			// Obtengo el local modificado de la bd
@@ -99,7 +101,15 @@ public class LocalController {
 			nuevoGerente.setTipoGerente(true);
 			empleadoService.insertOrUpdate(nuevoGerente);
 		}
-		localService.insertOrUpdate(localModificado);
+		
+		
+		if(bindingResult.hasErrors()) {
+			return ViewRouteHelper.LOCAL_ABM;
+		}else {
+			localService.insertOrUpdate(localModificado);
+		}
+		
+		
 		return "redirect:/" + ViewRouteHelper.LOCAL_ROOT;
 	}
 	
