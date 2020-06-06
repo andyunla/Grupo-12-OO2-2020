@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name="notificacion")
 public class Notificacion implements Serializable {
@@ -49,7 +50,7 @@ public class Notificacion implements Serializable {
 	public Notificacion() {}
 
 	public Notificacion(Long id, String tipo, boolean estado, String texto, User userFrom, User userTo, Local localTo,
-			DetalleNotificacion detalleNotificacion) {
+						DetalleNotificacion detalleNotificacion) {
 		super();
 		this.id = id;
 		this.tipo = tipo;

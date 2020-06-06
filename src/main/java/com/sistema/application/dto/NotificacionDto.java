@@ -2,34 +2,47 @@ package com.sistema.application.dto;
 
 public class NotificacionDto {
 	private long id;
-	private String type; // Si es para hacerle un pedido a un usuario o responderle su pedido
-	private boolean status;
+	private String tipo; // Si es para hacerle un pedido a un usuario o responderle su pedido
+	private boolean estado;
 	private String text;
 	private String from; // El username del usuario actual
 	private String to; // El username del destinatario
-	private long toLocal; // El ID del local en caso de ser una solicitud
-	private DetallePedidoDto detallePedido;
+	private Long toLocal; // El ID del local en caso de ser una solicitud
+	private DetalleNotificacionDto detalleNotificacion;
 	
 	public NotificacionDto() {
 		super();
 	}
 	
-	// Solicitudes
-	public NotificacionDto(long id, String type, String from, long toLocal, DetallePedidoDto detallePedido) {
+	public NotificacionDto(long id, String tipo, boolean estado, String text, String from, String to, Long toLocal,
+						   DetalleNotificacionDto detalleNotificacion) {
 		super();
 		this.id = id;
-		this.type = type;
+		this.tipo = tipo;
+		this.estado = estado;
+		this.text = text;
+		this.from = from;
+		this.to = to;
+		this.toLocal = toLocal;
+		this.detalleNotificacion = detalleNotificacion;
+	}
+
+	// Solicitudes
+	public NotificacionDto(long id, String tipo, String from, Long toLocal, DetalleNotificacionDto detalleNotificacion) {
+		super();
+		this.id = id;
+		this.tipo = tipo;
 		this.from = from;
 		this.toLocal = toLocal;
-		this.detallePedido = detallePedido;
+		this.detalleNotificacion = detalleNotificacion;
 	}
 	
 	// Respuestas
-	public NotificacionDto(long id, String type, boolean status, String text, String from, String to) {
+	public NotificacionDto(long id, String tipo, boolean estado, String text, String from, String to) {
 		super();
 		this.id = id;
-		this.type = type;
-		this.status = status;
+		this.tipo = tipo;
+		this.estado = estado;
 		this.text = text;
 		this.from = from;
 		this.to = to;
@@ -43,20 +56,20 @@ public class NotificacionDto {
 		this.id = id;
 	}
 
-	public String getType() {
-		return type;
+	public String getTipo() {
+		return tipo;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
-	public boolean isStatus() {
-		return status;
+	public boolean isEstado() {
+		return estado;
 	}
 
-	public void setStatus(boolean status) {
-		this.status = status;
+	public void setEstado(boolean estado) {
+		this.estado = estado;
 	}
 
 	public String getText() {
@@ -83,25 +96,25 @@ public class NotificacionDto {
 		this.to = to;
 	}
 
-	public long getToLocal() {
+	public Long getToLocal() {
 		return toLocal;
 	}
 
-	public void setToLocal(long toLocal) {
+	public void setToLocal(Long toLocal) {
 		this.toLocal = toLocal;
 	}
 
-	public DetallePedidoDto getDetallePedido() {
-		return detallePedido;
+	public DetalleNotificacionDto getDetalleNotificacion() {
+		return detalleNotificacion;
 	}
 
-	public void setDetallePedido(DetallePedidoDto detallePedido) {
-		this.detallePedido = detallePedido;
+	public void setDetalleNotificacion(DetalleNotificacionDto detalleNotificacion) {
+		this.detalleNotificacion = detalleNotificacion;
 	}
 
 	@Override
 	public String toString() {
-		return "NotificacionDto [id=" + id + ", type=" + type + ", status=" + status + ", text=" + text + ", from="
-				+ from + ", to=" + to + ", toLocal=" + toLocal + ", detallePedido=" + detallePedido + "]";
+		return "NotificacionDto [id=" + id + ", tipo=" + tipo + ", estado=" + estado + ", text=" + text + ", from="
+				+ from + ", to=" + to + ", toLocal=" + toLocal + ", detalleNotificacion=" + detalleNotificacion + "]";
 	}
 }
