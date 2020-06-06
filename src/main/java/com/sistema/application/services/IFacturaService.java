@@ -25,4 +25,6 @@ public interface IFacturaService {
 	public  List<Factura> findByFechaFacturaBetween(LocalDate fecha1, LocalDate fecha2);
 
 	public FacturaModel findByChango(ChangoModel chango);
+
+	public List<FacturaModel> findByIdLocal(long idLocal);
 }

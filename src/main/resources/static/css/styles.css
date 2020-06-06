@@ -153,3 +153,13 @@ li.dropdown:last-child .dropdown-menu {
 .chango-row:hover {
     cursor: pointer;
 }
+
+/* LISTA DE FACTURAS */
+.factura-row {
+    cursor: pointer;
+}
+
+.factura-row td:first-child {
+    text-decoration: underline;
+    color: rgb(8, 8, 71);
+}

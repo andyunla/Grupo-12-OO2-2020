@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="fragments/head :: head(title='Facturas')"></head>
+
+<body class="container-fluid m-0 p-0">
+     <nav th:replace="fragments/navbar :: navbar(active='factura')"></nav>
+     <header class="text-center m-3">
+          <h1 class="display-4">FACTURAS</h1>
+     </header>
+     <main class="w-100 d-flex flex-column align-items-center">
+          <!-- AGREGAR FILTRO POR EMPLEADO Y/O CLIENTE -->
+          <div class="container-fluid col-12 col-md-9 col-lg-7 col-xl-6 text-center table-responsive">
+               <table class="table w-100 shadow mb-3 bg-white table-hover rounded">
+                    <thead class="thead-dark">
+                         <tr>
+                              <th scope="col">Nro. Factura</th>
+                              <th scope="col">Leg. Vendedor</th>
+                              <th scope="col">DNI Cliente </th>
+                              <th scope="col">Total ($)</th>
+                              <th scope="col">Fecha</th>
+                         </tr>
+                    </thead>
+                    <tbody>
+                         <tr th:each="factura : ${facturas}" onclick="abrirFactura(this)" class="factura-row">
+                              <td th:text="${factura.getIdFactura()}"></td>
+                              <td th:text="${factura.getEmpleado().getLegajo()}"></td>
+                              <td th:text="${factura.getCliente().getDni()}"></td>
+                              <td th:text="${factura.getCosteTotal()}"></td>
+                              <td th:text="${factura.getFechaCorta()}"></td>
+                         </tr>
+                    </tbody>
+               </table>
+     </main>
+     <footer th:replace="fragments/footer :: footer"></footer>
+     <div th:replace="fragments/scripts :: scripts"></div>
+     <script th:src="@{/js/facturas.js}"></script>
+</body>
+
+</html>

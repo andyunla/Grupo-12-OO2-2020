@@ -21,4 +21,6 @@ public interface IFacturaRepository  extends JpaRepository<Factura, Serializable
 	public abstract List<Factura> findByFechaFacturaBetween(LocalDate fecha1, LocalDate fecha2);
 	//public abstract Set<Factura> findByFechaFacturaBetween(LocalDate fecha1, LocalDate fecha2);
 	public abstract Factura findByChango(Chango chango);
+	@Query("FROM Factura  WHERE id_local = (:idLocal) ORDER BY fecha_factura DESC")
+	public abstract List<Factura> findByIdLocal(long idLocal);
 }
