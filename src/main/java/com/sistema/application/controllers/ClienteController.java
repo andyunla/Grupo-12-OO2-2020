@@ -60,8 +60,12 @@ public class ClienteController {
 	}
 	
 	@PostMapping("modificar")
-	public String modificar(@ModelAttribute("cliente") ClienteModel clienteModificado) {
-		clienteService.insertOrUpdate(clienteModificado);
+	public String modificar(@Valid @ModelAttribute("cliente") ClienteModel clienteModificado, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return ViewRouteHelper.CLIENTE_ABM;
+		}else {
+			clienteService.insertOrUpdate(clienteModificado);
+		}
 		return "redirect:/" + ViewRouteHelper.CLIENTE_ROOT;
 	}
 	

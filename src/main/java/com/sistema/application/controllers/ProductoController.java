@@ -60,8 +60,14 @@ public class ProductoController {
 	}
 	
 	@PostMapping("modificar")
-	public String modificarProducto(@ModelAttribute("producto") ProductoModel productoModificado) {
-		productoService.insertOrUpdate(productoModificado);
+	public String modificarProducto(@Valid @ModelAttribute("producto") ProductoModel productoModificado, BindingResult bindingResult) {
+		
+		if(bindingResult.hasErrors()) {
+			return ViewRouteHelper.PRODUCTO_ABM;
+		}else {
+			productoService.insertOrUpdate(productoModificado);
+		}
+		
 		return "redirect:/" + ViewRouteHelper.PRODUCTO_ROOT;
 	}
 	
