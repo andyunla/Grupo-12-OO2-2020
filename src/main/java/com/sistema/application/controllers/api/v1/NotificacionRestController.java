@@ -55,8 +55,8 @@ public class NotificacionRestController {
     	ProductoModel producto = productoService.findByIdProducto(idProducto);
     	UserDto solicitante = userConverter.entityToDto(userRepository.findByUsername(usernameSolicitante));
     	String texto = "El empleado " + solicitante.getNombreCompleto() + " necesita " + cantidad + " unidades de " + producto.getNombre();
-    	String userTo = "";
-        NotificacionDto newNotificacionDto = new NotificacionDto(UtilHelper.TIPO_NOTIFICACION_SOLICITUD, true, texto, usernameSolicitante, userTo, idLocal2, 
+        String userTo = null;
+        NotificacionDto newNotificacionDto = new NotificacionDto(UtilHelper.TIPO_NOTIFICACION_SOLICITUD, false, texto, usernameSolicitante, userTo, idLocal2, 
         														 new DetalleNotificacionDto(idProducto, cantidad));
         NotificacionDto notificacionGuardada = notificacionService.insertOrUpdate(newNotificacionDto);
         if(notificacionGuardada != null)
@@ -69,15 +69,16 @@ public class NotificacionRestController {
     @GetMapping("comprobar/{username}")
     ResponseEntity<List<NotificacionDto>> comprobar(@PathVariable("username") String username) {
         List<NotificacionDto> lista = notificacionService.findByUserTo(username);
-        if(lista != null)
+        if(lista != null) {
         	return new ResponseEntity<List<NotificacionDto>>(lista, HttpStatus.OK);
+        }
         // Cualquier problema
         return new ResponseEntity<List<NotificacionDto>>(HttpStatus.BAD_REQUEST);
     }
     
     // Crear una notificación que indique la respuesta del oferente
     @GetMapping("responder/{usernameFrom}/{usernameTo}/{fueAceptado}")
-    ResponseEntity<String> comprobar(@PathVariable("usernameFrom") String usernameFrom, @PathVariable("usernameTo") String usernameTo,
+    ResponseEntity<String> responder(@PathVariable("usernameFrom") String usernameFrom, @PathVariable("usernameTo") String usernameTo,
     												@PathVariable("fueAceptado") boolean fueAceptado) {
     	String texto = "El pedido ha sido rechazado";
         NotificacionDto newNotificacionDto = new NotificacionDto(UtilHelper.TIPO_NOTIFICACION_RESPUESTA, false, texto, usernameFrom, usernameTo, null, null);

@@ -3,7 +3,7 @@ package com.sistema.application.dto;
 public class NotificacionDto {
 	private long id;
 	private String tipo; // Si es para hacerle un pedido a un usuario o responderle su pedido
-	private boolean estado;
+	private boolean estado; // Si fue leído la solicitud/respuesta; true=leído
 	private String text;
 	private String from; // El username del usuario actual
 	private String to; // El username del destinatario

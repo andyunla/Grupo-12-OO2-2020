@@ -125,4 +125,11 @@ public class Notificacion implements Serializable {
 	public void setDetalleNotificacion(DetalleNotificacion detalleNotificacion) {
 		this.detalleNotificacion = detalleNotificacion;
 	}
+
+	@Override
+	public String toString() {
+		return "Notificacion [id=" + id + ", tipo=" + tipo + ", estado=" + estado + ", texto=" + texto + ", userFrom="
+				+ userFrom + ", userTo=" + userTo + ", localTo=" + localTo + ", detalleNotificacion="
+				+ detalleNotificacion + "]";
+	}
 }

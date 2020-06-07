@@ -17,11 +17,11 @@ import com.sistema.application.services.INotificacionService;
 
 @Service("notificacionService")
 public class NotificacionService implements INotificacionService {
-	@Autowired
+    @Autowired
     @Qualifier("notificacionRepository")
     private INotificacionReporitory notificacionRepository;
-	
-	@Autowired
+    
+    @Autowired
     @Qualifier("userRepository")
     private IUserRepository userRepository;
     
@@ -47,7 +47,7 @@ public class NotificacionService implements INotificacionService {
     public List<NotificacionDto> getAllDto() {
         List <NotificacionDto> localesModelos = new ArrayList<NotificacionDto>();
         for(Notificacion entidad: notificacionRepository.findAll()){
-        	NotificacionDto dto = notificacionConverter.entityToDto(entidad);
+            NotificacionDto dto = notificacionConverter.entityToDto(entidad);
             localesModelos.add(dto);
         }
         return localesModelos;
@@ -71,32 +71,35 @@ public class NotificacionService implements INotificacionService {
         }
     }
     
+    // Busca las notificaciones de los usuarios que las enviaron
     @Override
     public List<NotificacionDto> findByUserFrom(String usernameFrom) {
-    	List<NotificacionDto> lista = new ArrayList<NotificacionDto>();
-    	User user = userRepository.findByUsernameAndFetchUserRolesEagerly(usernameFrom);
-    	for(Notificacion notificacion: notificacionRepository.findByUserTo(user.getId())) {
-    		lista.add(notificacionConverter.entityToDto(notificacion));
-    	}
-    	return lista;
+        List<NotificacionDto> lista = new ArrayList<NotificacionDto>();
+        User user = userRepository.findByUsernameAndFetchUserRolesEagerly(usernameFrom);
+        for(Notificacion notificacion: notificacionRepository.findByUserTo(user.getId())) {
+            lista.add(notificacionConverter.entityToDto(notificacion));
+        }
+        return lista;
     }
     
+    // Busca las notificaciones de los usuarios que necesitan saber si recibieron alguna notificación
     @Override
     public List<NotificacionDto> findByUserTo(String usernameTo) {
-    	List<NotificacionDto> lista = new ArrayList<NotificacionDto>();
-    	User user = userRepository.findByUsernameAndFetchUserRolesEagerly(usernameTo);
-    	for(Notificacion notificacion: notificacionRepository.findByUserTo(user.getId())) {
-    		lista.add(notificacionConverter.entityToDto(notificacion));
-    	}
-    	return lista;
+        List<NotificacionDto> lista = new ArrayList<NotificacionDto>();
+        User user = userRepository.findByUsernameAndFetchUserRolesEagerly(usernameTo);
+        for(Notificacion notificacion: notificacionRepository.findByUserTo(user.getId())) {
+            lista.add(notificacionConverter.entityToDto(notificacion));
+        }
+        return lista;
     }
     
+    // Busca las notificaciones dirijidos a un local en específico
     @Override
     public List<NotificacionDto> findByIdLocal(long idLocal) {
         List<NotificacionDto> lista = new ArrayList<NotificacionDto>();
-    	for(Notificacion notificacion: notificacionRepository.findByLocal(idLocal)) {
-    		lista.add(notificacionConverter.entityToDto(notificacion));
-    	}
-    	return lista;
+        for(Notificacion notificacion: notificacionRepository.findByLocal(idLocal)) {
+            lista.add(notificacionConverter.entityToDto(notificacion));
+        }
+        return lista;
     }
 }
