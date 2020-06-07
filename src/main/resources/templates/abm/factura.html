@@ -6,16 +6,16 @@
 <body class="container-fluid m-0 p-0">
      <nav th:replace="fragments/navbar :: navbar(active='factura')"></nav>
      <div class="w-100 d-flex justify-content-center p-5" id="spinnerContainer">
-          <div class="spinner-border text-dark" style="width: 3rem; height: 3rem;" role="status" >
+          <div class="spinner-border text-dark" style="width: 3rem; height: 3rem;" role="status">
                <span class="sr-only m-5">Loading...</span>
           </div>
      </div>
      <main class="w-100 d-flex flex-column align-items-center invisible">
           <div class="d-flex justify-content-center">
                <button class="btn btn-secondary m-4" onclick="window.print();return false;">
-                    <i class="fas fa-print"></i><br/>IMPRIMIR</button>
+                    <i class="fas fa-print"></i><br />IMPRIMIR</button>
                <button class="btn btn-secondary m-4" onclick="descargar()">
-                    <i class="fas fa-download"></i><br/>DESCARGAR</button>
+                    <i class="fas fa-download"></i><br />DESCARGAR</button>
           </div>
           <div id="container-container">
                <div id="factura-container">
@@ -40,8 +40,9 @@
                          <div id="factura-info">
                               <div>
                                    <p id="factura-title" class="roboto">FACTURA</p>
-                                   <p class="factura-text roboto">Nro. de Factura: <span
-                                             th:text="${' 0000' + factura.getIdFactura()}"></span></p>
+                                   <p class="factura-text roboto">Nro. de Factura:
+                                        <span id="nroFactura" th:text="${' 0000' + factura.getIdFactura()}"></span>
+                                   </p>
                                    <p class="factura-text roboto">Fecha de emisión: <span
                                              th:text="${factura.getFechaCorta()}"></span></p>
                               </div>
@@ -107,7 +108,7 @@
      <div th:replace="fragments/scripts :: scripts"></div>
      <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Roboto&display=swap" rel="stylesheet" />
      <!-- ESTILOS -->
-     <link rel="stylesheet" type="text/css" th:href="@{/css/factura.css}" media="screen" />
+     <link rel="stylesheet" type="text/css" th:href="@{/css/factura.css}" media="all" />
      <link rel="stylesheet" th:href="@{/css/facturaPrint.css}" type="text/css" media="print">
      <!-- SCRIPTS PARA GENERAR CODIGO DE BARRA -->
      <script type="text/javascript"

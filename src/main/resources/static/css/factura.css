@@ -27,7 +27,6 @@
 
 .barraNaranja {
      background-color: rgb(255, 166, 0);
-     /* luego cambiar */
      height: 45px;
      width: 100%;
 }
@@ -258,8 +257,4 @@ tr {
      margin-top: 15px;
      background-color: rgb(255, 166, 0);
      margin-bottom: 0;
-}
-
-.ie body {
-     background-color: blueviolet;
 }
