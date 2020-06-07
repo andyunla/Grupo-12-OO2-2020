@@ -30,16 +30,20 @@ public class NotificacionConverter {
     
 	public NotificacionDto entityToDto(Notificacion notificacion) {
 		DetalleNotificacionDto detalleDto = null;
+		String usernameTo = null; // El username a quién va dirijido
+		Long idLocal = null;
 		if(notificacion.getTipo().equalsIgnoreCase(UtilHelper.TIPO_NOTIFICACION_SOLICITUD)) {
 			DetalleNotificacion detalle = notificacion.getDetalleNotificacion();
 			if(detalle != null) {
 				detalleDto = new DetalleNotificacionDto(detalle.getId(), detalle.getProducto().getIdProducto(), detalle.getCantidad());
 			}
+			idLocal = notificacion.getLocalTo().getIdLocal();
+		} else { // Es una respuesta dirigida a un usuario
+			usernameTo = notificacion.getUserTo().getUsername();
 		}
 		
 		return new NotificacionDto(notificacion.getId(), notificacion.getTipo(), notificacion.isEstado(), notificacion.getTexto(),
-								   notificacion.getUserFrom().getUsername(), notificacion.getUserTo().getUsername(), 
-								   notificacion.getLocalTo().getIdLocal(), detalleDto);
+								   notificacion.getUserFrom().getUsername(), usernameTo, idLocal, detalleDto);
 	}
 	
 	public Notificacion dtoToEntity(NotificacionDto notificacionDto) {
