@@ -6,9 +6,7 @@ import com.sistema.application.converters.EmpleadoConverter;
 import com.sistema.application.converters.UserConverter;
 import com.sistema.application.dto.DetalleNotificacionDto;
 import com.sistema.application.dto.NotificacionDto;
-import com.sistema.application.dto.UserDto;
 import com.sistema.application.helpers.UtilHelper;
-import com.sistema.application.models.ProductoModel;
 import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IEmpleadoService;
 import com.sistema.application.services.ILocalService;
@@ -50,9 +48,9 @@ public class NotificacionRestController {
     private IUserRepository userRepository;
 
     @GetMapping("solicitar/{usernameSolicitante}/{idLocal2}/{idProducto}/{cantidad}")
-    ResponseEntity<String> solicitar(@PathVariable("legajoSolicitante") String usernameSolicitante, @PathVariable("idLocal2") long idLocal2, 
+    ResponseEntity<String> solicitar(@PathVariable("usernameSolicitante") String usernameSolicitante, @PathVariable("idLocal2") long idLocal2, 
                                      @PathVariable("idProducto") long idProducto, @PathVariable("cantidad") int cantidad) {
-    	String texto = UtilHelper.NOTIFICACION_ACEPTADA;
+    	String texto = null;
     	String userTo = null;
         NotificacionDto newNotificacionDto = new NotificacionDto(UtilHelper.TIPO_NOTIFICACION_SOLICITUD, false, texto, usernameSolicitante, userTo, idLocal2, 
         														 new DetalleNotificacionDto(idProducto, cantidad));
@@ -65,36 +63,38 @@ public class NotificacionRestController {
     
     // Comprobar si el usuario actual posee respuesta a su solicitud
     @GetMapping("comprobar/respuesta/{username}")
-    ResponseEntity<List<NotificacionDto>> comprobar(@PathVariable("username") String username) {
+    ResponseEntity<List<NotificacionDto>> comprobarRespuesta(@PathVariable("username") String username) {
         List<NotificacionDto> respuestas = notificacionService.findByUserTo(username);
         if(respuestas != null) {
         	return new ResponseEntity<List<NotificacionDto>>(respuestas, HttpStatus.OK);
         }
-        // Cualquier problema
-        return new ResponseEntity<List<NotificacionDto>>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<List<NotificacionDto>>(HttpStatus.OK);
     }
 
     // Comprobar si el usuario del local actual posee solicitudes
     @GetMapping("comprobar/solicitud/{idLocal}")
-    ResponseEntity<List<NotificacionDto>> comprobar(@PathVariable("idLocal") long idLocal) {
+    ResponseEntity<List<NotificacionDto>> comprobarSolicitud(@PathVariable("idLocal") long idLocal) {
         List<NotificacionDto> solicitudes = notificacionService.findByIdLocal(idLocal);
         if(solicitudes != null) {
             return new ResponseEntity<List<NotificacionDto>>(solicitudes, HttpStatus.OK);
         }
-        // Cualquier problema
-        return new ResponseEntity<List<NotificacionDto>>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<List<NotificacionDto>>(HttpStatus.OK);
     }
     
     // Crear una notificación que indique la respuesta del oferente
     @GetMapping("responder/{usernameFrom}/{usernameTo}/{fueAceptado}")
     ResponseEntity<String> responder(@PathVariable("usernameFrom") String usernameFrom, @PathVariable("usernameTo") String usernameTo,
-    												@PathVariable("fueAceptado") boolean fueAceptado) {
+    								 @PathVariable("fueAceptado") boolean fueAceptado) {
     	String texto = UtilHelper.NOTIFICACION_RECHAZADA;
-        NotificacionDto newNotificacionDto = new NotificacionDto(UtilHelper.TIPO_NOTIFICACION_RESPUESTA, false, texto, usernameFrom, usernameTo, null, null);
+        boolean estado = true; // La notificación fue leída
+        if(fueAceptado) {
+            texto = UtilHelper.NOTIFICACION_ACEPTADA;
+        }
+        NotificacionDto newNotificacionDto = new NotificacionDto(UtilHelper.TIPO_NOTIFICACION_RESPUESTA, estado, texto, usernameFrom, usernameTo, null, null);
         NotificacionDto notificacionGuardada = notificacionService.insertOrUpdate(newNotificacionDto);
         if(notificacionGuardada != null)
         	return new ResponseEntity<String>(HttpStatus.CREATED);
         // Cualquier problema
-        return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<String>(HttpStatus.OK);
     }
 }

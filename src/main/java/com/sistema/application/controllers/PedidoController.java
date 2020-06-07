@@ -2,7 +2,6 @@ package com.sistema.application.controllers;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 import com.sistema.application.converters.EmpleadoConverter;
@@ -94,23 +93,20 @@ public class PedidoController {
 	 * @param cantidad   de tipo int.
 	 * @return boolean
 	 */
-	@PostMapping("solicitar/{legajo}/{idLocal2}/{idProducto}/{cantidad}")
-	public ResponseEntity<String> solicitar(@PathVariable("legajo") long legajo, @PathVariable("idLocal2") long idLocal2, 
+	@PostMapping("solicitar/{userSolicitante}/{userOferente}/{aceptado}/{idProducto}/{cantidad}")
+	public ResponseEntity<String> solicitar(@PathVariable("userSolicitante") String userSolicitante, 
+											@PathVariable("userOferente") String userOferente, @PathVariable("aceptado") boolean aceptado,
 											@PathVariable("idProducto") long idProducto, @PathVariable("cantidad") int cantidad) {
 		ProductoModel producto = productoService.findByIdProducto(idProducto);
-		boolean aceptado = false;
-		EmpleadoModel solicitante = empleadoService.findByLegajo(legajo);
-		// Tratamos de buscar aleatoriamente a cualquier empleado del otro local
-		List<EmpleadoModel> listaEmpleados = empleadoService.findByIdLocal(idLocal2);
-		Random rand = new Random();
-		int randIndex = rand.nextInt(listaEmpleados.size());
-		EmpleadoModel oferente = listaEmpleados.get(randIndex);
-		PedidoStockModel pedido = pedidoStockService.insertOrUpdate(new PedidoStockModel(producto, cantidad, aceptado, solicitante, oferente));
+		com.sistema.application.entities.User solicitante = userRepository.findByUsernameAndFetchUserRolesEagerly(userSolicitante);
+		com.sistema.application.entities.User oferente = userRepository.findByUsernameAndFetchUserRolesEagerly(userOferente);
+		EmpleadoModel solicitanteModel = empleadoService.findByLegajo(solicitante.getEmpleado().getLegajo());
+		EmpleadoModel oferenteModel = empleadoService.findByLegajo(oferente.getEmpleado().getLegajo());
+		PedidoStockModel pedido = pedidoStockService.insertOrUpdate(new PedidoStockModel(producto, cantidad, aceptado, solicitanteModel, oferenteModel));
 		if (pedido != null) { // Para verificar si se creó el pedido
-			LocalModel local = oferente.getLocal();
+			LocalModel local = oferenteModel.getLocal();
 			ChangoModel chango = new ChangoModel(local);
 			chango.setPedidoStock(pedido);
-			
 			// Empezamos a descontar el stock requerido
 			boolean continuar = true;
 			int i = 0;
