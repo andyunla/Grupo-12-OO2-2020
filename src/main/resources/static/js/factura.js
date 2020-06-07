@@ -32,3 +32,10 @@ function descargar() {
      };
      html2pdf().from(element).set(opt).save();
 }
+
+window.onload = () => {
+     // Una vez cargada la pagina remueve el spinner y muestra la factura
+     document.getElementsByTagName("main")[0].classList.remove("invisible");
+     let spinnerContainer = document.getElementById("spinnerContainer");
+     spinnerContainer.parentElement.removeChild(spinnerContainer);
+}

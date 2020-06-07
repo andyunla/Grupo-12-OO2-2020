@@ -5,21 +5,24 @@
 
 <body class="container-fluid m-0 p-0">
      <nav th:replace="fragments/navbar :: navbar(active='factura')"></nav>
-     <header class="text-center m-3">
-          <h1 class="display-4">FACTURA</h1>
-     </header>
-     <main class="w-100 d-flex flex-column align-items-center">
+     <div class="w-100 d-flex justify-content-center p-5" id="spinnerContainer">
+          <div class="spinner-border text-dark" style="width: 3rem; height: 3rem;" role="status" >
+               <span class="sr-only m-5">Loading...</span>
+          </div>
+     </div>
+     <main class="w-100 d-flex flex-column align-items-center invisible">
           <div class="d-flex justify-content-center">
-               <button class="btn btn-secondary m-4" onclick="window.print();return false;">IMPRIMIR</button>
-               <button class="btn btn-secondary m-4" onclick="descargar()"></svg>DESCARGAR</button>
+               <button class="btn btn-secondary m-4" onclick="window.print();return false;">
+                    <i class="fas fa-print"></i><br/>IMPRIMIR</button>
+               <button class="btn btn-secondary m-4" onclick="descargar()">
+                    <i class="fas fa-download"></i><br/>DESCARGAR</button>
           </div>
           <div id="container-container">
                <div id="factura-container">
                     <div class="barraNaranja"></div>
                     <div class="remitente-info">
                          <div id="sucursal-info">
-                              <img th:src="@{/images/unla.png}"
-                                   alt="UNLA ICONO" />
+                              <img th:src="@{/images/unla.png}" alt="UNLA ICONO" />
                               <div id="info">
                                    <p class="sucursal-title roboto"><strong>UNLa Stock</strong></p>
                                    <p class="sucursal-text roboto"
