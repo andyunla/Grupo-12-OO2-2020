@@ -319,7 +319,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `Grupo-12-BDD-OO2-2020`.`detalle_notificacion` ;
 CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`detalle_notificacion` (
-  `id_detalle_notificacion` INT(11) NOT NULL,
+  `id_detalle_notificacion` INT(11) NOT NULL AUTO_INCREMENT,
   `producto_id` INT(11) NOT NULL,
   `cantidad` INT NOT NULL,
   PRIMARY KEY (`id_detalle_notificacion`),

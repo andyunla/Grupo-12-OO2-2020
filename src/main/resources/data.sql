@@ -170,11 +170,13 @@ INSERT INTO `user_role` (user_id, role) VALUES ('9', 'GERENTE');
 
 -- NOTIFICACIONES
 INSERT INTO `detalle_notificacion`
-	(id_detalle_notificacion, producto_id, cantidad)
+	(producto_id, cantidad)
 VALUES
-	(1, 1, 3);
+	(1, 3),
+	(1, 2);
 
 INSERT INTO `notificacion`
-	(tipo, estado, texto, user_from, local_to, detalle_id)
+	(tipo, estado, user_from, user_to, local_to, detalle_id)
 VALUES
-	('Solicitud', 0, "", 1, 2, 1);
+	('solicitud', 0, 1, null, 2, 1),
+    ('respuesta', 0, 3, 1, null, 2);
