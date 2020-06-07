@@ -5,7 +5,9 @@ public class UtilHelper {
 	public final static String ROLE_EMPLEADO = "EMPLEADO";
 	public final static String ROLE_GERENTE = "GERENTE";
 	
-	/**** ROLES *********************************************/
+	/**** NOTIFICACION *********************************************/
 	public final static String TIPO_NOTIFICACION_SOLICITUD = "Solicitud";
 	public final static String TIPO_NOTIFICACION_RESPUESTA = "Respuesta";
+	public final static String NOTIFICACION_ACEPTADA = "ACEPTADO";
+	public final static String NOTIFICACION_RECHAZADA = "RECHAZADO";
 }
