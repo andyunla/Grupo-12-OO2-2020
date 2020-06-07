@@ -13,7 +13,7 @@ public interface INotificacionService {
 	
     public List<NotificacionDto> getAllDto();
     
-	public NotificacionDto insertOrUpdate(NotificacionDto localModel);
+	public NotificacionDto insertOrUpdate(NotificacionDto notificacionDto);
 	
 	public boolean remove(long id);
 	

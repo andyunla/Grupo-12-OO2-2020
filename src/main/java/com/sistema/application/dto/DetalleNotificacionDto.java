@@ -7,6 +7,12 @@ public class DetalleNotificacionDto {
 	
 	public DetalleNotificacionDto() {}
 	
+	public DetalleNotificacionDto(long idProducto, int cantidad) {
+		super();
+		this.idProducto = idProducto;
+		this.cantidad = cantidad;
+	}
+	
 	public DetalleNotificacionDto(long id, long idProducto, int cantidad) {
 		super();
 		this.id = id;

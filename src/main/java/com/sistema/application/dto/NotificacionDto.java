@@ -14,6 +14,18 @@ public class NotificacionDto {
 		super();
 	}
 	
+	public NotificacionDto(String tipo, boolean estado, String text, String from, String to, Long toLocal,
+			   			   DetalleNotificacionDto detalleNotificacion) {
+		super();
+		this.tipo = tipo;
+		this.estado = estado;
+		this.text = text;
+		this.from = from;
+		this.to = to;
+		this.toLocal = toLocal;
+		this.detalleNotificacion = detalleNotificacion;
+	}
+	
 	public NotificacionDto(long id, String tipo, boolean estado, String text, String from, String to, Long toLocal,
 						   DetalleNotificacionDto detalleNotificacion) {
 		super();
