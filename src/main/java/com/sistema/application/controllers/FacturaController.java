@@ -99,10 +99,19 @@ public class FacturaController {
      @GetMapping("ver/{idFactura}")
      public ModelAndView traerFactura(@PathVariable ("idFactura") long idFactura) {
           //TODO: Controlar el caso en que se necesiten dos hojas
-          //TODO: Controlar que solo se accedan a facturas del local
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.FACTURA);
-          FacturaModel factura = facturaService.findByIdFactura(idFactura);
           UserDto userDto = userService.getCurrentUser();
+          FacturaModel factura = facturaService.findByIdFactura(idFactura);
+          // Verifico que la factura exista
+          if(factura == null) {
+               mAV.setViewName("error/404");
+               return mAV;
+          }
+          // Verifica que la factura sea del local del empleado logueado
+          if( factura.getLocal().getIdLocal() != userDto.getLocal().getIdLocal()) {
+               mAV.setViewName("error/403");
+               return mAV;
+          }
           List <ItemModel> items = itemService.findByChango(factura.getChango().getIdChango());
           mAV.addObject("currentUser", userDto); 
           mAV.addObject("factura", factura);
