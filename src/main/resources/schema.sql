@@ -336,7 +336,7 @@ CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`notificacion` (
   `id_notificacion` INT(11) NOT NULL AUTO_INCREMENT,
   `tipo` VARCHAR(20) NOT NULL,
   `estado` TINYINT(1) NULL DEFAULT 0,
-  `texto` VARCHAR(45) NOT NULL,
+  `texto` VARCHAR(45) NULL DEFAULT NULL,
   `user_from` INT(11) NOT NULL,
   `user_to` INT(11) NULL,
   `local_to` INT(11) NULL,
