@@ -17,7 +17,6 @@
                     </option>
                </select>
           </div>
-          <!---->
           <div class="container-fluid col-12 col-md-9 col-lg-7 col-xl-6 text-center table-responsive">
                <table class="table w-100 shadow mb-3 bg-white table-hover rounded">
                     <thead class="thead-dark">
@@ -30,7 +29,19 @@
                          </tr>
                     </thead>
                     <tbody>
-                         <tr th:replace="partial/listaFacturas :: facturas"></tr>
+                         <tr th:if="${facturas.size() > 0}" th:each="factura : ${facturas}" onclick="abrirFactura(this)" class="factura-row">
+                              <td th:text="${factura.getIdFactura()}"></td>
+                              <td th:text="${factura.getEmpleado().getLegajo()}"></td>
+                              <td th:text="${factura.getCliente().getDni()}"></td>
+                              <td th:text="${factura.getCosteTotal()}"></td>
+                              <td th:text="${factura.getFechaCorta()}"></td>
+                         </tr>
+                         <tr th:if="${facturas.size() > 0}">
+                              <td th:text="${'Total: ' + facturas.size()}"></td>
+                         </tr>
+                         <tr th:unless="${facturas.size() > 0}" >
+                              <td>No hay ventas</td>
+                         </tr>
                     </tbody>
                </table>
      </main>
