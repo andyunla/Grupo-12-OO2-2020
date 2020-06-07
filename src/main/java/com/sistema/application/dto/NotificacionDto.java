@@ -4,7 +4,7 @@ public class NotificacionDto {
 	private long id;
 	private String tipo; // Si es para hacerle un pedido a un usuario o responderle su pedido
 	private boolean estado; // Si fue leído la solicitud/respuesta; true=leído
-	private String text;
+	private String texto;
 	private String from; // El username del usuario actual
 	private String to; // El username del destinatario
 	private Long toLocal; // El ID del local en caso de ser una solicitud
@@ -14,25 +14,25 @@ public class NotificacionDto {
 		super();
 	}
 	
-	public NotificacionDto(String tipo, boolean estado, String text, String from, String to, Long toLocal,
+	public NotificacionDto(String tipo, boolean estado, String texto, String from, String to, Long toLocal,
 			   			   DetalleNotificacionDto detalleNotificacion) {
 		super();
 		this.tipo = tipo;
 		this.estado = estado;
-		this.text = text;
+		this.texto = texto;
 		this.from = from;
 		this.to = to;
 		this.toLocal = toLocal;
 		this.detalleNotificacion = detalleNotificacion;
 	}
 	
-	public NotificacionDto(long id, String tipo, boolean estado, String text, String from, String to, Long toLocal,
+	public NotificacionDto(long id, String tipo, boolean estado, String texto, String from, String to, Long toLocal,
 						   DetalleNotificacionDto detalleNotificacion) {
 		super();
 		this.id = id;
 		this.tipo = tipo;
 		this.estado = estado;
-		this.text = text;
+		this.texto = texto;
 		this.from = from;
 		this.to = to;
 		this.toLocal = toLocal;
@@ -50,12 +50,12 @@ public class NotificacionDto {
 	}
 	
 	// Respuestas
-	public NotificacionDto(long id, String tipo, boolean estado, String text, String from, String to) {
+	public NotificacionDto(long id, String tipo, boolean estado, String texto, String from, String to) {
 		super();
 		this.id = id;
 		this.tipo = tipo;
 		this.estado = estado;
-		this.text = text;
+		this.texto = texto;
 		this.from = from;
 		this.to = to;
 	}
@@ -84,12 +84,12 @@ public class NotificacionDto {
 		this.estado = estado;
 	}
 
-	public String getText() {
-		return text;
+	public String getTexto() {
+		return texto;
 	}
 
-	public void setText(String text) {
-		this.text = text;
+	public void setTexto(String texto) {
+		this.texto = texto;
 	}
 
 	public String getFrom() {
@@ -126,7 +126,7 @@ public class NotificacionDto {
 
 	@Override
 	public String toString() {
-		return "NotificacionDto [id=" + id + ", tipo=" + tipo + ", estado=" + estado + ", text=" + text + ", from="
+		return "NotificacionDto [id=" + id + ", tipo=" + tipo + ", estado=" + estado + ", texto=" + texto + ", from="
 				+ from + ", to=" + to + ", toLocal=" + toLocal + ", detalleNotificacion=" + detalleNotificacion + "]";
 	}
 }

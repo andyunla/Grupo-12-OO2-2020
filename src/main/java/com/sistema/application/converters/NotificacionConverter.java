@@ -57,7 +57,7 @@ public class NotificacionConverter {
 		} else {
 			userTo = userRepository.findByUsername(notificacionDto.getTo());
 		}		
-		return new Notificacion(notificacionDto.getId(), notificacionDto.getTipo(), notificacionDto.isEstado(), notificacionDto.getText(),
+		return new Notificacion(notificacionDto.getId(), notificacionDto.getTipo(), notificacionDto.isEstado(), notificacionDto.getTexto(),
 								userFrom, userTo, localTo, detalle);		
 	}
 
