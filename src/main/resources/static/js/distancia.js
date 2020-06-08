@@ -1,6 +1,3 @@
-//const host = "http://localhost:8080"; // Declarada en client.js
-//const url_api = host + "/api/v1/notificacion" // Declarada en client.js
-
 window.onload = () => {
      let legajoUser = document.getElementById("legajoUser");
      let localActual = document.getElementById("localActual");

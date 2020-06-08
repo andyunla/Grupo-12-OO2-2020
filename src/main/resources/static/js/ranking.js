@@ -1,5 +1,3 @@
-const host = "http://localhost:8080";
-
 window.onload = () => {
     let fecha1Select = document.getElementById("fecha1Ranking");
     let fecha2Select = document.getElementById("fecha2Ranking");

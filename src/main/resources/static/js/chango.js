@@ -1,11 +1,11 @@
-const host = 'http://localhost:8080/chango/';
+const urlChango = host + '/chango/';
 /* Flags para detectar si ya se puede habilitar la facturación */
 var clienteElegido = false;
 var changoConItem = false;
 
 /* AGREGA UN ITEM DE LA TABLA DE PRODUCTOS DISPONIBLES AL CHANGO */
 async function agregarItem(element) {
-     let urlNewItem = host + 'nuevo-item/' + element.dataset.idchango + '/' + element.dataset.idproducto;
+     let urlNewItem = urlChango + 'nuevo-item/' + element.dataset.idchango + '/' + element.dataset.idproducto;
      try {
           let response = await fetch(urlNewItem, { method: 'POST' });
           // Verifica si el item fue creado, puede que no si ya existía
@@ -32,7 +32,7 @@ async function agregarItem(element) {
 
 /* ELIMINA UN ITEM DE LA TABLA DEL CHANGO */
 async function eliminarItem(e) {
-     let urlDeleteItem = host + 'eliminar-item/' + e.dataset.iditem;
+     let urlDeleteItem = urlChango + 'eliminar-item/' + e.dataset.iditem;
      try {
           let response = await fetch(urlDeleteItem, { method: 'POST' });
           if (response.status == 200) {
@@ -67,7 +67,7 @@ async function modificarCantidad(element, valor = 0) {
      if (nuevaCantidad < 1) {
           cantidadInput.value = cantidadInput.dataset.lastvalue;
      } else {
-          let url = host + 'modificar-item/' + element.dataset.iditem + '/' + nuevaCantidad;
+          let url = urlChango + 'modificar-item/' + element.dataset.iditem + '/' + nuevaCantidad;
           // Desabilita los botones y el campo de modificación hasta obtener una respuesta del servidor
           element.disabled = true;
           try {
