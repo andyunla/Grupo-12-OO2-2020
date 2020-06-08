@@ -179,3 +179,18 @@ INSERT INTO `user_role` (user_id, role) VALUES ('9', 'GERENTE');
 INSERT INTO `user_role` (user_id, role) VALUES ('10', 'GERENTE');
 INSERT INTO `user_role` (user_id, role) VALUES ('11', 'GERENTE');
 INSERT INTO `user_role` (user_id, role) VALUES ('12', 'GERENTE');
+
+/* Sólo para pruebas
+-- NOTIFICACIONES
+INSERT INTO `detalle_notificacion`
+	(producto_id, cantidad)
+VALUES
+	(1, 3),
+	(1, 2);
+
+INSERT INTO `notificacion`
+	(tipo, estado, user_from, user_to, local_to, detalle_id)
+VALUES
+	('solicitud', 0, 1, null, 2, 1),
+    ('respuesta', 0, 3, 1, null, 2);
+*/

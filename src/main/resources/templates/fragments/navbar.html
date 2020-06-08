@@ -49,12 +49,18 @@
                </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-               <!-- Link chango
-               <li><a href="#">Chango</a></li>
-               -->
                <ul class="navbar-nav ">
                     <li class="nav-item dropdown">
-                         <a href="#" class="nav-link dropdown-toggle" id="navDropDownLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-fw fa-user"></i> <span th:text="${currentUser.username}  " /></a>
+                         <a href="#" class="nav-link dropdown-toggle" id="navDropDownLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i id="icon-notif" class="fa fa-bell"></i> </a>
+                         <!-- Contenedor de las notificaciones, cargado desde js -->
+                         <div class="dropdown-menu" aria-labelledby="navDropDownLink" id="notificationContainer"></div>
+                    </li>
+               </ul>
+               <ul class="navbar-nav ">
+                    <li class="nav-item dropdown">
+                         <input type="hidden" id="current-username" th:value="${currentUser.username}" />
+                         <input type="hidden" id="current-idLocal" th:value="${currentUser.idLocal}" />
+                         <a href="#" class="nav-link dropdown-toggle" id="navDropDownLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-fw fa-user"></i> <span id="username" th:attr="data-idLocal=${currentUser.idLocal}" th:text="${currentUser.username}  " /></a>
                          <div class="dropdown-menu" aria-labelledby="navDropDownLink">
                               <a class="dropdown-item" data-toggle="modal" data-target="#userDetails" href="#"><i class="fa fa-id-card" aria-hidden="true"></i> Detalles</a>
                               <div class="dropdown-divider"></div>

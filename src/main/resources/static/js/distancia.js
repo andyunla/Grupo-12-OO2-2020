@@ -1,4 +1,5 @@
-const host = "http://localhost:8080";
+//const host = "http://localhost:8080"; // Declarada en client.js
+//const url_api = host + "/api/v1/notificacion" // Declarada en client.js
 
 window.onload = () => {
      let legajoUser = document.getElementById("legajoUser");
@@ -10,17 +11,11 @@ window.onload = () => {
      function agregarListenerABotonesSolicitar() {
           let botonesSolicitar = document.querySelectorAll('.botonSolicitar');
           botonesSolicitar.forEach(boton => boton.addEventListener('click', (e) => {
-               let legajo = legajoUser.value;
-               let idLocal2 = e.target.dataset.idlocal;
-               let idProducto = productoDeLotes.value;
-               let cantidad = cantidadProducto.value;
-               let urlSolicitud = host + "/pedido/solicitar/" + legajo + "/" + idLocal2 + "/"  + idProducto + "/" + cantidad;
-               fetch(urlSolicitud, { method: 'POST' })
+               let username = document.getElementById('current-username').value;
+               // Se realiza la factura
+               var url = url_api + "/solicitar/" + username + "/" + e.target.dataset.idlocal + "/"  + productoDeLotes.value + "/" + cantidadProducto.value;
+               fetch(url, { method: 'GET' })
                     .then(res => {
-                         if (res.status == 200 || res.status == 201) {
-                              // let estado = await res.json();
-                              listarMasCercanos(); // Refrescamos la lista de locales cercanos
-                         }
                          alertarResultadoDeSolicitud(res.status);
                     })
                     .catch(e => { console.error(e) });
@@ -31,12 +26,12 @@ window.onload = () => {
      function alertarResultadoDeSolicitud(resultado) {
           let alertCloseButton = '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
                '<span aria-hidden="true">&times;</span></button>';
-          let htmlAlert = (resultado == 201) ?
+          let htmlAlert = (resultado == 200 || resultado == 201) ?
                '<div class="p-4 alert alert-success alert-dismissible fade show" role="alert">' +
-               '<strong>EXITO</strong> El pedido se agregó correctamente' + alertCloseButton + '</div> '
+               '<strong>EXITO</strong> Se realizó la solicitud satisfactoriamente' + alertCloseButton + '</div> '
                :
                '<div class="p-4 alert alert-warning alert-dismissible fade show" role="alert">' +
-               '<strong>ERROR</strong> Hubo un problema al crear el pedido' + alertCloseButton + '</div> ';
+               '<strong>ERROR</strong> Hubo un problema al realizar la solicitud' + alertCloseButton + '</div> ';
           document.getElementById("alertContainer").innerHTML = htmlAlert;
      }
 
