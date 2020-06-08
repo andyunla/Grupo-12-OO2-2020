@@ -42,9 +42,12 @@ public class FacturaService implements IFacturaService {
 	// Métodos
 	@Override
 	public FacturaModel findByIdFactura(long idFactura) {
-		return facturaConverter.entityToModel(facturaRepository.findByIdFactura(idFactura));
+		Factura factura = facturaRepository.findByIdFactura(idFactura);
+		if(factura == null) {
+			return null;
+		}
+		return facturaConverter.entityToModel(factura);
 	}
-	
 
 	@Override
 	public List<Factura> getAll() {

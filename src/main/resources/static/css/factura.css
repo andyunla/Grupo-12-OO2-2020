@@ -27,7 +27,6 @@
 
 .barraNaranja {
      background-color: rgb(255, 166, 0);
-     /* luego cambiar */
      height: 45px;
      width: 100%;
 }
@@ -163,7 +162,8 @@
 #changoContainer {
      margin-top: 15px;
      width: 100%;
-     min-height: 500px;
+     height: 500px;
+     overflow: hidden;
      border: 1px;
      border-style: solid;
 }
@@ -258,8 +258,4 @@ tr {
      margin-top: 15px;
      background-color: rgb(255, 166, 0);
      margin-bottom: 0;
-}
-
-.ie body {
-     background-color: blueviolet;
 }

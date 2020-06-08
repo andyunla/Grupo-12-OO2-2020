@@ -1,10 +1,13 @@
-<tr th:fragment="facturas" th:if="${facturas.size() > 0}" th:each="factura : ${facturas}" onclick="abrirFactura(this)" class="factura-row">
+<tr th:if="${facturas.size() > 0}" th:each="factura : ${facturas}" onclick="abrirFactura(this)" class="factura-row">
      <td th:text="${factura.getIdFactura()}"></td>
      <td th:text="${factura.getEmpleado().getLegajo()}"></td>
      <td th:text="${factura.getCliente().getDni()}"></td>
      <td th:text="${factura.getCosteTotal()}"></td>
      <td th:text="${factura.getFechaCorta()}"></td>
 </tr>
+<tr th:if="${facturas.size() > 0}">
+     <td><small th:text="${'Total: ' + facturas.size()}"></small></td>
+</tr>
 <tr th:unless="${facturas.size() > 0}" >
-     <td>No hay ventas</td>
+     <td><small>No hay ventas</small></td>
 </tr>

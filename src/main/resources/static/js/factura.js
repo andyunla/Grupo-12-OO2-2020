@@ -13,10 +13,11 @@ JsBarcode(".codigo")
      .init();
 
 function descargar() {
-     var element = document.getElementById('container-container');
+     var facturaBody = document.getElementById('container-container');
+     let nombreArchivo = 'factura-' + document.getElementById("nroFactura").innerText + '.pdf';
      var opt = {
           margin: 1,
-          filename: 'factura.pdf',
+          filename: nombreArchivo,
           enableLinks: true,
           image: { type: 'jpeg', quality: 0.99 },
           html2canvas: {
@@ -30,5 +31,12 @@ function descargar() {
                putOnlyUsedFonts: true
           }
      };
-     html2pdf().from(element).set(opt).save();
+     html2pdf().from(facturaBody).set(opt).save();
+}
+
+window.onload = () => {
+     // Una vez cargada la pagina remueve el spinner y muestra la factura
+     document.getElementsByTagName("main")[0].classList.remove("invisible");
+     let spinnerContainer = document.getElementById("spinnerContainer");
+     spinnerContainer.parentElement.removeChild(spinnerContainer);
 }
