@@ -59,8 +59,8 @@
                <ul class="navbar-nav ">
                     <li class="nav-item dropdown">
                          <input type="hidden" id="current-username" th:value="${currentUser.username}" />
-                         <input type="hidden" id="current-idLocal" th:value="${currentUser.idLocal}" />
-                         <a href="#" class="nav-link dropdown-toggle" id="navDropDownLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-fw fa-user"></i> <span id="username" th:attr="data-idLocal=${currentUser.idLocal}" th:text="${currentUser.username}  " /></a>
+                         <input type="hidden" id="current-idLocal" th:value="${currentUser.local.idLocal}" />
+                         <a href="#" class="nav-link dropdown-toggle" id="navDropDownLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-fw fa-user"></i> <span id="username" th:attr="data-idLocal=${currentUser.local.idLocal}" th:text="${currentUser.username}  " /></a>
                          <div class="dropdown-menu" aria-labelledby="navDropDownLink">
                               <a class="dropdown-item" data-toggle="modal" data-target="#userDetails" href="#"><i class="fa fa-id-card" aria-hidden="true"></i> Detalles</a>
                               <div class="dropdown-divider"></div>
