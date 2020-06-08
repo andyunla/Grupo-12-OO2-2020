@@ -42,7 +42,8 @@ function enviarRespuesta(msg) {
     fetch(url, { method: 'GET' })
         .then(res => {
             if (res.status == 200 || res.status == 201) {
-                listarMasCercanos(); // Refrescamos la lista de locales cercanos
+                //listarMasCercanos(); // Refrescamos la lista de locales cercanos
+                console.log("Respuesta enviada");
             } else {
                 // Si ocurre un error
                 msg.texto = "ERROR: HUBO UN PROBLEMA EN LA TRANSACCIÓN"
@@ -55,7 +56,7 @@ function enviarRespuesta(msg) {
 function agregarListenerABotonesAceptar() {
     let botonesAceptar = document.querySelectorAll('.botonAceptar');
     botonesAceptar.forEach(boton => boton.addEventListener('click', (e) => {
-        // Se construye un Objeto msg que contiene la información que el servidor necesita procesar del cliente.
+        // Se construye un Objeto msg que contiene los datos para enviar en la respuesta; no para realizar el pedido
         var msg = {
             aceptado: true,
             texto: "ACEPTADO",
@@ -64,13 +65,16 @@ function agregarListenerABotonesAceptar() {
         };
         // Se realiza la factura
         let userOferente = document.getElementById("current-username").value
-        let userSolicitante = e.target.dataset.userFrom // El dueño que envío la solicitud; le devolvemos la respuesta
+        let userSolicitante = e.target.dataset.userFrom; // El dueño que envío la solicitud; le devolvemos la respuesta
         let aceptado = true;
+        let idProducto = e.target.dataset.idProducto;
+        let cantidad = e.target.dataset.cantidad;
         let urlSolicitud = url_pedido + "/solicitar/" + userOferente + "/" + userSolicitante + "/" + aceptado + "/" + idProducto + "/" + cantidad;
         fetch(urlSolicitud, { method: 'POST' })
             .then(res => {
                 if (res.status == 200 || res.status == 201) {
-                    listarMasCercanos(); // Refrescamos la lista de locales cercanos
+                    //listarMasCercanos(); // Refrescamos la lista de locales cercanos
+                    console.log("Solicitud realizada");
                 } else {
                     // Si ocurre un error
                     msg.texto = "ERROR: HUBO UN PROBLEMA EN LA TRANSACCIÓN"
@@ -85,13 +89,31 @@ function agregarListenerABotonesAceptar() {
 function agregarListenerABotonesRechazar() {
     let botonesRechazar = document.querySelectorAll('.botonRechazar');
     botonesRechazar.forEach(boton => boton.addEventListener('click', (e) => {
-        // Se construye un Objeto msg que contiene la información que el servidor necesita procesar del cliente.
+        // Se construye un Objeto msg que contiene los datos para enviar en la respuesta; no para realizar el pedido
         var msg = {
             aceptado: false,
             texto: "RECHAZADO",
             from: document.getElementById("current-username").value, // El username del usuario actual
             to: e.target.dataset.userFrom // El dueño que envío la solicitud; le devolvemos la respuesta
         };
+        // Se crea solo el pedido sin factura
+        let userOferente = document.getElementById("current-username").value
+        let userSolicitante = e.target.dataset.userFrom; // El dueño que envío la solicitud; le devolvemos la respuesta
+        let aceptado = false; // Al ser false no se creará la factura
+        let idProducto = e.target.dataset.idProducto;
+        let cantidad = e.target.dataset.cantidad;
+        let urlSolicitud = url_pedido + "/solicitar/" + userOferente + "/" + userSolicitante + "/" + aceptado + "/" + idProducto + "/" + cantidad;
+        fetch(urlSolicitud, { method: 'POST' })
+            .then(res => {
+                if (res.status == 200 || res.status == 201) {
+                    //listarMasCercanos(); // Refrescamos la lista de locales cercanos
+                    console.log("Solicitud realizada");
+                } else {
+                    // Si ocurre un error
+                    msg.texto = "ERROR: HUBO UN PROBLEMA EN LA TRANSACCIÓN"
+                }
+            })
+            .catch(e => { console.error(e) });
         enviarRespuesta(msg);
     }));
 }
@@ -126,8 +148,10 @@ function renderizarAHTML(obj) {
               obj.detalleNotificacion.idProducto;
     html = '<div class="dropdown-item">' + 
              '<strong>' + msg + '</strong>' +
-             '<a class="dropdown-item botonAceptar" data-id="' + obj.id + '" data-user-from="' + obj.from + '" href="#"> Aceptar</a>' +
-             '<a class="dropdown-item botonRechazar" data-id="' + obj.id + '" data-user-from="' + obj.from + '" href="#"> Rechazar</a>' +
+             '<a class="dropdown-item botonAceptar" data-id="' + obj.id + '" data-user-from="' + obj.from + 
+                '" data-id-producto="' + obj.detalleNotificacion.idProducto + '" data-cantidad="' + obj.detalleNotificacion.cantidad + '" href="#"> Aceptar</a>' +
+             '<a class="dropdown-item botonRechazar" data-id="' + obj.id + '" data-user-from="' + obj.from + 
+                '" data-id-producto="' + obj.detalleNotificacion.idProducto + '" data-cantidad="' + obj.detalleNotificacion.cantidad + '" href="#"> Rechazar</a>' +
            '</div>' +
            '<div class="dropdown-divider"></div>'
     return html;

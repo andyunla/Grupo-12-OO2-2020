@@ -86,7 +86,7 @@ public class NotificacionRestController {
     ResponseEntity<String> responder(@PathVariable("usernameFrom") String usernameFrom, @PathVariable("usernameTo") String usernameTo,
     								 @PathVariable("fueAceptado") boolean fueAceptado) {
     	String texto = UtilHelper.NOTIFICACION_RECHAZADA;
-        boolean estado = true; // La notificación fue leída
+        boolean estado = false; // false porque es para que le llegue como respuesta; luego se setea a true
         if(fueAceptado) {
             texto = UtilHelper.NOTIFICACION_ACEPTADA;
         }
@@ -110,5 +110,5 @@ public class NotificacionRestController {
             return new ResponseEntity<String>(HttpStatus.CREATED);
         // Cualquier problema
         return new ResponseEntity<String>(HttpStatus.OK);
-    }  
+    }
 }
