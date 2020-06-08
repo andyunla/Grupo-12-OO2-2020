@@ -175,32 +175,37 @@ function alertarRespuesta(obj) {
                     '<strong>EXITO</strong> El pedido ha sido aceptado' + alertCloseButton + '</div> ';
         break;
       case "RECHAZADO":
-        htmlAlert = '<div data-id-notificacion="' + obj.id + '" class="p-4 alert alert-warning alert-dismissible fade show" role="alert">' +
+        htmlAlert = '<div data-id-notificacion="' + obj.id + '" class="p-4 alert alert-danger alert-dismissible fade show" role="alert">' +
                     '<strong>ERROR</strong> El pedido ha sido rechazado' + alertCloseButton + '</div> ';
         break;
       default: // Algún error
-        htmlAlert = '<div data-id-notificacion="' + obj.id + '" class="p-4 alert alert-warning alert-dismissible fade show" role="alert">' +
+        htmlAlert = '<div data-id-notificacion="' + obj.id + '" class="p-4 alert alert-danger alert-dismissible fade show" role="alert">' +
                     '<strong>ERROR</strong> Hubo un problema al crear el pedido' + alertCloseButton + '</div> ';
     }
     document.getElementById("alertContainer").innerHTML = htmlAlert;
 }
 
 function confirmarRespuestas(idNotificacion) {
-    if(idNotificacion === null) { // Automáticamente; para confirmar respuestas
+    if(idNotificacion === undefined) { // Automáticamente; para confirmar respuestas
         let children = document.getElementById("alertContainer").children;
-        let idNotificacion = children[0].dataset.idNotificacion;
+        if(children.length !== 0) {
+            idNotificacion = children[0].dataset.idNotificacion;
+            continuar = true;
+        }
     }
-    let url = url_api + "/confirmar/" + idNotificacion;
-    fetch(url, { method: 'GET' })
-        .then(res => {
-            if (res.status == 200 || res.status == 201) {
-                console.log("Mensaje de respuesta confirmado");
-            } else {
-                // Si ocurre un error
-                console.log("ERROR: HUBO UN PROBLEMA EN LA TRANSACCIÓN")
-            }
-        })
-        .catch(e => { console.error(e) });
+    if(idNotificacion) { // Si es que se logró resolver el undefined
+        let url = url_api + "/confirmar/" + idNotificacion;
+        fetch(url, { method: 'GET' })
+            .then(res => {
+                if (res.status == 200 || res.status == 201) {
+                    console.log("Mensaje de respuesta confirmado");
+                } else {
+                    // Si ocurre un error
+                    console.log("ERROR: HUBO UN PROBLEMA EN LA CONFIRMACIÓN DE LA RESPUESTA")
+                }
+            })
+            .catch(e => { console.error(e) });
+    }
 }
 
 setInterval(function(){ comprobar() }, TIME_LOOP);
