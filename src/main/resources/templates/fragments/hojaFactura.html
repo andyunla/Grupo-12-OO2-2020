@@ -15,7 +15,7 @@
                          <p class="sucursal-text roboto">CUIT: 30-68287386-4</p>
                     </div>
                     <div class="hoja">
-                         <small>Hoja 1/1</small>
+                         <small th:text="${'Hoja ' + hojaNro}"></small>
                     </div>
                </div>
                <div class="factura-info">
@@ -70,7 +70,7 @@
                          <a href="https://sds-unla.herokuapp.com/">https://sds-unla.herokuapp.com/</a>
                     </small>
                </div>
-               <div class="total-seccion">
+               <div th:if="${ultimaHoja}" class="total-seccion">
                     <p class="total roboto">TOTAL: <span
                               th:text="${'$' + factura.getCosteTotal()}"></span></p>
                     <small>Vencimiento dentro de 15 días</small>

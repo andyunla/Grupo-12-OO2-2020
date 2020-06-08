@@ -98,7 +98,6 @@ public class FacturaController {
 
      @GetMapping("ver/{idFactura}")
      public ModelAndView traerFactura(@PathVariable ("idFactura") long idFactura) {
-          //TODO: Controlar el caso en que se necesiten dos hojas
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.FACTURA);
           UserDto userDto = userService.getCurrentUser();
           FacturaModel factura = facturaService.findByIdFactura(idFactura);
@@ -113,18 +112,21 @@ public class FacturaController {
                return mAV;
           }
           List <ItemModel> items = itemService.findByChango(factura.getChango().getIdChango());
+          // Creo una lista de listas de items. Cada lista tendrá hasta max 13 items, seran 13 items por hoja
+          List <ArrayList<ItemModel>> listaDeListas = new ArrayList<ArrayList<ItemModel>>();
+          int cursorListas = -1;
+          for(int i=0; i<items.size(); i++) {     
+               if(i == 0 || i % 13 == 0) {
+                    listaDeListas.add(new ArrayList<ItemModel>());
+                    cursorListas++;
+               }
+               listaDeListas.get( cursorListas ).add( items.get(i) );
+          }
+          mAV.addObject("todosLosItems", listaDeListas);
           mAV.addObject("currentUser", userDto); 
           mAV.addObject("factura", factura);
-          mAV.addObject("items", items);
           return mAV;
      }
-
-     /* IDEA: Se le pasa a la vista una lista de listas de items
-     Cada lista tiene 14 items
-     En la vista se recorre y se van colocando 14 items por factura
-     th:each="14items : ${items}"
-          th:each="item : ${14items}"
-     */
 
      @GetMapping("todas")
      public ModelAndView traerFactura() {

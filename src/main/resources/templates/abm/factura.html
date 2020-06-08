@@ -17,7 +17,15 @@
                <button class="btn btn-secondary m-4" onclick="descargar()">
                     <i class="fas fa-download"></i><br />DESCARGAR</button>
           </div>
-          <div th:replace="fragments/hojaFactura :: factura"></div>
+          <ul th:each="treceItems : ${todosLosItems}">
+               <li th:text="${'Hoja ' + (treceItemsStat.index + 1) + '/'  + todosLosItems.size()}">LISTA</li>
+               <div th:replace="fragments/hojaFactura :: factura(
+                                   items = ${treceItems}, 
+                                   hojaNro = ${treceItemsStat.index + 1} + '/' + ${todosLosItems.size()},
+                                   ultimaHoja = ( ${treceItemsStat.index + 1} == ${todosLosItems.size()} )
+                              )">
+               </div>
+          </ul>
      </main>
      <footer th:replace="fragments/footer :: footer"></footer>
      <div th:replace="fragments/scripts :: scripts"></div>
@@ -35,7 +43,6 @@
      <script th:src="@{/libraries/html2pdf.bundle.min.js}"></script>
      <!--SCRIPT FACTURA-->
      <script th:src="@{/js/factura.js}"></script>
-
 </body>
 
 </html>
