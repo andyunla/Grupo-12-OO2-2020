@@ -148,16 +148,21 @@ function cargarNotificaciones(lista) {
 }
 
 function renderizarAHTML(obj) {
-    var msg = "El usuario " + obj.from + " necesita " + obj.detalleNotificacion.cantidad + " unidades del producto " + 
+    var msg = "El usuario <strong>" + obj.from + "</strong> necesita " + obj.detalleNotificacion.cantidad + " unidad(es) del producto " + 
               obj.detalleNotificacion.idProducto;
-    html = '<div class="dropdown-item" id="notificacion-' + obj.id + '">' + 
-             '<strong>' + msg + '</strong>' +
-             '<a class="dropdown-item botonAceptar" data-id="' + obj.id + '" data-user-from="' + obj.from + 
-                '" data-id-producto="' + obj.detalleNotificacion.idProducto + '" data-cantidad="' + obj.detalleNotificacion.cantidad + '" href="#"> Aceptar</a>' +
-             '<a class="dropdown-item botonRechazar" data-id="' + obj.id + '" data-user-from="' + obj.from + 
-                '" data-id-producto="' + obj.detalleNotificacion.idProducto + '" data-cantidad="' + obj.detalleNotificacion.cantidad + '" href="#"> Rechazar</a>' +
-           '</div>' +
-           '<div class="dropdown-divider"></div>'
+    var html = '<div class="dropdown-item" id="notificacion-' + obj.id + '">' + 
+                '<div class="alert alert-info">' +
+                    msg +
+                    '<div class="alert alert-info">' +
+                        '<a href="#" class="btn btn-xs btn-primary pull-right botonAceptar" data-id="' + obj.id + 
+                            '" data-user-from="' + obj.from + '" data-id-producto="' + obj.detalleNotificacion.idProducto + 
+                            '" data-cantidad="' + obj.detalleNotificacion.cantidad + '"> Aceptar</a>' +
+                        '<a href="#" class="btn btn-xs btn-primary pull-right botonRechazar" data-id="' + obj.id + 
+                            '" data-user-from="' + obj.from + '" data-id-producto="' + obj.detalleNotificacion.idProducto + 
+                            '" data-cantidad="' + obj.detalleNotificacion.cantidad + '"> Rechazar</a>' +
+                    '</div>' +
+                '<div class="dropdown-divider"></div>' +
+           '</div>';
     return html;
 }
 
