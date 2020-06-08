@@ -21,7 +21,7 @@ function descargar() {
           enableLinks: true,
           image: { type: 'jpeg', quality: 0.99 },
           html2canvas: {
-               scale: 3,
+               scale: 2,
                allowTaint: true
           },
           jsPDF: {
