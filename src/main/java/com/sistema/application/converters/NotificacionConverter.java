@@ -35,7 +35,9 @@ public class NotificacionConverter {
 		if(notificacion.getTipo().equalsIgnoreCase(UtilHelper.TIPO_NOTIFICACION_SOLICITUD)) {
 			DetalleNotificacion detalle = notificacion.getDetalleNotificacion();
 			if(detalle != null) {
-				detalleDto = new DetalleNotificacionDto(detalle.getId(), detalle.getProducto().getIdProducto(), detalle.getCantidad());
+				long idProducto = detalle.getProducto().getIdProducto();
+				String nombreProducto = productoRepository.findByIdProducto(idProducto).getNombre();
+				detalleDto = new DetalleNotificacionDto(detalle.getId(), idProducto, nombreProducto, detalle.getCantidad());
 			}
 			idLocal = notificacion.getLocalTo().getIdLocal();
 		} else { // Es una respuesta dirigida a un usuario

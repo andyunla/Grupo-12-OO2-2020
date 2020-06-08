@@ -7,6 +7,7 @@ import com.sistema.application.converters.UserConverter;
 import com.sistema.application.dto.DetalleNotificacionDto;
 import com.sistema.application.dto.NotificacionDto;
 import com.sistema.application.helpers.UtilHelper;
+import com.sistema.application.models.ProductoModel;
 import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IEmpleadoService;
 import com.sistema.application.services.ILocalService;
@@ -52,8 +53,9 @@ public class NotificacionRestController {
                                      @PathVariable("idProducto") long idProducto, @PathVariable("cantidad") int cantidad) {
     	String texto = null;
     	String userTo = null;
+    	ProductoModel producto = productoService.findByIdProducto(idProducto);
         NotificacionDto newNotificacionDto = new NotificacionDto(UtilHelper.TIPO_NOTIFICACION_SOLICITUD, false, texto, usernameSolicitante, userTo, idLocal2, 
-        														 new DetalleNotificacionDto(idProducto, cantidad));
+        														 new DetalleNotificacionDto(idProducto, producto.getNombre(), cantidad));
         NotificacionDto notificacionGuardada = notificacionService.insertOrUpdate(newNotificacionDto);
         if(notificacionGuardada != null)
         	return new ResponseEntity<String>(HttpStatus.CREATED);

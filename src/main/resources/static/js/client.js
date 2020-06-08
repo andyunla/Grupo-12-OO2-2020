@@ -148,8 +148,8 @@ function cargarNotificaciones(lista) {
 }
 
 function renderizarAHTML(obj) {
-    var msg = "El usuario <strong>" + obj.from + "</strong> necesita " + obj.detalleNotificacion.cantidad + " unidad(es) del producto " + 
-              obj.detalleNotificacion.idProducto;
+    var msg = "El usuario <strong>" + obj.from + "</strong> necesita " + obj.detalleNotificacion.cantidad + " unidad(es) de " + 
+              '<strong>' + obj.detalleNotificacion.nombreProducto + '</strong>';
     var html = '<div class="dropdown-item" id="notificacion-' + obj.id + '">' + 
                 '<div class="alert alert-info">' +
                     msg +
@@ -182,7 +182,7 @@ function alertarRespuesta(obj) {
         break;
       default: // Algún error
         htmlAlert = '<div data-id-notificacion="' + obj.id + '" class="p-4 alert alert-danger alert-dismissible fade show" role="alert">' +
-                    '<strong>ERROR</strong> Hubo un problema al crear el pedido' + alertCloseButton + '</div> ';
+                    '<strong>' + obj.texto + '</strong>' + alertCloseButton + '</div> ';
     }
     document.getElementById("alertContainer").innerHTML = htmlAlert;
 }
