@@ -97,4 +97,18 @@ public class NotificacionRestController {
         // Cualquier problema
         return new ResponseEntity<String>(HttpStatus.OK);
     }
+
+    // Para los mensajes que indican la respuesta del oferente.
+    // Es para que no muestre a cada momento el mensaje
+    @GetMapping("confirmar/{idNotificacion}")
+    ResponseEntity<String> autoConfirmarRespuestas(@PathVariable("idNotificacion") long idNotificacion) {
+        boolean estado = true; // La notificación fue leída
+        NotificacionDto notificacion = notificacionService.findById(idNotificacion);
+        notificacion.setEstado(estado);
+        NotificacionDto notificacionGuardada = notificacionService.insertOrUpdate(notificacion);
+        if(notificacionGuardada != null)
+            return new ResponseEntity<String>(HttpStatus.CREATED);
+        // Cualquier problema
+        return new ResponseEntity<String>(HttpStatus.OK);
+    }  
 }

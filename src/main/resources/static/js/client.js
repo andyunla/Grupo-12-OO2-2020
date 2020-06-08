@@ -7,6 +7,8 @@ const url_pedido = host + "/pedido"
 function comprobar() {
     comprobarSolicitudes();
     comprobarRespuestas();
+    // Para que no aparezcan varias veces los alerts que aparecen que se confirmó o no la solicitud
+    confirmarRespuestas();
 }
 
 function comprobarSolicitudes() {
@@ -110,7 +112,7 @@ function cargarNotificaciones(lista) {
                 }
             } else { // Si lo que me llega es una respuesta
                 if(obj.to == document.getElementById("current-username").value) // Si son mensajes para el usuario actual
-                    alertarRespuesta(obj.texto);
+                    alertarRespuesta(obj);
             }
         }
         agregarListenerABotonesAceptar();
@@ -132,24 +134,40 @@ function renderizarAHTML(obj) {
 }
 
 // Inserta el nodo alert en el DOM
-function alertarRespuesta(respuesta) {
+function alertarRespuesta(obj) {
     let alertCloseButton = '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
                            '<span aria-hidden="true">&times;</span></button>';
     let htmlAlert = "";
-    switch(respuesta.toUpperCase()) {
+    switch(obj.texto.toUpperCase()) {
       case "ACEPTADO":
-        htmlAlert = '<div class="p-4 alert alert-success alert-dismissible fade show" role="alert">' +
+        htmlAlert = '<div data-id-notificacion="' + obj.id + '" class="p-4 alert alert-success alert-dismissible fade show" role="alert">' +
                     '<strong>EXITO</strong> El pedido ha sido aceptado' + alertCloseButton + '</div> ';
         break;
       case "RECHAZADO":
-        htmlAlert = '<div class="p-4 alert alert-warning alert-dismissible fade show" role="alert">' +
+        htmlAlert = '<div data-id-notificacion="' + obj.id + '" class="p-4 alert alert-warning alert-dismissible fade show" role="alert">' +
                     '<strong>ERROR</strong> El pedido ha sido rechazado' + alertCloseButton + '</div> ';
         break;
       default: // Algún error
-        htmlAlert = '<div class="p-4 alert alert-warning alert-dismissible fade show" role="alert">' +
+        htmlAlert = '<div data-id-notificacion="' + obj.id + '" class="p-4 alert alert-warning alert-dismissible fade show" role="alert">' +
                     '<strong>ERROR</strong> Hubo un problema al crear el pedido' + alertCloseButton + '</div> ';
     }
     document.getElementById("alertContainer").innerHTML = htmlAlert;
+}
+
+function confirmarRespuestas() {
+    var children = document.getElementById("alertContainer").children;
+    let idNotificacion = children[0].dataset.idNotificacion;
+    let url = url_api + "/confirmar/" + idNotificacion;
+    fetch(url, { method: 'GET' })
+        .then(res => {
+            if (res.status == 200 || res.status == 201) {
+                console.log("Mensaje de respuesta confirmado");
+            } else {
+                // Si ocurre un error
+                console.log("ERROR: HUBO UN PROBLEMA EN LA TRANSACCIÓN")
+            }
+        })
+        .catch(e => { console.error(e) });
 }
 
 setInterval(function(){ comprobar() }, TIME_LOOP);
