@@ -37,6 +37,38 @@ function comprobarRespuestas() {
         });
 }
 
+// En caso que se acepte o no la solicitud
+function realizarSolicitudPedido(detalleEnvio) {
+    // Se construye un Objeto msg que contiene los datos para enviar en la respuesta; no para realizar el pedido
+    var msg = {
+        idNotificacion: detalleEnvio.idNotificacion,
+        aceptado: detalleEnvio.aceptado? true : false,
+        texto: detalleEnvio.aceptado? "ACEPTADO" : "RECHAZADO",
+        from: document.getElementById("current-username").value, // El username del usuario actual
+        to: detalleEnvio.userSolicitante // El dueño que envío la solicitud; le devolvemos la respuesta
+    };
+    // Se realiza la factura
+    let userOferente = detalleEnvio.userOferente;
+    let userSolicitante = detalleEnvio.userSolicitante; // El dueño que envío la solicitud; le devolvemos la respuesta
+    let fueAceptado = detalleEnvio.aceptado;
+    let idProducto = detalleEnvio.idProducto;
+    let cantidad = detalleEnvio.cantidad;
+    let urlSolicitud = url_pedido + "/solicitar/" + userOferente + "/" + userSolicitante + "/" + fueAceptado + "/" + idProducto + "/" + cantidad;
+    fetch(urlSolicitud, { method: 'POST' })
+        .then(res => {
+            if (res.status == 200 || res.status == 201) {
+                //listarMasCercanos(); // Refrescamos la lista de locales cercanos
+                console.log("Solicitud realizada");
+            } else {
+                // Si ocurre un error
+                msg.texto = "ERROR: HUBO UN PROBLEMA EN LA TRANSACCIÓN"
+            }
+        })
+        .catch(e => { console.error(e) });
+    // Enviamos la respuesta
+    enviarRespuesta(msg);
+}
+
 function enviarRespuesta(msg) {
     let url = url_api + "/responder/" + msg.from + "/" + msg.to + "/" + msg.aceptado;
     fetch(url, { method: 'GET' })
@@ -46,75 +78,46 @@ function enviarRespuesta(msg) {
                 console.log("Respuesta enviada");
             } else {
                 // Si ocurre un error
-                msg.texto = "ERROR: HUBO UN PROBLEMA EN LA TRANSACCIÓN"
+                msg.texto = "ERROR: HUBO UN PROBLEMA EN EL ENVÍO DE LA RESPUESTA"
             }
         })
         .catch(e => { console.error(e) });
+    // Le mandamos el id para que lo marque como leída
+    confirmarRespuestas(msg.idNotificacion);
+    // Eliminamos la notificación de la lista
+    document.getElementById("notificacion-" + msg.idNotificacion).remove();
 }
 
 // Añade los listener a los botones para aceptar el pedido
 function agregarListenerABotonesAceptar() {
     let botonesAceptar = document.querySelectorAll('.botonAceptar');
     botonesAceptar.forEach(boton => boton.addEventListener('click', (e) => {
-        // Se construye un Objeto msg que contiene los datos para enviar en la respuesta; no para realizar el pedido
-        var msg = {
+        var detalleEnvio = {
+            idNotificacion: e.target.dataset.id,
+            userOferente: document.getElementById("current-username").value,
+            userSolicitante: e.target.dataset.userFrom,
             aceptado: true,
-            texto: "ACEPTADO",
-            from: document.getElementById("current-username").value, // El username del usuario actual
-            to: e.target.dataset.userFrom // El dueño que envío la solicitud; le devolvemos la respuesta
+            idProducto: e.target.dataset.idProducto,
+            cantidad: e.target.dataset.cantidad,
+            to: e.target.dataset.userFrom
         };
-        // Se realiza la factura
-        let userOferente = document.getElementById("current-username").value
-        let userSolicitante = e.target.dataset.userFrom; // El dueño que envío la solicitud; le devolvemos la respuesta
-        let aceptado = true;
-        let idProducto = e.target.dataset.idProducto;
-        let cantidad = e.target.dataset.cantidad;
-        let urlSolicitud = url_pedido + "/solicitar/" + userOferente + "/" + userSolicitante + "/" + aceptado + "/" + idProducto + "/" + cantidad;
-        fetch(urlSolicitud, { method: 'POST' })
-            .then(res => {
-                if (res.status == 200 || res.status == 201) {
-                    //listarMasCercanos(); // Refrescamos la lista de locales cercanos
-                    console.log("Solicitud realizada");
-                } else {
-                    // Si ocurre un error
-                    msg.texto = "ERROR: HUBO UN PROBLEMA EN LA TRANSACCIÓN"
-                }
-            })
-            .catch(e => { console.error(e) });
-        // Enviamos la respuesta
-        enviarRespuesta(msg);
+        realizarSolicitudPedido(detalleEnvio);
     }));
 }
 
 function agregarListenerABotonesRechazar() {
     let botonesRechazar = document.querySelectorAll('.botonRechazar');
     botonesRechazar.forEach(boton => boton.addEventListener('click', (e) => {
-        // Se construye un Objeto msg que contiene los datos para enviar en la respuesta; no para realizar el pedido
-        var msg = {
+        var detalleEnvio = {
+            idNotificacion: e.target.dataset.id,
+            userOferente: document.getElementById("current-username").value,
+            userSolicitante: e.target.dataset.userFrom,
             aceptado: false,
-            texto: "RECHAZADO",
-            from: document.getElementById("current-username").value, // El username del usuario actual
-            to: e.target.dataset.userFrom // El dueño que envío la solicitud; le devolvemos la respuesta
+            idProducto: e.target.dataset.idProducto,
+            cantidad: e.target.dataset.cantidad,
+            to: e.target.dataset.userFrom
         };
-        // Se crea solo el pedido sin factura
-        let userOferente = document.getElementById("current-username").value
-        let userSolicitante = e.target.dataset.userFrom; // El dueño que envío la solicitud; le devolvemos la respuesta
-        let aceptado = false; // Al ser false no se creará la factura
-        let idProducto = e.target.dataset.idProducto;
-        let cantidad = e.target.dataset.cantidad;
-        let urlSolicitud = url_pedido + "/solicitar/" + userOferente + "/" + userSolicitante + "/" + aceptado + "/" + idProducto + "/" + cantidad;
-        fetch(urlSolicitud, { method: 'POST' })
-            .then(res => {
-                if (res.status == 200 || res.status == 201) {
-                    //listarMasCercanos(); // Refrescamos la lista de locales cercanos
-                    console.log("Solicitud realizada");
-                } else {
-                    // Si ocurre un error
-                    msg.texto = "ERROR: HUBO UN PROBLEMA EN LA TRANSACCIÓN"
-                }
-            })
-            .catch(e => { console.error(e) });
-        enviarRespuesta(msg);
+        realizarSolicitudPedido(detalleEnvio);
     }));
 }
 
@@ -122,6 +125,7 @@ function cargarNotificaciones(lista) {
     var size = lista.length;
     if(size !== 0) {
         var i;
+        // Borramos todo el contenido del área de notificación
         document.getElementById("notificationContainer").innerHTML = "";
         for (i = 0; i < size; i++) {
             var obj = lista[i];
@@ -144,16 +148,21 @@ function cargarNotificaciones(lista) {
 }
 
 function renderizarAHTML(obj) {
-    var msg = "El usuario " + obj.from + " necesita " + obj.detalleNotificacion.cantidad + " unidades del producto " + 
-              obj.detalleNotificacion.idProducto;
-    html = '<div class="dropdown-item">' + 
-             '<strong>' + msg + '</strong>' +
-             '<a class="dropdown-item botonAceptar" data-id="' + obj.id + '" data-user-from="' + obj.from + 
-                '" data-id-producto="' + obj.detalleNotificacion.idProducto + '" data-cantidad="' + obj.detalleNotificacion.cantidad + '" href="#"> Aceptar</a>' +
-             '<a class="dropdown-item botonRechazar" data-id="' + obj.id + '" data-user-from="' + obj.from + 
-                '" data-id-producto="' + obj.detalleNotificacion.idProducto + '" data-cantidad="' + obj.detalleNotificacion.cantidad + '" href="#"> Rechazar</a>' +
-           '</div>' +
-           '<div class="dropdown-divider"></div>'
+    var msg = "El usuario <strong>" + obj.from + "</strong> necesita " + obj.detalleNotificacion.cantidad + " unidad(es) de " + 
+              '<strong>' + obj.detalleNotificacion.nombreProducto + '</strong>';
+    var html = '<div class="dropdown-item" id="notificacion-' + obj.id + '">' + 
+                '<div class="alert alert-info">' +
+                    msg +
+                    '<div class="alert alert-info">' +
+                        '<a href="#" class="btn btn-xs btn-primary pull-right botonAceptar" data-id="' + obj.id + 
+                            '" data-user-from="' + obj.from + '" data-id-producto="' + obj.detalleNotificacion.idProducto + 
+                            '" data-cantidad="' + obj.detalleNotificacion.cantidad + '"> Aceptar</a>' +
+                        '<a href="#" class="btn btn-xs btn-primary pull-right botonRechazar" data-id="' + obj.id + 
+                            '" data-user-from="' + obj.from + '" data-id-producto="' + obj.detalleNotificacion.idProducto + 
+                            '" data-cantidad="' + obj.detalleNotificacion.cantidad + '"> Rechazar</a>' +
+                    '</div>' +
+                '<div class="dropdown-divider"></div>' +
+           '</div>';
     return html;
 }
 
@@ -168,30 +177,36 @@ function alertarRespuesta(obj) {
                     '<strong>EXITO</strong> El pedido ha sido aceptado' + alertCloseButton + '</div> ';
         break;
       case "RECHAZADO":
-        htmlAlert = '<div data-id-notificacion="' + obj.id + '" class="p-4 alert alert-warning alert-dismissible fade show" role="alert">' +
+        htmlAlert = '<div data-id-notificacion="' + obj.id + '" class="p-4 alert alert-danger alert-dismissible fade show" role="alert">' +
                     '<strong>ERROR</strong> El pedido ha sido rechazado' + alertCloseButton + '</div> ';
         break;
       default: // Algún error
-        htmlAlert = '<div data-id-notificacion="' + obj.id + '" class="p-4 alert alert-warning alert-dismissible fade show" role="alert">' +
-                    '<strong>ERROR</strong> Hubo un problema al crear el pedido' + alertCloseButton + '</div> ';
+        htmlAlert = '<div data-id-notificacion="' + obj.id + '" class="p-4 alert alert-danger alert-dismissible fade show" role="alert">' +
+                    '<strong>' + obj.texto + '</strong>' + alertCloseButton + '</div> ';
     }
     document.getElementById("alertContainer").innerHTML = htmlAlert;
 }
 
-function confirmarRespuestas() {
-    var children = document.getElementById("alertContainer").children;
-    let idNotificacion = children[0].dataset.idNotificacion;
-    let url = url_api + "/confirmar/" + idNotificacion;
-    fetch(url, { method: 'GET' })
-        .then(res => {
-            if (res.status == 200 || res.status == 201) {
-                console.log("Mensaje de respuesta confirmado");
-            } else {
-                // Si ocurre un error
-                console.log("ERROR: HUBO UN PROBLEMA EN LA TRANSACCIÓN")
-            }
-        })
-        .catch(e => { console.error(e) });
+function confirmarRespuestas(idNotificacion) {
+    if(idNotificacion === undefined) { // Automáticamente; para confirmar respuestas
+        let children = document.getElementById("alertContainer").children;
+        if(children.length !== 0) {
+            idNotificacion = children[0].dataset.idNotificacion;
+        }
+    }
+    if(idNotificacion) { // Si es que se logró resolver el undefined
+        let url = url_api + "/confirmar/" + idNotificacion;
+        fetch(url, { method: 'GET' })
+            .then(res => {
+                if (res.status == 200 || res.status == 201) {
+                    console.log("Mensaje de respuesta confirmado");
+                } else {
+                    // Si ocurre un error
+                    console.log("ERROR: HUBO UN PROBLEMA EN LA CONFIRMACIÓN DE LA RESPUESTA")
+                }
+            })
+            .catch(e => { console.error(e) });
+    }
 }
 
 setInterval(function(){ comprobar() }, TIME_LOOP);
