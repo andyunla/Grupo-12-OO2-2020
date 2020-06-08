@@ -119,6 +119,13 @@ public class FacturaController {
           return mAV;
      }
 
+     /* IDEA: Se le pasa a la vista una lista de listas de items
+     Cada lista tiene 14 items
+     En la vista se recorre y se van colocando 14 items por factura
+     th:each="14items : ${items}"
+          th:each="item : ${14items}"
+     */
+
      @GetMapping("todas")
      public ModelAndView traerFactura() {
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.FACTURAS);
