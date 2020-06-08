@@ -1,4 +1,4 @@
-const host = "http://localhost:8080/chango/";
+const urlChango = host + '/chango/';
 
 window.onload = async () => {
      let filasDeChangos = document.querySelectorAll('.chango-row');
@@ -9,9 +9,9 @@ window.onload = async () => {
                fila.className += ' border border-primary';
                console.log(fila.lastElementChild.innerText);
                if(fila.lastElementChild.innerText == 'Facturado') {
-                    window.location.href = host + 'ver/' + fila.firstElementChild.innerText;
+                    window.location.href = urlChango + 'ver/' + fila.firstElementChild.innerText;
                } else {
-                    window.location.href = host + fila.firstElementChild.innerText;
+                    window.location.href = urlChango + fila.firstElementChild.innerText;
                }
           });
      });
