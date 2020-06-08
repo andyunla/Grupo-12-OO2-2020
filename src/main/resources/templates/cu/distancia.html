@@ -16,17 +16,6 @@
           <div class="w-100 d-flex flex-column align-items-center">
                <section class="col-12 col-sm-11 pl-1 pr-1 d-flex justify-content-start flex-wrap">
                     <div class="form-group col col-11 col-sm-5 col-md-4 col-lg-3">
-                         <!-- Legajo del usuario actual -->
-                         <input type="hidden" th:value="${currentUser.legajo}" id="legajoUser"/>
-                         <label class="bigger-text" for="localActual">Local actual:</label>
-                         <div>
-                              <input type="hidden" th:value="${local.idLocal}" id="localActual"/>
-                              <div>
-                                   <p><i class="fa fa-building fa-2x" aria-hidden="true"></i>Nombre: <strong><span th:text="${local.nombreLocal}" /></strong></p>
-                              </div>
-                         </div>
-                    </div>
-                    <div class="form-group col col-11 col-sm-5 col-md-4 col-lg-3">
                          <label for="productoDeLotes">Producto</label>
                          <select class="custom-select " id="productoDeLotes">
                               <option value="0" selected>Seleccione producto</option>
@@ -37,6 +26,11 @@
                     <div class="form-group col col-11 col-sm-5 col-md-4 col-lg-3">
                          <label for="cantidadProducto" class="col-md-2 col-3">Cantidad</label>
                          <input type="number" min="1" class="form-control col-sm-4 col-5" id="cantidadProducto"/>
+                    </div>
+                    <div class="form-group col col-11 col-sm-5 col-md-4 col-lg-3">
+                         <!-- Legajo del usuario actual -->
+                         <input type="hidden" th:value="${currentUser.legajo}" id="legajoUser"/>
+                         <input type="hidden" th:value="${currentUser.local.idLocal}" id="localActual"/>
                     </div>
                </section>
           </div>

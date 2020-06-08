@@ -23,6 +23,9 @@ import com.sistema.application.services.ILoteService;
 import com.sistema.application.services.IPedidoStockService;
 import com.sistema.application.services.IProductoService;
 
+import com.sistema.application.entities.Empleado;
+import com.sistema.application.entities.Factura;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
@@ -487,94 +490,68 @@ public class LocalModel {
 	////////////////////////////////////////////////////////////////////////////////////////////////////// EMPLEADOS//////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
-	public double calcularSueldo(EmpleadoModel empleado) {
+	public double calcularSueldo(Empleado empleado) {
 		double comisionCompleta = 0;
-		for (FacturaModel fa : traerFacturaMesPasado()) {// para cada factura del mes pasado
+		for (Factura fa : traerFacturaMesPasado()) {// para cada factura del mes pasado
 			if (fa.getEmpleado().equals(empleado)) { // si la factura pertenece a este empleado
-				if (fa.getChango().getPedidoStock() != null) { // el chango de la factura tiene un pedido stock, esta
+				if (fa.getChango().getPedidostock() != null) { // el chango de la factura tiene un pedido stock, esta
 																// factura es con stock de otro local
 					// si el empleado solicito stock de otro local se calcula la comision de 3%
-					if (fa.getChango().getPedidoStock().getEmpleadoSolicitante().equals(empleado))
+					if (fa.getChango().getPedidostock().getEmpleadoSolicitante().equals(empleado))
 						comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 3) / 100);
 				} else {// si este empleado no pidio stock se calcula la comision del 5%
 					comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 5) / 100);
 				}
 			} else {// si la factura no es de este empleado y si este empleado ofreció stock se el
 					// calcula el 2%
-				if (fa.getChango().getPedidoStock() != null
-						&& fa.getChango().getPedidoStock().getEmpleadoOferente().equals(empleado))
+				if (fa.getChango().getPedidostock() != null
+						&& fa.getChango().getPedidostock().getEmpleadoOferente().equals(empleado))
 					comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 2) / 100);
 			}
 		}
 		return (empleado.getSueldoBasico() + comisionCompleta);
 	}
 
-	public Set<FacturaModel> traerFacturaMesPasado() {
+	public List<Factura> traerFacturaMesPasado() {
 		LocalDate fecha1 = LocalDate.now().minusMonths(1).withDayOfMonth(1);// mes pasado dia 1
 		LocalDate fecha2 = LocalDate.now().minusMonths(1).withDayOfMonth(fecha1.lengthOfMonth());// último día del mes pasado
 		return facturaService.findByFechaFacturaBetween(fecha1, fecha2);// retorno la lista de facturas
 	}
-
-	/****************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////
-	// 14) EMITIR REPORTE DE PRODUCTOS VENDIDOS ENTRE FECHAS POR
-	////////////////////////////////////////////////////////////////////////////////////////////////////// LOCAL/////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////////////////
-	/****************************************************************************************************/
-	public LinkedHashMap<ProductoModel, Integer> reporte(LocalDate fecha1, LocalDate fecha2) {
-		LinkedHashMap<ProductoModel, Integer> listaReporte = new LinkedHashMap<ProductoModel, Integer>();
-		// Para cada producto de la lista de productos
-		for (ProductoModel pro : productoService.getAllModel()) {
-			int cantidad = 0;
-			// Traigo la lista de facturas del local entre fechas
-			Set<FacturaModel> listaFacturas = facturaService.findByFechaFacturaBetweenAndIdLocal(fecha1, fecha2,
-					this.idLocal);
-
-			for (FacturaModel fa : listaFacturas) {
-				// de cada factura obtengo el chango y traigo el item que tenga el producto que
-				// estamos evaluando
-				// si el producto está en la factura, se suma la cantidad correspondiente
-				if (fa.getChango().traerItem(pro) != null)
-					cantidad = cantidad + fa.getChango().traerItem(pro).getCantidad();
+	
+	public double calcularComisionVentaCompleta(Empleado empleado) {
+		double comisionVentaCompleta = 0;
+		for (Factura fa : traerFacturaMesPasado()) {
+			if (fa.getEmpleado().equals(empleado)) { 
+				if (fa.getChango().getPedidostock() == null) comisionVentaCompleta = comisionVentaCompleta + ((fa.getCosteTotal() * 5) / 100);
 			}
-			listaReporte.put(pro, cantidad);
 		}
-		return listaReporte;
+		return (comisionVentaCompleta);
 	}
 
-	/****************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////
-	// 15) RANKING DE PRODUCTOS MÁS VENDIDOS
-	////////////////////////////////////////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////////////////
-	/****************************************************************************************************/
-	public List<ProductoRankingDto> ranking() {
-		// traigo la lista de productos
-		List<ProductoModel> listaProductos = productoService.getAllModel();
-		// creo una lista de ProductoRankingDto en el que puedo guardar la variable de cantidad
-		List<ProductoRankingDto> productoRanking = new ArrayList<ProductoRankingDto>();
-		//recorro la lista de productos y voy agregando cada producto a la lista ProductoRankingDto
-		for (ProductoModel pro : listaProductos) {
-			// se llama al método cantidad de producto vendido para asignar la variable cantidad en ProductoRankingDto
-			productoRanking.add(productoConverter.modelToDto(pro, cantidadProductoVendido(pro)));
+	
+	public double calcularComisionVentaExterna(Empleado empleado) {
+		double comisionVentaExterna = 0;
+		for (Factura fa : traerFacturaMesPasado()) {
+			if (fa.getEmpleado().equals(empleado)) {
+				if (fa.getChango().getPedidostock() != null && fa.getChango().getPedidostock().getEmpleadoSolicitante().equals(empleado) ){ 
+					comisionVentaExterna = comisionVentaExterna + ((fa.getCosteTotal() * 3) / 100);
+				}
+			}
 		}
-		
-		//orden de mayor a menor
-		Collections.sort(productoRanking, Collections.reverseOrder());		
-		return productoRanking;
+		return (comisionVentaExterna);
 	}
-
-	public int cantidadProductoVendido(ProductoModel producto) {
-		int cantidad = 0;
-		for (FacturaModel fa : facturaService.getAllModel()) {
-			// de cada factura obtengo el chango y traigo el item que tenga el producto que
-			// estamos evaluando
-			// si el producto está en la factura, se suma la cantidad correspondiente
-			ItemModel it = itemService.findByChangoAndProducto(fa.getChango().getIdChango(), producto.getIdProducto());
-			if (it != null) {
-				cantidad = cantidad + it.getCantidad();
-			}				
+	
+	
+	public double calcularComisionStockCedido(Empleado empleado) {
+		double comisionStockCedido = 0;
+		for (Factura fa : traerFacturaMesPasado()) {
+			if (fa.getEmpleado().equals(empleado)) {
+				if (fa.getChango().getPedidostock() != null &&  fa.getChango().getPedidostock().getEmpleadoOferente().equals(empleado) ){ 
+					comisionStockCedido = comisionStockCedido + ((fa.getCosteTotal() * 2) / 100);
+				}
+			}
 		}
-		return cantidad;
-	}
+		return (comisionStockCedido);
+	}	
+	
 }

@@ -1,55 +1,38 @@
 <div th:fragment="user_details" class="modal fade" id="userDetails" tabindex="-1" role="dialog">
-     <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-               <div class="modal-header">
-                    <h5 class="modal-title"><i class="fa fa-id-card" aria-hidden="true"></i> Detalles del usuario</h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                         <span aria-hidden="true">&times;</span>
-                    </button>
-               </div>
-               <div class="modal-body">
-                    <form class="col-12 m-1 p-2 mx-auto bg-light rounded" th:object="${currentUser}" action="#">
-                         <div class="form-group row">
-                              <label class="col-sm-3 col-4">Username</label>
-                              <input type="text" class="form-control col-md-8 col-7" id="detailsUsername"
-                                   th:value="${currentUser.username}" readonly />
-                         </div>
-                         <div class="form-group row">
-                              <label class="col-sm-3 col-4">Nombre completo</label>
-                              <input type="text" class="form-control col-md-8 col-7" id="detailsNombreCompleto"
-                                   th:value="${currentUser.nombreCompleto}" readonly />
-                         </div>
-                         <div class="form-group row">
-                              <label class="col-sm-3 col-4">Email</label>
-                              <input type="text" class="form-control col-md-8 col-7" id="detailsEmail"
-                                   th:value="${currentUser.emailUser}" readonly />
-                         </div>
-                         <div class="form-group row">
-                              <label class="col-sm-3 col-4">Legajo</label>
-                              <input type="text" class="form-control col-md-8 col-7" id="detailsLegajo"
-                                   th:value="${currentUser.legajo}" readonly />
-                         </div>
-                         <div class="form-group row">
-                              <label class="col-sm-3 col-4">Rol</label>
-                              <div th:switch="${currentUser.tipoGerente}">
-                                   <input th:case="${true}" type="text" class="form-control col-md-8 col-7" id="detailsRol"
-                                   value="GERENTE" readonly />
-                                   <input th:case="${false}" type="text" class="form-control col-md-8 col-7" id="detailsRol"
-                                   value="EMPLEADO" readonly />
-                              </div>
-                         </div>
-                         <div class="clearfix"></div>
-                         <br>
-                         <div class="form-group row">
-                              <label class="col-sm-3 col-4">ID Local</label>
-                              <input type="text" class="form-control col-md-8 col-7" id="detailsIdLocal"
-                                   th:value="${currentUser.idLocal}" readonly />
-                         </div>
-                         <div class="text-center">
-                              <button type="submit" class="btn btn-primary"  data-dismiss="modal">Cerrar</button>
-                         </div>
-                    </form>
-               </div>
-          </div>
-     </div>
+    <div class="modal-dialog modal-notify modal-info" role="document">
+           <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header">
+                <p class="heading">Detalles del usuario</p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="white-text">×</span>
+                </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-3 text-center">
+                        <img th:src="@{/images/user.png}" th:alt="${currentUser.nombreCompleto}" class="img-fluid z-depth-1-half rounded-circle">
+                        <div style="height: 10px"></div>
+                        <p class="title mb-0"><span th:text="${currentUser.username}" /></p>
+                        <p class="text-muted " style="font-size: 13px"><span th:text="${currentUser.nombreCompleto}" /></p>
+                    </div>
+                    <div class="col-9">
+                        <strong>Email: </strong><span span th:text="${currentUser.emailUser}" /><br>
+                        <strong>Nro legajo: </strong><span span th:text="${currentUser.legajo}" /><br>
+                        <div th:if="${currentUser.tipoGerente}"><strong>ROL: </strong><span>GERENTE</span></div>
+                        <div th:unless="${currentUser.tipoGerente}"><strong>ROL: </strong><span>EMPLEADO</span></div>
+                        <br><hr>
+                        <div class="card-text">
+                            <strong>Local: </strong><span th:text="${currentUser.local.idLocal} + ' - ' + ${currentUser.local.nombreLocal}"></span><br>
+                        </div>
+                    </div>
+              </div>
+            </div>
+            <!--Footer-->
+            <div class="modal-footer justify-content-center">
+                <button type="submit" class="btn btn-primary waves-effect waves-light" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
 </div>

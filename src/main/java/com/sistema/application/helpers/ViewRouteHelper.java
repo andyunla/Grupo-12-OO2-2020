@@ -14,17 +14,25 @@ public class ViewRouteHelper {
 	public final static String CHANGO = "abm/chango";
 	public final static String CHANGOS = "abm/changos";
 	public final static String CHANGO_FACTURADO = "abm/changoFacturado";
+	public final static String FACTURA = "abm/factura";
+	public final static String FACTURAS = "abm/facturas";
+
 
 	// Parciales   
 	public final static String LISTA_LOTES = "partial/listaLotes";
 	public final static String LISTA_LOCALES_CERCANOS = "partial/listaLocalesCercanos";
+	public final static String RANKING_REPORTE_PRODUCTOS = "partial/listaProductosRanking";
 	public final static String ITEM = "partial/item";
+	public final static String LISTA_FACTURAS = "partial/listaFacturas";
+
 
 	// CASOS DE USO
 	public final static String DISTANCIA_ROOT = "cu/distancia";
-	public final static String RANKIG_ROOT = "cu/ranking";
+	public final static String RANKING_ROOT = "cu/ranking";
+	public final static String REPORTE_ROOT = "cu/reporte";
 	public final static String PEDIDO_VIEW = "cu/pedido";
-
+	public final static String SUELDO_ROOT = "cu/sueldo";
+	
 	// USER
 	public final static String USER_LOGIN = "user/login";
 	public final static String USER_LOGOUT = "user/logout";

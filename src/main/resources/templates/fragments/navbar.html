@@ -1,16 +1,11 @@
 <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
-     <a class="navbar-brand" th:href="@{/}">
-          <img th:src="@{/images/unla.png}" width="35" height="35" class="d-inline-block align-top" alt="" />
-          UNLa Stock
-     </a>
-     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-     </button>
      <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
                <li class="nav-item" th:classappend="${active=='home'} ? active : ''">
-                    <a class="nav-link" th:href="@{/}"><i class="fa fa-fw fa-home"></i> Home <span class="sr-only">(current)</span></a>
+                    <a class="navbar-brand nav-link" th:href="@{/}">
+                         <img th:src="@{/images/unla.png}" width="35" height="35" class="d-inline-block align-top" alt="" />
+                         UNLa Stock - <span th:text="${currentUser.local.nombreLocal}"></span>
+                    </a>
                </li>
                <!-- Si es un GERENTE tiene el permiso de realizar los ABMs del resto de las cosas -->
                <span th:if="${currentUser.tipoGerente}">
@@ -26,7 +21,7 @@
                               <a class="dropdown-item" th:href="@{/cliente}">Clientes</a>
                               <a class="dropdown-item" th:href="@{/lote}">Lotes</a>
                               <a class="dropdown-item" th:href="@{/item}">Items</a>
-                              <a class="dropdown-item" th:href="@{/chango/todos}">Changos</a>
+                              <a class="dropdown-item" th:href="@{/chango/todos}">Carrito</a>
                          </div>
                     </li>
                </span>
@@ -39,6 +34,15 @@
                </li>
                <li class="nav-item" th:classappend="${active=='ranking'} ? active : ''">
                     <a class="nav-link" th:href="@{/ranking}"><i class="fa fa-line-chart" aria-hidden="true"></i> Ranking</a>
+               </li>
+               <li class="nav-item" th:classappend="${active=='reporte'} ? active : ''">
+                    <a class="nav-link" th:href="@{/reporte}"><i class="fa fa-line-chart" aria-hidden="true"></i> Reporte</a>
+               </li>
+               <li class="nav-item" th:classappend="${active=='sueldos'} ? active : ''">
+                    <a class="nav-link" th:href="@{/sueldos}"><i class="fa fa-money" aria-hidden="true"></i> Sueldos</a>
+               </li>
+               <li class="nav-item" th:classappend="${active=='factura'} ? active : ''">
+                    <a class="nav-link" th:href="@{/factura/todas}"><i class="far fa-file-alt"></i> Facturas</a>
                </li>
                <li class="nav-item" th:classappend="${active=='chango'} ? active : ''">
                     <a class="nav-link" th:href="@{/chango}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Chango</a>

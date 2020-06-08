@@ -5,6 +5,7 @@ import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.LocalModel;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IChangoService {
 
@@ -19,4 +20,7 @@ public interface IChangoService {
 	public ChangoModel insertOrUpdate(ChangoModel changoModel);
 	
 	public boolean remove(long id);
+
+	public double calcularTotal(long idChango);
+
 }

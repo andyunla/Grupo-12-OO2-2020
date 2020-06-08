@@ -7,7 +7,6 @@ import java.util.Set;
 import com.sistema.application.converters.EmpleadoConverter;
 import com.sistema.application.converters.UserConverter;
 import com.sistema.application.dto.UserDto;
-import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.EmpleadoModel;
@@ -22,14 +21,12 @@ import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.ILoteService;
 import com.sistema.application.services.IPedidoStockService;
 import com.sistema.application.services.IProductoService;
+import com.sistema.application.services.implementations.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,14 +64,14 @@ public class PedidoController {
 	@Autowired
 	@Qualifier("loteService")
 	private ILoteService loteService;
+	@Autowired
+    @Qualifier("userService")
+    private UserService userService;
 
 	@GetMapping("")
 	public String pedidos(Model modelo) {
-		// Obtengo el usuario de la sesión
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
-		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
-		userDto.setTipoGerente(isGerente);
+		// Obtenemos el usuario de la sesión
+		UserDto userDto = userService.getCurrentUser();
 		modelo.addAttribute("currentUser", userDto);
 		Set<PedidoStockModel> pedidos = pedidoStockService.getAllModel();
 		modelo.addAttribute("pedidos", pedidos);

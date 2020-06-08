@@ -81,6 +81,10 @@ public class PersonaModel {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
+	public String getNombreCompleto() {
+		return nombre + ' ' + apellido;
+	}
+
 	@Override
 	public String toString() {
 		return "PersonaModel [nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + ", fechaNacimiento="

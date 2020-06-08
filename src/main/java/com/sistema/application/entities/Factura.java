@@ -39,7 +39,7 @@ public class Factura implements Serializable {
 	private double costeTotal;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="empleado_legajo", nullable=false)
+	@JoinColumn(name="empleado_legajo", nullable=false, referencedColumnName = "legajo")
 	private Empleado empleado;
 
 	@ManyToOne(fetch=FetchType.LAZY)

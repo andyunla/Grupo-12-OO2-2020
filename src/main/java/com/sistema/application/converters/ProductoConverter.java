@@ -27,8 +27,8 @@ public class ProductoConverter {
 	}
 	
 
-	public ProductoDisponibleDto modelToDTO(ProductoModel producto, int stock, boolean enChango) {
+	public ProductoDisponibleDto modelToDTO(ProductoModel producto, int stockTotal, int stockDisponible, boolean enChango) {
 		return new ProductoDisponibleDto(producto.getIdProducto(), producto.getNombre(),
-			 producto.getTalle(), producto.getPrecio(), stock, enChango);
+			 producto.getTalle(), producto.getPrecio(), stockTotal, stockDisponible, enChango);
 	}
 }

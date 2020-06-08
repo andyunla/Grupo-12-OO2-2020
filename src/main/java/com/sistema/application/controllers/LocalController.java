@@ -4,22 +4,19 @@ import com.sistema.application.converters.LocalConverter;
 import com.sistema.application.converters.UserConverter;
 import com.sistema.application.dto.LocalDto;
 import com.sistema.application.dto.UserDto;
-import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.LocalModel;
 import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IEmpleadoService;
 import com.sistema.application.services.ILocalService;
+import com.sistema.application.services.implementations.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,13 +46,14 @@ public class LocalController {
 	@Autowired
     @Qualifier("userRepository")
     private IUserRepository userRepository;
+	@Autowired
+    @Qualifier("userService")
+    private UserService userService;
 
 	@GetMapping("")
 	public String locales(Model modelo) {
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
-		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
-		userDto.setTipoGerente(isGerente);
+		// Obtenemos el usuario de la sesión
+		UserDto userDto = userService.getCurrentUser();
 		modelo.addAttribute("currentUser", userDto);
 		List<LocalModel> localesModel = localService.getAllModel();
 		List<LocalDto> locales = new ArrayList<LocalDto>();
@@ -70,18 +68,20 @@ public class LocalController {
 	
 	@PostMapping("agregar")
 	public String agregar(@Valid @ModelAttribute("local") LocalModel nuevoLocal, BindingResult bindingResult) {
+		
 		if(bindingResult.hasErrors()) {
 			return ViewRouteHelper.LOCAL_ABM;
 		}else {
 			localService.insertOrUpdate(nuevoLocal);
 		}
 		
-		localService.insertOrUpdate(nuevoLocal);
+		
 		return "redirect:/" + ViewRouteHelper.LOCAL_ROOT;
 	}
 	
 	@PostMapping("modificar")
-	public String modificar(@ModelAttribute("local") LocalModel localModificado) {
+	public String modificar(@Valid @ModelAttribute("local") LocalModel localModificado, BindingResult bindingResult) {
+		
 		// Modifico el empleado gerente anterior si es que se eligió un nuevo gerente
 		if(localModificado.getGerente() != null) {
 			// Obtengo el local modificado de la bd
@@ -101,7 +101,15 @@ public class LocalController {
 			nuevoGerente.setTipoGerente(true);
 			empleadoService.insertOrUpdate(nuevoGerente);
 		}
-		localService.insertOrUpdate(localModificado);
+		
+		
+		if(bindingResult.hasErrors()) {
+			return ViewRouteHelper.LOCAL_ABM;
+		}else {
+			localService.insertOrUpdate(localModificado);
+		}
+		
+		
 		return "redirect:/" + ViewRouteHelper.LOCAL_ROOT;
 	}
 	

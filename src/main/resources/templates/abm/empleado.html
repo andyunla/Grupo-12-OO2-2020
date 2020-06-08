@@ -34,7 +34,7 @@
                <div class="form-group row">
                     <label for="dniNuevoEmpleado" class="col-md-2 col-3">DNI</label>
                     <input type="number" class="form-control col-sm-4 col-5" id="dniNuevoEmpleado" th:field="*{dni}" 
-                    min="1000000" max="99999999" required/>
+                    	min="1000000" max="99999999" required/>
                     <p th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}">DNI tiene errores</p>
                </div>
                <div class="form-group row">
@@ -44,7 +44,7 @@
               		<p th:if="${#fields.hasErrors('fechaNacimiento')}" th:errors="*{fechaNacimiento}">Fecha de Nac. tiene errores</p>
                </div>
                <div class="form-group row">
-                    <label for="horaDesdeNuevoEmpleado" class="col-md-2 col-3">Horario de llegada</label>
+                    <label for="horaDesdeNuevoEmpleado" class="col-md-2 col-3">Horario de entrada</label>
                     <input type="time" class="form-control col-sm-4 col-5" id="horaDesdeNuevoEmpleado"
                          th:field="*{horaDesde}" required/>
                     <p th:if="${#fields.hasErrors('horaDesde')}" th:errors="*{horaDesde}">Horario de llegada no puede ir vacio</p>
@@ -90,39 +90,46 @@
                                         th:field="*{legajo}" />
                                    <div class="form-group row">
                                         <label for="nombreModificarEmpleado" class="col-sm-3 col-4">Nombre</label>
-                                        <input type="text" class="form-control col-md-8  col-7"
-                                             id="nombreModificarEmpleado" th:field="*{nombre}" />
+                                        <input type="text" class="form-control col-md-9 col-8" id="nombreNuevoEmpleado"
+                         					th:field="*{nombre}" required/>
+                    					<p th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Nombre no puede ir vacio</p>
                                    </div>
                                    <div class="form-group row">
                                         <label for="apellidoModificarEmpleado" class="col-sm-3 col-4">Apellido</label>
-                                        <input type="text" class="form-control col-md-8 col-7"
-                                             id="apellidoModificarEmpleado" th:field="*{apellido}" />
+                                        <input type="text" class="form-control col-md-9 col-8" id="apellidoNuevoEmpleado"
+                         					th:field="*{apellido}" required/>
+                    					<p th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}">Apellido no puede ir vacio</p>
                                    </div>
                                    <div class="form-group row">
                                         <label for="dniModificarEmpleado" class="col-sm-3 col-4">DNI</label>
-                                        <input type="number" class="form-control col-5" id="dniModificarEmpleado"
-                                             th:field="*{dni}" />
+                                        <input type="number" class="form-control col-sm-4 col-5" id="dniNuevoEmpleado" th:field="*{dni}" 
+                    						min="1000000" max="99999999" required/>
+                    					<p th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}">DNI tiene errores</p>
                                    </div>
                                    <div class="form-group row">
                                         <label for="fechaDeNacModificarEmpleado" class="col-sm-3 col-4">Fecha de
                                              Nac.</label>
-                                        <input type="date" class="form-control col-5" id="fechaDeNacModificarEmpleado"
-                                             th:field="*{fechaNacimiento}" />
+                                        <input type="date" class="form-control col-sm-4 col-5" id="fechaNacNuevoEmpleado"
+                         					th:field="*{fechaNacimiento}" required/>
+              							<p th:if="${#fields.hasErrors('fechaNacimiento')}" th:errors="*{fechaNacimiento}">Fecha de Nac. tiene errores</p>
                                    </div>
                                    <div class="form-group row">
                                         <label for="horaDesdeModificarEmpleado" class="col-sm-3 col-4">Horario de entrada</label>
-                                        <input type="time" class="form-control col-5" id="horaDesdeModificarEmpleado"
-                                             th:field="*{horaDesde}" />
+                                        <input type="time" class="form-control col-sm-4 col-5" id="horaDesdeNuevoEmpleado"
+                        					th:field="*{horaDesde}" required/>
+                    					<p th:if="${#fields.hasErrors('horaDesde')}" th:errors="*{horaDesde}">Horario de llegada no puede ir vacio</p>
                                    </div>
                                    <div class="form-group row">
                                         <label for="horaHastaModificarEmpleado" class="col-sm-3 col-4">Horario de salida</label>
-                                        <input type="time" class="form-control col-5" id="horaHastaModificarEmpleado"
-                                             th:field="*{horaHasta}" />
+                                        <input type="time" class="form-control col-sm-4 col-5" id="horaHastaNuevoEmpleado"
+                         					th:field="*{horaHasta}" required/>
+                   						<p th:if="${#fields.hasErrors('horaHasta')}" th:errors="*{horaHasta}">Horario de salida no puede ir vacio</p>
                                    </div>
                                    <div class="form-group row">
                                         <label for="sueldoModificarEmpleado" class="col-sm-3 col-4">Sueldo básico</label>
-                                        <input type="number" class="form-control col-5" id="sueldoModificarEmpleado"
-                                             th:field="*{sueldoBasico}" />
+                                        <input type="number" class="form-control col-sm-4 col-5" id="sueldoNuevoEmpleado"
+                         					th:field="*{sueldoBasico}" min="1000" required/>
+                    					<p th:if="${#fields.hasErrors('sueldoBasico')}" th:errors="*{sueldoBasico}">Sueldo basico no puede ser menor a 1000$</p>
                                    </div>
                                    <div class="form-group row">
                                         <label for="localModificarEmpleado" class="col-sm-3 col-4">Local</label>

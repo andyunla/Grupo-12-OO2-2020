@@ -6,16 +6,17 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.sistema.application.services.IChangoService;
 import com.sistema.application.services.IItemService;
+import com.sistema.application.services.ILocalService;
 import com.sistema.application.repositories.IChangoRepository;
 import com.sistema.application.converters.ChangoConverter;
 import com.sistema.application.converters.LocalConverter;
 import com.sistema.application.entities.Chango;
+import com.sistema.application.entities.Local;
 import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.ItemModel;
 import com.sistema.application.models.LocalModel;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -39,6 +40,15 @@ public class ChangoService implements IChangoService{
 		@Qualifier("itemService")
 		private IItemService itemService;
 		
+		@Autowired
+		@Qualifier("localService")
+		private ILocalService localService;
+		
+		@Autowired
+		@Qualifier("localConverter")
+		private LocalConverter localCoverter;
+		
+		
 		//Métodos
 		@Override
 		public ChangoModel findByIdChango(long idChango) {
@@ -48,6 +58,7 @@ public class ChangoService implements IChangoService{
 				return null;
 			}
 		}
+		
 		@Override
 		public List<ChangoModel> findByLocal(LocalModel local){
 			List<ChangoModel> changos = new ArrayList<ChangoModel>();
@@ -56,7 +67,8 @@ public class ChangoService implements IChangoService{
 			}
 			return changos;
 		} 
-  
+	
+	
 		@Override
 		public List<Chango> getAll(){
 			return changoRepository.findAll();
@@ -85,6 +97,16 @@ public class ChangoService implements IChangoService{
 			}catch(Exception e) {
 				return false;
 			}
+		}
+
+		@Override 
+		public double calcularTotal(long idChango) {
+			List<ItemModel> itemsDelChango = itemService.findByChango(idChango);
+			double total = 0;
+			for(ItemModel item: itemsDelChango){
+				total += item.getCantidad() * item.getProductoModel().getPrecio();
+			}
+			return total;
 		}
 	
 }

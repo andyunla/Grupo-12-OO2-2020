@@ -1,6 +1,7 @@
 package com.sistema.application.models;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class FacturaModel {
 
@@ -91,6 +92,9 @@ public class FacturaModel {
 		this.empleado = empleado;
 	}
 
+	public String getFechaCorta() {
+		return fechaFactura.format(DateTimeFormatter.ofPattern("dd/MM/YYYY"));
+	}
 	
 	//toString
 	@Override
