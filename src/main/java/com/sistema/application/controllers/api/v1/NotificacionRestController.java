@@ -107,8 +107,7 @@ public class NotificacionRestController {
         notificacion.setEstado(estado);
         NotificacionDto notificacionGuardada = notificacionService.insertOrUpdate(notificacion);
         if(notificacionGuardada != null)
-            return new ResponseEntity<String>(HttpStatus.CREATED);
-        // Cualquier problema
-        return new ResponseEntity<String>(HttpStatus.OK);
+            return new ResponseEntity<String>(HttpStatus.OK);
+        return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
     }
 }

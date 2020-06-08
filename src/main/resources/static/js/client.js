@@ -50,6 +50,9 @@ function enviarRespuesta(msg) {
             }
         })
         .catch(e => { console.error(e) });
+    confirmarRespuestas(msg.idNotificacion); // Le mandamos el id para que lo marque como leída
+    // Eliminamos la notificación de la lista
+    document.getElementById("notificacion-" + msg.idNotificacion).remove();
 }
 
 // Añade los listener a los botones para aceptar el pedido
@@ -58,6 +61,7 @@ function agregarListenerABotonesAceptar() {
     botonesAceptar.forEach(boton => boton.addEventListener('click', (e) => {
         // Se construye un Objeto msg que contiene los datos para enviar en la respuesta; no para realizar el pedido
         var msg = {
+            idNotificacion: e.target.dataset.id,
             aceptado: true,
             texto: "ACEPTADO",
             from: document.getElementById("current-username").value, // El username del usuario actual
@@ -91,12 +95,14 @@ function agregarListenerABotonesRechazar() {
     botonesRechazar.forEach(boton => boton.addEventListener('click', (e) => {
         // Se construye un Objeto msg que contiene los datos para enviar en la respuesta; no para realizar el pedido
         var msg = {
+            idNotificacion: e.target.dataset.id,
             aceptado: false,
             texto: "RECHAZADO",
             from: document.getElementById("current-username").value, // El username del usuario actual
             to: e.target.dataset.userFrom // El dueño que envío la solicitud; le devolvemos la respuesta
         };
         // Se crea solo el pedido sin factura
+        let idNotificacion = e.target.dataset.id;
         let userOferente = document.getElementById("current-username").value
         let userSolicitante = e.target.dataset.userFrom; // El dueño que envío la solicitud; le devolvemos la respuesta
         let aceptado = false; // Al ser false no se creará la factura
@@ -122,6 +128,7 @@ function cargarNotificaciones(lista) {
     var size = lista.length;
     if(size !== 0) {
         var i;
+        // Borramos todo el contenido del área de notificación
         document.getElementById("notificationContainer").innerHTML = "";
         for (i = 0; i < size; i++) {
             var obj = lista[i];
@@ -146,7 +153,7 @@ function cargarNotificaciones(lista) {
 function renderizarAHTML(obj) {
     var msg = "El usuario " + obj.from + " necesita " + obj.detalleNotificacion.cantidad + " unidades del producto " + 
               obj.detalleNotificacion.idProducto;
-    html = '<div class="dropdown-item">' + 
+    html = '<div class="dropdown-item" id="notificacion-' + obj.id + '">' + 
              '<strong>' + msg + '</strong>' +
              '<a class="dropdown-item botonAceptar" data-id="' + obj.id + '" data-user-from="' + obj.from + 
                 '" data-id-producto="' + obj.detalleNotificacion.idProducto + '" data-cantidad="' + obj.detalleNotificacion.cantidad + '" href="#"> Aceptar</a>' +
@@ -178,9 +185,11 @@ function alertarRespuesta(obj) {
     document.getElementById("alertContainer").innerHTML = htmlAlert;
 }
 
-function confirmarRespuestas() {
-    var children = document.getElementById("alertContainer").children;
-    let idNotificacion = children[0].dataset.idNotificacion;
+function confirmarRespuestas(idNotificacion) {
+    if(idNotificacion === null) { // Automáticamente; para confirmar respuestas
+        let children = document.getElementById("alertContainer").children;
+        let idNotificacion = children[0].dataset.idNotificacion;
+    }
     let url = url_api + "/confirmar/" + idNotificacion;
     fetch(url, { method: 'GET' })
         .then(res => {
