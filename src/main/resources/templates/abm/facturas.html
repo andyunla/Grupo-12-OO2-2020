@@ -37,10 +37,10 @@
                               <td th:text="${factura.getFechaCorta()}"></td>
                          </tr>
                          <tr th:if="${facturas.size() > 0}">
-                              <td th:text="${'Total: ' + facturas.size()}"></td>
+                              <td><small th:text="${'Total: ' + facturas.size()}"></small></td>
                          </tr>
                          <tr th:unless="${facturas.size() > 0}" >
-                              <td>No hay ventas</td>
+                              <td><small>No hay ventas</small></td>
                          </tr>
                     </tbody>
                </table>
