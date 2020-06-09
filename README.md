@@ -6,7 +6,6 @@ ___Nota:___ Si faltan otras tareas agregarlas en las secciones que parecen perti
 
 ### **[HIGH]**
 + Al editar un _local_ se debe indicar el _gerente_ que trabaja porque cuando se edita nuevamente siempre elije el 1° de la lista.
-+ Al editar un local genera un error en el converter.
 + No deben haber 2 _locales_ con el mismo _gerente_
 + Al crear un empleado nuevo generar también su usuario con el que ingresará.
 
