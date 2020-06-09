@@ -1,4 +1,4 @@
-const TIME_LOOP = 4000;
+const TIME_LOOP = 4000; // Cada 4s
 const host = "http://localhost:8080";
 const url_api = host + "/api/v1/notificacion"
 const url_pedido = host + "/pedido"
@@ -189,9 +189,12 @@ function alertarRespuesta(obj) {
 
 function confirmarRespuestas(idNotificacion) {
     if(idNotificacion === undefined) { // Automáticamente; para confirmar respuestas
-        let children = document.getElementById("alertContainer").children;
-        if(children.length !== 0) {
-            idNotificacion = children[0].dataset.idNotificacion;
+        let alertContainer = document.getElementById("alertContainer");
+        if(alertContainer) { // Si existe algún alert activo
+            let children = document.getElementById("alertContainer").children;
+            if(children.length !== 0) {
+                idNotificacion = children[0].dataset.idNotificacion;
+            }
         }
     }
     if(idNotificacion) { // Si es que se logró resolver el undefined
