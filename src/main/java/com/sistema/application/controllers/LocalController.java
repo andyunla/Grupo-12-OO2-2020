@@ -68,10 +68,9 @@ public class LocalController {
 	
 	@PostMapping("agregar")
 	public String agregar(@Valid @ModelAttribute("local") LocalModel nuevoLocal, BindingResult bindingResult) {
-		
 		if(bindingResult.hasErrors()) {
-			return ViewRouteHelper.LOCAL_ABM;
-		}else {
+			return ViewRouteHelper.LOCAL_ROOT;
+		} else {
 			localService.insertOrUpdate(nuevoLocal);
 		}
 		return "redirect:/" + ViewRouteHelper.LOCAL_ROOT;

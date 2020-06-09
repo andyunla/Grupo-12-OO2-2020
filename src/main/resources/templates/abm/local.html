@@ -49,6 +49,10 @@
                          id="telefonoNuevoLocal" th:field="*{telefono}" required/>
                     <p th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">Telefono no puede ir vacio</p>
                </div>
+               <div class="form-group row">
+                    <input type="hidden" class="form-control col-sm-4 col-5" id="gerenteNuevoLocal" 
+                         th:field="*{gerente.legajo}" th:value="0" required/>
+               </div>
                <div class="text-center">
                     <button type="submit" class="btn btn-primary">Guardar</button>
                </div>
