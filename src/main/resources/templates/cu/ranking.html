@@ -9,7 +9,8 @@
           <h1 class="display-4">Ranking de productos</h1>
      </header>
     <main class="w-100 d-flex flex-column align-items-center">
-    
+        <!-- Contenedor de las respuestas a las solicitudes -->
+        <div class="p-1 col-11 col-sm-7 col-md-6 col-lg-4" id="alertRespuesta"></div>
         <div class="container  ">
             
             <table class="w-100 shadow mb-3 bg-white rounded table-hover table-bordered">
@@ -29,7 +30,9 @@
         </div>
     </main>
 
-    <footer th:replace="fragments/footer :: footer"></footer>    
+    <footer th:replace="fragments/footer :: footer"></footer>
+    <!-- Contenedor de las respuestas a las solicitudes -->
+    <div class="p-1 col-11 col-sm-7 col-md-6 col-lg-4" id="alertRespuesta"></div>
     <div th:replace="fragments/scripts :: scripts"></div>
 </body>
 </html>
