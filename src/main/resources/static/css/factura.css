@@ -1,4 +1,4 @@
-#container-container {
+.container-container {
      background-color: rgb(247, 247, 247);
      padding: 10px;
      border-style: solid;
@@ -18,11 +18,11 @@
      zoom: 100%;
 }
 
-#factura-container {
+.factura-container {
      width: 800px;
      height: 1132px;
      background-color: white;
-     margin: 0;
+     margin: 0 !important
 }
 
 .barraNaranja {
@@ -40,7 +40,7 @@
 
 /* DATOS DE SUCURSAL */
 
-#sucursal-info {
+.sucursal-info {
      width: 400px;
      height: 100%;
      display: flex;
@@ -49,7 +49,7 @@
      align-items: center;
 }
 
-#sucursal-info img {
+.sucursal-info img {
      width: 95px;
      height: 95px;
      padding: 0;
@@ -57,7 +57,7 @@
      border-radius: 50%;
 }
 
-#sucursal-info #info {
+.sucursal-info .info {
      width: 235px;
      margin: 5px;
      height: 100%;
@@ -77,7 +77,7 @@
      margin: 1px 0 2px 0;
 }
 
-#hoja {
+.hoja {
      width: 55px;
      height: 160px;
      display: flex;
@@ -87,7 +87,7 @@
 
 /* DATOS DE  FACTURA */
 
-#factura-info {
+.factura-info {
      width: 400px;
      height: 100%;
      display: flex;
@@ -96,12 +96,12 @@
      align-items: flex-end;
 }
 
-#factura-info div {
+.factura-info div {
      width: 280px;
      height: 100%;
 }
 
-#factura-title {
+.factura-title {
      font-size: 40px;
      text-align: center;
      background-color: rgb(153, 153, 153);
@@ -121,7 +121,7 @@
 
 /* DATOS DE CLIENTE */
 
-#cliente-info {
+.cliente-info {
      width: 100%;
      margin-top: 15px;
      height: 140px;
@@ -132,16 +132,16 @@
      justify-content: start;
 }
 
-#cliente-info div {
+.cliente-info div {
      margin-left: 10px;
 }
 
-#cliente {
+.cliente {
      width: 50%;
      padding: 5px;
 }
 
-#vendedor {
+.vendedor {
      width: 50%;
      padding: 5px;
 }
@@ -159,7 +159,7 @@
 
 /* DATOS DEL CHANGO */
 
-#changoContainer {
+.changoContainer {
      margin-top: 15px;
      width: 100%;
      height: 500px;
@@ -199,7 +199,7 @@ tr {
 
 /* SECCIÓN DEL TOTAL E INFO */
 
-#ultimaSeccion {
+.ultimaSeccion {
      width: 100%;
      height: 176px;
      display: flex;
@@ -207,11 +207,11 @@ tr {
      justify-content: start;
 }
 
-#ultimaSeccion div {
+.ultimaSeccion div {
      width: 50%;
 }
 
-#QR-seccion {
+.QR-seccion {
      display: flex;
      flex-direction: column;
      justify-content: center;
@@ -219,17 +219,17 @@ tr {
      text-align: center;
 }
 
-#QR-seccion img {
+.QR-seccion img {
      width: 110px;
 }
 
-#total-seccion {
+.total-seccion {
      display: flex;
      flex-direction: column;
      align-items: center;
 }
 
-#total {
+.total {
      font-size: 27px;
      margin: 20px 30px 5px 30px;
      padding: 15px;
@@ -238,14 +238,14 @@ tr {
      border-radius: 5px;
 }
 
-#total-seccion img {
+.total-seccion img {
      width: 120px;
      margin: 0;
 }
 
 /* SALUDO */
 
-#saludo {
+.saludo {
      margin: 0;
      text-align: center;
      height: 20px;
