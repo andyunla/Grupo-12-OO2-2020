@@ -64,26 +64,26 @@
                                         th:field="*{idProducto}" />
                                    <div class="form-group row">
                                         <label for="nombreModificarProducto" class="col-sm-3 col-4">Nombre</label>
-                                        <input type="text" class="form-control col-md-9 col-8" id="nombreNuevoProducto"
+                                        <input type="text" class="form-control col-md-9 col-8" id="nombreModificarProducto"
                         					 th:field="*{nombre}" required/>
 					                    <p th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Nombre no puede ir vacio</p>
                                    </div>
                                    <div class="form-group row">
                                         <label for="descripcionModificarProducto"
                                              class="col-sm-3 col-4">Descripcion</label>
-                                        <input type="text" class="form-control col-md-9 col-8" id="descripcionNuevoProducto"
+                                        <input type="text" class="form-control col-md-9 col-8" id="descripcionModificarProducto"
                       						th:field="*{descripcion}" required/>
                   						<p th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}">Descripcion no puede ir vacio</p>
                                    </div>
                                    <div class="form-group row">
                                         <label for="precioModificarProducto" class="col-sm-3 col-4">Precio</label>
                                         <input type="number" step="0.01" class="form-control col-md-9 col-8"
-                        					id="precioNuevoProducto" th:field="*{precio}" min="1" required/>
+                        					id="precioModificarProducto" th:field="*{precio}" min="1" required/>
                 					    <p th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}">Precio no puede ir vacio</p>
                                    </div>
                                    <div class="form-group row">
                                         <label for="talleModificarProducto" class="col-sm-3 col-4">Talle</label>
-                                        <input type="number" class="form-control col-sm-4 col-5" id="talleNuevoProducto"
+                                        <input type="number" class="form-control col-sm-4 col-5" id="talleModificarProducto"
                          					th:field="*{talle}" min="1" required/>
                     					<p th:if="${#fields.hasErrors('talle')}" th:errors="*{talle}">Talle no puede ir vacio</p>
                                    </div>
