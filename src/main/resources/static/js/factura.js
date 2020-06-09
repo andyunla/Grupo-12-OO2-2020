@@ -13,7 +13,7 @@ JsBarcode(".codigo")
      .init();
 
 function descargar() {
-     var facturaBody = document.getElementsByClassName('container-container')[0];
+     var facturaBody = document.getElementById('facturasContainer');
      let nombreArchivo = 'factura-' + document.getElementsByClassName("nroFactura")[0].innerText + '.pdf';
      var opt = {
           margin: 1,
