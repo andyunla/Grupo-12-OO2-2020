@@ -3,6 +3,17 @@ footer, nav, header, button{
 }
 
 .container-container  {
-     zoom: 1.25;
+     zoom: 1.28;
      display: block;
 }
+
+@page {
+     margin: 1cm 0.5cm 0.5cm 0.5cm;
+ }
+ 
+/* ELIMINA EL ESPACIO DEL FOOTER */
+body::after {
+     content: '';
+    display: inline;
+}
+
