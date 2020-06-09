@@ -184,14 +184,14 @@ function alertarRespuesta(obj) {
         htmlAlert = '<div data-id-notificacion="' + obj.id + '" class="p-4 alert alert-danger alert-dismissible fade show" role="alert">' +
                     '<strong>' + obj.texto + '</strong>' + alertCloseButton + '</div> ';
     }
-    document.getElementById("alertContainer").innerHTML = htmlAlert;
+    document.getElementById("alertRespuesta").innerHTML = htmlAlert;
 }
 
 function confirmarRespuestas(idNotificacion) {
     if(idNotificacion === undefined) { // Automáticamente; para confirmar respuestas
-        let alertContainer = document.getElementById("alertContainer");
-        if(alertContainer) { // Si existe algún alert activo
-            let children = document.getElementById("alertContainer").children;
+        let alertRespuesta = document.getElementById("alertRespuesta");
+        if(alertRespuesta) {
+            let children = alertRespuesta.children;
             if(children.length !== 0) {
                 idNotificacion = children[0].dataset.idNotificacion;
             }
