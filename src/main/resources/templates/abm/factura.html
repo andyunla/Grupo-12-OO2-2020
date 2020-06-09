@@ -17,6 +17,9 @@
                <button class="btn btn-secondary m-4" onclick="descargar()">
                     <i class="fas fa-download"></i><br />DESCARGAR</button>
           </div>
+          <small id="avisoDeCompatibilidad" class="d-none text-danger roboto">
+               Para imprimir varias páginas se recomienda Chrome u otro navegador basado en Chromium
+          </small>
           <div id="facturasContainer">
                <div th:each="treceItems : ${todosLosItems}">
                     <div th:replace="fragments/hojaFactura :: factura(

@@ -39,4 +39,8 @@ window.onload = () => {
      document.getElementsByTagName("main")[0].classList.remove("invisible");
      let spinnerContainer = document.getElementById("spinnerContainer");
      spinnerContainer.parentElement.removeChild(spinnerContainer);
+     // Verifica si el navegador usado no es Chrome
+     if (navigator.userAgent.indexOf("Chrome") == -1) {
+          document.getElementById("avisoDeCompatibilidad").classList.remove("d-none");
+     }
 }
