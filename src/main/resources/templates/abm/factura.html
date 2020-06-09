@@ -17,15 +17,15 @@
                <button class="btn btn-secondary m-4" onclick="descargar()">
                     <i class="fas fa-download"></i><br />DESCARGAR</button>
           </div>
-          <ul th:each="treceItems : ${todosLosItems}">
-               <li th:text="${'Hoja ' + (treceItemsStat.index + 1) + '/'  + todosLosItems.size()}">LISTA</li>
+          <div th:each="treceItems : ${todosLosItems}">
                <div th:replace="fragments/hojaFactura :: factura(
                                    items = ${treceItems}, 
                                    hojaNro = ${treceItemsStat.index + 1} + '/' + ${todosLosItems.size()},
                                    ultimaHoja = ( ${treceItemsStat.index + 1} == ${todosLosItems.size()} )
                               )">
                </div>
-          </ul>
+               <div th:if="${treceItemsStat.index + 1} != ${todosLosItems.size()}" style="page-break-before: always; margin:0;">PEPE</div>
+          </div>
      </main>
      <footer th:replace="fragments/footer :: footer"></footer>
      <div th:replace="fragments/scripts :: scripts"></div>
