@@ -74,14 +74,11 @@ public class LocalController {
 		}else {
 			localService.insertOrUpdate(nuevoLocal);
 		}
-		
-		
 		return "redirect:/" + ViewRouteHelper.LOCAL_ROOT;
 	}
 	
 	@PostMapping("modificar")
 	public String modificar(@Valid @ModelAttribute("local") LocalModel localModificado, BindingResult bindingResult) {
-		
 		// Modifico el empleado gerente anterior si es que se eligió un nuevo gerente
 		if(localModificado.getGerente() != null) {
 			// Obtengo el local modificado de la bd
@@ -90,7 +87,7 @@ public class LocalController {
 			EmpleadoModel gerenteOriginal = localOriginal.getGerente();
 			// Si el local no tiene un gerente asociado 'legajoGerente' vale 0 
 			// y ocacionará una excepción si se lo busca por el método 'empleadoService.findByLegajo'
-			if(gerenteOriginal != null) {
+			if(gerenteOriginal.getLegajo() != 0) {
 				// Obtengo el empleado que era gerente y lo cambio a empleado común
 				EmpleadoModel gerenteAnterior = empleadoService.findByLegajo(gerenteOriginal.getLegajo());
 				gerenteAnterior.setTipoGerente(false);
@@ -102,14 +99,11 @@ public class LocalController {
 			empleadoService.insertOrUpdate(nuevoGerente);
 		}
 		
-		
 		if(bindingResult.hasErrors()) {
 			return ViewRouteHelper.LOCAL_ABM;
-		}else {
+		} else {
 			localService.insertOrUpdate(localModificado);
 		}
-		
-		
 		return "redirect:/" + ViewRouteHelper.LOCAL_ROOT;
 	}
 	
