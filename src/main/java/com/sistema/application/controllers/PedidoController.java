@@ -91,7 +91,7 @@ public class PedidoController {
 	 * @return boolean
 	 */
 	@PostMapping("solicitar/{userSolicitante}/{userOferente}/{aceptado}/{idProducto}/{cantidad}")
-	public ResponseEntity<String> solicitar(@PathVariable("userSolicitante") String userSolicitante, 
+	public ResponseEntity<PedidoStockModel> solicitar(@PathVariable("userSolicitante") String userSolicitante, 
 											@PathVariable("userOferente") String userOferente, @PathVariable("aceptado") boolean aceptado,
 											@PathVariable("idProducto") long idProducto, @PathVariable("cantidad") int cantidad) {
 		ProductoModel producto = productoService.findByIdProducto(idProducto);
@@ -129,9 +129,9 @@ public class PedidoController {
 			// Persistiendo los datos
 			chango = changoService.insertOrUpdate(chango);
 			local = localService.insertOrUpdate(local);
-			return new ResponseEntity<String>(HttpStatus.CREATED);
+			return new ResponseEntity<PedidoStockModel>(pedido, HttpStatus.CREATED);
 		}
 		// Cualquier problema
-		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<PedidoStockModel>(HttpStatus.BAD_REQUEST);
 	}
 }
