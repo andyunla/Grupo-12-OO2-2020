@@ -71,7 +71,7 @@ public class PedidoController {
 
 	@GetMapping("")
 	public ModelAndView pedidoStock() {
-		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.RANKING_ROOT);
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.PEDIDO_STOCK_VIEW );
 		// Obtenemos el usuario de la sesión
 		UserDto userDto = userService.getCurrentUser();
 		modelAndView.addObject("currentUser", userDto);
