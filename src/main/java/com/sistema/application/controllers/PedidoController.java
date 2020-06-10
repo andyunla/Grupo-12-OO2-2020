@@ -6,6 +6,7 @@ import java.util.Set;
 
 import com.sistema.application.converters.EmpleadoConverter;
 import com.sistema.application.converters.UserConverter;
+import com.sistema.application.dto.DetalleNotificacionDto;
 import com.sistema.application.dto.UserDto;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ChangoModel;
@@ -78,20 +79,8 @@ public class PedidoController {
 		return ViewRouteHelper.PEDIDO_VIEW;
 	}
 
-	/**
-	 * Método que solicita un pedido nuevo, donde un empleado realiza el pedido de
-	 * un pruducto a otro local. El empleado oferente se selecciona al azar.
-	 * 
-	 * @param legajo     de tipo long. También podremos obtener el local donde
-	 *                   trabaja
-	 * @param idLocal2   de tipo long. Representa el local que posee los productos
-	 *                   solicitados.
-	 * @param idProducto de tipo long.
-	 * @param cantidad   de tipo int.
-	 * @return boolean
-	 */
 	@PostMapping("solicitar/{userSolicitante}/{userOferente}/{aceptado}/{idProducto}/{cantidad}")
-	public ResponseEntity<PedidoStockModel> solicitar(@PathVariable("userSolicitante") String userSolicitante, 
+	public ResponseEntity<DetalleNotificacionDto> solicitar(@PathVariable("userSolicitante") String userSolicitante, 
 											@PathVariable("userOferente") String userOferente, @PathVariable("aceptado") boolean aceptado,
 											@PathVariable("idProducto") long idProducto, @PathVariable("cantidad") int cantidad) {
 		ProductoModel producto = productoService.findByIdProducto(idProducto);
@@ -129,9 +118,13 @@ public class PedidoController {
 			// Persistiendo los datos
 			chango = changoService.insertOrUpdate(chango);
 			local = localService.insertOrUpdate(local);
-			return new ResponseEntity<PedidoStockModel>(pedido, HttpStatus.CREATED);
+			// Enviar de datos al cliente(js)
+			DetalleNotificacionDto detalleDto = new DetalleNotificacionDto();
+			detalleDto.setIdPedidoStock(pedido.getIdPedidoStock());
+			detalleDto.setIdChango(chango.getIdChango());
+			return new ResponseEntity<DetalleNotificacionDto>(detalleDto, HttpStatus.CREATED);
 		}
 		// Cualquier problema
-		return new ResponseEntity<PedidoStockModel>(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<DetalleNotificacionDto>(HttpStatus.BAD_REQUEST);
 	}
 }
