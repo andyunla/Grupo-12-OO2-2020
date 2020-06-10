@@ -43,7 +43,7 @@ public class PedidoStockService implements IPedidoStockService{
 		@Override
 		public List<PedidoStockModel> getAllModel(){
 			List<PedidoStockModel> pedidoStock = new ArrayList<PedidoStockModel>();
-			for(PedidoStock p: this.getAll() ) {
+			for(PedidoStock p: pedidoStockRepository.findAll() ) {
 				pedidoStock.add(pedidoStockConverter.entityToModel(p) );
 			}
 			return pedidoStock;
