@@ -492,22 +492,31 @@ public class LocalModel {
 	/****************************************************************************************************/
 	public double calcularSueldo(Empleado empleado) {
 		double comisionCompleta = 0;
+		System.out.println(empleado.getDni());
 		for (Factura fa : traerFacturaMesPasado()) {// para cada factura del mes pasado
-			if (fa.getEmpleado().equals(empleado)) { // si la factura pertenece a este empleado
-				if (fa.getChango().getPedidostock() != null) { // el chango de la factura tiene un pedido stock, esta
-																// factura es con stock de otro local
-					// si el empleado solicito stock de otro local se calcula la comision de 3%
-					if (fa.getChango().getPedidostock().getEmpleadoSolicitante().equals(empleado))
-						comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 3) / 100);
-				} else {// si este empleado no pidio stock se calcula la comision del 5%
-					comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 5) / 100);
-				}
-			} else {// si la factura no es de este empleado y si este empleado ofreció stock se el
-					// calcula el 2%
-				if (fa.getChango().getPedidostock() != null
-						&& fa.getChango().getPedidostock().getEmpleadoOferente().equals(empleado))
+			
+			if (fa.getEmpleado().equals(empleado) ) { // si la factura pertenece a este empleado
+				System.out.println(fa.getEmpleado().getDni());
+				// el chango de la factura tiene un pedido stock, esta factura es con stock de otro local
+				if (fa.getChango().getPedidostock() != null && fa.getChango().getPedidostock().getEmpleadoSolicitante().equals(empleado)) {
+					comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 3) / 100); // si el empleado solicito stock de otro local se calcula la comision de 3%
+					System.out.println(comisionCompleta);
+				} 
+				
+				// si la factura no es de este empleado y si este empleado ofreció stock se le calcula el 2%
+				if (fa.getChango().getPedidostock() != null && fa.getChango().getPedidostock().getEmpleadoOferente().equals(empleado)) {
 					comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 2) / 100);
+					System.out.println(comisionCompleta);
+				}
+				
+				// si este empleado no pidio stock se calcula la comision del 5%
+				if (fa.getChango().getPedidostock() == null) {
+					comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 5) / 100);
+					System.out.println(comisionCompleta);
+				}
+				System.out.println("Hola");
 			}
+			
 		}
 		return (empleado.getSueldoBasico() + comisionCompleta);
 	}
@@ -522,7 +531,11 @@ public class LocalModel {
 		double comisionVentaCompleta = 0;
 		for (Factura fa : traerFacturaMesPasado()) {
 			if (fa.getEmpleado().equals(empleado)) { 
-				if (fa.getChango().getPedidostock() == null) comisionVentaCompleta = comisionVentaCompleta + ((fa.getCosteTotal() * 5) / 100);
+				if (fa.getChango().getPedidostock() == null) {
+					System.out.println(comisionVentaCompleta);
+					comisionVentaCompleta = comisionVentaCompleta + ((fa.getCosteTotal() * 5) / 100);
+					System.out.println(comisionVentaCompleta);
+				}
 			}
 		}
 		return (comisionVentaCompleta);
@@ -533,8 +546,10 @@ public class LocalModel {
 		double comisionVentaExterna = 0;
 		for (Factura fa : traerFacturaMesPasado()) {
 			if (fa.getEmpleado().equals(empleado)) {
-				if (fa.getChango().getPedidostock() != null && fa.getChango().getPedidostock().getEmpleadoSolicitante().equals(empleado) ){ 
+				if (fa.getChango().getPedidostock() != null && fa.getChango().getPedidostock().getEmpleadoSolicitante().equals(empleado) ){
+					System.out.println(comisionVentaExterna);
 					comisionVentaExterna = comisionVentaExterna + ((fa.getCosteTotal() * 3) / 100);
+					System.out.println(comisionVentaExterna);
 				}
 			}
 		}
@@ -547,7 +562,9 @@ public class LocalModel {
 		for (Factura fa : traerFacturaMesPasado()) {
 			if (fa.getEmpleado().equals(empleado)) {
 				if (fa.getChango().getPedidostock() != null &&  fa.getChango().getPedidostock().getEmpleadoOferente().equals(empleado) ){ 
+					System.out.println(comisionStockCedido);
 					comisionStockCedido = comisionStockCedido + ((fa.getCosteTotal() * 2) / 100);
+					System.out.println(comisionStockCedido);
 				}
 			}
 		}
