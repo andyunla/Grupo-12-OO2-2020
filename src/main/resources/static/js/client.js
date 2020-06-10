@@ -7,8 +7,6 @@ const url_pedido = host + "/pedido";
 function comprobar() {
     comprobarSolicitudes();
     comprobarRespuestas();
-    // Para que no aparezcan varias veces los alerts que aparecen que se confirmó o no la solicitud
-    confirmarRespuestas();
 }
 
 function comprobarSolicitudes() {
@@ -200,28 +198,17 @@ function renderizarAHTML(obj) {
 }
 
 function confirmarRespuestas(idNotificacion) {
-    if(idNotificacion === undefined) { // Automáticamente; para confirmar respuestas
-        let alertRespuesta = document.getElementById("alertRespuesta");
-        if(alertRespuesta) {
-            let children = alertRespuesta.children;
-            if(children.length !== 0) {
-                idNotificacion = children[0].dataset.idNotificacion;
+    let url = url_api + "/confirmar/" + idNotificacion;
+    fetch(url, { method: 'GET' })
+        .then(res => {
+            if (res.status == 200 || res.status == 201) {
+                console.log("Mensaje de respuesta confirmado");
+            } else {
+                // Si ocurre un error
+                console.log("ERROR: HUBO UN PROBLEMA EN LA CONFIRMACIÓN DE LA RESPUESTA")
             }
-        }
-    }
-    if(idNotificacion) { // Si es que se logró resolver el undefined
-        let url = url_api + "/confirmar/" + idNotificacion;
-        fetch(url, { method: 'GET' })
-            .then(res => {
-                if (res.status == 200 || res.status == 201) {
-                    console.log("Mensaje de respuesta confirmado");
-                } else {
-                    // Si ocurre un error
-                    console.log("ERROR: HUBO UN PROBLEMA EN LA CONFIRMACIÓN DE LA RESPUESTA")
-                }
-            })
-            .catch(e => { console.error(e) });
-    }
+        })
+        .catch(e => { console.error(e) });
 }
 
 setInterval(function(){ comprobar() }, TIME_LOOP);
