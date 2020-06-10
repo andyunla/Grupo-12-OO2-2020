@@ -323,9 +323,11 @@ CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`detalle_notificacion` (
   `producto_id` INT(11) NULL DEFAULT NULL,
   `cantidad` INT NULL DEFAULT 0,
   `pedido_id` INT(11) NULL DEFAULT NULL,
+  `chango_id` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id_detalle_notificacion`),
   INDEX `fk_detalle_notificacion_producto1_idx` (`producto_id` ASC),
   INDEX `fk_detalle_notificacion_pedido1_idx` (`pedido_id` ASC),
+  INDEX `fk_detalle_notificacion_chango1_idx` (`chango_id` ASC),
   CONSTRAINT `fk_detalle_notificacion_producto1`
     FOREIGN KEY (`producto_id`)
     REFERENCES `Grupo-12-BDD-OO2-2020`.`producto` (`id_producto`)
@@ -334,6 +336,11 @@ CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`detalle_notificacion` (
   CONSTRAINT `fk_detalle_notificacion_pedido1`
     FOREIGN KEY (`pedido_id`)
     REFERENCES `Grupo-12-BDD-OO2-2020`.`pedido_stock` (`id_pedido_stock`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_detalle_notificacion_chango1`
+    FOREIGN KEY (`chango_id`)
+    REFERENCES `Grupo-12-BDD-OO2-2020`.`chango` (`id_chango`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
