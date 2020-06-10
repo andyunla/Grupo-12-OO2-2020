@@ -35,8 +35,12 @@
                <li class="nav-item" th:classappend="${active=='ranking'} ? active : ''">
                     <a class="nav-link" th:href="@{/ranking}"><i class="fa fa-line-chart" aria-hidden="true"></i> Ranking</a>
                </li>
+               
                <li class="nav-item" th:classappend="${active=='reporte'} ? active : ''">
                     <a class="nav-link" th:href="@{/reporte}"><i class="fa fa-line-chart" aria-hidden="true"></i> Reporte</a>
+               </li>
+               <li class="nav-item" th:classappend="${active=='pedido'} ? active : ''">
+                    <a class="nav-link" th:href="@{/pedido}"><i class="fa fa-line-chart" aria-hidden="true"></i> Pedido</a>
                </li>
                <li class="nav-item" th:classappend="${active=='sueldos'} ? active : ''">
                     <a class="nav-link" th:href="@{/sueldos}"><i class="fa fa-money" aria-hidden="true"></i> Sueldos</a>

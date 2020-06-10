@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("pedido")
@@ -69,13 +70,14 @@ public class PedidoController {
     private UserService userService;
 
 	@GetMapping("")
-	public String pedidos(Model modelo) {
+	public ModelAndView pedidoStock() {
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.RANKING_ROOT);
 		// Obtenemos el usuario de la sesión
 		UserDto userDto = userService.getCurrentUser();
-		modelo.addAttribute("currentUser", userDto);
-		Set<PedidoStockModel> pedidos = pedidoStockService.getAllModel();
-		modelo.addAttribute("pedidos", pedidos);
-		return ViewRouteHelper.PEDIDO_VIEW;
+		modelAndView.addObject("currentUser", userDto);
+		List<PedidoStockModel> pedidos =  pedidoStockService.getAllModel();
+		modelAndView.addObject("pedidos", pedidos);
+		return modelAndView;
 	}
 
 	/**
