@@ -75,19 +75,13 @@ public class SueldoController {
 		int i = 0;
 		//Calculo comisiones y sueldo final
 		for (Empleado emp : empleados) {
-				
-			double sueldoFinal = localModel.calcularSueldo(emp);
-			double comisionVentaCompleta = localModel.calcularComisionVentaCompleta(emp);
-			double comisionVentaExterna = localModel.calcularComisionVentaExterna(emp);
-			double comisionStockCedido = localModel.calcularComisionStockCedido(emp);
-			
 			
 			if(!emp.isTipoGerente() && userDto.getLocal().getIdLocal() == emp.getLocal().getIdLocal() ) {
 				vendedores.add(empleadoConverter.entityToDto(emp) );
-				vendedores.get(i).setSueldoFinal(sueldoFinal);
-				vendedores.get(i).setComisionVentaCompleta(comisionVentaCompleta);
-				vendedores.get(i).setComisionVentaExterna(comisionVentaExterna);
-				vendedores.get(i).setComisionStockCedido(comisionStockCedido);
+				vendedores.get(i).setSueldoFinal(localModel.calcularSueldo(emp));
+				vendedores.get(i).setComisionVentaCompleta(localModel.calcularComisionVentaCompleta(emp));
+				vendedores.get(i).setComisionVentaExterna(localModel.calcularComisionVentaExterna(emp));
+				vendedores.get(i).setComisionStockCedido(localModel.calcularComisionStockCedido(emp));
 				i++;
 			}
 		}
