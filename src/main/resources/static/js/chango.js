@@ -3,6 +3,19 @@ const urlChango = host + '/chango/';
 var clienteElegido = false;
 var changoConItem = false;
 
+async function traerProductosDisponibles() {
+     let url = urlChango + 'productos-disponibles/' + document.getElementById("idChango").innerText;
+     console.log(url);
+     try {
+          let response = await fetch(url);
+          let productosHTML = await response.text();
+          console.log(productosHTML)
+          document.getElementById("productosDisponibles").innerHTML = productosHTML;
+     } catch (e) {
+          alert("No se pudo conectar al servidor");
+     }
+}
+
 /* AGREGA UN ITEM DE LA TABLA DE PRODUCTOS DISPONIBLES AL CHANGO */
 async function agregarItem(element) {
      let urlNewItem = urlChango + 'nuevo-item/' + element.dataset.idchango + '/' + element.dataset.idproducto;
@@ -181,6 +194,7 @@ function fadeOutEffect(fadeTarget) {
  }
 
  window.onload = () => {
+     traerProductosDisponibles();
      actualizarTotal();
      // Deteca si se elegió un cliente para permitir confirmar generar la factura
      document.getElementById("clienteFactura").addEventListener("change", () => {

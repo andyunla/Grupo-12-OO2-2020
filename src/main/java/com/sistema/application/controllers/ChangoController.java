@@ -20,6 +20,7 @@ import com.sistema.application.models.ProductoModel;
 import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IChangoService;
 import com.sistema.application.services.IItemService;
+import com.sistema.application.services.ILoteService;
 import com.sistema.application.services.IProductoService;
 import com.sistema.application.services.implementations.FacturaService;
 import com.sistema.application.services.IClienteService;
@@ -64,6 +65,10 @@ public class ChangoController {
      private IChangoService changoService;
 
      @Autowired
+     @Qualifier("loteService")
+     private ILoteService loteService;
+
+     @Autowired
      @Qualifier("localConverter")
      private LocalConverter localConverter;
      
@@ -104,23 +109,33 @@ public class ChangoController {
                mAV.setViewName("redirect:/chango/" + changoSesion.getIdChango());
                return mAV;
           }   
-          // Selecciono de todos los productos solo los que tienen stock en el local
-          List<ProductoDisponibleDto> productosConStock = new ArrayList<ProductoDisponibleDto>();
-          for (ProductoModel p : productoService.getAllModel()) {
-               int stock = localModel.calcularStockLocal(p);
-               if (stock > 0) {
-                    productosConStock.add(productoConverter.modelToDTO(p, stock, stock, false));
-               }
-          }
           ChangoModel nuevoChango = localModel.crearChango();
           changoSesion.setInstance(nuevoChango);
-          mAV.addObject("productos", productosConStock);
           mAV.addObject("chango", nuevoChango);
           mAV.addObject("items", new ArrayList<ItemModel>());
           mAV.addObject("clientes", clienteService.getAllModel());
           mAV.addObject("cliente", new ClienteModel());
           return mAV;
      } 
+
+     /* TRAER PRODUCTOS DISPONIBLES */
+     @GetMapping("/productos-disponibles/{idChango}")
+     public ModelAndView traerProductosDisponibles(@PathVariable("idChango") long idChango) {
+          ModelAndView mAV = new ModelAndView(ViewRouteHelper.PRODUCTOS_DISPONIBLES);
+          List<ProductoDisponibleDto> productosDisponibles = new ArrayList<ProductoDisponibleDto>();
+          for (ProductoModel producto : productoService.getAllModel()) {
+               int stock = loteService.calcularStock( producto, localModel );
+               ItemModel item = itemService.findByChangoAndProducto(idChango, producto.getIdProducto());
+               // Verifica si hay stock o si el producto está como item
+               if (stock > 0 || item != null) {
+                    // Si el producto está como item sumo su cantidad al stock que se visualizará
+                    int stockTotal = stock  + ((item != null) ? item.getCantidad() : 0);
+                    productosDisponibles.add(productoConverter.modelToDTO(producto, stockTotal, stock, item != null));
+               }
+          }
+          mAV.addObject("productos", productosDisponibles);
+          return mAV;
+     }
 
      /* MODIFICACIÓN DE UN CHANGO */
      @GetMapping("{idChango}")
@@ -139,20 +154,6 @@ public class ChangoController {
                return mAV;
           }
           changoSesion.setInstance( chango );
-          List<ProductoDisponibleDto> productosConStock = new ArrayList<ProductoDisponibleDto>();
-          // Paso como productos disponibles aquellos que tienen stock o que no tienen stock
-          // pero están como item del chango
-          for (ProductoModel p : productoService.getAllModel()) {
-               int stock = localModel.calcularStockLocal(p);
-               ItemModel item = itemService.findByChangoAndProducto(idChango, p.getIdProducto());
-               // Verifica si hay stock o si el producto está como item
-               if (stock > 0 || item != null) {
-                    // Si el producto está como item sumo su cantidad al stock que se visualizará
-                    int stockTotal = stock  + ((item != null) ? item.getCantidad() : 0);
-                    productosConStock.add(productoConverter.modelToDTO(p, stockTotal, stock, item != null));
-               }
-          }
-          mAV.addObject("productos", productosConStock);
           mAV.addObject("chango", changoSesion);
           mAV.addObject("items", itemService.findByChango(idChango) );
           mAV.addObject("clientes", clienteService.getAllModel());

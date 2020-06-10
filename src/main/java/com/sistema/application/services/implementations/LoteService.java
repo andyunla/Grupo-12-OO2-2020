@@ -9,7 +9,9 @@ import com.sistema.application.repositories.ILoteRepository;
 import com.sistema.application.converters.LoteConverter;
 import com.sistema.application.converters.ProductoConverter;
 import com.sistema.application.entities.Lote;
+import com.sistema.application.models.LocalModel;
 import com.sistema.application.models.LoteModel;
+import com.sistema.application.models.ProductoModel;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -109,5 +111,14 @@ public class LoteService implements ILoteService {
 			lotes.add(loteConverter.entityToModel(l));
 		}
 		return lotes;
+	}
+
+	@Override
+	public int calcularStock(ProductoModel producto, LocalModel local) {
+		int total = 0;
+		for(LoteModel lote: findByLoteProductoActivo(producto.getIdProducto(), local.getIdLocal())) {
+			total += lote.getCantidadActual();
+		}
+		return total;
 	}
 }
