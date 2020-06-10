@@ -32,13 +32,18 @@ public class DetalleNotificacion implements Serializable {
 	@Column(name="cantidad", nullable=false)
 	private int cantidad;
 
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="pedido_id", nullable=true)
+	private PedidoStock pedido;
+
 	public DetalleNotificacion() {}
 
-	public DetalleNotificacion(Long id, Producto producto, int cantidad) {
+	public DetalleNotificacion(Long id, Producto producto, int cantidad, PedidoStock pedido) {
 		super();
 		this.id = id;
 		this.producto = producto;
 		this.cantidad = cantidad;
+		this.pedido = pedido;
 	}
 
 	public Long getId() {
@@ -63,5 +68,13 @@ public class DetalleNotificacion implements Serializable {
 
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
+	}
+	
+	public PedidoStock getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(PedidoStock pedido) {
+		this.pedido = pedido;
 	}
 }

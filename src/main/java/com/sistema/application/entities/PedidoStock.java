@@ -46,6 +46,9 @@ public class PedidoStock implements Serializable {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="pedidoStock")
 	private Set<Chango> listaChangos;
 
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="producto")
+	private Set<DetalleNotificacion> listaDetallesNotificaciones;
+
 	public PedidoStock() {}
 
 	public PedidoStock(Producto producto, int cantidad, boolean aceptado, Empleado empleadoSolicitante, Empleado empleadoOferente) {
@@ -121,6 +124,14 @@ public class PedidoStock implements Serializable {
 
 	public void setListaChangos(Set<Chango> listaChangos) {
 		this.listaChangos = listaChangos;
+	}
+
+	public Set<DetalleNotificacion> getListaDetallesNotificaciones() {
+		return listaDetallesNotificaciones;
+	}
+
+	public void setListaDetallesNotificaciones(Set<DetalleNotificacion> listaDetallesNotificaciones) {
+		this.listaDetallesNotificaciones = listaDetallesNotificaciones;
 	}
 
 	@Override

@@ -42,7 +42,6 @@ public class Notificacion implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="local_to", nullable=true)
 	private Local localTo; // Indica el local a donde va dirijido, en caso de ser una solicitud
-	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="detalle_id", referencedColumnName="id_detalle_notificacion", nullable=true)
 	private DetalleNotificacion detalleNotificacion;
