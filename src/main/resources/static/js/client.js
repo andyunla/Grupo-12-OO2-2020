@@ -61,8 +61,9 @@ async function realizarSolicitudPedido(detalleEnvio) {
         if (response.ok) { // 200 - 299
             let text = await response.text();
             console.log("Solicitud realizada");
-            respuesta.detalleNotificacion.idPedidoStock = JSON.parse(text).idPedidoStock; // El id del pedido realizado
+            respuesta.detalleNotificacion = JSON.parse(text); // El id del pedido y el chango realizado
         } else {
+            respuesta.texto = "ERROR AL REALIZAR LA SOLICITUD";
             throw new Error();
         }
     } catch(e) {
@@ -128,6 +129,31 @@ function agregarListenerABotonesRechazar() {
     }));
 }
 
+function agregarListenerABotonesFacturar() {
+    let botonesFacturar = document.querySelectorAll('.botonFacturar');
+    botonesFacturar.forEach(boton => boton.addEventListener('click', (e) => {
+        let idChango = e.target.dataset.idChango;
+        let idPedidoStock = e.target.dataset.idPedidoStock;
+        let idNotificacion = e.target.dataset.id;
+        // AQUÍ
+        // Le mandamos el id para que lo marque como leída
+        confirmarRespuestas(idNotificacion);
+        // Eliminamos la notificación de la lista
+        document.getElementById("notificacion-" + idNotificacion).remove();
+    }));
+}
+
+function agregarListenerABotonesCerrar() {
+    let botonesCerrar = document.querySelectorAll('.botonCerrar');
+    botonesCerrar.forEach(boton => boton.addEventListener('click', (e) => {
+        let idNotificacion = e.target.dataset.id;        
+        // Le mandamos el id para que lo marque como leída
+        confirmarRespuestas(idNotificacion);
+        // Eliminamos la notificación de la lista
+        document.getElementById("notificacion-" + idNotificacion).remove();
+    }));
+}
+
 function cargarNotificaciones(lista) {
     var size = lista.length;
     if(size !== 0) {
@@ -142,12 +168,15 @@ function cargarNotificaciones(lista) {
         }
         agregarListenerABotonesAceptar();
         agregarListenerABotonesRechazar();
+        agregarListenerABotonesFacturar();
+        agregarListenerABotonesCerrar();
         console.log("Notificación recibida");
     }
 }
 
 function renderizarAHTML(obj) {
     var cargado = false;
+    var alert_tipo = "alert-info";
     if(obj.tipo.toUpperCase() === "SOLICITUD") { // Solicitud
         var msg = "El usuario <strong>" + obj.from + "</strong> necesita " + obj.detalleNotificacion.cantidad + " unidad(es) de " + 
                   "<strong>" + obj.detalleNotificacion.nombreProducto + "</strong>";
@@ -172,23 +201,26 @@ function renderizarAHTML(obj) {
                     break;
             }
             let botonFacturar = '<a href="#" class="btn btn-xs btn-primary pull-right botonFacturar" data-id="' + obj.id + 
-                                '" data-user-from="' + obj.from + '" data-id-producto="' + obj.detalleNotificacion.idProducto + 
-                                '" data-cantidad="' + obj.detalleNotificacion.cantidad + '"> Facturar</a>';
+                                'data-toggle="modal" data-target="#facturarPedido"' + 
+                                '" data-user-from="' + obj.from + '" data-id-chango="' + obj.detalleNotificacion.idChango + 
+                                '" data-id-pedido="' + obj.detalleNotificacion.idPedidoStock + '"> Facturar</a>';
             // En el caso de rechazo o error
             let botonCerrar = '<a href="#" class="btn btn-xs btn-primary pull-right botonCerrar" data-id="' + obj.id + 
-                                '" data-user-from="' + obj.from + '" data-id-producto="' + obj.detalleNotificacion.idProducto + 
-                                '" data-cantidad="' + obj.detalleNotificacion.cantidad + '"> Cerrar</a>';
-            var botones = (obj.texto.toUpperCase() === "ACEPTADO")? botonFacturar : botonCerrar;
+                                '" data-user-from="' + obj.from + '" data-id-chango="' + obj.detalleNotificacion.idChango + 
+                                '" data-id-pedido="' + obj.detalleNotificacion.idPedidoStock + '"> Cerrar</a>';
+            if(obj.texto.toUpperCase() === "ACEPTADO") {
+                var botones = botonFacturar;
+            } else {
+                var botones = botonCerrar;
+                alert_tipo = "alert-danger";
+            }
             cargado = true; // Para no enviar html cuando los botones no se establecieron
         }
     }
     if(cargado) {
         var html = '<div class="dropdown-item" id="notificacion-' + obj.id + '">' + 
-                        '<div class="alert alert-info">' +
-                            msg +
-                            '<div class="alert alert-info">' +
-                                botones +
-                            '</div>' +
+                        '<div class="alert ' + alert_tipo + '">' +
+                            msg + botones +
                         '<div class="dropdown-divider"></div>' +
                    '</div>';
     } else {
