@@ -23,16 +23,21 @@
                     </tr>
                 </thead>
                 <tbody id="tbody">
-                    <tr th:each="pedido :${pedidos}" class="fila-producto ">
-                        <td th:text="${pedido.idPedidoStock}"></td>
-                        <td th:text="${pedido.producto.nombre} +' unidades.'"></td>
-                        <td th:text="${pedido.cantidad}"></td>
-                        <td th:text="${pedido.empleadoSolicitante.nombre}"></td>
-                        <td th:if="${pedido.empleadoOferente} != null">
-                            <div th:text="${pedido.empleadoOferente.nombre}"></div>
+                    <tr th:each="pedido :${pedidos}" class="fila-producto  ">
+                        <td th:text="${pedido.idPedidoStock}" align="center"></td>
+                        <td th:text="${pedido.producto.nombre}" align="center"></td>
+                        <td th:text="${pedido.cantidad}" align="center"></td>
+                        <td th:text="${pedido.empleadoSolicitante.nombre}"align="center"></td>
+                        <td th:if="${pedido.empleadoOferente} != null" align="center">
+                            <div th:text="${pedido.empleadoOferente.nombre}" ></div>
                         </td>
-                        <td th:unless="${pedido.empleadoOferente} != null"> - </td>
-                        <td th:text="${pedido.aceptado}"></td>
+                        <td th:unless="${pedido.empleadoOferente} != null" align="center"> - </td>
+                        <td th:if="${pedido.aceptado} == true" align="center">
+                            <button  href="" class="btn btn-primary center">Facturar</button>                            
+                        </td>
+                        <td th:unless="${pedido.aceptado} == true " align="center">
+                            <button  href="" class="btn btn-dark btn-disabled center">Facturar</button>                            
+                        </td>
                     </tr>
                 </tbody>
             </table>
