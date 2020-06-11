@@ -121,7 +121,6 @@ public class PedidoController {
 			// Enviar de datos al cliente(js)
 			DetalleNotificacionDto detalleDto = new DetalleNotificacionDto();
 			detalleDto.setIdPedidoStock(pedido.getIdPedidoStock());
-			detalleDto.setIdChango(chango.getIdChango());
 			return new ResponseEntity<DetalleNotificacionDto>(detalleDto, HttpStatus.CREATED);
 		}
 		// Cualquier problema

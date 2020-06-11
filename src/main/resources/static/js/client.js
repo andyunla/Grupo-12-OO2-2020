@@ -78,7 +78,7 @@ function enviarRespuesta(respuesta) {
         type : "POST",
         url : url_api + "/responder",
         dataType: "json",
-        headers: { 
+        headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json' 
         },
@@ -129,24 +129,10 @@ function agregarListenerABotonesRechazar() {
     }));
 }
 
-function agregarListenerABotonesFacturar() {
-    let botonesFacturar = document.querySelectorAll('.botonFacturar');
-    botonesFacturar.forEach(boton => boton.addEventListener('click', (e) => {
-        let idChango = e.target.dataset.idChango;
-        let idPedidoStock = e.target.dataset.idPedidoStock;
-        let idNotificacion = e.target.dataset.id;
-        // AQUÍ
-        // Le mandamos el id para que lo marque como leída
-        confirmarRespuestas(idNotificacion);
-        // Eliminamos la notificación de la lista
-        document.getElementById("notificacion-" + idNotificacion).remove();
-    }));
-}
-
 function agregarListenerABotonesCerrar() {
     let botonesCerrar = document.querySelectorAll('.botonCerrar');
     botonesCerrar.forEach(boton => boton.addEventListener('click', (e) => {
-        let idNotificacion = e.target.dataset.id;        
+        let idNotificacion = e.target.dataset.id;
         // Le mandamos el id para que lo marque como leída
         confirmarRespuestas(idNotificacion);
         // Eliminamos la notificación de la lista
@@ -200,18 +186,11 @@ function renderizarAHTML(obj) {
                     var msg = "<strong>" + obj.texto + "</strong>";
                     break;
             }
-            let botonFacturar = '<a href="#" class="btn btn-xs btn-primary pull-right botonFacturar" data-id="' + obj.id + 
-                                'data-toggle="modal" data-target="#facturarPedido"' + 
-                                '" data-user-from="' + obj.from + '" data-id-chango="' + obj.detalleNotificacion.idChango + 
-                                '" data-id-pedido="' + obj.detalleNotificacion.idPedidoStock + '"> Facturar</a>';
             // En el caso de rechazo o error
-            let botonCerrar = '<a href="#" class="btn btn-xs btn-primary pull-right botonCerrar" data-id="' + obj.id + 
-                                '" data-user-from="' + obj.from + '" data-id-chango="' + obj.detalleNotificacion.idChango + 
-                                '" data-id-pedido="' + obj.detalleNotificacion.idPedidoStock + '"> Cerrar</a>';
-            if(obj.texto.toUpperCase() === "ACEPTADO") {
-                var botones = botonFacturar;
-            } else {
-                var botones = botonCerrar;
+            var botones = '<a href="#" class="btn btn-xs btn-primary pull-right botonCerrar" data-id="' + obj.id + 
+                          '" data-user-from="' + obj.from + '" data-id-chango="' + obj.detalleNotificacion.idChango + 
+                          '" data-id-pedido="' + obj.detalleNotificacion.idPedidoStock + '"> Cerrar</a>';
+            if(obj.texto.toUpperCase() === "RECHAZADO") {
                 alert_tipo = "alert-danger";
             }
             cargado = true; // Para no enviar html cuando los botones no se establecieron
