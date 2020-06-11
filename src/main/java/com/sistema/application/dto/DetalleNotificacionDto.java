@@ -2,25 +2,28 @@ package com.sistema.application.dto;
 
 public class DetalleNotificacionDto {
 	private long id;
-	private long idProducto;
+	private Long idProducto;
 	private String nombreProducto;
 	private int cantidad;
+	private Long idPedidoStock;
 	
 	public DetalleNotificacionDto() {}
 	
-	public DetalleNotificacionDto(long idProducto, String nombreProducto, int cantidad) {
+	public DetalleNotificacionDto(Long idProducto, String nombreProducto, int cantidad, Long idPedidoStock) {
 		super();
 		this.idProducto = idProducto;
 		this.nombreProducto = nombreProducto;
 		this.cantidad = cantidad;
+		this.idPedidoStock = idPedidoStock;
 	}
 	
-	public DetalleNotificacionDto(long id, long idProducto, String nombreProducto, int cantidad) {
+	public DetalleNotificacionDto(long id, Long idProducto, String nombreProducto, int cantidad, Long idPedidoStock) {
 		super();
 		this.id = id;
 		this.idProducto = idProducto;
 		this.nombreProducto = nombreProducto;
 		this.cantidad = cantidad;
+		this.idPedidoStock = idPedidoStock;
 	}
 
 	public long getId() {
@@ -31,11 +34,11 @@ public class DetalleNotificacionDto {
 		this.id = id;
 	}
 
-	public long getIdProducto() {
+	public Long getIdProducto() {
 		return idProducto;
 	}
 
-	public void setIdProducto(long idProducto) {
+	public void setIdProducto(Long idProducto) {
 		this.idProducto = idProducto;
 	}
 
@@ -55,9 +58,17 @@ public class DetalleNotificacionDto {
 		this.cantidad = cantidad;
 	}
 
+	public Long getIdPedidoStock() {
+		return idPedidoStock;
+	}
+
+	public void setIdPedidoStock(Long idPedidoStock) {
+		this.idPedidoStock = idPedidoStock;
+	}
+
 	@Override
 	public String toString() {
 		return "DetallePedidoDto [id=" + id + ", idProducto=" + idProducto + ", nombreProducto=" + nombreProducto + ", cantidad="
-				+ cantidad + "]";
+				+ cantidad + ", idPedidoStock=" + idPedidoStock + "]";
 	}
 }

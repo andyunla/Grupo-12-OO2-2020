@@ -1,5 +1,6 @@
 package com.sistema.application.controllers.api.v1;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.sistema.application.converters.EmpleadoConverter;
@@ -16,12 +17,18 @@ import com.sistema.application.services.IProductoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.expression.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController 
 @RequestMapping("api/v1/notificacion")
@@ -55,7 +62,7 @@ public class NotificacionRestController {
     	String userTo = null;
     	ProductoModel producto = productoService.findByIdProducto(idProducto);
         NotificacionDto newNotificacionDto = new NotificacionDto(UtilHelper.TIPO_NOTIFICACION_SOLICITUD, false, texto, usernameSolicitante, userTo, idLocal2, 
-        														 new DetalleNotificacionDto(idProducto, producto.getNombre(), cantidad));
+        														 new DetalleNotificacionDto(idProducto, producto.getNombre(), cantidad, null));
         NotificacionDto notificacionGuardada = notificacionService.insertOrUpdate(newNotificacionDto);
         if(notificacionGuardada != null)
         	return new ResponseEntity<String>(HttpStatus.CREATED);
@@ -84,18 +91,13 @@ public class NotificacionRestController {
     }
     
     // Crear una notificación que indique la respuesta del oferente
-    @GetMapping("responder/{usernameFrom}/{usernameTo}/{fueAceptado}")
-    ResponseEntity<String> responder(@PathVariable("usernameFrom") String usernameFrom, @PathVariable("usernameTo") String usernameTo,
-    								 @PathVariable("fueAceptado") boolean fueAceptado) {
-    	String texto = UtilHelper.NOTIFICACION_RECHAZADA;
-        boolean estado = false; // false porque es para que le llegue como respuesta; luego se setea a true
-        if(fueAceptado) {
-            texto = UtilHelper.NOTIFICACION_ACEPTADA;
-        }
-        NotificacionDto newNotificacionDto = new NotificacionDto(UtilHelper.TIPO_NOTIFICACION_RESPUESTA, estado, texto, usernameFrom, usernameTo, null, null);
-        NotificacionDto notificacionGuardada = notificacionService.insertOrUpdate(newNotificacionDto);
-        if(notificacionGuardada != null)
-        	return new ResponseEntity<String>(HttpStatus.CREATED);
+    @RequestMapping(value = "responder", method = RequestMethod.POST)
+    ResponseEntity<String> responder(@RequestBody NotificacionDto respuesta) throws ParseException, IOException {
+        boolean estadoLeido = false; // false para que llegue como respuesta no leída; luego se setea a true
+        respuesta.setEstado(estadoLeido);
+        NotificacionDto respuestaGuardada = notificacionService.insertOrUpdate(respuesta);
+        if(respuestaGuardada != null)
+            return new ResponseEntity<String>(HttpStatus.CREATED);
         // Cualquier problema
         return new ResponseEntity<String>(HttpStatus.OK);
     }
