@@ -24,6 +24,7 @@ import com.sistema.application.entities.Empleado;
 import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IEmpleadoService;
 import com.sistema.application.services.IFacturaService;
+import com.sistema.application.services.implementations.UserService;
 
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,12 +35,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class SueldoController {
 
 	@Autowired
-    @Qualifier("userRepository")
-    private IUserRepository userRepository;	
-	
-	@Autowired
-	@Qualifier("userConverter")
-	private UserConverter userConverter;
+    @Qualifier("userService")
+    private UserService userService;
 	
 	@Autowired
     @Qualifier("empleadoService")
@@ -62,13 +59,9 @@ public class SueldoController {
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.SUELDO_ROOT);
 		
 		//Chequea que sea un gerente
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
-		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
-		userDto.setTipoGerente(isGerente);
+		UserDto userDto = userService.getCurrentUser();
 		modelAndView.addObject("currentUser", userDto);
 
-			
 		List<Empleado> empleados = empleadoService.getAll();
 		List<EmpleadoDto> vendedores = new ArrayList<EmpleadoDto>();
 
