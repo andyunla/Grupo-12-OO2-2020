@@ -69,19 +69,17 @@ public class LoteController {
      @PostMapping("agregar")
      public String agregar(@Valid @ModelAttribute("lote") LoteModel nuevoLote, BindingResult bindingResult) {
           nuevoLote.setCantidadActual(nuevoLote.getCantidadInicial());
-          
-	      if(bindingResult.hasErrors()) {
-	    	  return ViewRouteHelper.LOTE_ABM;
-	  	  }else {
-	  		  loteService.insertOrUpdate(nuevoLote);
-	  	  }
-	      
+          if(bindingResult.hasErrors()) {
+               return ViewRouteHelper.LOTE_ABM;
+          } else {
+               loteService.insertOrUpdate(nuevoLote);
+          }
           return "redirect:/" + ViewRouteHelper.LOTE_ROOT;
      }
 
      @GetMapping("traer/{idLocal}/{idProducto}/{soloActivos}")
      public ModelAndView traer(@PathVariable("idLocal") long idLocal, @PathVariable("idProducto") long idProducto,
-               @PathVariable("soloActivos") boolean soloActivos) {
+                               @PathVariable("soloActivos") boolean soloActivos) {
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.LISTA_LOTES);
           List<LoteModel> lotes = loteService.findByLocalProductoAndActivo(idLocal, idProducto, soloActivos);
           mAV.addObject("lotes", lotes);
