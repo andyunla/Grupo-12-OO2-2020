@@ -46,7 +46,7 @@ public class PedidoStock implements Serializable {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="pedidoStock")
 	private Set<Chango> listaChangos;
 
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="producto")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="pedido")
 	private Set<DetalleNotificacion> listaDetallesNotificaciones;
 
 	public PedidoStock() {}
