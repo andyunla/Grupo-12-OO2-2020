@@ -33,12 +33,12 @@
                         </td>
                         <td th:unless="${pedido.empleadoOferente} != null" align="center"> - </td>
                         <td th:if="${pedido.aceptado} == true" align="center">
-                            <button class="btn btn-primary m-1" data-toggle="modal" data-target="#facturarChango">
-                                 Facturar
-                            </button>
+                            <button class="btn btn-primary m-1" data-toggle="modal" data-target="#facturarPedido">
+                         	FACTURAR
+                    		</button>                            
                         </td>
                         <td th:unless="${pedido.aceptado} == true " align="center">
-                            <button class="btn btn-dark m-1" disabled >Facturar</button>
+                            <button  class="btn btn-dark " disabled >FACTURAR</button>                            
                         </td>
                     </tr>
                 </tbody>
