@@ -76,7 +76,7 @@ public class NotificacionService implements INotificacionService {
     public List<NotificacionDto> findByUserFrom(String usernameFrom) {
         List<NotificacionDto> lista = new ArrayList<NotificacionDto>();
         User user = userRepository.findByUsernameAndFetchUserRolesEagerly(usernameFrom);
-        for(Notificacion notificacion: notificacionRepository.findByUserTo(user.getId())) {
+        for(Notificacion notificacion: notificacionRepository.findByUserFrom(user.getId())) {
             lista.add(notificacionConverter.entityToDto(notificacion));
         }
         return lista;
