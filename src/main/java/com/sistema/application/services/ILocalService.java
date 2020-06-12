@@ -3,7 +3,10 @@ package com.sistema.application.services;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.sistema.application.dto.EmpleadoDto;
 import com.sistema.application.dto.ProductoRankingDto;
+import com.sistema.application.entities.Empleado;
+import com.sistema.application.entities.Factura;
 import com.sistema.application.entities.Local;
 import com.sistema.application.models.LocalModel;
 
@@ -27,4 +30,15 @@ public interface ILocalService {
 	
 	public List<ProductoRankingDto> reporte(LocalDate fecha1, LocalDate fecha2, long idLocal);
 	
+	public double calcularSueldo(Empleado empleado);
+	
+	public List<Factura> traerFacturaMesPasado();
+	
+	public double calcularComisionVentaCompleta(Empleado empleado);
+	
+	public double calcularComisionVentaExterna(Empleado empleado);
+	
+	public double calcularComisionStockCedido(Empleado empleado);
+	
+	public List<EmpleadoDto> calcularSueldoGlobal();
 }
