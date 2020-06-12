@@ -112,7 +112,7 @@ public class ChangoController {
           ChangoModel nuevoChango = localModel.crearChango();
           changoSesion.setInstance(nuevoChango);
           mAV.addObject("chango", nuevoChango);
-          mAV.addObject("items", new ArrayList<ItemModel>());
+          //mAV.addObject("items", new ArrayList<ItemModel>());
           mAV.addObject("clientes", clienteService.getAllModel());
           mAV.addObject("cliente", new ClienteModel());
           return mAV;
@@ -136,6 +136,15 @@ public class ChangoController {
           mAV.addObject("productos", productosDisponibles);
           return mAV;
      }
+
+     /* TRAER ITEMS DEL CHANGO */
+     @GetMapping("/items/{idChango}")
+     public ModelAndView traerItems(@PathVariable("idChango") long idChango) {
+          ModelAndView mAV = new ModelAndView(ViewRouteHelper.ITEMS);
+          mAV.addObject("items", itemService.findByChango(idChango));
+          return mAV;
+     }
+          
 
      /* MODIFICACIÓN DE UN CHANGO */
      @GetMapping("{idChango}")

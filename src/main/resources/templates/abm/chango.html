@@ -17,9 +17,9 @@
                     <p class="text-center quick-sand text-secondary p-0 m-0">PRODUCTOS DISPONIBLES</p>
                     <!-- BUSCADOR DE PRODUCTOS -->
                     <div class="input-group input-group-sm search-bar m-1">
-                         <input type="search" class="form-control" placeholder="Producto..." onsearch="buscar()">
+                         <input type="search" class="form-control" placeholder="Buscar producto" onsearch="buscar(this)">
                          <div class="input-group-append">
-                              <button class="btn btn-outline-secondary" type="button" onclick="buscar()">
+                              <button class="btn btn-outline-secondary" style="cursor: initial;" type="button" disabled>
                                    <svg th:replace="fragments/icons :: searchIcon"></svg>
                               </button>
                          </div>
@@ -75,61 +75,8 @@
                          <tr class="m-0 p-0">
                               <td class="m-0 p-0">
                                    <div style="height:40vh; overflow:auto;">
-                                        <table class="table shadow bg-white rounded" id="tablaChango">
-                                             <!--  ITEMS EN CASO DE QUE EL CHANGO NO SEA NUEVO -->
-                                             <tr th:each="item :${items}" class="item" th:id="'item' + ${item.idItem}"
-                                                  th:attr="data-idProducto = ${item.getProductoModel().idProducto}">
-                                                  <td class="width-30" th:text="${item.getProductoModel().nombre}"></td>
-                                                  <td class="width-10" th:text="${item.getProductoModel().talle}"></td>
-                                                  <td class="width-20 just-in-big-screen"
-                                                       th:text="${'$' + item.getProductoModel().precio}"></td>
-                                                  <td class="width-40 pt-1 pb-1">
-                                                       <div class="d-flex w-100 justify-content-center">
-                                                            <div class="input-group w-75 flex-nowrap">
-                                                                 <div class="input-group-prepend">
-                                                                      <button
-                                                                           class="btn btn-outline-info btn-sm btn-cart"
-                                                                           data-toggle="tooltip" data-placement="top"
-                                                                           title="Restar" type="button"
-                                                                           th:attr="'data-idItem' = ${item.idItem}"
-                                                                           onclick="modificarCantidad(this, -1)">
-                                                                           <svg
-                                                                                th:replace="fragments/icons :: subtractIcon"></svg>
-                                                                      </button>
-                                                                 </div>
-                                                                 <input type="number" th:value="${item.cantidad}"
-                                                                      class="form-control text-center border-info no-arrows"
-                                                                      style="min-width: 2em !important; padding: 0;"
-                                                                      th:id="'cantidad-item' + ${item.idItem}"
-                                                                      th:attr="'data-idItem' = ${item.idItem}"
-                                                                      data-lastValue="1"
-                                                                      onchange="modificarCantidad(this)">
-                                                                 <div class="input-group-append">
-                                                                      <button
-                                                                           class="btn btn-outline-info btn-sm btn-cart"
-                                                                           data-toggle="tooltip" data-placement="top"
-                                                                           title="Agregar" type="button"
-                                                                           th:attr="'data-idItem' = ${item.idItem}"
-                                                                           onclick="modificarCantidad(this, 1)">
-                                                                           <svg
-                                                                                th:replace="fragments/icons :: addIcon"></svg>
-                                                                      </button>
-                                                                      <button class="btn btn-outline-danger btn-sm"
-                                                                           data-toggle="tooltip" data-placement="top"
-                                                                           title="Eliminar Item" type="button"
-                                                                           th:attr="data-idItem= ${item.idItem},
-                                                                                data-idProducto= ${item.getProductoModel().idProducto}"
-                                                                           onclick="eliminarItem(this)">
-                                                                           <svg
-                                                                                th:replace="fragments/icons :: deleteIcon"></svg>
-                                                                      </button>
-                                                                 </div>
-                                                            </div>
-                                                       </div>
-                                                  </td>
-                                             </tr>
-                                             <!--   -->
-                                        </table>
+                                        <!-- LE CAMBIE EL NOMBRE DEL ID tablaChango-->
+                                        <table class="table shadow bg-white rounded" id="itemsChango"></table>
                                    </div>
                               </td>
                          </tr>
@@ -170,7 +117,8 @@
                               th:action="@{/factura/confirmar/{idChango}(idChango = ${chango.idChango})}">
                               <div class="form-group d-flex flex-column align-items-center m-1">
                                    <label for="clienteFactura" class="mb-2 quicksand">Cliente:</label>
-                                   <select class="custom-select mb-4 w-75" th:field="*{nroCliente}" id="clienteFactura">
+                                   <select class="custom-select mb-4 w-75" th:field="*{nroCliente}" id="clienteFactura"
+                                        onchange="activarClienteElegido()">
                                         <option value="0" selected hidden disabled>Seleccione un cliente</option>
                                         <option th:each="c: ${clientes}" th:value="${c.nroCliente}"
                                              th:text="${c.dni + ' - ' + c.nombre + ' ' +  c.apellido }"></option>

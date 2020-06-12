@@ -25,6 +25,8 @@ public class ViewRouteHelper {
 	public final static String ITEM = "partial/item";
 	public final static String PRODUCTOS_DISPONIBLES = "partial/productosDisponibles";
 	public final static String LISTA_FACTURAS = "partial/listaFacturas";
+	public final static String ITEMS = "partial/items";
+
 
 	// CASOS DE USO
 	public final static String DISTANCIA_ROOT = "cu/distancia";

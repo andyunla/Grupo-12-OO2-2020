@@ -5,18 +5,32 @@ var changoConItem = false;
 
 async function traerProductosDisponibles() {
      let url = urlChango + 'productos-disponibles/' + document.getElementById("idChango").innerText;
-     console.log(url);
      try {
           let response = await fetch(url);
           let productosHTML = await response.text();
-          console.log(productosHTML)
           document.getElementById("productosDisponibles").innerHTML = productosHTML;
      } catch (e) {
+          console.error(e);
           alert("No se pudo conectar al servidor");
      }
 }
 
-/* AGREGA UN ITEM DE LA TABLA DE PRODUCTOS DISPONIBLES AL CHANGO */
+async function traerItems() {
+     let url = urlChango + 'items/' + document.getElementById("idChango").innerText;
+     console.log(url);
+     try {
+          let response = await fetch(url);
+          let itemsHTML = await response.text();
+          document.getElementById("itemsChango").innerHTML = itemsHTML;
+     } catch (e) {
+          console.error(e);
+          alert("No se pudo conectar al servidor");
+     } finally {
+          actualizarTotal();
+     }
+}
+
+/* AGREGA UN ITEM DE LA TABLA DE PRODUCTOS DISPONIBLES AL CHANGO 
 async function agregarItem(element) {
      let urlNewItem = urlChango + 'nuevo-item/' + element.dataset.idchango + '/' + element.dataset.idproducto;
      try {
@@ -43,7 +57,7 @@ async function agregarItem(element) {
      }
 }
 
-/* ELIMINA UN ITEM DE LA TABLA DEL CHANGO */
+/* ELIMINA UN ITEM DE LA TABLA DEL CHANGO 
 async function eliminarItem(e) {
      let urlDeleteItem = urlChango + 'eliminar-item/' + e.dataset.iditem;
      try {
@@ -71,7 +85,7 @@ async function eliminarItem(e) {
      }
 }
 
-/* MODIFICA LA CANTIDAD DE UN ITEM */
+/* MODIFICA LA CANTIDAD DE UN ITEM 
 async function modificarCantidad(element, valor = 0) {
      // El valor es la cantidad a sumar o restar de la cantidad actual
      let cantidadInput = document.getElementById("cantidad-item" + element.dataset.iditem);
@@ -116,7 +130,7 @@ async function modificarCantidad(element, valor = 0) {
      }
 }
 
-/* AGREGA O RESTA UNA UNIDAD A UN ITEM */
+/* AGREGA O RESTA UNA UNIDAD A UN ITEM 
 function cambiarUnidad(element, valor) {
      // El valor es la cantidad a sumar o restar de la cantidad actual
      let cantidadInput = document.getElementById("cantidad-item" + element.dataset.iditem);
@@ -134,8 +148,9 @@ function actualizarTotal() {
      let total = 0;
      for (let element of itemsElements) {
           // Obtengo el precio de la lista de items en chango y lo multiplico por la cantidad
-          let precio = element.children[2].innerText.substring(1);
-          let cantidad = document.getElementById('cantidad-' + element.id).value;
+          let precio = element.children[2].innerText;
+          console.log('cantidad-' + element.dataset.id);
+          let cantidad = document.getElementById('cantidad-item' + element.dataset.id).value;
           total += (precio * cantidad);
      }
      document.getElementById("total").innerText = '$' + total;
@@ -144,22 +159,24 @@ function actualizarTotal() {
      document.getElementById("botonConfirmar").disabled = !(changoConItem && clienteElegido);
 }
 
-/* ACTUALIZA EL STOCK QUE SE MUESTRA EN LA TABLA PRODUCTOS */
+/* ACTUALIZA EL STOCK QUE SE MUESTRA EN LA TABLA PRODUCTOS 
 function actualizarStock(idProducto, cantidadEnItem) {
     let filaProducto = document.getElementById("producto" + idProducto);
     let columnaStock = filaProducto.children[4];
     columnaStock.innerText = parseInt(columnaStock.dataset.stockinicial) - cantidadEnItem;
-}
+}*/
 
 /* BUSCA UN PRODUCTO POR SU NOMBRE */
-function buscar() {
-     let valorBuscado = document.querySelector('input[type=search]').value;
+function buscar(e) {
+     let valorBuscado = e.value;
+     console.log(valorBuscado)
      // Obtiene la lista <tr> de filas de la tabla
      let elementosProducto = document.getElementById("productosDisponibles").children;
      if (valorBuscado != "") {
           for (let filaProducto of elementosProducto) {
                // Si el producto de la fila incluye el valor buscado será visible
-               let nombreProducto = filaProducto.children[1].innerText;
+               let nombreProducto = filaProducto.children[0].innerText;
+               console.log(nombreProducto)
                if (nombreProducto.toUpperCase().includes(valorBuscado.toUpperCase())) {
                     filaProducto.classList.remove('d-none');
                } else {
@@ -192,14 +209,14 @@ function fadeOutEffect(fadeTarget) {
          }
      }, 100);
  }
-
+/*
+ function activarClienteElegido(e) {
+     clienteElegido = true;
+     // Habilita el boton de confirmar la factura si ya hay un chango cargado
+     document.getElementById("botonConfirmar").disabled = !(changoConItem && clienteElegido);
+ }
+*/
  window.onload = () => {
      traerProductosDisponibles();
-     actualizarTotal();
-     // Deteca si se elegió un cliente para permitir confirmar generar la factura
-     document.getElementById("clienteFactura").addEventListener("change", () => {
-          clienteElegido = true;
-          // Habilita el boton de confirmar la factura si ya hay un chango cargado y un cliente elegido
-          document.getElementById("botonConfirmar").disabled = !(changoConItem && clienteElegido);
-     });
+     traerItems();
 }
