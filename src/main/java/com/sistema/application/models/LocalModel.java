@@ -30,7 +30,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 
-@Component("localModel")
+@Component("localSesion")
 public class LocalModel {
 
 	// Atributos

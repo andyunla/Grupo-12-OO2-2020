@@ -2,9 +2,10 @@ const urlChango = host + '/chango/';
 /* Flags para detectar si ya se puede habilitar la facturación */
 var clienteElegido = false;
 var changoConItem = false;
+var idChango = 0;   // Id del chango actual
 
 async function traerProductosDisponibles() {
-     let url = urlChango + 'productos-disponibles/' + document.getElementById("idChango").innerText;
+     let url = urlChango + 'productos-disponibles/' + idChango;
      try {
           let response = await fetch(url);
           let productosHTML = await response.text();
@@ -16,8 +17,7 @@ async function traerProductosDisponibles() {
 }
 
 async function traerItems() {
-     let url = urlChango + 'items/' + document.getElementById("idChango").innerText;
-     console.log(url);
+     let url = urlChango + 'items/' + idChango;
      try {
           let response = await fetch(url);
           let itemsHTML = await response.text();
@@ -27,6 +27,64 @@ async function traerItems() {
           alert("No se pudo conectar al servidor");
      } finally {
           actualizarTotal();
+     }
+}
+
+function sumar(idItem, cantidad) {
+     
+}
+
+async function agregarItem(idProducto) {
+     let urlNuevoItem = urlChango + 'nuevo-item/' + idChango + '/' + idProducto;
+     let boton = document.getElementById('botonProducto' + idProducto);
+     try {
+          let response = await fetch(urlNuevoItem, { method: 'POST' });
+          // Verifica si el item fue creado, puede que no si ya existía
+          if (response.status != 201) {
+               throw new Error(response);
+          }
+          let htmlItem = await response.text();
+          // Agrega el item a la tabla del chango
+          let template = document.createElement('template');
+          template.innerHTML = htmlItem.trim();
+          document.getElementById("itemsChango").appendChild(template.content.firstChild);
+          // Deshabilita el boton de agregar en la lista de productos
+          boton.innerText = "LISTO";
+          boton.disabled = true;
+          boton.classList.remove('btn-info');
+          boton.classList.add('btn-success');
+          actualizarTotal();
+          //actualizarStock(idProducto, 1);
+     }
+     catch (e) {
+          alert("ERROR, no se pudo agregar");
+          console.error(e);
+     }
+}
+
+async function eliminarItem(idItem, idProducto) {
+     let urlDeleteItem = urlChango + 'eliminar-item/' + idItem;
+     try {
+          let response = await fetch(urlDeleteItem, { method: 'POST' });
+          if (response.status == 200) {
+               // Devuelvo el stock disponible
+               //actualizarStock(e.dataset.idproducto, 0);
+               // Elimino el item de la vista
+               let filaItem = document.getElementById('idItem' + idItem);
+               filaItem.parentElement.removeChild(filaItem);
+               // Rehabilita el boton de agregar en la tabla de productos
+               let botonProducto = document.getElementById("botonProducto" + idProducto);
+               botonProducto.classList.remove('btn-success');
+               botonProducto.classList.add('btn-info');
+               botonProducto.innerText = "AGREGAR";
+               botonProducto.disabled = false;
+               actualizarTotal();
+          } else {
+               throw new Error();
+          }
+     }
+     catch (e) {
+          alert("Error, no se pudo eliminar");
      }
 }
 
@@ -149,8 +207,7 @@ function actualizarTotal() {
      for (let element of itemsElements) {
           // Obtengo el precio de la lista de items en chango y lo multiplico por la cantidad
           let precio = element.children[2].innerText;
-          console.log('cantidad-' + element.dataset.id);
-          let cantidad = document.getElementById('cantidad-item' + element.dataset.id).value;
+          let cantidad = document.getElementById('cantidad-item' + element.dataset.iditem).value;
           total += (precio * cantidad);
      }
      document.getElementById("total").innerText = '$' + total;
@@ -217,6 +274,7 @@ function fadeOutEffect(fadeTarget) {
  }
 */
  window.onload = () => {
+     idChango = document.getElementById("idChango").innerText;
      traerProductosDisponibles();
      traerItems();
 }

@@ -30,4 +30,11 @@ public interface ILoteService {
 	public List<LoteModel> findByLoteProductoNoNuevo(long idProducto, long idLocal);
 
 	public int calcularStock(ProductoModel Producto, LocalModel local);
+
+	public boolean verificarStock(ProductoModel Producto, LocalModel local, int cantidad);
+
+	public boolean consumirStock(LocalModel local, ProductoModel producto, int cantidad);
+
+	public boolean devolverStock(LocalModel local, ProductoModel producto, int cantidad);
+
 }

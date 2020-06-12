@@ -1,4 +1,4 @@
-<tr th:each="item :${items}" class="item" th:attr="data-id=${item.idItem}">
+<tr th:each="item :${items}" class="item" th:id="'idItem' + ${item.idItem}" th:attr="data-idItem = ${item.idItem}">
      <td class="width-30" th:text="${item.getProductoModel().nombre}"></td>
      <td class="width-10" th:text="${item.getProductoModel().talle}"></td>
      <td class="width-20 just-in-big-screen" th:text="${item.getProductoModel().precio}"></td>

@@ -5,21 +5,15 @@
      <td scope="col" class="width-10 text-secondary smaller-text just-in-big-screen"
           th:attr="data-stockInicial = ${producto.stockTotal}" th:text="${producto.stockDisponible}"></td>
      <td class="width-20 p-0 align-middle">
-          <!-- SAQUÉ LA ID DEL CHANGO y el botonid
-           <button th:if="${producto.enChango}" class="btn btn-success btn-sm boton-agregar-poducto m-0" 
-               th:attr="data-idProducto = ${producto.idProducto}, data-idChango = ${chango.idChango}"
-               th:id="'botonProducto' + ${producto.idProducto}" onclick="agregarItem(this)" disabled
-          >
-           -->
           <button th:if="${producto.enChango}" class="btn btn-success btn-sm boton-agregar-poducto m-0" 
-               th:attr="data-idProducto = ${producto.idProducto}"
-               onclick="agregarItem(this)" disabled
+               th:id="'botonProducto' + ${producto.idProducto}"
+               th:onclick="agregarItem([[${producto.idProducto}]])" disabled
           >
                LISTO
           </button>
           <button th:unless="${producto.enChango}" class="btn btn-info btn-sm boton-agregar-poducto m-0" 
-               th:attr="data-idProducto = ${producto.idProducto}"
-               th:id="'botonProducto' + ${producto.idProducto}" onclick="agregarItem(this)"
+               th:id="'botonProducto' + ${producto.idProducto}" 
+               th:onclick="agregarItem([[${producto.idProducto}]])"
           >
                AGREGAR
           </button>
