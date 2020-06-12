@@ -2,9 +2,7 @@ package com.sistema.application.models;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -13,7 +11,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.sistema.application.converters.ProductoConverter;
-import com.sistema.application.dto.ProductoRankingDto;
 import com.sistema.application.funciones.Funciones;
 import com.sistema.application.services.IChangoService;
 import com.sistema.application.services.IFacturaService;
@@ -22,9 +19,6 @@ import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.ILoteService;
 import com.sistema.application.services.IPedidoStockService;
 import com.sistema.application.services.IProductoService;
-
-import com.sistema.application.entities.Empleado;
-import com.sistema.application.entities.Factura;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Max;
@@ -483,92 +477,6 @@ public class LocalModel {
 																// local
 		}
 	}
-
-	/****************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////
-	// 13) CIERRE DEL MES PARA DEFINIR EL SUELDO DE LOS
-	////////////////////////////////////////////////////////////////////////////////////////////////////// EMPLEADOS//////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////////////////
-	/****************************************************************************************************/
-	public double calcularSueldo(Empleado empleado) {
-		double comisionCompleta = 0;
-		System.out.println(empleado.getDni());
-		for (Factura fa : traerFacturaMesPasado()) {// para cada factura del mes pasado
-			
-			if (fa.getEmpleado().equals(empleado) ) { // si la factura pertenece a este empleado
-				System.out.println(fa.getEmpleado().getDni());
-				// el chango de la factura tiene un pedido stock, esta factura es con stock de otro local
-				if (fa.getChango().getPedidostock() != null && fa.getChango().getPedidostock().getEmpleadoSolicitante().equals(empleado)) {
-					comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 3) / 100); // si el empleado solicito stock de otro local se calcula la comision de 3%
-					System.out.println(comisionCompleta);
-				} 
-				
-				// si la factura no es de este empleado y si este empleado ofreció stock se le calcula el 2%
-				if (fa.getChango().getPedidostock() != null && fa.getChango().getPedidostock().getEmpleadoOferente().equals(empleado)) {
-					comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 2) / 100);
-					System.out.println(comisionCompleta);
-				}
-				
-				// si este empleado no pidio stock se calcula la comision del 5%
-				if (fa.getChango().getPedidostock() == null) {
-					comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 5) / 100);
-					System.out.println(comisionCompleta);
-				}
-				System.out.println("Hola");
-			}
-			
-		}
-		return (empleado.getSueldoBasico() + comisionCompleta);
-	}
-
-	public List<Factura> traerFacturaMesPasado() {
-		LocalDate fecha1 = LocalDate.now().minusMonths(1).withDayOfMonth(1);// mes pasado dia 1
-		LocalDate fecha2 = LocalDate.now().minusMonths(1).withDayOfMonth(fecha1.lengthOfMonth());// último día del mes pasado
-		return facturaService.findByFechaFacturaBetween(fecha1, fecha2);// retorno la lista de facturas
-	}
 	
-	public double calcularComisionVentaCompleta(Empleado empleado) {
-		double comisionVentaCompleta = 0;
-		for (Factura fa : traerFacturaMesPasado()) {
-			if (fa.getEmpleado().equals(empleado)) { 
-				if (fa.getChango().getPedidostock() == null) {
-					System.out.println(comisionVentaCompleta);
-					comisionVentaCompleta = comisionVentaCompleta + ((fa.getCosteTotal() * 5) / 100);
-					System.out.println(comisionVentaCompleta);
-				}
-			}
-		}
-		return (comisionVentaCompleta);
-	}
-
-	
-	public double calcularComisionVentaExterna(Empleado empleado) {
-		double comisionVentaExterna = 0;
-		for (Factura fa : traerFacturaMesPasado()) {
-			if (fa.getEmpleado().equals(empleado)) {
-				if (fa.getChango().getPedidostock() != null && fa.getChango().getPedidostock().getEmpleadoSolicitante().equals(empleado) ){
-					System.out.println(comisionVentaExterna);
-					comisionVentaExterna = comisionVentaExterna + ((fa.getCosteTotal() * 3) / 100);
-					System.out.println(comisionVentaExterna);
-				}
-			}
-		}
-		return (comisionVentaExterna);
-	}
-	
-	
-	public double calcularComisionStockCedido(Empleado empleado) {
-		double comisionStockCedido = 0;
-		for (Factura fa : traerFacturaMesPasado()) {
-			if (fa.getEmpleado().equals(empleado)) {
-				if (fa.getChango().getPedidostock() != null &&  fa.getChango().getPedidostock().getEmpleadoOferente().equals(empleado) ){ 
-					System.out.println(comisionStockCedido);
-					comisionStockCedido = comisionStockCedido + ((fa.getCosteTotal() * 2) / 100);
-					System.out.println(comisionStockCedido);
-				}
-			}
-		}
-		return (comisionStockCedido);
-	}	
 	
 }

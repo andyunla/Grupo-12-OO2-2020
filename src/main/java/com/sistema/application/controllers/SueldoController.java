@@ -9,21 +9,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 
-import com.sistema.application.converters.UserConverter;
 import com.sistema.application.converters.EmpleadoConverter;
 import com.sistema.application.dto.EmpleadoDto;
 import com.sistema.application.dto.UserDto;
-import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
-import com.sistema.application.models.LocalModel;
 import com.sistema.application.entities.Empleado;
-import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IEmpleadoService;
 import com.sistema.application.services.IFacturaService;
+import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.implementations.UserService;
 
 import org.springframework.ui.Model;
@@ -34,24 +28,26 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/sueldos")
 public class SueldoController {
 
+	//Services
 	@Autowired
     @Qualifier("userService")
     private UserService userService;
-	
 	@Autowired
     @Qualifier("empleadoService")
     private IEmpleadoService empleadoService;
-	
 	@Autowired
     @Qualifier("facturaService")
     private IFacturaService facturaService;
+	@Autowired
+    @Qualifier("localService")
+    private ILocalService localService;
 	
+	//Converters
 	@Autowired
     @Qualifier("empleadoConverter")
     private EmpleadoConverter empleadoConverter;
+
 	
-	@Autowired
-	private LocalModel localModel;
 	
 	@GetMapping("")
 	public ModelAndView sueldo(Model modelo) {
@@ -69,12 +65,13 @@ public class SueldoController {
 		//Calculo comisiones y sueldo final
 		for (Empleado emp : empleados) {
 			
+			//Separo vendedores de gerentes
 			if(!emp.isTipoGerente() && userDto.getLocal().getIdLocal() == emp.getLocal().getIdLocal() ) {
 				vendedores.add(empleadoConverter.entityToDto(emp) );
-				vendedores.get(i).setSueldoFinal(localModel.calcularSueldo(emp));
-				vendedores.get(i).setComisionVentaCompleta(localModel.calcularComisionVentaCompleta(emp));
-				vendedores.get(i).setComisionVentaExterna(localModel.calcularComisionVentaExterna(emp));
-				vendedores.get(i).setComisionStockCedido(localModel.calcularComisionStockCedido(emp));
+				vendedores.get(i).setSueldoFinal(localService.calcularSueldo(emp) );
+				vendedores.get(i).setComisionVentaCompleta(localService.calcularComisionVentaCompleta(emp));
+				vendedores.get(i).setComisionVentaExterna(localService.calcularComisionVentaExterna(emp));
+				vendedores.get(i).setComisionStockCedido(localService.calcularComisionStockCedido(emp));
 				i++;
 			}
 		}
