@@ -17,6 +17,7 @@ import com.sistema.application.models.PedidoStockModel;
 import com.sistema.application.models.ProductoModel;
 import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IChangoService;
+import com.sistema.application.services.IClienteService;
 import com.sistema.application.services.IEmpleadoService;
 import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.ILoteService;
@@ -55,6 +56,9 @@ public class PedidoController {
 	@Qualifier("changoService")
 	private IChangoService changoService;
 	@Autowired
+	@Qualifier("clienteService")
+	private IClienteService clienteService;
+	@Autowired
 	@Qualifier("empleadoService")
 	private IEmpleadoService empleadoService;
 	@Autowired
@@ -78,6 +82,7 @@ public class PedidoController {
 		modelAndView.addObject("currentUser", userDto);
 		List<PedidoStockModel> pedidos =  pedidoStockService.getAllModel();
 		modelAndView.addObject("pedidos", pedidos);
+		modelAndView.addObject("clientes", clienteService.getAllModel());
 		return modelAndView;
 	}
 
