@@ -148,7 +148,7 @@ function cargarNotificaciones(lista) {
         document.getElementById("notificationContainer").innerHTML = "";
         for (i = 0; i < size; i++) {
             var obj = lista[i];
-            var html = renderizarAHTML(obj);
+            let html = renderizarAHTML(obj);
             var htmlAnterior = document.getElementById("notificationContainer").innerHTML
             document.getElementById("notificationContainer").innerHTML = html + htmlAnterior;
         }
@@ -161,50 +161,37 @@ function cargarNotificaciones(lista) {
 }
 
 function renderizarAHTML(obj) {
-    var cargado = false;
-    var alert_tipo = "alert-info";
-    if(obj.tipo.toUpperCase() === "SOLICITUD") { // Solicitud
-        var msg = "El usuario <strong>" + obj.from + "</strong> necesita " + obj.detalleNotificacion.cantidad + " unidad(es) de " + 
-                  "<strong>" + obj.detalleNotificacion.nombreProducto + "</strong>";
-        var botones = '<a href="#" class="btn btn-xs btn-primary pull-right botonAceptar" data-id="' + obj.id + 
-                           '" data-user-from="' + obj.from + '" data-id-producto="' + obj.detalleNotificacion.idProducto + 
-                           '" data-cantidad="' + obj.detalleNotificacion.cantidad + '"> Aceptar</a>' +
-                           '<a href="#" class="btn btn-xs btn-primary pull-right botonRechazar" data-id="' + obj.id + 
-                           '" data-user-from="' + obj.from + '" data-id-producto="' + obj.detalleNotificacion.idProducto + 
-                           '" data-cantidad="' + obj.detalleNotificacion.cantidad + '"> Rechazar</a>';
-        cargado = true;
-    } else { // Si lo que me llega es una respuesta
+    var paraEsteLocal = false; // Para no cargar respuestas vacías
+    var alert_tipo = "alert-primary";
+    if(obj.tipo.toUpperCase() === "SOLICITUD") {
+        var msgCorto = `El usuario ${obj.from} ha realizado una solicitud de un producto`;
+        paraEsteLocal = true;
+    } else { // Respuestas
         if(obj.to == document.getElementById("current-username").value) { // Si son mensajes para el usuario actual
             switch(obj.texto.toUpperCase()) {
                 case "ACEPTADO":
-                    var msg = "<strong> El pedido ha sido aceptado </strong>";
+                    var msgCorto = `El pedido ha sido aceptado`;
+                    alert_tipo = "alert-success";
                     break;
                 case "RECHAZADO":
-                    var msg = "<strong> El pedido ha sido rechazado </strong>";
+                    var msgCorto = `El pedido ha sido rechazado`;
+                    alert_tipo = "alert-danger";
                     break;
                 default:
-                    var msg = "<strong>" + obj.texto + "</strong>";
+                    var msg = obj.texto;
+                    alert_tipo = "alert-danger";
                     break;
             }
-            // En el caso de rechazo o error
-            var botones = '<a href="#" class="btn btn-xs btn-primary pull-right botonCerrar" data-id="' + obj.id + 
-                          '" data-user-from="' + obj.from + '" data-id-chango="' + obj.detalleNotificacion.idChango + 
-                          '" data-id-pedido="' + obj.detalleNotificacion.idPedidoStock + '"> Cerrar</a>';
-            if(obj.texto.toUpperCase() === "RECHAZADO") {
-                alert_tipo = "alert-danger";
-            }
-            cargado = true; // Para no enviar html cuando los botones no se establecieron
+            paraEsteLocal = true;
         }
     }
-    if(cargado) {
-        var html = '<div class="dropdown-item" id="notificacion-' + obj.id + '">' + 
-                        '<div class="alert ' + alert_tipo + '">' +
-                            msg + botones +
-                        '<div class="dropdown-divider"></div>' +
-                   '</div>';
-    } else {
-        var html = "";
+    let html = "";
+    // Si las notificaciones no eran para este empleado(si eran para otro en este mismo local)
+    // no se renderiza el contenido
+    if(paraEsteLocal) {
+        var row = `<a class="dropdown-item alert ${alert_tipo}" role="alert" href="/notificacion/ver/${obj.id}"> ${msgCorto}</a>`;
     }
+    html += row; 
     return html;
 }
 
