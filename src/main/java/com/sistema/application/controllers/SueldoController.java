@@ -14,7 +14,7 @@ import com.sistema.application.converters.EmpleadoConverter;
 import com.sistema.application.dto.EmpleadoDto;
 import com.sistema.application.dto.UserDto;
 import com.sistema.application.helpers.ViewRouteHelper;
-import com.sistema.application.entities.Empleado;
+import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.services.IEmpleadoService;
 import com.sistema.application.services.IFacturaService;
 import com.sistema.application.services.ILocalService;
@@ -58,24 +58,16 @@ public class SueldoController {
 		UserDto userDto = userService.getCurrentUser();
 		modelAndView.addObject("currentUser", userDto);
 
-		List<Empleado> empleados = empleadoService.getAll();
 		List<EmpleadoDto> vendedores = new ArrayList<EmpleadoDto>();
 
-		int i = 0;
 		//Calculo comisiones y sueldo final
-		for (Empleado emp : empleados) {
-			
+		for (EmpleadoModel emp : empleadoService.getAllModel() ) {
 			//Separo vendedores de gerentes
-			if(!emp.isTipoGerente() && userDto.getLocal().getIdLocal() == emp.getLocal().getIdLocal() ) {
-				vendedores.add(empleadoConverter.entityToDto(emp) );
-				vendedores.get(i).setSueldoFinal(localService.calcularSueldo(emp) );
-				vendedores.get(i).setComisionVentaCompleta(localService.calcularComisionVentaCompleta(emp));
-				vendedores.get(i).setComisionVentaExterna(localService.calcularComisionVentaExterna(emp));
-				vendedores.get(i).setComisionStockCedido(localService.calcularComisionStockCedido(emp));
-				i++;
+			if(!emp.isTipoGerente() && userDto.getLocal().getIdLocal() == emp.getLocal().getIdLocal() ) {	
+				EmpleadoDto empleado = localService.calcularSueldo(emp);
+				vendedores.add(empleado);
 			}
 		}
-		
 		
 		//Mando atributos al modelo
 		modelAndView.addObject("empleados", vendedores );
