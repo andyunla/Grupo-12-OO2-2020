@@ -9,6 +9,7 @@ import com.sistema.application.entities.Empleado;
 import com.sistema.application.entities.Factura;
 import com.sistema.application.entities.Local;
 import com.sistema.application.models.LocalModel;
+import com.sistema.application.models.EmpleadoModel;
 
 public interface ILocalService {
 	
@@ -30,7 +31,7 @@ public interface ILocalService {
 	
 	public List<ProductoRankingDto> reporte(LocalDate fecha1, LocalDate fecha2, long idLocal);
 	
-	public double calcularSueldo(Empleado empleado);
+	public EmpleadoDto calcularSueldo(EmpleadoModel empleado);
 	
 	public List<Factura> traerFacturaMesPasado();
 	

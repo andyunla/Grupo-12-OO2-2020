@@ -17,6 +17,7 @@ import com.sistema.application.models.FacturaModel;
 import com.sistema.application.models.ItemModel;
 import com.sistema.application.models.LocalModel;
 import com.sistema.application.models.ProductoModel;
+import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.repositories.ILocalRepository;
 import com.sistema.application.services.IEmpleadoService;
 import com.sistema.application.services.IFacturaService;
@@ -116,33 +117,45 @@ public class LocalService implements ILocalService {
  	////////////////////////////////////////////////////////////////////////////////////////////////////// EMPLEADOS//////////////////////////////////////////
  	//////////////////////////////////////////////////////////////////////////////////////////////////////
  	/****************************************************************************************************/
- 	public double calcularSueldo(Empleado empleado) {
+ 	public EmpleadoDto calcularSueldo(EmpleadoModel empleado) {
  		double comisionCompleta = 0;
+ 		double comisionVentaCompleta = 0;
+ 		double comisionVentaExterna = 0;
+ 		double comisionStockCedido = 0;
  		
  		for (Factura fa : traerFacturaMesPasado()) {// para cada factura del mes pasado
  			
- 			if (fa.getEmpleado().equals(empleado) ) { // si la factura pertenece a este empleado
+ 			if (fa.getEmpleado().getDni() == empleado.getDni() ) { // si la factura pertenece a este empleado
 
  				// el chango de la factura tiene un pedido stock, esta factura es con stock de otro local
- 				if (fa.getChango().getPedidostock() != null && fa.getChango().getPedidostock().getEmpleadoSolicitante().equals(empleado)) {
+ 				if (fa.getChango().getPedidostock() != null && fa.getChango().getPedidostock().getEmpleadoSolicitante().getDni() == empleado.getDni() ) {
  					comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 3) / 100); // si el empleado solicito stock de otro local se calcula la comision de 3%
+ 					comisionVentaExterna = comisionVentaExterna + ((fa.getCosteTotal() * 3) / 100);
  				} 
  				
  				// si la factura no es de este empleado y si este empleado ofreció stock se le calcula el 2%
- 				if (fa.getChango().getPedidostock() != null && fa.getChango().getPedidostock().getEmpleadoOferente().equals(empleado)) {
+ 				if (fa.getChango().getPedidostock() != null && fa.getChango().getPedidostock().getEmpleadoOferente().getDni() == empleado.getDni() ) {
  					comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 2) / 100);
+ 					comisionStockCedido = comisionStockCedido + ((fa.getCosteTotal() * 2) / 100);
  				}
  				
  				// si este empleado no pidio stock se calcula la comision del 5%
  				if (fa.getChango().getPedidostock() == null) {
  					comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 5) / 100);
+ 					comisionVentaCompleta = comisionVentaCompleta + ((fa.getCosteTotal() * 5) / 100);
  				}
  				
  			}
- 			
  		}
  		
- 		return (empleado.getSueldoBasico() + comisionCompleta);
+ 		EmpleadoDto emp = empleadoConverter.modelToDto(empleado);
+ 		
+ 		emp.setSueldoFinal(emp.getSueldoBasico() + comisionCompleta);
+ 		emp.setComisionVentaCompleta(comisionVentaCompleta);
+ 		emp.setComisionVentaExterna(comisionVentaExterna);
+ 		emp.setComisionStockCedido(comisionStockCedido);
+ 		
+ 		return emp;
  	}
 
  	public List<Factura> traerFacturaMesPasado() {
@@ -151,6 +164,7 @@ public class LocalService implements ILocalService {
  		return facturaService.findByFechaFacturaBetween(fecha1, fecha2);// retorno la lista de facturas
  	}
  	
+ 	/***********************************************************************************************************************************************************/
  	public double calcularComisionVentaCompleta(Empleado empleado) {
  		double comisionVentaCompleta = 0;
  		for (Factura fa : traerFacturaMesPasado()) {
@@ -194,38 +208,46 @@ public class LocalService implements ILocalService {
  	public List<EmpleadoDto> calcularSueldoGlobal() {
  		
  		List<EmpleadoDto> listaEmpleados = new ArrayList<EmpleadoDto>();
- 		int i=0;
- 		
- 		for(Empleado empleado: empleadoService.getAll() ) {
+
+ 		for(EmpleadoModel empleado: empleadoService.getAllModel() ) {
  			double comisionCompleta = 0;
+ 			double comisionVentaCompleta = 0;
+ 	 		double comisionVentaExterna = 0;
+ 	 		double comisionStockCedido = 0;
+ 	 		
  			for (Factura fa : traerFacturaMesPasado()) {// para cada factura del mes pasado
  				
- 				if (fa.getEmpleado().equals(empleado) ) { // si la factura pertenece a este empleado
+ 				if (fa.getEmpleado().getDni() == empleado.getDni() ) { // si la factura pertenece a este empleado
 
  					// el chango de la factura tiene un pedido stock, esta factura es con stock de otro local
- 					if (fa.getChango().getPedidostock() != null && fa.getChango().getPedidostock().getEmpleadoSolicitante().equals(empleado)) {
+ 					if (fa.getChango().getPedidostock() != null && fa.getChango().getPedidostock().getEmpleadoSolicitante().getDni() == empleado.getDni() ) {
  						comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 3) / 100); // si el empleado solicito stock de otro local se calcula la comision de 3%
+ 						comisionVentaExterna = comisionVentaExterna + ((fa.getCosteTotal() * 3) / 100);
  					} 
  					
  					// si la factura no es de este empleado y si este empleado ofreció stock se le calcula el 2%
- 					if (fa.getChango().getPedidostock() != null && fa.getChango().getPedidostock().getEmpleadoOferente().equals(empleado)) {
+ 					if (fa.getChango().getPedidostock() != null && fa.getChango().getPedidostock().getEmpleadoOferente().getDni() == empleado.getDni() ) {
  						comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 2) / 100);
+ 						comisionStockCedido = comisionStockCedido + ((fa.getCosteTotal() * 2) / 100);
  					}
  					
  					// si este empleado no pidio stock se calcula la comision del 5%
  					if (fa.getChango().getPedidostock() == null) {
  						comisionCompleta = comisionCompleta + ((fa.getCosteTotal() * 5) / 100);
+ 						comisionVentaCompleta = comisionVentaCompleta + ((fa.getCosteTotal() * 5) / 100);
  					}
  					
  				}	
  			}
  			
- 			listaEmpleados.add(empleadoConverter.entityToDto(empleado) );
- 			listaEmpleados.get(i).setSueldoFinal(empleado.getSueldoBasico() + comisionCompleta);
- 			listaEmpleados.get(i).setComisionVentaCompleta(calcularComisionVentaCompleta(empleado) );
- 			listaEmpleados.get(i).setComisionVentaExterna(calcularComisionVentaExterna(empleado) );
- 			listaEmpleados.get(i).setComisionStockCedido(calcularComisionStockCedido(empleado) );
- 			i++;
+ 			EmpleadoDto emp = empleadoConverter.modelToDto(empleado);
+ 	 		
+ 	 		emp.setSueldoFinal(emp.getSueldoBasico() + comisionCompleta);
+ 	 		emp.setComisionVentaCompleta(comisionVentaCompleta);
+ 	 		emp.setComisionVentaExterna(comisionVentaExterna);
+ 	 		emp.setComisionStockCedido(comisionStockCedido);
+ 			
+ 			listaEmpleados.add(emp);
  		}
  		
  		return listaEmpleados;
