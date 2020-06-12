@@ -2,7 +2,6 @@ package com.sistema.application.controllers;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import com.sistema.application.converters.EmpleadoConverter;
 import com.sistema.application.converters.UserConverter;
@@ -10,6 +9,7 @@ import com.sistema.application.dto.DetalleNotificacionDto;
 import com.sistema.application.dto.UserDto;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ChangoModel;
+import com.sistema.application.models.ClienteModel;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.LocalModel;
 import com.sistema.application.models.LoteModel;
@@ -30,7 +30,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -83,6 +82,7 @@ public class PedidoController {
 		List<PedidoStockModel> pedidos =  pedidoStockService.getAllModel();
 		modelAndView.addObject("pedidos", pedidos);
 		modelAndView.addObject("clientes", clienteService.getAllModel());
+        modelAndView.addObject("cliente", new ClienteModel());
 		return modelAndView;
 	}
 
