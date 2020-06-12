@@ -4,7 +4,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.sistema.application.services.IChangoService;
+import com.sistema.application.services.IClienteService;
+import com.sistema.application.services.IEmpleadoService;
 import com.sistema.application.services.IFacturaService;
+import com.sistema.application.services.ILocalService;
+import com.sistema.application.services.IPedidoStockService;
 import com.sistema.application.repositories.IFacturaRepository;
 import com.sistema.application.converters.ChangoConverter;
 import com.sistema.application.converters.FacturaConverter;
@@ -12,7 +17,11 @@ import com.sistema.application.converters.LocalConverter;
 import com.sistema.application.dto.ProductoRankingDto;
 import com.sistema.application.entities.Factura;
 import com.sistema.application.models.ChangoModel;
+import com.sistema.application.models.ClienteModel;
+import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.FacturaModel;
+import com.sistema.application.models.LocalModel;
+import com.sistema.application.models.PedidoStockModel;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -38,6 +47,24 @@ public class FacturaService implements IFacturaService {
 	@Autowired
 	@Qualifier("localConverter")
 	private LocalConverter localConverter;
+	
+	//Services
+	@Autowired
+	@Qualifier("localService")
+	ILocalService localService;
+	@Autowired
+	@Qualifier("clienteService")
+	IClienteService clienteService;
+	@Autowired
+	@Qualifier("empleadoService")
+	IEmpleadoService empleadoService;
+	@Autowired
+	@Qualifier("changoService")
+	IChangoService changoService;
+	@Autowired
+	@Qualifier("pedidoStockService")
+	IPedidoStockService pedidoStockService;
+	
 
 	// Métodos
 	@Override
@@ -142,5 +169,22 @@ public class FacturaService implements IFacturaService {
 			facturas.add( facturaConverter.entityToModel(factura));
 		}
 		return facturas;
+	}
+	@Override
+	public void facturaPedido(long idPedidoStock, long nroCliente,  long idLegajo) {
+		//creo los atributos para poder generar la factura de un chango con PedidoStock
+		ClienteModel clienteModel = clienteService.findByNroCliente(nroCliente);
+		EmpleadoModel empleadoModel = empleadoService.findByLegajo(idLegajo);
+		LocalModel localModel = localService.findByIdLocal(empleadoModel.getLocal().getIdLocal());
+		PedidoStockModel pedidoStockModel= pedidoStockService.findByIdPedidoStock(idPedidoStock);
+		ChangoModel changoModel = new ChangoModel(localModel);
+		changoModel.setPedidoStock(pedidoStockModel);		
+		double costeTotal = pedidoStockModel.getCantidad()*pedidoStockModel.getProducto().getPrecio();
+		// persisto el chango
+		changoService.insertOrUpdate(changoModel);
+		//creo la factura y la persisto
+		FacturaModel facturaModel = new FacturaModel(clienteModel, changoModel,LocalDate.now(), costeTotal, empleadoModel, localModel );
+		this.insertOrUpdate(facturaModel);
+		//Faltaría restar el lote al local que cediò el stock
 	}
 }

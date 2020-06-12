@@ -29,4 +29,6 @@ public interface IFacturaService {
 	public List<FacturaModel> findByIdLocal(long idLocal);
 
 	public List<FacturaModel> findByIdLocalAndByLegajoEmpleado(long idLocal, long legajo);
+	
+	public void facturaPedido(long idPedidoStock, long nroCliente, long idLegajo);
 }
