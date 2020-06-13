@@ -90,11 +90,12 @@ public class FacturaController {
           return mAV; 
      }
 
-     @PostMapping("confirmar/{idPedidoStock}/{nroCliente}")
-     public String crearFactura(@PathVariable("nroCliente") long nroCliente, 
+     @PostMapping("confirmarPedido/{idPedidoStock}")
+     public String crearFactura( @ModelAttribute ClienteModel cliente,
           @PathVariable("idPedidoStock") long idPedidoStock ) 
-     {
-          FacturaModel factura = facturaService.facturaPedido(idPedidoStock, nroCliente );
+     { 
+          System.out.println("\n\nNROCLIENTE: " + cliente.getNroCliente() + "\nPedido:" + idPedidoStock + "\n");   //Borrar luego
+          FacturaModel factura = facturaService.facturaPedido(idPedidoStock, cliente.getNroCliente() );
           return "redirect:/factura/ver/" + factura.getIdFactura();
      }
 

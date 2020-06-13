@@ -33,7 +33,8 @@
                         </td>
                         <td th:unless="${pedido.empleadoOferente} != null" align="center"> - </td>
                         <td th:if="${pedido.aceptado} == true" align="center">
-                            <button class="btn btn-primary m-1" data-toggle="modal" data-target="#facturarPedido">
+                            <button class="btn btn-primary m-1" data-toggle="modal" data-target="#facturarPedido" 
+                            th:onclick="prepararPedidoId([[${pedido.idPedidoStock}]])">
                          	FACTURAR
                     		</button>                            
                         </td>
@@ -57,10 +58,11 @@
                     </div>
                     <div class="modal-body">
                          <form id="factura-pedido-form" name="factura-pedido-form" class="bg-light rounded"
-                               th:object="${cliente}" method="post" action="#">
+                            th:object="${cliente}" method="post" th:action="@{/factura/confirmarPedido/0}" action="#">
                               <div class="form-group d-flex flex-column align-items-center m-1">
                                    <label for="clienteFactura" class="mb-2 quicksand">Cliente:</label>
-                                   <select class="custom-select mb-4 w-75" th:field="*{nroCliente}" id="clienteFactura">
+                                   <select class="custom-select mb-4 w-75" th:field="*{nroCliente}" id="clienteFactura" 
+                                    onchange="habilitarFacturacion()">
                                         <option value="0" selected hidden disabled>Seleccione un cliente</option>
                                         <option th:each="c: ${clientes}" th:value="${c.nroCliente}"
                                              th:text="${c.dni + ' - ' + c.nombre + ' ' +  c.apellido }"></option>
@@ -77,5 +79,6 @@
     <!-- Contenedor de las respuestas a las solicitudes -->
     <div class="p-1 col-11 col-sm-7 col-md-6 col-lg-4" id="alertRespuesta"></div>
     <div th:replace="fragments/scripts :: scripts"></div>
+    <script th:src="@{/js/pedido.js}"></script>
 </body>
 </html>
