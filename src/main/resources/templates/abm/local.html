@@ -105,7 +105,6 @@
                                         <label for="gerenteModificarLocal" class="col-sm-3 col-4">Gerente</label>
                                         <select th:field="*{gerente.legajo}" class="col-5 custom-select w-50"
                                              id="gerenteModificarLocal">
-                                             <option value="1" selected hidden disabled>Seleccione un empleado</option>
                                         </select>
                                    </div>
                                    <div class="text-center">
@@ -195,6 +194,7 @@
                document.getElementById("longitudModificarLocal").value = locales[localIndex].longitud;
                document.getElementById("direccionModificarLocal").value = locales[localIndex].direccion;
                document.getElementById("telefonoModificarLocal").value = locales[localIndex].telefono;
+               let gerenteActual = locales[localIndex].gerenteLegajo;
                let selectGerenteElement = document.getElementById("gerenteModificarLocal");
                selectGerenteElement.innerHTML = '<option selected disabled>cargando</option>';
                fetch("http://localhost:8080/api/v1/local/empleados/" + locales[localIndex].idLocal)
@@ -205,7 +205,7 @@
                          selectGerenteElement.innerHTML = '';
                          for (var i = 0; i < empleados.length; i++) {
                               selectGerenteElement.innerHTML +=
-                                   '<option value="' + empleados[i].legajo + '">' +
+                                   '<option value="' + empleados[i].legajo + ((empleados[i].legajo == gerenteActual) ? '"selected>' : '">') +
                                    empleados[i].legajo + ' - ' +
                                    empleados[i].nombre + ' ' +
                                    empleados[i].apellido +
