@@ -52,26 +52,13 @@ public class SueldoController {
 	@GetMapping("")
 	public ModelAndView sueldo(Model modelo) {
 		
-		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.SUELDO_ROOT);
-		
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.SUELDO_ROOT);		
 		//Chequea que sea un gerente
 		UserDto userDto = userService.getCurrentUser();
 		modelAndView.addObject("currentUser", userDto);
-
-		List<EmpleadoDto> vendedores = new ArrayList<EmpleadoDto>();
-
-		//Calculo comisiones y sueldo final
-		for (EmpleadoModel emp : empleadoService.getAllModel() ) {
-			//Separo vendedores de gerentes
-			if(!emp.isTipoGerente() && userDto.getLocal().getIdLocal() == emp.getLocal().getIdLocal() ) {	
-				EmpleadoDto empleado = localService.calcularSueldo(emp);
-				vendedores.add(empleado);
-			}
-		}
-		
+		List<EmpleadoDto> vendedores = localService.calcularSueldos(userDto.getLocal().getIdLocal());
 		//Mando atributos al modelo
-		modelAndView.addObject("empleados", vendedores );
-		
+		modelAndView.addObject("empleados", vendedores );		
 		//Muestro en pantalla
 		return modelAndView;
 	}
