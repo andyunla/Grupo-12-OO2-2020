@@ -131,22 +131,20 @@ public class LocalService implements ILocalService {
  		LocalModel localModel = findByIdLocal(idLocal);
  		
  		for (LocalModel lo : getAllModel()) {
- 			if(lo != localModel && validarStock(lo, producto, cantidad)) {
+ 			if(lo.getIdLocal() != idLocal && validarStock(lo, producto, cantidad)) {
  			LocalDistanciaDto localDistanciaDto = localConverter.modelToDistanciaDto(lo);
  			localDistanciaDto.setDistancia(localModel.calcularDistancia(lo));
  			localDistanciaDto.setStock(calcularStockLocal(lo, producto));
  			lista.add(localDistanciaDto);
  			}
-		}
+		} 		
  		//ordeno la lista
  		Collections.sort(lista); 		
  		return lista;
  	}
-
 	public boolean validarStock(LocalModel local, ProductoModel producto, int cantidad) {
 		return calcularStockLocal(local, producto)>= cantidad;		
 	}
-
 	public int calcularStockLocal(LocalModel local, ProductoModel producto) {		
 		int cantidadStock = 0;		
 		List<LoteModel> lista = loteService.findByLoteProductoActivo( producto.getIdProducto(), local.getIdLocal() );
@@ -154,10 +152,8 @@ public class LocalService implements ILocalService {
 			cantidadStock = cantidadStock + lo.getCantidadActual();			
 		}		
 		return cantidadStock;
-	}
-
- 	
-     /****************************************************************************************************/
+	} 	
+    /****************************************************************************************************/
  	//////////////////////////////////////////////////////////////////////////////////////////////////////
  	// 13) CIERRE DEL MES PARA DEFINIR EL SUELDO DE LOS EMPLEADOS/////////////////////////////////////////
  	////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -192,8 +188,7 @@ public class LocalService implements ILocalService {
  		emp.setSueldoFinal(emp.getSueldoBasico() + comisionVentaCompleta + comisionVentaExterna + comisionStockCedido);
  		emp.setComisionVentaCompleta(comisionVentaCompleta);
  		emp.setComisionVentaExterna(comisionVentaExterna);
- 		emp.setComisionStockCedido(comisionStockCedido);
- 		
+ 		emp.setComisionStockCedido(comisionStockCedido); 		
  		return emp;
  	}
 
@@ -207,6 +202,7 @@ public class LocalService implements ILocalService {
  	public List<EmpleadoDto> calcularSueldos(long idLocal) {
  		List<EmpleadoDto> empleadosDto = new ArrayList<EmpleadoDto>();
  		List<EmpleadoModel> empleadosModel = empleadoService.findByIdLocal(idLocal);
+ 		// a cada empleado del local correspondiente le calculo el sueldo y lo agrego a la lista
  		for (EmpleadoModel e : empleadosModel) {
 			empleadosDto.add(calcularSueldo(e));
 		} 		
@@ -215,11 +211,13 @@ public class LocalService implements ILocalService {
  	/*****************************************************************************************************************************************************************/
  	public List<EmpleadoDto> calcularSueldoGlobal() { 		
  		List<EmpleadoDto> listaEmpleados = new ArrayList<EmpleadoDto>();
+ 		//calculo el sueldo de todos los empleados en cada local
  		for (LocalModel l : getAllModel()) {
 			for (EmpleadoDto empleadoDto : calcularSueldos(l.getIdLocal())) {
 				listaEmpleados.add(empleadoDto);
 			}
-		} 		
+		} 
+ 		//lo retorno en una sola lista general
  		return listaEmpleados;
  	}
      
