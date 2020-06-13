@@ -32,10 +32,6 @@ public interface ILoteService {
 	public int calcularStock(ProductoModel Producto, LocalModel local);
 
 	public boolean verificarStock(ProductoModel Producto, LocalModel local, int cantidad);
-
-	public boolean consumirStock(LocalModel local, ProductoModel producto, int cantidad);
-
-	public boolean devolverStock(LocalModel local, ProductoModel producto, int cantidad);
 	
 	public boolean consumirStock(long idLocal, long idProducto, int cantidad);
 	

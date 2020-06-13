@@ -128,46 +128,6 @@ public class LoteService implements ILoteService {
 	}
 
 	@Override
-	public boolean consumirStock(LocalModel local, ProductoModel producto, int cantidad) { //BORRAR
-		List<LoteModel> lista = findByLoteProductoActivo(producto.getIdProducto(), local.getIdLocal());
-		Iterator<LoteModel> itr = lista.iterator();
-		LoteModel lo = null;
-		// Consume stock sobre los lotes activos del producto hasta cumplir con la cantidad
-		while (cantidad > 0 && itr.hasNext()) {
-			lo = itr.next();
-			if (lo.getCantidadActual() - cantidad <= 0) { // si la cantidad actual queda en 0 doy de baja el lote
-				cantidad = cantidad - lo.getCantidadActual(); // se actualiza la cantidad a restar
-				lo.setCantidadActual(0);
-				insertOrUpdate(lo);
-			} else {
-				lo.setCantidadActual(lo.getCantidadActual() - cantidad);
-				insertOrUpdate(lo);
-				cantidad = 0; // seteo en cero para salir del bucle, ya no hay mas que restar
-			}
-		}
-		return cantidad == 0; // Si se pudo consumir la cantidad recibida devuelve true
-	}
-
-	@Override
-	public boolean devolverStock(LocalModel local, ProductoModel producto, int cantidad) {// BORRAR
-		List<LoteModel> lista = findByLoteProductoNoNuevo(producto.getIdProducto(), local.getIdLocal());
-		Iterator<LoteModel> itr = lista.iterator();
-		LoteModel lo;
-		while (cantidad > 0 && itr.hasNext()) {
-			lo = itr.next();
-			if (lo.getCantidadActual() + cantidad >= lo.getCantidadInicial()) {
-				cantidad = lo.getCantidadInicial() - lo.getCantidadActual();
-				lo.setCantidadActual(lo.getCantidadInicial());
-				insertOrUpdate(lo);
-			} else {
-				lo.setCantidadActual(lo.getCantidadActual() + cantidad);
-				insertOrUpdate(lo);
-				cantidad = 0;
-			}
-		}
-		return cantidad == 0; // Si se pudo devolver la cantidad recibida devuelve true
-	}
-	@Override
 	public boolean consumirStock(long idLocal, long idProducto, int cantidad) {
 		List<LoteModel> lista = findByLoteProductoActivo(idProducto, idLocal);
 		Iterator<LoteModel> itr = lista.iterator();
