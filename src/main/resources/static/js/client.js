@@ -35,44 +35,6 @@ function comprobarRespuestas() {
         });
 }
 
-// 1ro se realiza el pedido y obtenemos el id en caso que se haya realizado con éxito.
-// Luego se envía la respuesta
-async function realizarSolicitudPedido(detalleEnvio) {
-    // Se construye un Objeto msg que contiene los datos para enviar en la respuesta; no para realizar el pedido
-    var respuesta = {
-        id: detalleEnvio.idNotificacion,
-        tipo: "RESPUESTA",
-        texto: detalleEnvio.aceptado? "ACEPTADO" : "RECHAZADO",
-        from: document.getElementById("current-username").value, // El username del usuario actual
-        to: detalleEnvio.userSolicitante, // El dueño que envío la solicitud; le devolvemos la respuesta
-        detalleNotificacion: {
-            idPedidoStock: null
-        }
-    };
-    // Se realiza la factura
-    let userOferente = detalleEnvio.userOferente;
-    let userSolicitante = detalleEnvio.userSolicitante; // El dueño que envío la solicitud; le devolvemos la respuesta
-    let fueAceptado = detalleEnvio.aceptado;
-    let idProducto = detalleEnvio.idProducto;
-    let cantidad = detalleEnvio.cantidad;
-    let urlSolicitud = url_pedido + "/solicitar/" + userOferente + "/" + userSolicitante + "/" + fueAceptado + "/" + idProducto + "/" + cantidad;
-    try {
-        let response = await fetch(urlSolicitud, { method: 'POST' });
-        if (response.ok) { // 200 - 299
-            let text = await response.text();
-            console.log("Solicitud realizada");
-            respuesta.detalleNotificacion = JSON.parse(text); // El id del pedido y el chango realizado
-        } else {
-            respuesta.texto = "ERROR AL REALIZAR LA SOLICITUD";
-            throw new Error();
-        }
-    } catch(e) {
-        console.error(e);
-    }
-    // Enviamos la respuesta
-    enviarRespuesta(respuesta);
-}
-
 function enviarRespuesta(respuesta) {
     $.ajax({
         type : "POST",
@@ -93,51 +55,10 @@ function enviarRespuesta(respuesta) {
     // Le mandamos el id para que lo marque como leída
     confirmarRespuestas(respuesta.id);
     // Eliminamos la notificación de la lista
-    document.getElementById("notificacion-" + respuesta.id).remove();
-}
-
-// Añade los listener a los botones para aceptar el pedido
-function agregarListenerABotonesAceptar() {
-    let botonesAceptar = document.querySelectorAll('.botonAceptar');
-    botonesAceptar.forEach(boton => boton.addEventListener('click', (e) => {
-        var detalleEnvio = {
-            idNotificacion: e.target.dataset.id,
-            userOferente: document.getElementById("current-username").value,
-            userSolicitante: e.target.dataset.userFrom,
-            aceptado: true,
-            idProducto: e.target.dataset.idProducto,
-            cantidad: e.target.dataset.cantidad,
-            to: e.target.dataset.userFrom
-        };
-        realizarSolicitudPedido(detalleEnvio);
-    }));
-}
-
-function agregarListenerABotonesRechazar() {
-    let botonesRechazar = document.querySelectorAll('.botonRechazar');
-    botonesRechazar.forEach(boton => boton.addEventListener('click', (e) => {
-        var detalleEnvio = {
-            idNotificacion: e.target.dataset.id,
-            userOferente: document.getElementById("current-username").value,
-            userSolicitante: e.target.dataset.userFrom,
-            aceptado: false,
-            idProducto: e.target.dataset.idProducto,
-            cantidad: e.target.dataset.cantidad,
-            to: e.target.dataset.userFrom
-        };
-        realizarSolicitudPedido(detalleEnvio);
-    }));
-}
-
-function agregarListenerABotonesCerrar() {
-    let botonesCerrar = document.querySelectorAll('.botonCerrar');
-    botonesCerrar.forEach(boton => boton.addEventListener('click', (e) => {
-        let idNotificacion = e.target.dataset.id;
-        // Le mandamos el id para que lo marque como leída
-        confirmarRespuestas(idNotificacion);
-        // Eliminamos la notificación de la lista
-        document.getElementById("notificacion-" + idNotificacion).remove();
-    }));
+    let notificacionItem = document.getElementById("notificacion-" + respuesta.id);
+    if(notificacionItem) {
+        notificacionItem.remove();
+    }
 }
 
 function cargarNotificaciones(lista) {
@@ -149,14 +70,16 @@ function cargarNotificaciones(lista) {
         for (i = 0; i < size; i++) {
             var obj = lista[i];
             let html = renderizarAHTML(obj);
-            var htmlAnterior = document.getElementById("notificationContainer").innerHTML
+            var htmlAnterior = document.getElementById("notificationContainer").innerHTML;
             document.getElementById("notificationContainer").innerHTML = html + htmlAnterior;
         }
-        agregarListenerABotonesAceptar();
-        agregarListenerABotonesRechazar();
-        agregarListenerABotonesFacturar();
-        agregarListenerABotonesCerrar();
         console.log("Notificación recibida");
+    } else {
+        let html = document.getElementById("notificationContainer").innerHTML; // Obtenemos lo anterior
+        if(document.getElementById("notificationContainer").childElementCount === 0) {
+            html += "<small> No hay notificaciones </small>";
+        }
+        document.getElementById("notificationContainer").innerHTML = html;
     }
 }
 
@@ -168,7 +91,7 @@ function renderizarAHTML(obj) {
         paraEsteLocal = true;
     } else { // Respuestas
         if(obj.to == document.getElementById("current-username").value) { // Si son mensajes para el usuario actual
-            switch(obj.texto.toUpperCase()) {
+            switch(obj.estado.toUpperCase()) {
                 case "ACEPTADO":
                     var msgCorto = `El pedido ha sido aceptado`;
                     alert_tipo = "alert-success";
@@ -178,7 +101,7 @@ function renderizarAHTML(obj) {
                     alert_tipo = "alert-danger";
                     break;
                 default:
-                    var msg = obj.texto;
+                    var msg = obj.estado;
                     alert_tipo = "alert-danger";
                     break;
             }
@@ -189,7 +112,7 @@ function renderizarAHTML(obj) {
     // Si las notificaciones no eran para este empleado(si eran para otro en este mismo local)
     // no se renderiza el contenido
     if(paraEsteLocal) {
-        var row = `<a class="dropdown-item alert ${alert_tipo}" role="alert" href="/notificacion/ver/${obj.id}"> ${msgCorto}</a>`;
+        var row = `<a class="dropdown-item alert ${alert_tipo}" role="alert" href="/notificacion/ver?id=${obj.id}"> ${msgCorto}</a>`;
     }
     html += row; 
     return html;

@@ -60,6 +60,14 @@ public class NotificacionService implements INotificacionService {
         return notificacionConverter.entityToDto(notificacionGuardada);
     }
 
+    // Directamente actualizamos
+    public NotificacionDto Update(NotificacionDto notificacion) {
+        Notificacion notificacionEntidad = notificacionConverter.dtoToEntity(notificacion);
+        notificacionEntidad.setId(notificacion.getId());
+        Notificacion notificacionGuardada = notificacionRepository.save(notificacionEntidad);
+        return notificacionConverter.entityToDto(notificacionGuardada);
+    }
+
     @Override
     public boolean remove(long id) {
         try{

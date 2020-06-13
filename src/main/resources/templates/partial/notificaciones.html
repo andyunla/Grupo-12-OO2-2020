@@ -1,0 +1,28 @@
+<tr th:each="notificacion :${notificaciones}" class="fila-notificacion">
+    <td th:text="${notificacion.id}"></td>
+    <td th:text="${notificacion.from}"></td>
+    <td th:text="${notificacion.tipo}"></td>
+    <td th:if="${notificacion.tipo} == 'SOLICITUD'" 
+        th:text="'El usuario ' + ${notificacion.from} + ' necesita ' + ${notificacion.detalleNotificacion.cantidad} + ' unidad(es) de ' + ${notificacion.detalleNotificacion.nombreProducto} + '.'">
+    </td>
+    <td th:if="${notificacion.tipo} == 'RESPUESTA' AND ${notificacion.estado} == 'ACEPTADO'" 
+        th:text="'El pedido ha sido aceptado por ' + ${notificacion.from} + '.'">
+    </td>
+    <td th:if="${notificacion.tipo} == 'RESPUESTA' AND ${notificacion.estado} == 'RECHAZADO'" 
+        th:text="'El pedido ha sido rechazado por ' + ${notificacion.from} + '.'">
+    </td>
+    <td th:if="${notificacion.tipo} == 'SOLICITUD'">
+        <button class="btn-info btn botonAceptar"
+                th:attr="data-id-notificacion=${notificacion.id}, data-user-from=${notificacion.from}, data-id-producto=${notificacion.detalleNotificacion.idProducto}, data-cantidad=${notificacion.detalleNotificacion.cantidad}" >
+            Aceptar
+        </button>
+        <button class="btn-danger btn botonRechazar"
+                th:attr="data-id-notificacion=${notificacion.id}, data-user-from=${notificacion.from}, data-id-producto=${notificacion.detalleNotificacion.idProducto}, data-cantidad=${notificacion.detalleNotificacion.cantidad}" >
+            Rechazar
+        </button>
+    </td>
+    <td th:unless="${notificacion.tipo} == 'SOLICITUD'"></td>
+</tr>
+<tr th:if="${notificaciones.size() == 0}" >
+    <td><small>No hay notificaciones</small></td>
+</tr>

@@ -22,13 +22,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 @RestController 
 @RequestMapping("api/v1/notificacion")
@@ -58,10 +55,10 @@ public class NotificacionRestController {
     @GetMapping("solicitar/{usernameSolicitante}/{idLocal2}/{idProducto}/{cantidad}")
     ResponseEntity<String> solicitar(@PathVariable("usernameSolicitante") String usernameSolicitante, @PathVariable("idLocal2") long idLocal2, 
                                      @PathVariable("idProducto") long idProducto, @PathVariable("cantidad") int cantidad) {
-    	String texto = null;
+    	String estado = UtilHelper.NOTIFICACION_PENDIENTE;
     	String userTo = null;
     	ProductoModel producto = productoService.findByIdProducto(idProducto);
-        NotificacionDto newNotificacionDto = new NotificacionDto(UtilHelper.TIPO_NOTIFICACION_SOLICITUD, false, texto, usernameSolicitante, userTo, idLocal2, 
+        NotificacionDto newNotificacionDto = new NotificacionDto(UtilHelper.TIPO_NOTIFICACION_SOLICITUD, false, estado, usernameSolicitante, userTo, idLocal2, 
         														 new DetalleNotificacionDto(idProducto, producto.getNombre(), cantidad, null));
         NotificacionDto notificacionGuardada = notificacionService.insertOrUpdate(newNotificacionDto);
         if(notificacionGuardada != null)
@@ -93,9 +90,15 @@ public class NotificacionRestController {
     // Crear una notificación que indique la respuesta del oferente
     @RequestMapping(value = "responder", method = RequestMethod.POST)
     ResponseEntity<String> responder(@RequestBody NotificacionDto respuesta) throws ParseException, IOException {
-        boolean estadoLeido = false; // false para que llegue como respuesta no leída; luego se setea a true
-        respuesta.setEstado(estadoLeido);
-        NotificacionDto respuestaGuardada = notificacionService.insertOrUpdate(respuesta);
+    	// Establecemos el estado de la solicitud de PENDIENTE a lo que el usuario eligió.
+    	NotificacionDto solicitudRespondida = notificacionService.findById(respuesta.getId());
+    	solicitudRespondida.setLeido(true);
+    	solicitudRespondida.setEstado(respuesta.getEstado());
+    	notificacionService.insertOrUpdate(solicitudRespondida); // Sólo actualizamos
+        NotificacionDto respuestaNueva = new NotificacionDto(UtilHelper.TIPO_NOTIFICACION_RESPUESTA, true, respuesta.getEstado(), 
+        													respuesta.getFrom(), respuesta.getTo(), respuesta.getToLocal(), 
+        													respuesta.getDetalleNotificacion());
+        NotificacionDto respuestaGuardada = notificacionService.insertOrUpdate(respuestaNueva);        
         if(respuestaGuardada != null)
             return new ResponseEntity<String>(HttpStatus.CREATED);
         // Cualquier problema
@@ -103,12 +106,11 @@ public class NotificacionRestController {
     }
 
     // Para los mensajes que indican la respuesta del oferente.
-    // Es para que no muestre a cada momento el mensaje
     @GetMapping("confirmar/{idNotificacion}")
     ResponseEntity<String> autoConfirmarRespuestas(@PathVariable("idNotificacion") long idNotificacion) {
-        boolean estado = true; // La notificación fue leída
+        boolean leido = true; // La notificación fue leída
         NotificacionDto notificacion = notificacionService.findById(idNotificacion);
-        notificacion.setEstado(estado);
+        notificacion.setLeido(leido);
         NotificacionDto notificacionGuardada = notificacionService.insertOrUpdate(notificacion);
         if(notificacionGuardada != null)
             return new ResponseEntity<String>(HttpStatus.OK);
