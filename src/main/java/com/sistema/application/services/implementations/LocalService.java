@@ -3,7 +3,6 @@ package com.sistema.application.services.implementations;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import com.sistema.application.converters.EmpleadoConverter;
@@ -11,16 +10,12 @@ import com.sistema.application.converters.LocalConverter;
 import com.sistema.application.converters.ProductoConverter;
 import com.sistema.application.dto.EmpleadoDto;
 import com.sistema.application.dto.LocalDistanciaDto;
-import com.sistema.application.dto.LocalDto;
 import com.sistema.application.dto.ProductoRankingDto;
-import com.sistema.application.entities.Empleado;
 import com.sistema.application.entities.Factura;
 import com.sistema.application.entities.Local;
-import com.sistema.application.funciones.Funciones;
 import com.sistema.application.models.FacturaModel;
 import com.sistema.application.models.ItemModel;
 import com.sistema.application.models.LocalModel;
-import com.sistema.application.models.LoteModel;
 import com.sistema.application.models.ProductoModel;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.repositories.ILocalRepository;
@@ -131,10 +126,10 @@ public class LocalService implements ILocalService {
  		LocalModel localModel = findByIdLocal(idLocal);
  		
  		for (LocalModel lo : getAllModel()) {
- 			if(lo.getIdLocal() != idLocal && validarStock(lo, producto, cantidad)) {
+ 			if(lo.getIdLocal() != idLocal && loteService.verificarStock(producto, lo, cantidad)) {
  			LocalDistanciaDto localDistanciaDto = localConverter.modelToDistanciaDto(lo);
  			localDistanciaDto.setDistancia(localModel.calcularDistancia(lo));
- 			localDistanciaDto.setStock(calcularStockLocal(lo, producto));
+ 			localDistanciaDto.setStock(loteService.calcularStock(producto, lo));
  			lista.add(localDistanciaDto);
  			}
 		} 		
@@ -142,17 +137,7 @@ public class LocalService implements ILocalService {
  		Collections.sort(lista); 		
  		return lista;
  	}
-	public boolean validarStock(LocalModel local, ProductoModel producto, int cantidad) {
-		return calcularStockLocal(local, producto)>= cantidad;		
-	}
-	public int calcularStockLocal(LocalModel local, ProductoModel producto) {		
-		int cantidadStock = 0;		
-		List<LoteModel> lista = loteService.findByLoteProductoActivo( producto.getIdProducto(), local.getIdLocal() );
-		for(LoteModel lo : lista) {
-			cantidadStock = cantidadStock + lo.getCantidadActual();			
-		}		
-		return cantidadStock;
-	} 	
+		
     /****************************************************************************************************/
  	//////////////////////////////////////////////////////////////////////////////////////////////////////
  	// 13) CIERRE DEL MES PARA DEFINIR EL SUELDO DE LOS EMPLEADOS/////////////////////////////////////////

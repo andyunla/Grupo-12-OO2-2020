@@ -6,11 +6,9 @@ import java.util.List;
 import com.sistema.application.dto.EmpleadoDto;
 import com.sistema.application.dto.LocalDistanciaDto;
 import com.sistema.application.dto.ProductoRankingDto;
-import com.sistema.application.entities.Empleado;
 import com.sistema.application.entities.Factura;
 import com.sistema.application.entities.Local;
 import com.sistema.application.models.LocalModel;
-import com.sistema.application.models.ProductoModel;
 import com.sistema.application.models.EmpleadoModel;
 
 public interface ILocalService {
@@ -43,8 +41,6 @@ public interface ILocalService {
 	
 	public List<LocalDistanciaDto> localesCercanos(long idProducto, int cantidad, long idLocal);
 	
-	public boolean validarStock(LocalModel local, ProductoModel producto, int cantidad);
 	
-	public int calcularStockLocal(LocalModel local, ProductoModel producto);
 	
 }
