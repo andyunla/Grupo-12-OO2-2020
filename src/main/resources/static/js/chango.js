@@ -117,7 +117,8 @@ async function cambiarCantidad(element, idItem, idProducto) {
                cantidadInput.value = cantidadInput.dataset.lastvalue;
                let htmlAlert =
                     '<div id="alert" class="p-4 alert alert-danger alert-dismissible fade show" role="alert">' +
-                    '<strong>STOCK SUPERADO:</strong> No se pudo modificar cantidad' +
+                    '<strong>STOCK SUPERADO:</strong> No se pudo seleccionar esa cantidad pero' + 
+                    '<a href="http://localhost:8080/pedido/"> puede hacer un pedido a otro local</a>' +
                     '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
                     '<span aria-hidden="true">&times;</span>' +
                     '</button>' +
@@ -196,7 +197,7 @@ function activarClienteElegido(e) {
 
 // Efecto de desvanecido
 function fadeOutEffect(fadeTarget) {
-     let escala = 0.003;
+     let escala = 0.0025;
      var fadeEffect = setInterval(function () {
           if (!fadeTarget.style.opacity) {
                fadeTarget.style.opacity = 1;
