@@ -145,13 +145,11 @@ public class LoteService implements ILoteService {
 				cantidad = 0; // seteo en cero para salir del bucle, ya no hay mas que restar
 			}
 		}
-		return cantidad == 0; // Si se pudo consumir la cantidad recibida devuevle true
+		return cantidad == 0; // Si se pudo consumir la cantidad recibida devuelve true
 	}
 
 	@Override
 	public boolean devolverStock(LocalModel local, ProductoModel producto, int cantidad) {
-		// Traigo todos los lotes que no estan llenos, de mas nuevo mas antiguo y los
-		// voy llenando
 		List<LoteModel> lista = findByLoteProductoNoNuevo(producto.getIdProducto(), local.getIdLocal());
 		Iterator<LoteModel> itr = lista.iterator();
 		LoteModel lo;

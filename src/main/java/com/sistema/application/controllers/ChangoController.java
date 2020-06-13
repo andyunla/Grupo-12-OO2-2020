@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import com.sistema.application.converters.ProductoConverter;
-import com.sistema.application.converters.UserConverter;
 import com.sistema.application.dto.ChangoDetalleDto;
 import com.sistema.application.dto.ProductoDisponibleDto;
 import com.sistema.application.dto.UserDto;
@@ -78,17 +77,8 @@ public class ChangoController {
      private ILocalService localService;
 
      @Autowired
-     @Qualifier("userConverter")
-     private UserConverter userConverter;
-
-     @Autowired
      @Qualifier("productoConverter")
      private ProductoConverter productoConverter;
-
-     /* CAMBIAR!!!! */
-     @Autowired
-     @Qualifier("changoSesion")
-     private ChangoModel changoSesion;
 
      @Autowired
      @Qualifier("facturaService")
