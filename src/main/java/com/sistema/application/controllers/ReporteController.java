@@ -48,7 +48,7 @@ public class ReporteController {
 		// Obtenemos el usuario de la sesión
 		UserDto userDto = userService.getCurrentUser();
 		modelAndView.addObject("currentUser", userDto);
-		List<ProductoRankingDto> productoRanking = localService.ranking();
+		List<ProductoRankingDto> productoRanking = null;
 		modelAndView.addObject("listaProductos", productoRanking);
 		return modelAndView;
 	}

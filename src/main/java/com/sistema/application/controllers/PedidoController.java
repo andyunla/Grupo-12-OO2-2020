@@ -2,13 +2,14 @@ package com.sistema.application.controllers;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import com.sistema.application.converters.EmpleadoConverter;
 import com.sistema.application.converters.UserConverter;
+import com.sistema.application.dto.DetalleNotificacionDto;
 import com.sistema.application.dto.UserDto;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ChangoModel;
+import com.sistema.application.models.ClienteModel;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.LocalModel;
 import com.sistema.application.models.LoteModel;
@@ -16,6 +17,7 @@ import com.sistema.application.models.PedidoStockModel;
 import com.sistema.application.models.ProductoModel;
 import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IChangoService;
+import com.sistema.application.services.IClienteService;
 import com.sistema.application.services.IEmpleadoService;
 import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.ILoteService;
@@ -28,11 +30,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("pedido")
@@ -53,6 +55,9 @@ public class PedidoController {
 	@Qualifier("changoService")
 	private IChangoService changoService;
 	@Autowired
+	@Qualifier("clienteService")
+	private IClienteService clienteService;
+	@Autowired
 	@Qualifier("empleadoService")
 	private IEmpleadoService empleadoService;
 	@Autowired
@@ -69,29 +74,20 @@ public class PedidoController {
     private UserService userService;
 
 	@GetMapping("")
-	public String pedidos(Model modelo) {
+	public ModelAndView pedidoStock() {
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.PEDIDO_STOCK_VIEW );
 		// Obtenemos el usuario de la sesión
 		UserDto userDto = userService.getCurrentUser();
-		modelo.addAttribute("currentUser", userDto);
-		Set<PedidoStockModel> pedidos = pedidoStockService.getAllModel();
-		modelo.addAttribute("pedidos", pedidos);
-		return ViewRouteHelper.PEDIDO_VIEW;
+		modelAndView.addObject("currentUser", userDto);
+		List<PedidoStockModel> pedidos =  pedidoStockService.getAllModel();
+		modelAndView.addObject("pedidos", pedidos);
+		modelAndView.addObject("clientes", clienteService.getAllModel());
+        modelAndView.addObject("cliente", new ClienteModel());
+		return modelAndView;
 	}
 
-	/**
-	 * Método que solicita un pedido nuevo, donde un empleado realiza el pedido de
-	 * un pruducto a otro local. El empleado oferente se selecciona al azar.
-	 * 
-	 * @param legajo     de tipo long. También podremos obtener el local donde
-	 *                   trabaja
-	 * @param idLocal2   de tipo long. Representa el local que posee los productos
-	 *                   solicitados.
-	 * @param idProducto de tipo long.
-	 * @param cantidad   de tipo int.
-	 * @return boolean
-	 */
 	@PostMapping("solicitar/{userSolicitante}/{userOferente}/{aceptado}/{idProducto}/{cantidad}")
-	public ResponseEntity<String> solicitar(@PathVariable("userSolicitante") String userSolicitante, 
+	public ResponseEntity<DetalleNotificacionDto> solicitar(@PathVariable("userSolicitante") String userSolicitante, 
 											@PathVariable("userOferente") String userOferente, @PathVariable("aceptado") boolean aceptado,
 											@PathVariable("idProducto") long idProducto, @PathVariable("cantidad") int cantidad) {
 		ProductoModel producto = productoService.findByIdProducto(idProducto);
@@ -129,9 +125,12 @@ public class PedidoController {
 			// Persistiendo los datos
 			chango = changoService.insertOrUpdate(chango);
 			local = localService.insertOrUpdate(local);
-			return new ResponseEntity<String>(HttpStatus.CREATED);
+			// Enviar de datos al cliente(js)
+			DetalleNotificacionDto detalleDto = new DetalleNotificacionDto();
+			detalleDto.setIdPedidoStock(pedido.getIdPedidoStock());
+			return new ResponseEntity<DetalleNotificacionDto>(detalleDto, HttpStatus.CREATED);
 		}
 		// Cualquier problema
-		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<DetalleNotificacionDto>(HttpStatus.BAD_REQUEST);
 	}
 }

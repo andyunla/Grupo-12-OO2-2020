@@ -3,9 +3,15 @@ package com.sistema.application.services;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.sistema.application.dto.EmpleadoDto;
+import com.sistema.application.dto.LocalDistanciaDto;
 import com.sistema.application.dto.ProductoRankingDto;
+import com.sistema.application.entities.Empleado;
+import com.sistema.application.entities.Factura;
 import com.sistema.application.entities.Local;
 import com.sistema.application.models.LocalModel;
+import com.sistema.application.models.ProductoModel;
+import com.sistema.application.models.EmpleadoModel;
 
 public interface ILocalService {
 	
@@ -26,5 +32,19 @@ public interface ILocalService {
 	public List<ProductoRankingDto> ranking();
 	
 	public List<ProductoRankingDto> reporte(LocalDate fecha1, LocalDate fecha2, long idLocal);
+	
+	public EmpleadoDto calcularSueldo(EmpleadoModel empleado);
+	
+	public List<Factura> traerFacturaMesPasado();
+	
+	public List<EmpleadoDto> calcularSueldos(long idLocal);
+	
+	public List<EmpleadoDto> calcularSueldoGlobal();
+	
+	public List<LocalDistanciaDto> localesCercanos(long idProducto, int cantidad, long idLocal);
+	
+	public boolean validarStock(LocalModel local, ProductoModel producto, int cantidad);
+	
+	public int calcularStockLocal(LocalModel local, ProductoModel producto);
 	
 }

@@ -11,6 +11,7 @@ import com.sistema.application.entities.PedidoStock;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.PedidoStockModel;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,8 +41,8 @@ public class PedidoStockService implements IPedidoStockService{
 		}
 		
 		@Override
-		public Set<PedidoStockModel> getAllModel(){
-			Set<PedidoStockModel> pedidoStock = new HashSet<PedidoStockModel>();
+		public List<PedidoStockModel> getAllModel(){
+			List<PedidoStockModel> pedidoStock = new ArrayList<PedidoStockModel>();
 			for(PedidoStock p: pedidoStockRepository.findAll() ) {
 				pedidoStock.add(pedidoStockConverter.entityToModel(p) );
 			}

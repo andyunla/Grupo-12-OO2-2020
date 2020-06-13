@@ -1,14 +1,31 @@
+</html>
 <!DOCTYPE html>
-<html>
-<head>
-	<meta charset="ISO-8859-1">
-	<title>Error 404</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!-- Se define que el ancho de los elementos siempre coincida con el calculo de arriba -->
-</head>
-<body style="background-Color:red">
-	<h1><b>La ruta solicitada no existe o no se encuentra</b></h1>
-	<img th:src="@{/images/404.jpg}" alt="" width="100%"/>
-	
+<html lang="en">
+
+<head th:replace="fragments/head :: head(title='Error 404 - Recurso no disponible')"></head>
+
+<body class="container-fluid m-0 p-0">
+	<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+               <ul class="navbar-nav mr-auto">
+                    <li class="nav-item" th:classappend="${active=='home'} ? active : ''">
+                         <a class="navbar-brand nav-link" th:href="@{/}">
+                              <img th:src="@{/images/unla.png}" width="35" height="35" class="d-inline-block align-top" alt="" /> Inicio
+                         </a>
+                    </li>
+               </ul>
+          </div>
+     </nav>
+     <header class="text-center m-4">
+          <h1 class="quicksand mt-5 mb-5">RECURSO NO ENCONTRADO</h1>
+          <h3 class="quicksand mb-5"><strong>La ruta solicitada no existe o no se encuentra </strong></h3>
+     </header>
+     <main class="w-100 d-flex flex-column align-items-center">
+          <img th:src="@{/images/404.jpg}" alt="" width="50%"/>
+     </main>
+     <div th:replace="fragments/footer :: footer"></div>
+     <!-- BOOTSTRAP Scripts -->
+     <footer th:replace="fragments/scripts :: scripts"></footer>
 </body>
+
 </html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head th:replace="fragments/head :: head(title='Pedido Stock')"></head>
+
+<body class="container-fluid m-0 p-0">
+    <nav th:replace="fragments/navbar :: navbar(active='pedido')"></nav>
+    <header class="text-center m-3">
+          <h1 class="display-4">Pedido Stock</h1>
+     </header>
+    <main class="w-100 d-flex flex-column align-items-center">
+        <div class="container  ">
+            
+            <table class="w-100 shadow mb-3 bg-white rounded table-hover table-bordered">
+                <thead class="bg-dark text-center text-white  ">
+                    <tr>
+                        <th scope="col">Nro. Pedido</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Cantidad</th> 
+                        <th scope="col">Empleado Solicitante</th>
+                        <th scope="col">Empleado Oferente</th>
+                        <th scope="col">Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    <tr th:each="pedido :${pedidos}" class="fila-producto  ">
+                        <td th:text="${pedido.idPedidoStock}" align="center"></td>
+                        <td th:text="${pedido.producto.nombre}" align="center"></td>
+                        <td th:text="${pedido.cantidad}" align="center"></td>
+                        <td th:text="${pedido.empleadoSolicitante.nombre}"align="center"></td>
+                        <td th:if="${pedido.empleadoOferente} != null" align="center">
+                            <div th:text="${pedido.empleadoOferente.nombre}" ></div>
+                        </td>
+                        <td th:unless="${pedido.empleadoOferente} != null" align="center"> - </td>
+                        <td th:if="${pedido.aceptado} == true" align="center">
+                            <button class="btn btn-primary m-1" data-toggle="modal" data-target="#facturarPedido">
+                         	FACTURAR
+                    		</button>                            
+                        </td>
+                        <td th:unless="${pedido.aceptado} == true " align="center">
+                            <button  class="btn btn-dark " disabled >FACTURAR</button>                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <!-- VENTANA MODAL DE FACTURACIÓN DEL PEDIDO -->
+     <div class="modal fade" id="facturarPedido" tabindex="-1" role="dialog">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+               <div class="modal-content">
+                    <div class="modal-header">
+                         <h5 class="modal-title">Facturar Pedido</h5>
+                         <button type="button" class="close" data-dismiss="modal">
+                              <span aria-hidden="true">&times;</span>
+                         </button>
+                    </div>
+                    <div class="modal-body">
+                         <form id="factura-pedido-form" name="factura-pedido-form" class="bg-light rounded"
+                               th:object="${cliente}" method="post" action="#">
+                              <div class="form-group d-flex flex-column align-items-center m-1">
+                                   <label for="clienteFactura" class="mb-2 quicksand">Cliente:</label>
+                                   <select class="custom-select mb-4 w-75" th:field="*{nroCliente}" id="clienteFactura">
+                                        <option value="0" selected hidden disabled>Seleccione un cliente</option>
+                                        <option th:each="c: ${clientes}" th:value="${c.nroCliente}"
+                                             th:text="${c.dni + ' - ' + c.nombre + ' ' +  c.apellido }"></option>
+                                   </select>
+                                   <button id="botonConfirmar" type="submit" class="btn btn-primary mb-2"
+                                        disabled>Confirmar</button>
+                              </div>
+                         </form>
+                    </div>
+               </div>
+          </div>
+     </div>
+    <footer th:replace="fragments/footer :: footer"></footer>
+    <!-- Contenedor de las respuestas a las solicitudes -->
+    <div class="p-1 col-11 col-sm-7 col-md-6 col-lg-4" id="alertRespuesta"></div>
+    <div th:replace="fragments/scripts :: scripts"></div>
+</body>
+</html>

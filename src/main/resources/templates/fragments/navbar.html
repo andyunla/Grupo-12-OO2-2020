@@ -30,13 +30,17 @@
                     <vr>
                </span>
                <li class="nav-item" th:classappend="${active=='distancia'} ? active : ''">
-                    <a class="nav-link" th:href="@{/distancia}"><i class="fa fa-random" aria-hidden="true"></i> Distancia</a>
+                    <a class="nav-link" th:href="@{/distancia}"><i class="fa fa-random" aria-hidden="true"></i> Solicitar Stock</a>
                </li>
                <li class="nav-item" th:classappend="${active=='ranking'} ? active : ''">
                     <a class="nav-link" th:href="@{/ranking}"><i class="fa fa-line-chart" aria-hidden="true"></i> Ranking</a>
                </li>
+               
                <li class="nav-item" th:classappend="${active=='reporte'} ? active : ''">
                     <a class="nav-link" th:href="@{/reporte}"><i class="fa fa-line-chart" aria-hidden="true"></i> Reporte</a>
+               </li>
+               <li class="nav-item" th:classappend="${active=='pedido'} ? active : ''">
+                    <a class="nav-link" th:href="@{/pedido}"><i class="fa fa-line-chart" aria-hidden="true"></i> Pedido</a>
                </li>
                <li class="nav-item" th:classappend="${active=='sueldos'} ? active : ''">
                     <a class="nav-link" th:href="@{/sueldos}"><i class="fa fa-money" aria-hidden="true"></i> Sueldos</a>
@@ -70,8 +74,7 @@
                </ul>
           </ul>
      </div>
-     <!-- Contenedor de las respuestas a las solicitudes -->
-     <div style="position: absolute; top: 0; right: 0;" class="p-1 col-11 col-sm-7 col-md-6 col-lg-4" id="alertRespuesta"></div>
+
      <div th:replace="fragments/user_details :: user_details"></div>
 
 </nav>

@@ -32,7 +32,7 @@ public class ViewRouteHelper {
 	public final static String DISTANCIA_ROOT = "cu/distancia";
 	public final static String RANKING_ROOT = "cu/ranking";
 	public final static String REPORTE_ROOT = "cu/reporte";
-	public final static String PEDIDO_VIEW = "cu/pedido";
+	public final static String PEDIDO_STOCK_VIEW = "cu/pedidoStock";
 	public final static String SUELDO_ROOT = "cu/sueldo";
 	
 	// USER
