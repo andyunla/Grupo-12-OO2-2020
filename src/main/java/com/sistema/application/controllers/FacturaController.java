@@ -94,9 +94,6 @@ public class FacturaController {
      public String crearFactura(@PathVariable("nroCliente") long nroCliente, 
           @PathVariable("idPedidoStock") long idPedidoStock ) 
      {
-          ModelAndView mAV = new ModelAndView(ViewRouteHelper.FACTURAS);
-          UserDto userDto = userService.getCurrentUser();
-          mAV.addObject("currentUser", userDto);           
           FacturaModel factura = facturaService.facturaPedido(idPedidoStock, nroCliente );
           return "redirect:/factura/ver/" + factura.getIdFactura();
      }
