@@ -20,4 +20,7 @@ public interface IPedidoStockService {
 	public boolean remove(long id);
 	
 	public Set<PedidoStockModel> findByEmpleadoSolicitante(EmpleadoModel empleadoSolicitante);
+	
+	public PedidoStockModel crearPedido(String userSolicitante, String userOferente, boolean aceptado, long idProducto, int cantidad);
+
 }

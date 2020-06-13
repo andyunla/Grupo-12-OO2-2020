@@ -1,6 +1,6 @@
 package com.sistema.application.controllers;
 
-import java.util.HashSet;
+
 import java.util.List;
 
 import com.sistema.application.converters.EmpleadoConverter;
@@ -8,13 +8,8 @@ import com.sistema.application.converters.UserConverter;
 import com.sistema.application.dto.DetalleNotificacionDto;
 import com.sistema.application.dto.UserDto;
 import com.sistema.application.helpers.ViewRouteHelper;
-import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.ClienteModel;
-import com.sistema.application.models.EmpleadoModel;
-import com.sistema.application.models.LocalModel;
-import com.sistema.application.models.LoteModel;
 import com.sistema.application.models.PedidoStockModel;
-import com.sistema.application.models.ProductoModel;
 import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IChangoService;
 import com.sistema.application.services.IClienteService;
@@ -90,41 +85,10 @@ public class PedidoController {
 	public ResponseEntity<DetalleNotificacionDto> solicitar(@PathVariable("userSolicitante") String userSolicitante, 
 											@PathVariable("userOferente") String userOferente, @PathVariable("aceptado") boolean aceptado,
 											@PathVariable("idProducto") long idProducto, @PathVariable("cantidad") int cantidad) {
-		ProductoModel producto = productoService.findByIdProducto(idProducto);
-		com.sistema.application.entities.User solicitante = userRepository.findByUsernameAndFetchUserRolesEagerly(userSolicitante);
-		com.sistema.application.entities.User oferente = userRepository.findByUsernameAndFetchUserRolesEagerly(userOferente);
-		EmpleadoModel solicitanteModel = empleadoService.findByLegajo(solicitante.getEmpleado().getLegajo());
-		EmpleadoModel oferenteModel = empleadoService.findByLegajo(oferente.getEmpleado().getLegajo());
-		PedidoStockModel pedido = pedidoStockService.insertOrUpdate(new PedidoStockModel(producto, cantidad, aceptado, solicitanteModel, oferenteModel));
-		if (pedido != null) { // Para verificar si se creó el pedido
-			LocalModel local = oferenteModel.getLocal();
-			ChangoModel chango = new ChangoModel(local);
-			chango.setPedidoStock(pedido);
-			// Empezamos a descontar el stock requerido
-			boolean continuar = true;
-			int i = 0;
-			int acumStock = 0;
-			List<LoteModel> listaLotes = loteService.findByLoteProductoNoNuevo(producto.getIdProducto(), local.getIdLocal());
-			while (continuar && i < listaLotes.size()) {
-				LoteModel lote = listaLotes.get(i);
-				int cantActual = lote.getCantidadActual();
-				if (acumStock + cantActual <= cantidad) { // Para no descontar de más
-					lote.setCantidadActual(0); // Adquirimos todos los productos
-					lote.setActivo(false);
-				} else {
-					int diff = cantidad - acumStock;
-					int restante = cantActual - diff;
-					lote.setCantidadActual(restante); // Establecemos la cantidad que sobra
-					continuar = false;
-				}
-				loteService.insertOrUpdate(lote);
-				acumStock = acumStock + cantActual;
-				i++;
-			}
-			local.setListaLotes(new HashSet<LoteModel>(listaLotes)); // List -> Set
-			// Persistiendo los datos
-			chango = changoService.insertOrUpdate(chango);
-			local = localService.insertOrUpdate(local);
+		
+		PedidoStockModel pedido = pedidoStockService.crearPedido(userSolicitante, userOferente, aceptado, idProducto, cantidad);
+		if (pedido != null) { // Para verificar si se creó el pedido			
+			loteService.consumirStock(pedido.getEmpleadoOferente().getLocal(), pedido.getProducto(), cantidad);
 			// Enviar de datos al cliente(js)
 			DetalleNotificacionDto detalleDto = new DetalleNotificacionDto();
 			detalleDto.setIdPedidoStock(pedido.getIdPedidoStock());
