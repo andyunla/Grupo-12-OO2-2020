@@ -237,7 +237,7 @@ public class ChangoController {
           return mAV;
      }
 
-     /* VISTA DE TODOS LOS CHANGOS CREADOS, DIFERENCIANDOLOS POR FACTURADOS O NO */
+     /* VISTA DE TODOS LOS CHANGOS CREADOS CON STOCK PROPIO, DIFERENCIANDOLOS POR FACTURADOS O NO */
      @GetMapping("todos")
      public ModelAndView traerTodos(Model modelo) {
           // Devuelve una vista con todos los changos del local actual
@@ -251,11 +251,13 @@ public class ChangoController {
           }
           List<ChangoDetalleDto> changos = new ArrayList<ChangoDetalleDto>();
           for (ChangoModel chango : changoService.findByLocal(getLocal())) {
-               // Llena los detalles que se pasaran a la vista de la lista de los changos
-               int cantidadDeItems = itemService.findByChango(chango.getIdChango()).size();
-               double total = changoService.calcularTotal(chango.getIdChango());
-               boolean facturado = (facturaService.findByChango(chango) != null);
-               changos.add(new ChangoDetalleDto(chango.getIdChango(), cantidadDeItems, total, facturado));
+               // Verifica que no sea un chango de pedido
+               if(chango.getPedidoStock() == null) {
+                    int cantidadDeItems = itemService.findByChango(chango.getIdChango()).size();
+                    double total = changoService.calcularTotal(chango.getIdChango());
+                    boolean facturado = (facturaService.findByChango(chango) != null);
+                    changos.add(new ChangoDetalleDto(chango.getIdChango(), cantidadDeItems, total, facturado));
+               }               
           }
           mAV.addObject("changos", changos);
           return mAV;
