@@ -30,13 +30,18 @@ async function traerItems() {
      }
 }
 
-function sumar(idItem, cantidad) {
-     
+//Deshabilita o habilita el boton de agregar producto disponible
+function actualizarBoton(idProducto) {
+     let boton = document.getElementById('botonProducto' + idProducto);
+     boton.innerText = (boton.innerText == "LISTO") ? "AGREGAR" : "LISTO";
+     boton.disabled = !boton.disabled;
+     boton.classList.toggle('btn-info');
+     boton.classList.toggle('btn-success');
 }
 
+// Agrega un nuevo item al chango
 async function agregarItem(idProducto) {
      let urlNuevoItem = urlChango + 'nuevo-item/' + idChango + '/' + idProducto;
-     let boton = document.getElementById('botonProducto' + idProducto);
      try {
           let response = await fetch(urlNuevoItem, { method: 'POST' });
           // Verifica si el item fue creado, puede que no si ya existía
@@ -48,17 +53,14 @@ async function agregarItem(idProducto) {
           let template = document.createElement('template');
           template.innerHTML = htmlItem.trim();
           document.getElementById("itemsChango").appendChild(template.content.firstChild);
-          // Deshabilita el boton de agregar en la lista de productos
-          boton.innerText = "LISTO";
-          boton.disabled = true;
-          boton.classList.remove('btn-info');
-          boton.classList.add('btn-success');
+          actualizarBoton(idProducto);
           actualizarTotal();
-          //actualizarStock(idProducto, 1);
      }
      catch (e) {
           alert("ERROR, no se pudo agregar");
           console.error(e);
+     } finally {
+          actualizarStock(idProducto);
      }
 }
 
@@ -67,18 +69,13 @@ async function eliminarItem(idItem, idProducto) {
      try {
           let response = await fetch(urlDeleteItem, { method: 'POST' });
           if (response.status == 200) {
-               // Devuelvo el stock disponible
-               //actualizarStock(e.dataset.idproducto, 0);
+               //actualizarStock(e.dataset.idproducto, 0); ******************************
                // Elimino el item de la vista
                let filaItem = document.getElementById('idItem' + idItem);
                filaItem.parentElement.removeChild(filaItem);
-               // Rehabilita el boton de agregar en la tabla de productos
-               let botonProducto = document.getElementById("botonProducto" + idProducto);
-               botonProducto.classList.remove('btn-success');
-               botonProducto.classList.add('btn-info');
-               botonProducto.innerText = "AGREGAR";
-               botonProducto.disabled = false;
+               actualizarBoton(idProducto);
                actualizarTotal();
+               actualizarStock(idProducto);
           } else {
                throw new Error();
           }
@@ -88,115 +85,47 @@ async function eliminarItem(idItem, idProducto) {
      }
 }
 
-/* AGREGA UN ITEM DE LA TABLA DE PRODUCTOS DISPONIBLES AL CHANGO 
-async function agregarItem(element) {
-     let urlNewItem = urlChango + 'nuevo-item/' + element.dataset.idchango + '/' + element.dataset.idproducto;
-     try {
-          let response = await fetch(urlNewItem, { method: 'POST' });
-          // Verifica si el item fue creado, puede que no si ya existía
-          if (response.status != 201) {
-               throw new Error(response);
-          }
-          let htmlItem = await response.text();
-          // Agrega el item a la tabla del chango
-          let template = document.createElement('template');
-          template.innerHTML = htmlItem.trim();
-          document.getElementById("tablaChango").appendChild(template.content.firstChild);
-          // Deshabilita el boton de agregar en la lista de productos
-          element.innerText = "LISTO";
-          element.disabled = true;
-          element.classList.remove('btn-info');
-          element.classList.add('btn-success');
-          actualizarTotal();
-          actualizarStock(element.dataset.idproducto, 1);
-     }
-     catch (e) {
-          console.log("Error, no se pudo agregar");
-     }
+// Agrega una unidad o resta una unidad a un item
+function sumar(element, idItem, cantidad, idProducto) {
+     let inputCantidad = document.getElementById("cantidad-item" + idItem);
+     inputCantidad.value = parseInt(inputCantidad.value) + cantidad;
+     cambiarCantidad(element, idItem, idProducto);
 }
 
-/* ELIMINA UN ITEM DE LA TABLA DEL CHANGO 
-async function eliminarItem(e) {
-     let urlDeleteItem = urlChango + 'eliminar-item/' + e.dataset.iditem;
-     try {
-          let response = await fetch(urlDeleteItem, { method: 'POST' });
-          if (response.status == 200) {
-               // Devuelvo el stock disponible
-               actualizarStock(e.dataset.idproducto, 0);
-               // Elimino el item de la vista
-               let filaItem = e.parentElement.parentElement.parentElement.parentElement.parentElement;
-               filaItem.parentElement.removeChild(filaItem);
-               // Rehabilita el boton de agregar en la tabla de productos
-               let botonProducto = document.getElementById("botonProducto" + e.dataset.idproducto);
-               botonProducto.classList.remove('btn-success');
-               botonProducto.classList.add('btn-info');
-               botonProducto.innerText = "AGREGAR";
-               botonProducto.disabled = false;
-               // Recalculo el total
-               actualizarTotal();
-          } else {
-               throw new Error();
-          }
-     }
-     catch (e) {
-          alert("Error, no se pudo eliminar");    // TODO: A cambiar por un alert con con estilos
-     }
-}
-
-/* MODIFICA LA CANTIDAD DE UN ITEM 
-async function modificarCantidad(element, valor = 0) {
-     // El valor es la cantidad a sumar o restar de la cantidad actual
-     let cantidadInput = document.getElementById("cantidad-item" + element.dataset.iditem);
-     let nuevaCantidad = parseInt(cantidadInput.value) + valor;
-     // Verifica si hay un valor negativo o cero, de ser así lo devuelve a su valor ultimo
-     if (nuevaCantidad < 1) {
-          cantidadInput.value = cantidadInput.dataset.lastvalue;
-     } else {
-          let url = urlChango + 'modificar-item/' + element.dataset.iditem + '/' + nuevaCantidad;
-          // Desabilita los botones y el campo de modificación hasta obtener una respuesta del servidor
-          element.disabled = true;
+// Cambia la cantidad de un item
+async function cambiarCantidad(element, idItem, idProducto) {
+     let cantidadInput = document.getElementById("cantidad-item" + idItem);
+     // Verifica que no se intente cambiar a un valor negativo o cero
+     if (cantidadInput.value > 0) {
+          let url = urlChango + 'modificar-item/' + idItem + '/' + cantidadInput.value;
+          element.disabled = true; // Deshabilita el boton que está modificando hasta terminar la operación
           try {
                let response = await fetch(url, { method: 'POST' });
                if (response.status == 200) {
-                    cantidadInput.value = nuevaCantidad;
-                    cantidadInput.dataset.lastvalue = nuevaCantidad;
-                     // Actualizo el stock
-                    let filaDelItem = document.getElementById("item" + element.dataset.iditem);
-                    let idProductoDelItem = filaDelItem.dataset.idproducto;
-                    actualizarStock(idProductoDelItem, nuevaCantidad);
+                    cantidadInput.dataset.lastvalue = cantidadInput.value;
+                    actualizarTotal();
                } else {
-                    // Si el servidor no responde OK se asume que es por falta de stock
-                    let htmlAlert =
-                         '<div id="alert" class="p-4 alert alert-danger alert-dismissible fade show" role="alert">' +
-                         '<strong>STOCK SUPERADO:</strong> No se pudo modificar cantidad' +
-                         '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                         '<span aria-hidden="true">&times;</span>' +
-                         '</button>' +
-                         '</div> ';
-                    document.getElementById("alertContainer").innerHTML = htmlAlert;;
-                    // Se reestablece la cantidad en la vista a la cantidad que tiene en la base de datos
-                    cantidadInput.value = await response.json();
-                    let alert = document.getElementById("alert");
-                    fadeOutEffect(alert);
+                    throw new Error();
                }
-               actualizarTotal();
           } catch (e) {
-               console.error(e);
+               // Se reestablece la cantidad en la vista a la cantidad que tiene en la base de datos
+               cantidadInput.value = cantidadInput.dataset.lastvalue;
+               let htmlAlert =
+                    '<div id="alert" class="p-4 alert alert-danger alert-dismissible fade show" role="alert">' +
+                    '<strong>STOCK SUPERADO:</strong> No se pudo modificar cantidad' +
+                    '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                    '<span aria-hidden="true">&times;</span>' +
+                    '</button>' +
+                    '</div> ';
+               let alertContainer = document.getElementById("alertContainer");
+               alertContainer.innerHTML = htmlAlert;
+               fadeOutEffect(document.getElementById("alert"));
           } finally {
+               actualizarStock(idProducto);
                element.disabled = false;
           }
-     }
-}
-
-/* AGREGA O RESTA UNA UNIDAD A UN ITEM 
-function cambiarUnidad(element, valor) {
-     // El valor es la cantidad a sumar o restar de la cantidad actual
-     let cantidadInput = document.getElementById("cantidad-item" + element.dataset.iditem);
-     let nuevaCantidad = parseInt(cantidadInput.value) + valor;
-     // Verifica que la cantidad no llegue a cero en caso de estar restando
-     if (nuevaCantidad > 0) {
-          cantidadInput.value = nuevaCantidad;
-          actualizarTotal();
+     } else {
+          cantidadInput.value = cantidadInput.dataset.lastvalue;
      }
 }
 
@@ -216,17 +145,23 @@ function actualizarTotal() {
      document.getElementById("botonConfirmar").disabled = !(changoConItem && clienteElegido);
 }
 
-/* ACTUALIZA EL STOCK QUE SE MUESTRA EN LA TABLA PRODUCTOS 
-function actualizarStock(idProducto, cantidadEnItem) {
-    let filaProducto = document.getElementById("producto" + idProducto);
-    let columnaStock = filaProducto.children[4];
-    columnaStock.innerText = parseInt(columnaStock.dataset.stockinicial) - cantidadEnItem;
-}*/
+async function actualizarStock(idProducto) {
+     let url = urlChango + 'stock/' + idProducto;
+     try {
+          let response = await fetch(url);
+          let stock = await response.text();
+          let filaProducto = document.getElementById("producto" + idProducto);
+          let columnaStock = filaProducto.children[3];
+          columnaStock.innerHTML = stock;
+     }
+     catch(e) {
+          alert("Hubo un problema para actualizar el stock");
+     }
+}
 
 /* BUSCA UN PRODUCTO POR SU NOMBRE */
 function buscar(e) {
      let valorBuscado = e.value;
-     console.log(valorBuscado)
      // Obtiene la lista <tr> de filas de la tabla
      let elementosProducto = document.getElementById("productosDisponibles").children;
      if (valorBuscado != "") {
@@ -249,31 +184,31 @@ function buscar(e) {
      }
 }
 
+function activarClienteElegido(e) {
+     clienteElegido = true;
+     // Habilita el boton de confirmar la factura si ya hay un chango cargado
+     document.getElementById("botonConfirmar").disabled = !(changoConItem && clienteElegido);
+}
+
 // Efecto de desvanecido
 function fadeOutEffect(fadeTarget) {
      let escala = 0.003;
      var fadeEffect = setInterval(function () {
-         if (!fadeTarget.style.opacity) {
-             fadeTarget.style.opacity = 1;
-         }
-         if (fadeTarget.style.opacity > 0) {
-             fadeTarget.style.opacity -= escala;
-             if(fadeTarget.style.opacity < 0.9) {
-                  escala = 0.07;
-             }
-         } else {
-             clearInterval(fadeEffect);
-         }
+          if (!fadeTarget.style.opacity) {
+               fadeTarget.style.opacity = 1;
+          }
+          if (fadeTarget.style.opacity > 0) {
+               fadeTarget.style.opacity -= escala;
+               if (fadeTarget.style.opacity < 0.9) {
+                    escala = 0.07;
+               }
+          } else {
+               clearInterval(fadeEffect);
+          }
      }, 100);
- }
-/*
- function activarClienteElegido(e) {
-     clienteElegido = true;
-     // Habilita el boton de confirmar la factura si ya hay un chango cargado
-     document.getElementById("botonConfirmar").disabled = !(changoConItem && clienteElegido);
- }
-*/
- window.onload = () => {
+}
+
+window.onload = () => {
      idChango = document.getElementById("idChango").innerText;
      traerProductosDisponibles();
      traerItems();

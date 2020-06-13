@@ -7,7 +7,8 @@
                <div class="input-group w-75 flex-nowrap">
                     <div class="input-group-prepend">
                          <button class="btn btn-outline-info btn-sm btn-cart" data-toggle="tooltip" data-placement="top"
-                              title="Sacar uno" type="button" th:onclick="sumar([[${item.idItem}]], -1)">
+                              title="Sacar uno" type="button" 
+                              th:onclick="sumar(this, [[${item.idItem}]], -1, [[${item.getProductoModel().idProducto}]])">
                               <svg th:replace="fragments/icons :: subtractIcon"></svg>
                          </button>
                     </div>
@@ -15,11 +16,12 @@
                          class="form-control text-center border-info no-arrows"
                          style="min-width: 2em !important; padding: 0;" th:id="'cantidad-item' + ${item.idItem}"
                          th:attr="data-idItem = ${item.idItem}, data-lastValue=${item.cantidad}"
-                         th:onchange="cambiarCantidad([[${item.idItem}]])">
+                         th:onchange="cambiarCantidad(this, [[${item.idItem}]], [[${item.getProductoModel().idProducto}]])">
                     <!-- FIJARSE UTILIDAD DEL LAST VALUE-->
                     <div class="input-group-append">
                          <button class="btn btn-outline-info btn-sm btn-cart" data-toggle="tooltip" data-placement="top"
-                              title="Agregar uno" type="button" th:onclick="sumar([[${item.idItem}]], 1)">
+                              title="Agregar uno" type="button" 
+                              th:onclick="sumar(this, [[${item.idItem}]], 1, [[${item.getProductoModel().idProducto}]])">
                               <svg th:replace="fragments/icons :: addIcon"></svg>
                          </button>
                          <button class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="top"
