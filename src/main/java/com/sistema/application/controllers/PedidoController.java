@@ -88,7 +88,7 @@ public class PedidoController {
 		
 		PedidoStockModel pedido = pedidoStockService.crearPedido(userSolicitante, userOferente, aceptado, idProducto, cantidad);
 		if (pedido != null) { // Para verificar si se creó el pedido			
-			loteService.consumirStock(pedido.getEmpleadoOferente().getLocal(), pedido.getProducto(), cantidad);
+			loteService.consumirStock(pedido.getEmpleadoOferente().getLocal().getIdLocal(), pedido.getProducto().getIdProducto(), cantidad);
 			// Enviar de datos al cliente(js)
 			DetalleNotificacionDto detalleDto = new DetalleNotificacionDto();
 			detalleDto.setIdPedidoStock(pedido.getIdPedidoStock());

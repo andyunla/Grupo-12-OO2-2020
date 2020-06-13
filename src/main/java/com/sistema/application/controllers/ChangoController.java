@@ -168,7 +168,7 @@ public class ChangoController {
                ItemModel item = itemService.insertOrUpdate(newItem);
                mAV.addObject("items", new ItemModel[] { item });
                // Resta la cantidad agregada de los lotes
-               loteService.consumirStock(getLocal(), item.getProductoModel(), 1);
+               loteService.consumirStock(getLocal().getIdLocal(), item.getProductoModel().getIdProducto(), 1);
                mAV.setStatus(HttpStatus.CREATED);
           } else {
                mAV.setStatus(HttpStatus.NOT_ACCEPTABLE);
@@ -183,7 +183,7 @@ public class ChangoController {
           ProductoModel producto = item.getProductoModel();
           if (itemService.remove(idItem)) {
                // Devuelve la cantidad del item eliminado a el/los lote/s
-               loteService.devolverStock(getLocal(), producto, item.getCantidad());
+               loteService.devolverStock(getLocal().getIdLocal(), producto.getIdProducto(), item.getCantidad());
                return new ResponseEntity<String>(HttpStatus.OK);
           } else {
                return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
@@ -200,13 +200,15 @@ public class ChangoController {
                // Verifico si hay stock en el local
                if (loteService.verificarStock(item.getProductoModel(), getLocal(), nuevaCantidad - item.getCantidad())) {
                     // Resto a los lotes del local la cantidad que se sumó
-                    loteService.consumirStock(getLocal(), item.getProductoModel(), nuevaCantidad - item.getCantidad());
+                    loteService.consumirStock(getLocal().getIdLocal(), item.getProductoModel().getIdProducto(), 
+                         nuevaCantidad - item.getCantidad());
                } else {
                     return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
                }
           } else {
                // Sumo a los lotes la cantidad que se restó
-               loteService.devolverStock(getLocal(), item.getProductoModel(), item.getCantidad() - nuevaCantidad);
+               loteService.devolverStock(getLocal().getIdLocal(), item.getProductoModel().getIdProducto(), 
+                    item.getCantidad() - nuevaCantidad);
           }
           item.setCantidad(nuevaCantidad);
           itemService.insertOrUpdate(item);
@@ -227,7 +229,8 @@ public class ChangoController {
           // Traer items del chango, devolverlos a sus lotes y eliminarlos
           List<ItemModel> items = itemService.findByChango(idChango);
           for (ItemModel item : items) {
-               loteService.devolverStock(getLocal(), item.getProductoModel(), item.getCantidad());
+               loteService.devolverStock(getLocal().getIdLocal(), item.getProductoModel().getIdProducto(), 
+                    item.getCantidad());
                itemService.remove(item.getIdItem());
           }
           if (changoService.remove(idChango)) { 
