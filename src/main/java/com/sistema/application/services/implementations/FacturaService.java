@@ -14,7 +14,6 @@ import com.sistema.application.repositories.IFacturaRepository;
 import com.sistema.application.converters.ChangoConverter;
 import com.sistema.application.converters.FacturaConverter;
 import com.sistema.application.converters.LocalConverter;
-import com.sistema.application.dto.ProductoRankingDto;
 import com.sistema.application.entities.Factura;
 import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.ClienteModel;
@@ -26,7 +25,6 @@ import com.sistema.application.models.PedidoStockModel;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service("facturaService")
 public class FacturaService implements IFacturaService {
@@ -171,7 +169,7 @@ public class FacturaService implements IFacturaService {
 		return facturas;
 	}
 	@Override
-	public void facturaPedido(long idPedidoStock, long nroCliente,  long idLegajo) {
+	public FacturaModel facturaPedido(long idPedidoStock, long nroCliente,  long idLegajo) {
 		//creo los atributos para poder generar la factura de un chango con PedidoStock
 		ClienteModel clienteModel = clienteService.findByNroCliente(nroCliente);
 		EmpleadoModel empleadoModel = empleadoService.findByLegajo(idLegajo);
@@ -185,6 +183,6 @@ public class FacturaService implements IFacturaService {
 		//creo la factura y la persisto
 		FacturaModel facturaModel = new FacturaModel(clienteModel, changoModel,LocalDate.now(), costeTotal, empleadoModel, localModel );
 		this.insertOrUpdate(facturaModel);
-		//Faltaría restar el lote al local que cediò el stock
+		return facturaModel;
 	}
 }

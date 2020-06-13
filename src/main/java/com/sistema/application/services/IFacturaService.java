@@ -6,7 +6,6 @@ import com.sistema.application.models.FacturaModel;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 public interface IFacturaService {
 
@@ -21,7 +20,7 @@ public interface IFacturaService {
 	public boolean remove(long id);	
 	
 	public  List<FacturaModel> findByFechaFacturaBetweenAndIdLocal(LocalDate fecha1, LocalDate fecha2, long idLocal);
-	//public  Set<FacturaModel> findByFechaFacturaBetween(LocalDate fecha1, LocalDate fecha2);
+	
 	public  List<Factura> findByFechaFacturaBetween(LocalDate fecha1, LocalDate fecha2);
 
 	public FacturaModel findByChango(ChangoModel chango);
@@ -30,5 +29,5 @@ public interface IFacturaService {
 
 	public List<FacturaModel> findByIdLocalAndByLegajoEmpleado(long idLocal, long legajo);
 	
-	public void facturaPedido(long idPedidoStock, long nroCliente, long idLegajo);
+	public FacturaModel facturaPedido(long idPedidoStock, long nroCliente, long idLegajo);
 }
