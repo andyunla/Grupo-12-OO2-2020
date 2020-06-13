@@ -28,10 +28,10 @@ public class Notificacion implements Serializable {
 
 	@Column(name="tipo", nullable=false, length=20)
 	private String tipo; // Si es para hacerle un pedido a un usuario o responderle su pedido
-	@Column(name="estado", nullable=false)
-	private boolean estado;
-	@Column(name="texto", nullable=false, length=45)
-	private String texto;
+	@Column(name="leido", nullable=true)
+	private boolean leido;
+	@Column(name="estado", nullable=true, length=20)
+	private String estado;
 
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_from", nullable=false)
@@ -48,13 +48,13 @@ public class Notificacion implements Serializable {
 	
 	public Notificacion() {}
 
-	public Notificacion(Long id, String tipo, boolean estado, String texto, User userFrom, User userTo, Local localTo,
+	public Notificacion(Long id, String tipo, boolean leido, String estado, User userFrom, User userTo, Local localTo,
 						DetalleNotificacion detalleNotificacion) {
 		super();
 		this.id = id;
 		this.tipo = tipo;
+		this.leido = leido;
 		this.estado = estado;
-		this.texto = texto;
 		this.userFrom = userFrom;
 		this.userTo = userTo;
 		this.localTo = localTo;
@@ -77,20 +77,20 @@ public class Notificacion implements Serializable {
 		this.tipo = tipo;
 	}
 
-	public boolean isEstado() {
+	public String getEstado() {
 		return estado;
 	}
 
-	public void setEstado(boolean estado) {
+	public void setEstado(String estado) {
 		this.estado = estado;
 	}
 
-	public String getTexto() {
-		return texto;
+	public boolean isLeido() {
+		return leido;
 	}
 
-	public void setTexto(String texto) {
-		this.texto = texto;
+	public void setLeido(boolean leido) {
+		this.leido = leido;
 	}
 
 	public User getUserFrom() {
@@ -127,7 +127,7 @@ public class Notificacion implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Notificacion [id=" + id + ", tipo=" + tipo + ", estado=" + estado + ", texto=" + texto + ", userFrom="
+		return "Notificacion [id=" + id + ", tipo=" + tipo + ", estado=" + estado + ", leido=" + leido + ", userFrom="
 				+ userFrom + ", userTo=" + userTo + ", localTo=" + localTo + ", detalleNotificacion="
 				+ detalleNotificacion + "]";
 	}
