@@ -103,7 +103,7 @@ public class FacturaController {
           UserDto userDto = userService.getCurrentUser();
           mAV.addObject("currentUser", userDto);           
           facturaService.facturaPedido(idPedidoStock, nroCliente,userDto.getLegajo() );
-          return mAV; 
+          return mAV;
      }
 
      @GetMapping("ver/{idFactura}")
