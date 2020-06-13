@@ -79,7 +79,7 @@ public class LoteService implements ILoteService {
 		// creo un set list vacio
 		Set<LoteModel> lista = new HashSet<LoteModel>();
 		// recorro la lista de lotes inactivos del poducto en el local correspondiente
-		for (Lote lo : loteRepository.findByLoteProductoBaja(idProducto, idLocal)) {
+		for (Lote lo : loteRepository.findByLoteProductoNoNuevo(idProducto, idLocal)) {
 			// a cada lote lo convierto de entidad a model y lo agrego a la lista
 			lista.add(loteConverter.entityToModel(lo));
 		}
