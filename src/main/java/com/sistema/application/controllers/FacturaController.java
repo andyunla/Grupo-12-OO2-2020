@@ -91,14 +91,14 @@ public class FacturaController {
      }
 
      @PostMapping("confirmar/{idPedidoStock}/{nroCliente}")
-     public ModelAndView crearFactura(@PathVariable("nroCliente") long nroCliente, 
+     public String crearFactura(@PathVariable("nroCliente") long nroCliente, 
           @PathVariable("idPedidoStock") long idPedidoStock ) 
      {
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.FACTURAS);
           UserDto userDto = userService.getCurrentUser();
           mAV.addObject("currentUser", userDto);           
-          facturaService.facturaPedido(idPedidoStock, nroCliente,userDto.getLegajo() );
-          return mAV;
+          FacturaModel factura = facturaService.facturaPedido(idPedidoStock, nroCliente );
+          return "redirect:/factura/ver/" + factura.getIdFactura();
      }
 
      @GetMapping("ver/{idFactura}")
