@@ -2,6 +2,7 @@ package com.sistema.application.controllers;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -12,6 +13,7 @@ import com.sistema.application.models.ClienteModel;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.FacturaModel;
 import com.sistema.application.models.ItemModel;
+import com.sistema.application.models.PedidoStockModel;
 import com.sistema.application.services.IChangoService;
 import com.sistema.application.services.IClienteService;
 import com.sistema.application.services.IEmpleadoService;
@@ -117,13 +119,20 @@ public class FacturaController {
           List <ItemModel> items = itemService.findByChango(factura.getChango().getIdChango());
           // Creo una lista de listas de items. Cada lista tendrá hasta max 13 items, seran 13 items por hoja
           List <ArrayList<ItemModel>> listaDeListas = new ArrayList<ArrayList<ItemModel>>();
-          int cursorListas = -1;
-          for(int i=0; i<items.size(); i++) {     
-               if(i == 0 || i % 13 == 0) {
-                    listaDeListas.add(new ArrayList<ItemModel>());
-                    cursorListas++;
+          // Verifica si la factura es de un pedido, de serlo lo manda como un item
+          PedidoStockModel pedido = factura.getChango().getPedidoStock();
+          if( pedido != null ) {
+               ItemModel itemPedido = new ItemModel(pedido.getCantidad(), pedido.getProducto());
+               listaDeListas.add(new ArrayList<ItemModel>(Arrays.asList(itemPedido)));
+          } else {
+               int cursorListas = -1;
+               for(int i=0; i<items.size(); i++) {     
+                    if(i == 0 || i % 13 == 0) {
+                         listaDeListas.add(new ArrayList<ItemModel>());
+                         cursorListas++;
+                    }
+                    listaDeListas.get( cursorListas ).add( items.get(i) );
                }
-               listaDeListas.get( cursorListas ).add( items.get(i) );
           }
           mAV.addObject("todosLosItems", listaDeListas);
           mAV.addObject("currentUser", userDto); 
