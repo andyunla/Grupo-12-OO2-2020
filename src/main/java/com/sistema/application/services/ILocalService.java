@@ -35,11 +35,7 @@ public interface ILocalService {
 	
 	public List<Factura> traerFacturaMesPasado();
 	
-	public double calcularComisionVentaCompleta(Empleado empleado);
-	
-	public double calcularComisionVentaExterna(Empleado empleado);
-	
-	public double calcularComisionStockCedido(Empleado empleado);
+	public List<EmpleadoDto> calcularSueldos(long idLocal);
 	
 	public List<EmpleadoDto> calcularSueldoGlobal();
 }
