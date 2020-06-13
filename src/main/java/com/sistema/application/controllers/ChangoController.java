@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import com.sistema.application.converters.LocalConverter;
+import javax.servlet.http.HttpSession;
+
 import com.sistema.application.converters.ProductoConverter;
 import com.sistema.application.converters.UserConverter;
 import com.sistema.application.dto.ChangoDetalleDto;
 import com.sistema.application.dto.ProductoDisponibleDto;
 import com.sistema.application.dto.UserDto;
-import com.sistema.application.entities.Local;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.ClienteModel;
@@ -96,17 +96,17 @@ public class ChangoController {
 
      /* CREACION DE UN CHANGO */
      @GetMapping("")
-     public ModelAndView chango() {
+     public ModelAndView chango(HttpSession session) {
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHANGO);
           UserDto userDto = userService.getCurrentUser();
           mAV.addObject("currentUser", userDto);          
           // Verifico si ya hay un chango abierto en esta sesion y si hay lo redirecciona a su modificación
-          if (changoSesion.hasInstance()) {
-               mAV.setViewName("redirect:/chango/" + changoSesion.getIdChango());
+          if (session.getAttribute("chango") != null) {
+               mAV.setViewName("redirect:/chango/" + ((ChangoModel)session.getAttribute("chango")).getIdChango());
                return mAV;
           }
           ChangoModel nuevoChango = changoService.insertOrUpdate( new ChangoModel(getLocal()) );
-          changoSesion.setInstance(nuevoChango);  //D
+          session.setAttribute("chango", nuevoChango);
           mAV.addObject("chango", nuevoChango);
           mAV.addObject("clientes", clienteService.getAllModel());
           mAV.addObject("cliente", new ClienteModel());
@@ -115,7 +115,7 @@ public class ChangoController {
 
      /* MODIFICACIÓN DE UN CHANGO */
      @GetMapping("{idChango}")
-     public ModelAndView editarChango(@PathVariable("idChango") long idChango) {
+     public ModelAndView editarChango(@PathVariable("idChango") long idChango, HttpSession session) {
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHANGO);
           UserDto userDto = userService.getCurrentUser();
           mAV.addObject("currentUser", userDto);  
@@ -130,8 +130,8 @@ public class ChangoController {
                mAV.setViewName("error/403");
                return mAV;
           }
-          changoSesion.setInstance(chango);
-          mAV.addObject("chango", changoSesion);
+          session.setAttribute("chango", chango);
+          mAV.addObject("chango", chango);
           mAV.addObject("clientes", clienteService.getAllModel());
           mAV.addObject("cliente", new ClienteModel());
           return mAV;
@@ -232,7 +232,7 @@ public class ChangoController {
      /* Elimina un chango y sus items */
      @PostMapping("cancelar/{idChango}")
      public ModelAndView cancelarChango(@PathVariable("idChango") long idChango,
-               RedirectAttributes redirectAttributes) {
+               RedirectAttributes redirectAttributes, HttpSession session) {
           ModelAndView mAV = new ModelAndView("redirect:/chango/todos");
           // Traer items del chango, devolverlos a sus lotes y eliminarlos
           List<ItemModel> items = itemService.findByChango(idChango);
@@ -242,7 +242,7 @@ public class ChangoController {
           }
           if (changoService.remove(idChango)) { 
                redirectAttributes.addFlashAttribute("changoEliminado", true);
-               changoSesion.clear(); // Saca al chango de la sesion D
+               session.removeAttribute("chango");
           }
           return mAV;
      }
@@ -262,9 +262,8 @@ public class ChangoController {
           List<ChangoDetalleDto> changos = new ArrayList<ChangoDetalleDto>();
           for (ChangoModel chango : changoService.findByLocal(getLocal())) {
                // Llena los detalles que se pasaran a la vista de la lista de los changos
-               chango.setListaItems(new HashSet<>(itemService.findByChango(chango.getIdChango())));
-               int cantidadDeItems = chango.getListaItems().size();
-               double total = chango.calcularTotalChango();
+               int cantidadDeItems = itemService.findByChango(chango.getIdChango()).size();
+               double total = changoService.calcularTotal(chango.getIdChango());
                boolean facturado = (facturaService.findByChango(chango) != null);
                changos.add(new ChangoDetalleDto(chango.getIdChango(), cantidadDeItems, total, facturado));
           }

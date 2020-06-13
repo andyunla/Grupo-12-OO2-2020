@@ -4,10 +4,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.sistema.application.converters.LocalConverter;
-import com.sistema.application.converters.UserConverter;
 import com.sistema.application.dto.UserDto;
-import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.ClienteModel;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.FacturaModel;
@@ -48,20 +48,12 @@ public class FacturaController {
      private IChangoService changoService;
 
      @Autowired
-     @Qualifier("userConverter")
-     private UserConverter userConverter;
-
-     @Autowired
      @Qualifier("localConverter")
      private LocalConverter localConverter;
 
      @Autowired
      @Qualifier("empleadoService")
      private IEmpleadoService empleadoService;
-
-     @Autowired
-     @Qualifier("changoSesion")
-     private ChangoModel changoSesion;
 
      @Autowired
      @Qualifier("userService")
@@ -77,7 +69,7 @@ public class FacturaController {
      
      @PostMapping("confirmar/{idChango}")
      public ModelAndView crearFactura(@ModelAttribute ClienteModel cliente, 
-          @PathVariable("idChango") long idChango ) 
+          @PathVariable("idChango") long idChango, HttpSession session ) 
      {
           ModelAndView mAV = new ModelAndView();
           UserDto userDto = userService.getCurrentUser();
@@ -92,9 +84,10 @@ public class FacturaController {
                );
           FacturaModel facturaGuradada = facturaService.insertOrUpdate(nuevaFactura);
           mAV.setViewName("redirect:/factura/ver/" + facturaGuradada.getIdFactura());
-          changoSesion.clear();
+          session.removeAttribute("chango");
           return mAV; 
      }
+
      @PostMapping("confirmar/{idPedidoStock}/{nroCliente}")
      public ModelAndView crearFactura(@PathVariable("nroCliente") long nroCliente, 
           @PathVariable("idPedidoStock") long idPedidoStock ) 
