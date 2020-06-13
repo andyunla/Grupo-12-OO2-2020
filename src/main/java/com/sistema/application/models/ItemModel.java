@@ -34,6 +34,13 @@ public class ItemModel {
 		this.changoModel = changoModel;
 	}
 
+	// Constructor usado para crear items de los pedidos para la vista de la factura
+	public ItemModel(int cantidad, ProductoModel productoModel) {
+		super();
+		this.cantidad = cantidad;
+		this.productoModel = productoModel;
+	}
+
 	//Getters y Setters
 	public long getIdItem() {
 		return idItem;
