@@ -5,10 +5,8 @@ import com.sistema.application.converters.UserConverter;
 import com.sistema.application.dto.LocalDistanciaDto;
 import com.sistema.application.dto.LocalDto;
 import com.sistema.application.dto.UserDto;
-import com.sistema.application.entities.Local;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.LocalModel;
-import com.sistema.application.models.ProductoModel;
 import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.IProductoService;
@@ -47,23 +45,17 @@ public class DistanciaController {
 	@Autowired
 	@Qualifier("productoService")
 	private IProductoService productoService;
-	// Para que el model pueda ejecutar los services debe ser usado como una instancia de componente
-	@Autowired
-	private LocalModel localModel;
-
+	
 	@GetMapping("")
 	public String distancia(Model modelo) {
 		// Obtenemos el usuario de la sesión
 		UserDto userDto = userService.getCurrentUser();
 		modelo.addAttribute("currentUser", userDto);
-		List<LocalModel> localesModels = localService.getAllModel();
 		List<LocalDto> locales = new ArrayList<LocalDto>();
-		for (LocalModel model : localesModels) {
+		for (LocalModel model : localService.getAllModel()) {
 			locales.add(localConverter.modelToDto(model));
-		}
-		// Obtenemos el local actual donde trabaja el usuario
-		LocalModel localActual = this.getLocalGivenUser(userDto.getUsername());
-		modelo.addAttribute("local", localActual);
+		}		
+		modelo.addAttribute("local", localService.findByIdLocal(userDto.getLocal().getIdLocal()));
 		modelo.addAttribute("locales", locales);
 		modelo.addAttribute("productos", productoService.getAllModel());
 		return ViewRouteHelper.DISTANCIA_ROOT;
@@ -73,33 +65,12 @@ public class DistanciaController {
 	public ModelAndView traerLocalesCercanos(@PathVariable("idLocal") long idLocal,
 			@PathVariable("idProducto") long idProducto, @PathVariable("cantidad") int cantidad) 
 	{
-		ModelAndView mAV = new ModelAndView(ViewRouteHelper.LISTA_LOCALES_CERCANOS);
-		LocalModel local = localService.findByIdLocal(idLocal);
-		ProductoModel producto = productoService.findByIdProducto(idProducto);
-		localModel.setInstance(local);
-		List<LocalModel> listaLocales = localModel.localesCercanos(producto, cantidad);
-		List<LocalDistanciaDto> localesCercanos = new ArrayList<LocalDistanciaDto>();
-		for (LocalModel model : listaLocales) {
-			LocalDistanciaDto dto = new LocalDistanciaDto(model.getIdLocal(), model.getNombreLocal(),
-					local.calcularDistancia(model), model.getDireccion(), model.getTelefono(), 
-					localModel.calcularStockLocal(model, producto));
-			localesCercanos.add(dto);
-		}
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.LISTA_LOCALES_CERCANOS);			
 		// Lista de locales más cercanos dependiendo del stock que tengan disponible dichos locales
 		// respecto a la cantidad que se necesita.
+		List<LocalDistanciaDto> localesCercanos = localService.localesCercanos(idProducto, cantidad, idLocal);	
 		mAV.addObject("localesCercanos", localesCercanos);
 		return mAV;
 	}
-	
-	/**
-	* Método que retorna el local donde trabaja el usuario
-	* que está logueado actualmente dado su username
-	* @param username Tipo String. Ej: 'empleado1'
-	* @return LocalModel
-	*/
-	private LocalModel getLocalGivenUser(String username) {
-		com.sistema.application.entities.User user = userRepository.findByUsernameAndFetchUserRolesEagerly(username);
-		Local local = user.getEmpleado().getLocal();
-		return localConverter.entityToModel(local);
-	}
+		
 }
