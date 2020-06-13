@@ -3,9 +3,14 @@ const urlChango = host + '/chango/';
 var clienteElegido = false;
 var changoConItem = false;
 var idChango = 0;   // Id del chango actual
+var spinner = '<tr id="spinnerProductos" class="spinner-border text-dark"' +
+'style="width: 3rem; height: 3rem;" role="status">' +
+'<span class="sr-only m-5">Loading...</span></tr>';
 
 async function traerProductosDisponibles() {
      let url = urlChango + 'productos-disponibles/' + idChango;
+     let productosDisponibles = document.getElementById("productosDisponibles");
+     productosDisponibles.innerHTML = spinner;
      try {
           let response = await fetch(url);
           let productosHTML = await response.text();
@@ -168,7 +173,6 @@ function buscar(e) {
           for (let filaProducto of elementosProducto) {
                // Si el producto de la fila incluye el valor buscado será visible
                let nombreProducto = filaProducto.children[0].innerText;
-               console.log(nombreProducto)
                if (nombreProducto.toUpperCase().includes(valorBuscado.toUpperCase())) {
                     filaProducto.classList.remove('d-none');
                } else {

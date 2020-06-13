@@ -10,20 +10,30 @@
      </header>
      <!-- MAIN CONTENT -->
      <main class="w-100 d-flex flex-column align-items-center">
-          <!-- TABLAS DE PRODUCTOS DISPONIBLES Y DEL CHANGO -->
+          <!-- PRODUCTOS DISPONIBLES Y CHANGO -->
           <div class="container-fluid w-100 text-center table-responsive d-flex flex-wrap justify-content-around">
-               <!-- TABLAS DE PRODUCTOS DISPONIBLES -->
+               <!-- PRODUCTOS DISPONIBLES -->
                <div class="chango-table m-0 p-0">
                     <p class="text-center quick-sand text-secondary p-0 m-0">PRODUCTOS DISPONIBLES</p>
-                    <!-- BUSCADOR DE PRODUCTOS -->
-                    <div class="input-group input-group-sm search-bar m-1">
-                         <input type="search" class="form-control" placeholder="Buscar producto" onsearch="buscar(this)">
-                         <div class="input-group-append">
-                              <button class="btn btn-outline-secondary" style="cursor: initial;" type="button" disabled>
-                                   <svg th:replace="fragments/icons :: searchIcon"></svg>
-                              </button>
+                    <div class="d-flex flex-row">
+                         <!-- BUSCADOR DE PRODUCTOS -->
+                         <div class="input-group input-group-sm search-bar m-1">
+                              <input type="search" class="form-control" placeholder="Buscar producto"
+                                   oninput="buscar(this)">
+                              <div class="input-group-append">
+                                   <button class="btn btn-outline-secondary" style="cursor: initial;" type="button"
+                                        disabled>
+                                        <svg th:replace="fragments/icons :: searchIcon"></svg>
+                                   </button>
+                              </div>
                          </div>
-                    </div>
+                         <!-- BOTON DE ACTUALIZAR PRODUCTOS-->
+                         <button class="btn btn-secondary btn-sm m-1" type="button" data-toggle="tooltip"
+                              data-placement="top" title="Actualizar productos" onclick="traerProductosDisponibles()">
+                              <svg th:replace="fragments/icons :: refreshIcon"></svg>
+                         </button>
+                    </div>   
+                    <!-- TABLAS DE PRODUCTOS DISPONIBLES -->
                     <table class="table shadow mb-3 bg-white rounded w-100">
                          <tr class="m-0 p-0">
                               <td class="m-0 p-0">
@@ -76,7 +86,13 @@
                               <td class="m-0 p-0">
                                    <div style="height:40vh; overflow:auto;">
                                         <!-- LE CAMBIE EL NOMBRE DEL ID tablaChango-->
-                                        <table class="table shadow bg-white rounded" id="itemsChango"></table>
+                                        <table class="table shadow bg-white rounded">
+                                             <tbody id="itemsChango">
+                                                  <tr class="spinner-border text-dark" style="width: 3rem; height: 3rem;" role="status">
+                                                       <span class="sr-only m-5">Loading...</span>
+                                                  </tr>
+                                             </tbody>     
+                                        </table>
                                    </div>
                               </td>
                          </tr>
@@ -89,17 +105,14 @@
                          <p class="m-0 p-0 bigger-text quicksand" id="total">$0</p>
                     </div>
                </div>
-               <!-- BOTTON -->
+               <!-- BOTONES DE CANCELAR Y FACTURAR -->
                <div class="d-flex w-100 justify-content-center flex-wrap mt-3 align-items-center">
                     <form th:action="@{/chango/cancelar/{idChango}(idChango = ${chango.idChango})}" method="POST">
-                         <button class="btn btn-danger btn-sm m-1">CANCELAR</button>
+                         <button class="btn btn-danger m-1">CANCELAR</button>
                     </form>
                     <button class="btn btn-primary m-1" data-toggle="modal" data-target="#facturarChango">
                          FACTURAR
                     </button>
-                    <form th:action="@{/chango/guardar}" method="POST">
-                         <button class="btn btn-secondary btn-sm m-1">GUARDAR</button>
-                    </form>
                </div>
      </main>
      <!-- VENTANA MODAL DE FACTURACIÓN DEL CHANGO -->
