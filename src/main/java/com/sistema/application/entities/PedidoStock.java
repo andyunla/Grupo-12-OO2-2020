@@ -48,25 +48,30 @@ public class PedidoStock implements Serializable {
 
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="pedido")
 	private Set<DetalleNotificacion> listaDetallesNotificaciones;
+	
+	@Column(name="facturado", nullable=false)
+	private boolean facturado;
 
 	public PedidoStock() {}
 
-	public PedidoStock(Producto producto, int cantidad, boolean aceptado, Empleado empleadoSolicitante, Empleado empleadoOferente) {
+	public PedidoStock(Producto producto, int cantidad, boolean aceptado, Empleado empleadoSolicitante, Empleado empleadoOferente, boolean facturado) {
 		this.producto = producto;
 		this.cantidad = cantidad;
 		this.aceptado = aceptado;
 		this.empleadoSolicitante = empleadoSolicitante;
 		this.empleadoOferente = empleadoOferente;
+		this.facturado = facturado;
 	}
 
 	//Constructor usado por el converter
-	public PedidoStock(long idPedidoStock, Producto producto, int cantidad, boolean aceptado, Empleado empleadoSolicitante, Empleado empleadoOferente) {
+	public PedidoStock(long idPedidoStock, Producto producto, int cantidad, boolean aceptado, Empleado empleadoSolicitante, Empleado empleadoOferente, boolean facturado) {
 		this.idPedidoStock = idPedidoStock;
 		this.producto = producto;
 		this.cantidad = cantidad;
 		this.aceptado = aceptado;
 		this.empleadoSolicitante = empleadoSolicitante;
 		this.empleadoOferente = empleadoOferente;
+		this.facturado = facturado;
 	}
 
 	//Getters y Setters
@@ -132,6 +137,15 @@ public class PedidoStock implements Serializable {
 
 	public void setListaDetallesNotificaciones(Set<DetalleNotificacion> listaDetallesNotificaciones) {
 		this.listaDetallesNotificaciones = listaDetallesNotificaciones;
+	}
+	
+
+	public boolean isFacturado() {
+		return facturado;
+	}
+
+	public void setFacturado(boolean facturado) {
+		this.facturado = facturado;
 	}
 
 	@Override
