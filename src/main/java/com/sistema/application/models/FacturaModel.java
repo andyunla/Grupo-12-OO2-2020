@@ -30,7 +30,7 @@ public class FacturaModel {
 		this.local = local;
 	}
 	// conconstructor para crear factura en un local sin ID
-	public FacturaModel( ClienteModel cliente, ChangoModel chango, LocalDate fechaFactura,
+	public FacturaModel(ClienteModel cliente, ChangoModel chango, LocalDate fechaFactura,
 			double costeTotal, EmpleadoModel empleado, LocalModel local) {
 		super();		
 		this.cliente = cliente;

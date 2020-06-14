@@ -3,6 +3,7 @@ package com.sistema.application.entities;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,11 +25,11 @@ public class Factura implements Serializable {
 	@Column(name="id_factura")
 	private long idFactura;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
 	@JoinColumn(name="nro_cliente", nullable=false)
 	private Cliente cliente;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
 	@JoinColumn(name="id_chango", nullable=false)
 	private Chango chango;
 
@@ -38,11 +39,11 @@ public class Factura implements Serializable {
 	@Column(name="coste_total", nullable=false)
 	private double costeTotal;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
 	@JoinColumn(name="empleado_legajo", nullable=false, referencedColumnName = "legajo")
 	private Empleado empleado;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
 	@JoinColumn(name="id_local", nullable=false)
 	private Local local;
 	

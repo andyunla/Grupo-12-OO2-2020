@@ -174,14 +174,14 @@ public class FacturaService implements IFacturaService {
 		ClienteModel clienteModel = clienteService.findByNroCliente(nroCliente);
 		PedidoStockModel pedidoStockModel= pedidoStockService.findByIdPedidoStock(idPedidoStock);
 		EmpleadoModel empleadoModel = empleadoService.findByLegajo(pedidoStockModel.getEmpleadoSolicitante().getLegajo());
-		LocalModel localModel = localService.findByIdLocal(empleadoModel.getLocal().getIdLocal());		
+		LocalModel localModel = localService.findByIdLocal(empleadoModel.getLocal().getIdLocal());
 		ChangoModel changoModel = new ChangoModel(localModel);
-		changoModel.setPedidoStock(pedidoStockModel);		
+		changoModel.setPedidoStock(pedidoStockModel);
 		double costeTotal = pedidoStockModel.getCantidad()*pedidoStockModel.getProducto().getPrecio();
 		// persisto el chango
-		changoService.insertOrUpdate(changoModel);
-		//creo la factura y la persisto
-		FacturaModel facturaModel = new FacturaModel(clienteModel, changoModel,LocalDate.now(), costeTotal, empleadoModel, localModel );
+		ChangoModel changoCreado = changoService.insertOrUpdate(changoModel);
+		// creo la factura y la persisto
+		FacturaModel facturaModel = new FacturaModel(clienteModel, changoCreado, LocalDate.now(), costeTotal, empleadoModel, localModel);
 		this.insertOrUpdate(facturaModel);
 		return facturaModel;
 	}
