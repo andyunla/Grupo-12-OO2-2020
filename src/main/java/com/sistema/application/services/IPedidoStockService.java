@@ -21,6 +21,10 @@ public interface IPedidoStockService {
 	
 	public Set<PedidoStockModel> findByEmpleadoSolicitante(EmpleadoModel empleadoSolicitante);
 	
+	public List<PedidoStockModel> findByEmpleadoSolicitanteNoFacturado(long idEmpleadoSolicitante);
+	
+	public List<PedidoStockModel> findByEmpleadoSolicitanteFacturado(long idEmpleadoSolicitante);
+	
 	public PedidoStockModel crearPedido(String userSolicitante, String userOferente, boolean aceptado, long idProducto, int cantidad);
 
 }

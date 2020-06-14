@@ -21,4 +21,7 @@ public interface IPedidoStockRepository extends  JpaRepository<PedidoStock, Seri
 	@Query("FROM PedidoStock WHERE solicitante_id=(:idEmpleadoSolicitante AND facturado = false)")
 	public abstract List<PedidoStock> findByEmpleadoSolicitanteNoFacturado(long idEmpleadoSolicitante);
 	
+	@Query("FROM PedidoStock WHERE solicitante_id=(:idEmpleadoSolicitante AND facturado = true)")
+	public abstract List<PedidoStock> findByEmpleadoSolicitanteFacturado(long idEmpleadoSolicitante);
+	
 }

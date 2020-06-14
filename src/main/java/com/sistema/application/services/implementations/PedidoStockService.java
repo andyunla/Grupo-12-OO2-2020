@@ -94,6 +94,23 @@ public class PedidoStockService implements IPedidoStockService{
 			return pedidoStock;
 		}
 		@Override
+		public List<PedidoStockModel> findByEmpleadoSolicitanteNoFacturado(long idEmpleadoSolicitante){
+			List<PedidoStockModel> pedidoStock = new ArrayList<PedidoStockModel>();
+			for(PedidoStock p: pedidoStockRepository.findByEmpleadoSolicitanteNoFacturado(idEmpleadoSolicitante)){
+				pedidoStock.add(pedidoStockConverter.entityToModel(p));
+			}			
+			return pedidoStock;
+		}
+		@Override
+		public List<PedidoStockModel> findByEmpleadoSolicitanteFacturado(long idEmpleadoSolicitante){
+			List<PedidoStockModel> pedidoStock = new ArrayList<PedidoStockModel>();
+			for(PedidoStock p: pedidoStockRepository.findByEmpleadoSolicitanteFacturado(idEmpleadoSolicitante)){
+				pedidoStock.add(pedidoStockConverter.entityToModel(p));
+			}			
+			return pedidoStock;
+		}
+		
+		@Override
 		public PedidoStockModel crearPedido(String userSolicitante, String userOferente, boolean aceptado, long idProducto, int cantidad) {
 			ProductoModel producto = productoService.findByIdProducto(idProducto);
 			com.sistema.application.entities.User solicitante = userRepository.findByUsernameAndFetchUserRolesEagerly(userSolicitante);
