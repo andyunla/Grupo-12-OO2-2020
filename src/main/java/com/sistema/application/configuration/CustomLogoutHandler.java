@@ -35,7 +35,7 @@ public class CustomLogoutHandler extends SecurityContextLogoutHandler {
      public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
           // Si hay un chango abierto lo elimina junto con sus items
           ChangoModel chango = (ChangoModel) request.getSession().getAttribute("chango");
-          if (chango != null && !changoService.estaFacturado(chango)) {
+          if (chango != null) {
                changoService.removeWithItems(chango.getIdChango());
           }
           request.getSession().invalidate(); // Cierra la sesión

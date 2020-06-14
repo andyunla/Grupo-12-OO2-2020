@@ -22,7 +22,5 @@ public interface IChangoService {
 
 	public double calcularTotal(long idChango);
 
-	public boolean estaFacturado(ChangoModel chango);
-
 	public boolean removeWithItems(long idChango);
 }
