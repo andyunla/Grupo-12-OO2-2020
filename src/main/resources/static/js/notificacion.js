@@ -76,6 +76,9 @@ async function realizarSolicitudPedido(detalleEnvio) {
     }
     // Enviamos la respuesta
     enviarRespuesta(respuesta);
+
+    // Refrescmos la vista
+    listarNotificaciones();
 }
 
 function listarNotificaciones() {
