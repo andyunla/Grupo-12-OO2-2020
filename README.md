@@ -14,5 +14,4 @@ ___Nota:___ Si faltan otras tareas agregarlas en las secciones que parecen perti
 
 
 ### **[LOW]**
-+ Darle estilo a la vista de errores.
 + Borrar _imports_ innecesarios.
