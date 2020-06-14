@@ -17,7 +17,6 @@
                          style="min-width: 2em !important; padding: 0;" th:id="'cantidad-item' + ${item.idItem}"
                          th:attr="data-idItem = ${item.idItem}, data-lastValue=${item.cantidad}"
                          th:onchange="cambiarCantidad(this, [[${item.idItem}]], [[${item.getProductoModel().idProducto}]])">
-                    <!-- FIJARSE UTILIDAD DEL LAST VALUE-->
                     <div class="input-group-append">
                          <button class="btn btn-outline-info btn-sm btn-cart" data-toggle="tooltip" data-placement="top"
                               title="Agregar uno" type="button" 
