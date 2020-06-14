@@ -226,14 +226,7 @@ public class ChangoController {
      public ModelAndView cancelarChango(@PathVariable("idChango") long idChango,
                RedirectAttributes redirectAttributes, HttpSession session) {
           ModelAndView mAV = new ModelAndView("redirect:/chango/todos");
-          // Traer items del chango, devolverlos a sus lotes y eliminarlos
-          List<ItemModel> items = itemService.findByChango(idChango);
-          for (ItemModel item : items) {
-               loteService.devolverStock(getLocal().getIdLocal(), item.getProductoModel().getIdProducto(), 
-                    item.getCantidad());
-               itemService.remove(item.getIdItem());
-          }
-          if (changoService.remove(idChango)) { 
+          if (changoService.removeWithItems(idChango)) { 
                redirectAttributes.addFlashAttribute("changoEliminado", true);
                session.removeAttribute("chango");
           }
