@@ -5,8 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sistema.application.models.ChangoModel;
 import com.sistema.application.services.IChangoService;
-import com.sistema.application.services.IItemService;
-import com.sistema.application.services.ILoteService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,14 +20,6 @@ public class CustomLogoutHandler extends SecurityContextLogoutHandler {
      @Autowired
      @Qualifier("changoService")
      private IChangoService changoService;
-
-     @Autowired
-     @Qualifier("itemService")
-     private IItemService itemService;
-
-     @Autowired
-     @Qualifier("loteService")
-     private ILoteService loteService;
 
      @Override
      public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
