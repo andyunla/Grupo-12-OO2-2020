@@ -170,9 +170,11 @@ public class FacturaService implements IFacturaService {
 	}
 	@Override
 	public FacturaModel facturaPedido(long idPedidoStock, long nroCliente) {
-		//creo los atributos para poder generar la factura de un chango con PedidoStock
-		ClienteModel clienteModel = clienteService.findByNroCliente(nroCliente);
+		//creo el pedidoStock y lo seteo facturado
 		PedidoStockModel pedidoStockModel= pedidoStockService.findByIdPedidoStock(idPedidoStock);
+		pedidoStockModel.setFacturado(true);
+		//creo los atributos para poder generar la factura de un chango con PedidoStock
+		ClienteModel clienteModel = clienteService.findByNroCliente(nroCliente);		
 		EmpleadoModel empleadoModel = empleadoService.findByLegajo(pedidoStockModel.getEmpleadoSolicitante().getLegajo());
 		LocalModel localModel = localService.findByIdLocal(empleadoModel.getLocal().getIdLocal());
 		ChangoModel changoModel = new ChangoModel(localModel);
@@ -183,6 +185,7 @@ public class FacturaService implements IFacturaService {
 		// creo la factura y la persisto
 		FacturaModel facturaModel = new FacturaModel(clienteModel, changoCreado, LocalDate.now(), costeTotal, empleadoModel, localModel);
 		FacturaModel facturaGuardada = this.insertOrUpdate(facturaModel);
+		if(facturaGuardada != null)pedidoStockService.insertOrUpdate(pedidoStockModel);
 		return facturaGuardada;
 	}
 }

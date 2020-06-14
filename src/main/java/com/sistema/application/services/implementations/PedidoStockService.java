@@ -101,7 +101,7 @@ public class PedidoStockService implements IPedidoStockService{
 			EmpleadoModel solicitanteModel = empleadoService.findByLegajo(solicitante.getEmpleado().getLegajo());
 			EmpleadoModel oferenteModel = empleadoService.findByLegajo(oferente.getEmpleado().getLegajo());
 			
-			PedidoStockModel pedido = new PedidoStockModel(producto, cantidad, aceptado, solicitanteModel, oferenteModel);
+			PedidoStockModel pedido = new PedidoStockModel(producto, cantidad, aceptado, solicitanteModel, oferenteModel, false);
 			
 			return insertOrUpdate(pedido);
 		}
