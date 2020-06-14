@@ -60,6 +60,14 @@ public class NotificacionService implements INotificacionService {
         return notificacionConverter.entityToDto(notificacionGuardada);
     }
 
+    // Directamente actualizamos
+    public NotificacionDto Update(NotificacionDto notificacion) {
+        Notificacion notificacionEntidad = notificacionConverter.dtoToEntity(notificacion);
+        notificacionEntidad.setId(notificacion.getId());
+        Notificacion notificacionGuardada = notificacionRepository.save(notificacionEntidad);
+        return notificacionConverter.entityToDto(notificacionGuardada);
+    }
+
     @Override
     public boolean remove(long id) {
         try{
@@ -76,7 +84,7 @@ public class NotificacionService implements INotificacionService {
     public List<NotificacionDto> findByUserFrom(String usernameFrom) {
         List<NotificacionDto> lista = new ArrayList<NotificacionDto>();
         User user = userRepository.findByUsernameAndFetchUserRolesEagerly(usernameFrom);
-        for(Notificacion notificacion: notificacionRepository.findByUserTo(user.getId())) {
+        for(Notificacion notificacion: notificacionRepository.findByUserFrom(user.getId())) {
             lista.add(notificacionConverter.entityToDto(notificacion));
         }
         return lista;

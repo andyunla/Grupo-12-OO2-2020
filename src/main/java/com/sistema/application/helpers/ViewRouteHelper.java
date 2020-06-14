@@ -17,7 +17,6 @@ public class ViewRouteHelper {
 	public final static String FACTURA = "abm/factura";
 	public final static String FACTURAS = "abm/facturas";
 
-
 	// Parciales   
 	public final static String LISTA_LOTES = "partial/listaLotes";
 	public final static String LISTA_LOCALES_CERCANOS = "partial/listaLocalesCercanos";
@@ -25,16 +24,19 @@ public class ViewRouteHelper {
 	public final static String ITEM = "partial/item";
 	public final static String PRODUCTOS_DISPONIBLES = "partial/productosDisponibles";
 	public final static String LISTA_FACTURAS = "partial/listaFacturas";
-	public final static String ITEMS = "partial/items";
-
-
+  public final static String ITEMS = "partial/items";
+	public final static String LISTA_NOTIFICACIONES = "partial/notificaciones";
+  
 	// CASOS DE USO
 	public final static String DISTANCIA_ROOT = "cu/distancia";
 	public final static String RANKING_ROOT = "cu/ranking";
 	public final static String REPORTE_ROOT = "cu/reporte";
 	public final static String PEDIDO_STOCK_VIEW = "cu/pedidoStock";
 	public final static String SUELDO_ROOT = "cu/sueldo";
-	
+
+	// OTROS
+	public final static String NOTIFICACION_ROOT = "notificacion/notificacion";
+
 	// USER
 	public final static String USER_LOGIN = "user/login";
 	public final static String USER_LOGOUT = "user/logout";

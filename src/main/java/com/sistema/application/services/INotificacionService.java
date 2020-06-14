@@ -17,6 +17,7 @@ public interface INotificacionService {
 	
 	public boolean remove(long id);
 	
+	// Solicitudes y respuestas(tanto leídos o no) **********************
 	public List<NotificacionDto> findByUserFrom(String usernameFrom);
 	
 	public List<NotificacionDto> findByUserTo(String usernameTo);

@@ -57,7 +57,7 @@ public class NotificacionConverter {
 				idPedidoStock = detalle.getPedido().getIdPedidoStock();
 			detalleDto = new DetalleNotificacionDto(detalle.getId(), idProducto, nombreProducto, cantidad, idPedidoStock);
 		}
-		return new NotificacionDto(notificacion.getId(), notificacion.getTipo(), notificacion.isEstado(), notificacion.getTexto(),
+		return new NotificacionDto(notificacion.getId(), notificacion.getTipo(), notificacion.isLeido(), notificacion.getEstado(),
 								   notificacion.getUserFrom().getUsername(), usernameTo, idLocal, detalleDto);
 	}
 	
@@ -86,7 +86,7 @@ public class NotificacionConverter {
 				pedido = pedidoStockRepository.findByIdPedidoStock(idPedidoStock);
 			detalle = new DetalleNotificacion(detalleDto.getId(), producto, cantidad, pedido);
 		}
-		return new Notificacion(notificacionDto.getId(), notificacionDto.getTipo(), notificacionDto.isEstado(), notificacionDto.getTexto(),
+		return new Notificacion(notificacionDto.getId(), notificacionDto.getTipo(), notificacionDto.isLeido(), notificacionDto.getEstado(),
 								userFrom, userTo, localTo, detalle);		
 	}
 
