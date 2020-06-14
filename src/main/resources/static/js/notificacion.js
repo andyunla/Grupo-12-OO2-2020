@@ -60,7 +60,7 @@ async function realizarSolicitudPedido(detalleEnvio) {
     let fueAceptado = detalleEnvio.aceptado;
     let idProducto = detalleEnvio.idProducto;
     let cantidad = detalleEnvio.cantidad;
-    let urlSolicitud = url_pedido + "/solicitar/" + userOferente + "/" + userSolicitante + "/" + fueAceptado + "/" + idProducto + "/" + cantidad;
+    let urlSolicitud = url_pedido + "/solicitar/" + userSolicitante + "/" + userOferente + "/" + fueAceptado + "/" + idProducto + "/" + cantidad;
     try {
         let response = await fetch(urlSolicitud, { method: 'POST' });
         if (response.ok) { // 200 - 299
