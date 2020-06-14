@@ -182,7 +182,7 @@ public class FacturaService implements IFacturaService {
 		ChangoModel changoCreado = changoService.insertOrUpdate(changoModel);
 		// creo la factura y la persisto
 		FacturaModel facturaModel = new FacturaModel(clienteModel, changoCreado, LocalDate.now(), costeTotal, empleadoModel, localModel);
-		this.insertOrUpdate(facturaModel);
-		return facturaModel;
+		FacturaModel facturaGuardada = this.insertOrUpdate(facturaModel);
+		return facturaGuardada;
 	}
 }
