@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import com.sistema.application.dto.LocalDistanciaDto;
 import com.sistema.application.dto.LocalDto;
 import com.sistema.application.entities.Empleado;
 import com.sistema.application.entities.Local;
@@ -85,4 +86,10 @@ public class LocalConverter {
 		return new LocalModel(localDto.getIdLocal(), localDto.getNombreLocal(), localDto.getLatitud(), localDto.getLongitud(),
 							  localDto.getDireccion(), localDto.getTelefono(), gerenteModel);
 	}
+	// models to distanciaDTO
+		// *******************************************************
+		public LocalDistanciaDto modelToDistanciaDto(LocalModel localModel) {			
+			return new LocalDistanciaDto(localModel.getIdLocal(), localModel.getNombreLocal(), 0, 
+								localModel.getDireccion(), localModel.getTelefono(), 0);
+		}
 }

@@ -1,0 +1,21 @@
+<tr th:each="producto :${productos}" th:id="'producto' + ${producto.idProducto}">
+     <td scope="col" class="width-30" th:text="${producto.nombre}"></td>
+     <td scope="col" class="width-20" th:text="${producto.talle}"></td>
+     <td scope="col" class="width-20" th:text="${'$' + producto.precio}"></td>
+     <td scope="col" class="width-10 text-secondary smaller-text just-in-big-screen"
+          th:attr="data-stockInicial = ${producto.stockTotal}" th:text="${producto.stockDisponible}"></td>
+     <td class="width-20 p-0 align-middle">
+          <button th:if="${producto.enChango}" class="btn btn-success btn-sm boton-agregar-poducto m-0" 
+               th:id="'botonProducto' + ${producto.idProducto}"
+               th:onclick="agregarItem([[${producto.idProducto}]])" disabled
+          >
+               LISTO
+          </button>
+          <button th:unless="${producto.enChango}" class="btn btn-info btn-sm boton-agregar-poducto m-0" 
+               th:id="'botonProducto' + ${producto.idProducto}" 
+               th:onclick="agregarItem([[${producto.idProducto}]])"
+          >
+               AGREGAR
+          </button>
+     </td>
+</tr>

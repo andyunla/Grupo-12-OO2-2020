@@ -29,6 +29,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
+    @Autowired
+    private CustomLogoutHandler logoutHandler; 
+
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
     	http.authorizeRequests()
@@ -40,7 +43,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .usernameParameter("username").passwordParameter("password")
             .defaultSuccessUrl("/loginsuccess").permitAll()
         .and()
-            .logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout").permitAll()
+            .logout()
+            .invalidateHttpSession(false)  //Evita cerrar la sesión para ejecutar el handler, ahí la cierra 
+            .logoutUrl("/logout")
+            .addLogoutHandler(logoutHandler)
+            .logoutSuccessUrl("/login?logout").permitAll()
         .and().csrf().disable();
     }
 }

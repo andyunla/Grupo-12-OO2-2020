@@ -2,16 +2,18 @@ package com.sistema.application.controllers;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.sistema.application.converters.LocalConverter;
-import com.sistema.application.converters.UserConverter;
 import com.sistema.application.dto.UserDto;
-import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.ClienteModel;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.FacturaModel;
 import com.sistema.application.models.ItemModel;
+import com.sistema.application.models.PedidoStockModel;
 import com.sistema.application.services.IChangoService;
 import com.sistema.application.services.IClienteService;
 import com.sistema.application.services.IEmpleadoService;
@@ -48,20 +50,12 @@ public class FacturaController {
      private IChangoService changoService;
 
      @Autowired
-     @Qualifier("userConverter")
-     private UserConverter userConverter;
-
-     @Autowired
      @Qualifier("localConverter")
      private LocalConverter localConverter;
 
      @Autowired
      @Qualifier("empleadoService")
      private IEmpleadoService empleadoService;
-
-     @Autowired
-     @Qualifier("changoSesion")
-     private ChangoModel changoSesion;
 
      @Autowired
      @Qualifier("userService")
@@ -77,7 +71,7 @@ public class FacturaController {
      
      @PostMapping("confirmar/{idChango}")
      public ModelAndView crearFactura(@ModelAttribute ClienteModel cliente, 
-          @PathVariable("idChango") long idChango ) 
+          @PathVariable("idChango") long idChango, HttpSession session ) 
      {
           ModelAndView mAV = new ModelAndView();
           UserDto userDto = userService.getCurrentUser();
@@ -92,18 +86,17 @@ public class FacturaController {
                );
           FacturaModel facturaGuradada = facturaService.insertOrUpdate(nuevaFactura);
           mAV.setViewName("redirect:/factura/ver/" + facturaGuradada.getIdFactura());
-          changoSesion.clear();
+          session.removeAttribute("chango");
           return mAV; 
      }
-     @PostMapping("confirmar/{idPedidoStock}/{nroCliente}")
-     public ModelAndView crearFactura(@PathVariable("nroCliente") long nroCliente, 
+
+     @PostMapping("confirmarPedido/{idPedidoStock}")
+     public String crearFactura( @ModelAttribute ClienteModel cliente,
           @PathVariable("idPedidoStock") long idPedidoStock ) 
-     {
-          ModelAndView mAV = new ModelAndView(ViewRouteHelper.FACTURAS);
-          UserDto userDto = userService.getCurrentUser();
-          mAV.addObject("currentUser", userDto);           
-          facturaService.facturaPedido(idPedidoStock, nroCliente,userDto.getLegajo() );
-          return mAV; 
+     { 
+          System.out.println("\n\nNROCLIENTE: " + cliente.getNroCliente() + "\nPedido:" + idPedidoStock + "\n");   //Borrar luego
+          FacturaModel factura = facturaService.facturaPedido(idPedidoStock, cliente.getNroCliente() );
+          return "redirect:/factura/ver/" + factura.getIdFactura();
      }
 
      @GetMapping("ver/{idFactura}")
@@ -124,13 +117,20 @@ public class FacturaController {
           List <ItemModel> items = itemService.findByChango(factura.getChango().getIdChango());
           // Creo una lista de listas de items. Cada lista tendrá hasta max 13 items, seran 13 items por hoja
           List <ArrayList<ItemModel>> listaDeListas = new ArrayList<ArrayList<ItemModel>>();
-          int cursorListas = -1;
-          for(int i=0; i<items.size(); i++) {     
-               if(i == 0 || i % 13 == 0) {
-                    listaDeListas.add(new ArrayList<ItemModel>());
-                    cursorListas++;
+          // Verifica si la factura es de un pedido, de serlo lo manda como un item
+          PedidoStockModel pedido = factura.getChango().getPedidoStock();
+          if( pedido != null ) {
+               ItemModel itemPedido = new ItemModel(pedido.getCantidad(), pedido.getProducto());
+               listaDeListas.add(new ArrayList<ItemModel>(Arrays.asList(itemPedido)));
+          } else {
+               int cursorListas = -1;
+               for(int i=0; i<items.size(); i++) {     
+                    if(i == 0 || i % 13 == 0) {
+                         listaDeListas.add(new ArrayList<ItemModel>());
+                         cursorListas++;
+                    }
+                    listaDeListas.get( cursorListas ).add( items.get(i) );
                }
-               listaDeListas.get( cursorListas ).add( items.get(i) );
           }
           mAV.addObject("todosLosItems", listaDeListas);
           mAV.addObject("currentUser", userDto); 

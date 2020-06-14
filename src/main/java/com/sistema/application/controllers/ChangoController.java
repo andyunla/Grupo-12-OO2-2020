@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import com.sistema.application.converters.LocalConverter;
+import javax.servlet.http.HttpSession;
+
 import com.sistema.application.converters.ProductoConverter;
-import com.sistema.application.converters.UserConverter;
 import com.sistema.application.dto.ChangoDetalleDto;
 import com.sistema.application.dto.ProductoDisponibleDto;
 import com.sistema.application.dto.UserDto;
-import com.sistema.application.entities.Local;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.ClienteModel;
@@ -20,6 +19,8 @@ import com.sistema.application.models.ProductoModel;
 import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IChangoService;
 import com.sistema.application.services.IItemService;
+import com.sistema.application.services.ILocalService;
+import com.sistema.application.services.ILoteService;
 import com.sistema.application.services.IProductoService;
 import com.sistema.application.services.implementations.FacturaService;
 import com.sistema.application.services.IClienteService;
@@ -64,31 +65,20 @@ public class ChangoController {
      private IChangoService changoService;
 
      @Autowired
-     @Qualifier("localConverter")
-     private LocalConverter localConverter;
-     
+     @Qualifier("loteService")
+     private ILoteService loteService;
+
      @Autowired
      @Qualifier("userService")
      private UserService userService;
 
      @Autowired
-     @Qualifier("userConverter")
-     private UserConverter userConverter;
+     @Qualifier("localService")
+     private ILocalService localService;
 
      @Autowired
      @Qualifier("productoConverter")
      private ProductoConverter productoConverter;
-
-     @Autowired
-     @Qualifier("localModel")
-     private LocalModel localModel;
-
-     /* Instancia de changoModel que se mantiene abierta en la pestaña 'Chango' */
-     /* Siempre se mantiene el ultimo chango que se está modificando o creando */
-     /* Se cambia la instancia cuando se decide facturarlo, cancelarlo o guardarlo */
-     @Autowired
-     @Qualifier("changoSesion")
-     private ChangoModel changoSesion; 
 
      @Autowired
      @Qualifier("facturaService")
@@ -96,90 +86,71 @@ public class ChangoController {
 
      /* CREACION DE UN CHANGO */
      @GetMapping("")
-     public ModelAndView chango() {
+     public ModelAndView chango(HttpSession session) {
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHANGO);
-          setUserAndLocal(mAV);
-          // Verifico si ya hay un chango abierto, si es así se redirecciona a la modificación
-          if( changoSesion.hasInstance() ) {
-               mAV.setViewName("redirect:/chango/" + changoSesion.getIdChango());
+          UserDto userDto = userService.getCurrentUser();
+          mAV.addObject("currentUser", userDto);          
+          // Verifico si ya hay un chango abierto en esta sesion y si hay lo redirecciona a su modificación
+          if (session.getAttribute("chango") != null) {
+               mAV.setViewName("redirect:/chango/" + ((ChangoModel)session.getAttribute("chango")).getIdChango());
                return mAV;
-          }   
-          // Selecciono de todos los productos solo los que tienen stock en el local
-          List<ProductoDisponibleDto> productosConStock = new ArrayList<ProductoDisponibleDto>();
-          for (ProductoModel p : productoService.getAllModel()) {
-               int stock = localModel.calcularStockLocal(p);
-               if (stock > 0) {
-                    productosConStock.add(productoConverter.modelToDTO(p, stock, stock, false));
-               }
           }
-          ChangoModel nuevoChango = localModel.crearChango();
-          changoSesion.setInstance(nuevoChango);
-          mAV.addObject("productos", productosConStock);
+          ChangoModel nuevoChango = changoService.insertOrUpdate( new ChangoModel(getLocal()) );
+          session.setAttribute("chango", nuevoChango);
           mAV.addObject("chango", nuevoChango);
-          mAV.addObject("items", new ArrayList<ItemModel>());
           mAV.addObject("clientes", clienteService.getAllModel());
           mAV.addObject("cliente", new ClienteModel());
           return mAV;
-     } 
+     }
 
      /* MODIFICACIÓN DE UN CHANGO */
      @GetMapping("{idChango}")
-     public ModelAndView editarChango(@PathVariable("idChango") long idChango) {
+     public ModelAndView editarChango(@PathVariable("idChango") long idChango, HttpSession session) {
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHANGO);
-          setUserAndLocal(mAV);
+          UserDto userDto = userService.getCurrentUser();
+          mAV.addObject("currentUser", userDto);  
           ChangoModel chango = changoService.findByIdChango(idChango);
           // Verifico si el chango fue eliminado o no existe
-          if(chango == null) {
+          if (chango == null) {
                mAV.setViewName("error/404");
                return mAV;
           }
           // Verifico si el chango fue facturado o es un chango de otro local
-          if(facturaService.findByChango(chango) != null || !chango.getLocal().equals(localModel) ){
+          if (facturaService.findByChango(chango) != null || !chango.getLocal().equals( getLocal() )) {
                mAV.setViewName("error/403");
                return mAV;
           }
-          changoSesion.setInstance( chango );
-          List<ProductoDisponibleDto> productosConStock = new ArrayList<ProductoDisponibleDto>();
-          // Paso como productos disponibles aquellos que tienen stock o que no tienen stock
-          // pero están como item del chango
-          for (ProductoModel p : productoService.getAllModel()) {
-               int stock = localModel.calcularStockLocal(p);
-               ItemModel item = itemService.findByChangoAndProducto(idChango, p.getIdProducto());
+          session.setAttribute("chango", chango);
+          mAV.addObject("chango", chango);
+          mAV.addObject("clientes", clienteService.getAllModel());
+          mAV.addObject("cliente", new ClienteModel());
+          return mAV;
+     }
+
+     /* TRAER PRODUCTOS DISPONIBLES */
+     @GetMapping("/productos-disponibles/{idChango}")
+     public ModelAndView traerProductosDisponibles(@PathVariable("idChango") long idChango) {
+          ModelAndView mAV = new ModelAndView(ViewRouteHelper.PRODUCTOS_DISPONIBLES);
+          List<ProductoDisponibleDto> productosDisponibles = new ArrayList<ProductoDisponibleDto>();
+          for (ProductoModel producto : productoService.getAllModel()) {
+               int stock = loteService.calcularStock( producto, getLocal() );
+               ItemModel item = itemService.findByChangoAndProducto(idChango, producto.getIdProducto());
                // Verifica si hay stock o si el producto está como item
                if (stock > 0 || item != null) {
                     // Si el producto está como item sumo su cantidad al stock que se visualizará
-                    int stockTotal = stock  + ((item != null) ? item.getCantidad() : 0);
-                    productosConStock.add(productoConverter.modelToDTO(p, stockTotal, stock, item != null));
+                    int stockTotal = stock + ((item != null) ? item.getCantidad() : 0);
+                    productosDisponibles.add(productoConverter.modelToDTO(producto, stockTotal, stock, item != null));
                }
           }
-          mAV.addObject("productos", productosConStock);
-          mAV.addObject("chango", changoSesion);
-          mAV.addObject("items", itemService.findByChango(idChango) );
-          mAV.addObject("clientes", clienteService.getAllModel());
-          mAV.addObject("cliente", new ClienteModel()); 
+          mAV.addObject("productos", productosDisponibles);
           return mAV;
      }
- 
-     /* VISTA DE LOS ITEMS DE UN CHANGO */
-     @GetMapping("ver/{idChango}")
-     public ModelAndView verChango(@PathVariable("idChango") long idChango) {
-          ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHANGO_FACTURADO);
-          setUserAndLocal(mAV);
-          ChangoModel chango = changoService.findByIdChango(idChango);
-          // Verifica si el chango que se intenta acceder existe
-          if(chango == null) {
-               mAV.setViewName("error/404");
-               return mAV;
-          }
-          // Verifica que se intenta ver sea del local del cual está logueado
-          if(! chango.getLocal().equals(localModel) ){
-               mAV.setViewName("error/403");
-               return mAV;
-          }
-          List<ItemModel> items = itemService.findByChango(idChango);
-          chango.setListaItems(new HashSet<ItemModel>(items));
-          mAV.addObject("chango", chango);
-          mAV.addObject("items", items);
+
+     /* TRAER ITEMS DEL CHANGO */
+     @GetMapping("/items/{idChango}")
+     public ModelAndView traerItems(@PathVariable("idChango") long idChango) {
+          ModelAndView mAV = new ModelAndView(ViewRouteHelper.ITEMS);
+          mAV.addObject("items", itemService.findByChango(idChango));
           return mAV;
      }
 
@@ -187,16 +158,18 @@ public class ChangoController {
      @PostMapping("nuevo-item/{idChango}/{idProducto}")
      public ModelAndView agregarItem(@PathVariable("idChango") long idChango,
                @PathVariable("idProducto") long idProducto) {
-          ModelAndView mAV = new ModelAndView(ViewRouteHelper.ITEM);
-          // Verifico que el producto elegido no esté ya en un item del chango
-          if (itemService.findByChangoAndProducto(idChango, idProducto) == null) {
-               ItemModel newItem = new ItemModel(1, productoService.findByIdProducto(idProducto),
-                         changoService.findByIdChango(idChango));
+          ModelAndView mAV = new ModelAndView(ViewRouteHelper.ITEMS);
+          ProductoModel producto = productoService.findByIdProducto(idProducto);
+          // Verifico que el producto elegido no esté ya en un item del chango y que haya
+          // stock de 1
+          if (itemService.findByChangoAndProducto(idChango, idProducto) == null
+                    && loteService.verificarStock(producto, getLocal(), 1)) {
+               ItemModel newItem = new ItemModel(1, producto, changoService.findByIdChango(idChango));
                ItemModel item = itemService.insertOrUpdate(newItem);
-               mAV.addObject("item", item);
+               mAV.addObject("items", new ItemModel[] { item });
+               // Resta la cantidad agregada de los lotes
+               loteService.consumirStock(getLocal().getIdLocal(), item.getProductoModel().getIdProducto(), 1);
                mAV.setStatus(HttpStatus.CREATED);
-               // Resta la cantidad agregada del/de los lote/s
-               localModel.restarLote(item.getProductoModel(), 1);
           } else {
                mAV.setStatus(HttpStatus.NOT_ACCEPTABLE);
           }
@@ -206,12 +179,11 @@ public class ChangoController {
      // Elimina un item de un chango abierto
      @PostMapping("eliminar-item/{idItem}")
      public ResponseEntity<String> eliminarItem(@PathVariable("idItem") long idItem) {
-          System.out.println("\n\nELIMINADO");
           ItemModel item = itemService.findByIdItem(idItem);
           ProductoModel producto = item.getProductoModel();
           if (itemService.remove(idItem)) {
                // Devuelve la cantidad del item eliminado a el/los lote/s
-               localModel.devolverLote(producto, item.getCantidad());
+               loteService.devolverStock(getLocal().getIdLocal(), producto.getIdProducto(), item.getCantidad());
                return new ResponseEntity<String>(HttpStatus.OK);
           } else {
                return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
@@ -226,84 +198,94 @@ public class ChangoController {
           // Verifico si estoy agregando cantidad al item
           if (item.getCantidad() < nuevaCantidad) {
                // Verifico si hay stock en el local
-               if (localModel.validarStock(item.getProductoModel(), nuevaCantidad - item.getCantidad())) {
+               if (loteService.verificarStock(item.getProductoModel(), getLocal(), nuevaCantidad - item.getCantidad())) {
                     // Resto a los lotes del local la cantidad que se sumó
-                    localModel.restarLote(item.getProductoModel(), nuevaCantidad - item.getCantidad());
+                    loteService.consumirStock(getLocal().getIdLocal(), item.getProductoModel().getIdProducto(), 
+                         nuevaCantidad - item.getCantidad());
                } else {
-                    // No se realizan cambios y devuelvo el una respuesta con la cantidad actual del item
-                    return ResponseEntity.badRequest().body(String.valueOf(item.getCantidad()));
+                    return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
                }
           } else {
                // Sumo a los lotes la cantidad que se restó
-               localModel.devolverLote(item.getProductoModel(), item.getCantidad() - nuevaCantidad);
+               loteService.devolverStock(getLocal().getIdLocal(), item.getProductoModel().getIdProducto(), 
+                    item.getCantidad() - nuevaCantidad);
           }
           item.setCantidad(nuevaCantidad);
           itemService.insertOrUpdate(item);
           return new ResponseEntity<String>(HttpStatus.OK);
      }
 
+     @GetMapping("stock/{idProducto}")
+     public ResponseEntity<Integer> traerStock(@PathVariable("idProducto") long idProducto) {
+          int stock = loteService.calcularStock(productoService.findByIdProducto(idProducto), getLocal());
+          return new ResponseEntity<>(stock, HttpStatus.OK);
+     }
+
      /* Elimina un chango y sus items */
      @PostMapping("cancelar/{idChango}")
-     public ModelAndView cancelarChango(@PathVariable("idChango") long idChango, 
-               RedirectAttributes redirectAttributes) {
+     public ModelAndView cancelarChango(@PathVariable("idChango") long idChango,
+               RedirectAttributes redirectAttributes, HttpSession session) {
           ModelAndView mAV = new ModelAndView("redirect:/chango/todos");
-          // Traer items del chango, devolverlos a sus lotes y eliminarlos
-          List<ItemModel> items = itemService.findByChango(idChango);
-          for (ItemModel item : items) {
-               localModel.devolverLote(item.getProductoModel(), item.getCantidad());
-               itemService.remove(item.getIdItem());
-          }
-          if( changoService.remove(idChango) ) {  // Elimina al chango
+          if (changoService.removeWithItems(idChango)) { 
                redirectAttributes.addFlashAttribute("changoEliminado", true);
-               changoSesion.clear();    //Saca al chango de la sesion
+               session.removeAttribute("chango");
           }
           return mAV;
      }
 
-     /* SACA AL CHANGO DE LA SESIÓN */
-     @PostMapping("guardar")
-     public String guardarChango() {
-          changoSesion.clear();
-          return "redirect:/chango/todos";
-     }  
-
-     /* VISTA DE TODOS LOS CHANGOS CREADOS, DIFERENCIANDOLOS POR FACTURADOS O NO */
+     /* VISTA DE TODOS LOS CHANGOS CREADOS CON STOCK PROPIO, DIFERENCIANDOLOS POR FACTURADOS O NO */
      @GetMapping("todos")
      public ModelAndView traerTodos(Model modelo) {
           // Devuelve una vista con todos los changos del local actual
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHANGOS);
-          // Agrega el objeto changoEliminado en caso de ser redireccionado tras cancelar uno
-          if(modelo.containsAttribute("changoEliminado")){
-               mAV.addObject("changoEliminado", modelo.getAttribute("changoEliminado"));
-          }
-          setUserAndLocal(mAV);
-          List<ChangoDetalleDto> changos = new ArrayList<ChangoDetalleDto>();
-          for(ChangoModel chango: changoService.findByLocal(localModel)) {
-               // Llena los detalles que se pasaran a la vista de la lista de los changos
-               chango.setListaItems( new HashSet<>( itemService.findByChango(chango.getIdChango())));
-               int cantidadDeItems = chango.getListaItems().size();
-               double total = chango.calcularTotalChango();
-               boolean facturado = ( facturaService.findByChango(chango) != null );
-               changos.add( new ChangoDetalleDto(chango.getIdChango(), cantidadDeItems, total, facturado));
-          }
-          mAV.addObject("changos", changos);
-          return mAV; 
-     }
-
-     // Establece el usario actual en el ModelAndView y a su local en la instancia de localModel
-     protected ModelAndView setUserAndLocal(ModelAndView mAV) {
-          // Obtenemos el usuario de la sesión
           UserDto userDto = userService.getCurrentUser();
           mAV.addObject("currentUser", userDto); 
-          LocalModel localActual = this.getLocalGivenUser(userDto.getUsername());
-          localModel.setInstance(localActual);
-          return mAV;  
+          // Agrega el objeto changoEliminado en caso de ser redireccionado tras cancelar
+          // uno
+          if (modelo.containsAttribute("changoEliminado")) {
+               mAV.addObject("changoEliminado", modelo.getAttribute("changoEliminado"));
+          }
+          List<ChangoDetalleDto> changos = new ArrayList<ChangoDetalleDto>();
+          for (ChangoModel chango : changoService.findByLocal(getLocal())) {
+               // Verifica que no sea un chango de pedido
+               if(chango.getPedidoStock() == null) {
+                    int cantidadDeItems = itemService.findByChango(chango.getIdChango()).size();
+                    double total = changoService.calcularTotal(chango.getIdChango());
+                    boolean facturado = (facturaService.findByChango(chango) != null);
+                    changos.add(new ChangoDetalleDto(chango.getIdChango(), cantidadDeItems, total, facturado));
+               }               
+          }
+          mAV.addObject("changos", changos);
+          return mAV;
      }
 
-     /* Obtiene el local del usuario logueado*/
-     private LocalModel getLocalGivenUser(String username) {
-          com.sistema.application.entities.User user = userRepository.findByUsernameAndFetchUserRolesEagerly(username);
-          Local local = user.getEmpleado().getLocal();
-          return localConverter.entityToModel(local);
-     }  
+     /* VISTA DE LOS ITEMS DE UN CHANGO */
+     @GetMapping("ver/{idChango}")
+     public ModelAndView verChango(@PathVariable("idChango") long idChango) {
+          ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHANGO_FACTURADO);
+          UserDto userDto = userService.getCurrentUser();
+          mAV.addObject("currentUser", userDto); 
+          ChangoModel chango = changoService.findByIdChango(idChango);
+          // Verifica si el chango que se intenta acceder existe
+          if (chango == null) {
+               mAV.setViewName("error/404");
+               return mAV;
+          }
+          // Verifica que se intenta ver sea del local del cual está logueado
+          if (!chango.getLocal().equals(getLocal())) {
+               mAV.setViewName("error/403");
+               return mAV;
+          }
+          List<ItemModel> items = itemService.findByChango(idChango);
+          chango.setListaItems(new HashSet<ItemModel>(items));
+          mAV.addObject("chango", chango);
+          mAV.addObject("items", items);
+          return mAV;
+     }
+
+     // Devuelve el local del usuario
+     public LocalModel getLocal() {
+          UserDto userDto = userService.getCurrentUser();
+          return localService.findByIdLocal(userDto.getLocal().getIdLocal());
+     }
 }

@@ -1,6 +1,6 @@
 package com.sistema.application.dto;
 
-public class LocalDistanciaDto {
+public class LocalDistanciaDto implements Comparable<LocalDistanciaDto>{
 	private long idLocal;
 	private String nombreLocal;
 	private double distancia;
@@ -68,4 +68,10 @@ public class LocalDistanciaDto {
 	public int getStock() {
 		return stock;
 	}
+	
+	@Override
+    public int compareTo(LocalDistanciaDto o) {
+        return new Double(distancia).compareTo( o.getDistancia());
+    }
+	
 }

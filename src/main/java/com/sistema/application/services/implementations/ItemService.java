@@ -6,9 +6,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.sistema.application.services.IItemService;
 import com.sistema.application.repositories.IItemRepository;
+import com.sistema.application.converters.ChangoConverter;
 import com.sistema.application.converters.ItemConverter;
+import com.sistema.application.converters.ProductoConverter;
 import com.sistema.application.entities.Item;
+import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.ItemModel;
+import com.sistema.application.models.ProductoModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,15 +29,23 @@ public class ItemService implements IItemService {
 	@Qualifier("itemConverter")
 	private ItemConverter itemConverter;
 
+	@Autowired
+	@Qualifier("changoConverter")
+	private ChangoConverter changoConverter;
+
+	@Autowired
+	@Qualifier("productoConverter")
+	private ProductoConverter productoConverter;
+
 	// Métodos
 	public ItemModel findByIdItem(long idItem) {
 		return itemConverter.entityToModel(itemRepository.findByIdItem(idItem));
 	}
 
 	@Override
-	public ItemModel findByChangoAndProducto(long idChango, long idProducto){
+	public ItemModel findByChangoAndProducto(long idChango, long idProducto) {
 		Item item = itemRepository.findByChangoAndProducto(idChango, idProducto);
-		if(item == null){
+		if (item == null) {
 			return null;
 		}
 		return itemConverter.entityToModel(item);
@@ -42,8 +54,8 @@ public class ItemService implements IItemService {
 	@Override
 	public List<ItemModel> findByChango(long idChango) {
 		List<ItemModel> items = new ArrayList<ItemModel>();
-		for(Item item : itemRepository.findByChango(idChango)) {
-			items.add( itemConverter.entityToModel(item));
+		for (Item item : itemRepository.findByChango(idChango)) {
+			items.add(itemConverter.entityToModel(item));
 		}
 		return items;
 	}
@@ -76,5 +88,5 @@ public class ItemService implements IItemService {
 		} catch (Exception e) {
 			return false;
 		}
-	}	
+	}
 }

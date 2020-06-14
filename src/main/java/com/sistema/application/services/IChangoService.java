@@ -5,7 +5,6 @@ import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.LocalModel;
 
 import java.util.List;
-import java.util.Set;
 
 public interface IChangoService {
 
@@ -23,4 +22,5 @@ public interface IChangoService {
 
 	public double calcularTotal(long idChango);
 
+	public boolean removeWithItems(long idChango);
 }
