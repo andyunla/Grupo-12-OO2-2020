@@ -1,6 +1,8 @@
 package com.sistema.application.controllers.api.v1;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.sistema.application.converters.EmpleadoConverter;
@@ -68,9 +70,16 @@ public class NotificacionRestController {
     }
     
     // Comprobar si el usuario actual posee respuesta a su solicitud
+    // Esto sólo será utilizado para que aparezca en el icono de notificación
     @GetMapping("comprobar/respuesta/{username}")
     ResponseEntity<List<NotificacionDto>> comprobarRespuesta(@PathVariable("username") String username) {
         List<NotificacionDto> respuestas = notificacionService.findByUserTo(username);
+        Iterator<NotificacionDto> itr = respuestas.iterator();
+        while (itr.hasNext()) {
+            if(itr.next().isLeido()) {
+            	itr.remove();
+            }                
+        }
         if(respuestas != null) {
         	return new ResponseEntity<List<NotificacionDto>>(respuestas, HttpStatus.OK);
         }
@@ -78,9 +87,16 @@ public class NotificacionRestController {
     }
 
     // Comprobar si el usuario del local actual posee solicitudes
+    // Esto sólo será utilizado para que aparezca en el icono de notificación
     @GetMapping("comprobar/solicitud/{idLocal}")
     ResponseEntity<List<NotificacionDto>> comprobarSolicitud(@PathVariable("idLocal") long idLocal) {
         List<NotificacionDto> solicitudes = notificacionService.findByIdLocal(idLocal);
+        Iterator<NotificacionDto> itr = solicitudes.iterator();
+        while (itr.hasNext()) {
+            if(itr.next().isLeido()) {
+            	itr.remove();
+            }                
+        }
         if(solicitudes != null) {
             return new ResponseEntity<List<NotificacionDto>>(solicitudes, HttpStatus.OK);
         }
