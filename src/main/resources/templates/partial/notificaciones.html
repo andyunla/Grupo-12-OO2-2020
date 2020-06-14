@@ -34,7 +34,7 @@
     <td th:if="${notificacion.tipo} == 'SOLICITUD' AND ${notificacion.estado} == 'RECHAZADO'"></td>
     <!-- Los botones para las respuestas -->
     <td th:if="${notificacion.tipo} == 'RESPUESTA' AND ${notificacion.estado} == 'ACEPTADO'">
-        <a class="btn-info btn botonFacturar" th:href="'/pedido/ver?id=' + ${notificacion.id}">
+        <a class="btn-info btn botonFacturar" th:href="'/pedido/ver?id=' + ${notificacion.detalleNotificacion.idPedidoStock}">
             Facturar pedido
         </a>
     </td>
