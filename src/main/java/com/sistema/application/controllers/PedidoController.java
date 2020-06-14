@@ -1,5 +1,6 @@
 package com.sistema.application.controllers;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,6 +11,7 @@ import com.sistema.application.dto.DetalleNotificacionDto;
 import com.sistema.application.dto.UserDto;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ChangoModel;
+import com.sistema.application.models.ClienteModel;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.LocalModel;
 import com.sistema.application.models.LoteModel;
@@ -35,6 +37,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -132,5 +135,30 @@ public class PedidoController {
 		}
 		// Cualquier problema
 		return new ResponseEntity<DetalleNotificacionDto>(HttpStatus.BAD_REQUEST);
+	}
+
+	// Ejemplo: HOST/pedido/ver?id=3
+	@GetMapping("/ver")
+	public ModelAndView verPedido(@RequestParam(name="id", required=true, defaultValue="0") String id) {
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.PEDIDO_STOCK_VIEW);
+		// Obtenemos el usuario de la sesión
+		UserDto userDto = userService.getCurrentUser();
+		modelAndView.addObject("currentUser", userDto);
+		List<PedidoStockModel> lista = new ArrayList<PedidoStockModel>();
+		Long idPedidoStock = 0L;
+		try {
+			idPedidoStock = Long.parseLong(id);
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		if(idPedidoStock >= 1) {
+			PedidoStockModel pedido = pedidoStockService.findByIdPedidoStock(idPedidoStock);
+			if(pedido != null)
+				lista.add(pedido);
+		}
+		modelAndView.addObject("pedidos", lista);
+		modelAndView.addObject("clientes", clienteService.getAllModel());
+		modelAndView.addObject("cliente", new ClienteModel());
+		return modelAndView;
 	}
 }
