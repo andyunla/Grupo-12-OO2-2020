@@ -75,8 +75,15 @@ public class PedidoController {
 		// Obtenemos el usuario de la sesión
 		UserDto userDto = userService.getCurrentUser();
 		modelAndView.addObject("currentUser", userDto);
-		List<PedidoStockModel> pedidos =  pedidoStockService.getAllModel();
-		modelAndView.addObject("pedidos", pedidos);
+		List<PedidoStockModel> todosPedidos = pedidoStockService.getAllModel();
+		List<PedidoStockModel> listaPedidos = new ArrayList<PedidoStockModel>();
+		for(PedidoStockModel pedido : todosPedidos) {
+			// Si los pedidos son del local del usuario actual
+			if(pedido.getEmpleadoSolicitante().getLocal().getIdLocal() == userDto.getLocal().getIdLocal()) {
+				listaPedidos.add(pedido);
+			}
+		}
+		modelAndView.addObject("pedidos", listaPedidos);
 		modelAndView.addObject("clientes", clienteService.getAllModel());
         modelAndView.addObject("cliente", new ClienteModel());
 		return modelAndView;
