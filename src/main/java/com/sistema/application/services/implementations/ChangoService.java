@@ -127,11 +127,4 @@ public class ChangoService implements IChangoService{
 			}
 			return total;
 		}
-
-		@Override 
-		public boolean estaFacturado(ChangoModel chango) {
-			return facturaService.findByChango(chango) != null;
-		}
-
-	
 }
