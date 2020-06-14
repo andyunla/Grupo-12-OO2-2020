@@ -131,6 +131,7 @@ CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`pedido_stock` (
   `id_producto` INT(11) NOT NULL,
   `solicitante_id` INT(11) NOT NULL,
   `oferente_id` INT(11) NULL,
+  `facturado` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`id_pedido_stock`),
   INDEX `fk_pedidostock_producto1_idx` (`id_producto` ASC),
   INDEX `fk_pedido_stock_empleado1_idx` (`solicitante_id` ASC),
