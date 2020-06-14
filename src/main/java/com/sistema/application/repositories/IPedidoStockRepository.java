@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.sistema.application.entities.PedidoStock;
+
+import java.util.List;
 import java.util.Set;
 
 @Repository("pedidoStockRepository")
@@ -15,5 +17,8 @@ public interface IPedidoStockRepository extends  JpaRepository<PedidoStock, Seri
 	
 	@Query("FROM PedidoStock WHERE solicitante_id=(:idEmpleadoSolicitante)")
 	public abstract Set<PedidoStock> findByEmpleadoSolicitante(long idEmpleadoSolicitante);
+	
+	@Query("FROM PedidoStock WHERE solicitante_id=(:idEmpleadoSolicitante AND facturado = false)")
+	public abstract List<PedidoStock> findByEmpleadoSolicitanteNoFacturado(long idEmpleadoSolicitante);
 	
 }
