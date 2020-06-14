@@ -118,7 +118,7 @@ async function cambiarCantidad(element, idItem, idProducto) {
                let htmlAlert =
                     '<div id="alert" class="p-4 alert alert-danger alert-dismissible fade show" role="alert">' +
                     '<strong>STOCK SUPERADO:</strong> No se pudo seleccionar esa cantidad pero' + 
-                    '<a href="http://localhost:8080/pedido/"> puede hacer un pedido a otro local</a>' +
+                    '<a href="http://localhost:8080/distancia/"> puede hacer un pedido a otro local</a>' +
                     '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
                     '<span aria-hidden="true">&times;</span>' +
                     '</button>' +
