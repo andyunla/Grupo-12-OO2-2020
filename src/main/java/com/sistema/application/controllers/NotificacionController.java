@@ -125,7 +125,7 @@ public class NotificacionController {
 				}
 			}
 		}
-		mAV.addObject("notificaciones", listaSolicitudes);
+		mAV.addObject("notificaciones", listaFinal);
 		return mAV;
 	}
 
