@@ -120,7 +120,7 @@ public class NotificacionController {
 				listaFinal.add(notificacion);
 			} else {
 				String estado = notificacion.getEstado();
-				if(estado != null && estadoNotificacion.equalsIgnoreCase(estadoNotificacion)) {
+				if(estadoNotificacion.equalsIgnoreCase(estado)) {
 					listaFinal.add(notificacion);
 				}
 			}
