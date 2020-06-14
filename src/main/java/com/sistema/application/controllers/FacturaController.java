@@ -92,10 +92,8 @@ public class FacturaController {
 
      @PostMapping("confirmarPedido/{idPedidoStock}")
      public String crearFactura( @ModelAttribute ClienteModel cliente,
-          @PathVariable("idPedidoStock") long idPedidoStock ) 
-     { 
-          System.out.println("\n\nNROCLIENTE: " + cliente.getNroCliente() + "\nPedido:" + idPedidoStock + "\n");   //Borrar luego
-          FacturaModel factura = facturaService.facturaPedido(idPedidoStock, cliente.getNroCliente() );
+                                 @PathVariable("idPedidoStock") long idPedidoStock ) {
+          FacturaModel factura = facturaService.facturaPedido(idPedidoStock, cliente.getNroCliente());
           return "redirect:/factura/ver/" + factura.getIdFactura();
      }
 
