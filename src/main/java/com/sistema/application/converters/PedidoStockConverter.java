@@ -26,7 +26,7 @@ public class PedidoStockConverter {
 		return new PedidoStockModel(pedidoStock.getIdPedidoStock(),
 				productoConverter.entityToModel(pedidoStock.getProducto()), pedidoStock.getCantidad(),
 				pedidoStock.isAceptado(), empleadoConverter.entityToModel(pedidoStock.getEmpleadoSolicitante()),
-				oferenteModel);
+				oferenteModel, pedidoStock.isFacturado() );
 	}
 
 	public PedidoStock modelToEntity(PedidoStockModel pedidoStockModel) {
@@ -37,6 +37,6 @@ public class PedidoStockConverter {
 				productoConverter.modelToEntity(pedidoStockModel.getProducto()), pedidoStockModel.getCantidad(),
 				pedidoStockModel.isAceptado(),
 				empleadoConverter.modelToEntity(pedidoStockModel.getEmpleadoSolicitante()),
-				oferenteEntity);
+				oferenteEntity, pedidoStockModel.isFacturado());
 	}
 }
