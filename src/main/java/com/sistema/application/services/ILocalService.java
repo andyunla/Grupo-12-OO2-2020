@@ -33,7 +33,7 @@ public interface ILocalService {
 	
 	public EmpleadoDto calcularSueldo(EmpleadoModel empleado);
 	
-	public List<Factura> traerFacturaMesPasado();
+	public List<Factura> traerFacturaMes(LocalDate fecha);
 	
 	public List<EmpleadoDto> calcularSueldos(long idLocal);
 	

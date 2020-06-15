@@ -56,7 +56,7 @@ public class SueldoController {
 		//Chequea que sea un gerente
 		UserDto userDto = userService.getCurrentUser();
 		modelAndView.addObject("currentUser", userDto);
-		List<EmpleadoDto> vendedores = localService.calcularSueldos(userDto.getLocal().getIdLocal());
+		List<EmpleadoDto> vendedores = localService.calcularSueldos(userDto.getLocal().getIdLocal(), fecha);
 		//Mando atributos al modelo
 		modelAndView.addObject("empleados", vendedores );		
 		//Muestro en pantalla

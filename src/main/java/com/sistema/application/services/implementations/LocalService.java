@@ -145,13 +145,13 @@ public class LocalService implements ILocalService {
  	////////////////////////////////////////////////////////////////////////////////////////////////////// 
  	//////////////////////////////////////////////////////////////////////////////////////////////////////
  	/****************************************************************************************************/
- 	public EmpleadoDto calcularSueldo(EmpleadoModel empleado) {
+ 	public EmpleadoDto calcularSueldo(EmpleadoModel empleado, LocalDate fecha) {
  		EmpleadoDto emp = empleadoConverter.modelToDto(empleado);
  		double comisionVentaCompleta = 0;
  		double comisionVentaExterna = 0;
  		double comisionStockCedido = 0;
  		
- 		for (Factura fa : traerFacturaMesPasado()) {// para cada factura del mes pasado
+ 		for (Factura fa : traerFacturaMes(fecha)) {// para cada factura del mes pasado
  			
  			if (fa.getEmpleado().getDni() == empleado.getDni() ) { // si la factura pertenece a este empleado
  				// el chango de la factura tiene un pedido stock, esta factura es con stock de otro local
@@ -176,16 +176,10 @@ public class LocalService implements ILocalService {
  		emp.setComisionVentaExterna(comisionVentaExterna);
  		emp.setComisionStockCedido(comisionStockCedido); 		
  		return emp;
- 	}
-	 /* metodo original antes de cambiar LocalDate a LocalDateTime
- 	public List<Factura> traerFacturaMesPasado() {
- 		LocalDate fecha1 = LocalDate.now().minusMonths(1).withDayOfMonth(1);// mes pasado dia 1
- 		LocalDate fecha2 = LocalDate.now().minusMonths(1).withDayOfMonth(fecha1.lengthOfMonth());// último día del mes pasado
- 		return facturaService.findByFechaFacturaBetween(fecha1, fecha2);// retorno la lista de facturas
- 	}*/
- 	public List<Factura> traerFacturaMesPasado() {
-		LocalDate fecha1 = LocalDate.now().minusMonths(1).withDayOfMonth(1);// mes pasado dia 1
-		LocalDate fecha2 = LocalDate.now().minusMonths(1).withDayOfMonth(fecha1.lengthOfMonth());// último día del mes pasado
+ 	}	
+ 	public List<Factura> traerFacturaMes(LocalDate fecha) {
+		LocalDate fecha1 = fecha.withDayOfMonth(1);// mes pasado dia 1
+		LocalDate fecha2 = fecha.withDayOfMonth(fecha1.lengthOfMonth());// último día del mes pasado
 		return facturaService.findByFechaFacturaBetween(fecha1, fecha2);// retorno la lista de facturas
 	}
  	/***********************************************************************************************************************************************************/
