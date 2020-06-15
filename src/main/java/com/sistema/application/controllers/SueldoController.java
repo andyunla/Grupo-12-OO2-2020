@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import com.sistema.application.converters.EmpleadoConverter;
 import com.sistema.application.dto.EmpleadoDto;
 import com.sistema.application.dto.UserDto;
+import com.sistema.application.funciones.Funciones;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.services.IEmpleadoService;
@@ -49,8 +50,6 @@ public class SueldoController {
     @Qualifier("empleadoConverter")
     private EmpleadoConverter empleadoConverter;
 
-	
-	
 	@GetMapping("")
 	public ModelAndView sueldo(Model modelo) {
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.SUELDO_ROOT);		
@@ -63,13 +62,13 @@ public class SueldoController {
 		return modelAndView;
 	}
 	
-	// Trae los sueldos dado una fecha del tipo mm-aaaa
+	// Trae los sueldos dado una fecha del tipo aaaa-mm
 	@GetMapping("traer/{fecha}")
-	public ModelAndView traer(@PathVariable("fecha") LocalDate fecha) {
+	public ModelAndView traer(@PathVariable("fecha") String fecha) {
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.LISTA_SUELDOS);		
 		UserDto userDto = userService.getCurrentUser();
-		List<EmpleadoDto> vendedores = localService.calcularSueldos(userDto.getLocal().getIdLocal(), fecha);
-		modelAndView.addObject("empleados", vendedores);		
+		List<EmpleadoDto> vendedores = localService.calcularSueldos(userDto.getLocal().getIdLocal(), Funciones.mesAFechaCompleta(fecha));
+		modelAndView.addObject("empleados", vendedores);
 		return modelAndView;
 	}
 }

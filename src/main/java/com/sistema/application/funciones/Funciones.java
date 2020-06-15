@@ -21,6 +21,25 @@ public class Funciones {
 	}
 	
 	/**
+   	* Método que retorna una fecha del tipo LocalDate
+   	* dado un String
+   	* @param fecha Tiene que ser del tipo "aaaa-mm"
+   	* @return LocalDate
+   	*/
+	public static LocalDate mesAFechaCompleta(String mesFecha) {
+		int aaaa, mm, dd;
+		String anio="", mes="", dia="1";
+		String[] partes = mesFecha.split("-");
+		anio = partes[0];
+		mes = partes[1];
+		aaaa = Integer.parseInt(anio);
+		mm = Integer.parseInt(mes);
+		dd = Integer.parseInt(dia);
+		LocalDate fechaNueva = LocalDate.of(aaaa, mm, dd);
+		return fechaNueva;
+	}
+
+	/**
 	* Método que retorna una fecha de tipo LocalDate
 	* dado un String 
 	* @param fecha Tiene que ser del tipo "AAAA-MM-DD"
