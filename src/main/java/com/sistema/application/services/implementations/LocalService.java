@@ -186,7 +186,7 @@ public class LocalService implements ILocalService {
  	public List<Factura> traerFacturaMesPasado() {
 		LocalDate fecha1 = LocalDate.now().minusMonths(1).withDayOfMonth(1);// mes pasado dia 1
 		LocalDate fecha2 = LocalDate.now().minusMonths(1).withDayOfMonth(fecha1.lengthOfMonth());// último día del mes pasado
-		return facturaService.findByFechaFacturaBetween(fecha1.atStartOfDay(), fecha2.atStartOfDay());// retorno la lista de facturas
+		return facturaService.findByFechaFacturaBetween(fecha1, fecha2);// retorno la lista de facturas
 	}
  	/***********************************************************************************************************************************************************/
  	public List<EmpleadoDto> calcularSueldos(long idLocal) {
@@ -220,8 +220,7 @@ public class LocalService implements ILocalService {
  	/****************************************************************************************************/
      public List<ProductoRankingDto> reporte(LocalDate fecha1, LocalDate fecha2, long idLocal){
     	 List<ProductoRankingDto> productoReporte = new ArrayList<ProductoRankingDto>();
-	 List<FacturaModel> listaFacturas = facturaService.findByFechaFacturaBetweenAndIdLocal(fecha1.atStartOfDay(), fecha2.atStartOfDay(), 
-		idLocal);
+	 List<FacturaModel> listaFacturas = facturaService.findByFechaFacturaBetweenAndIdLocal(fecha1, fecha2, idLocal);
     	 List<ProductoModel> productos = productoService.getAllModel();
     	 for (ProductoModel pro : productos ) {
     		int cantidad = cantidadProductoVendido(pro, listaFacturas);
