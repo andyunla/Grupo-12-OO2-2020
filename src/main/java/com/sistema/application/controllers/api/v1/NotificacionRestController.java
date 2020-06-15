@@ -111,7 +111,7 @@ public class NotificacionRestController {
     	solicitudRespondida.setLeido(true);
     	solicitudRespondida.setEstado(respuesta.getEstado());
     	notificacionService.insertOrUpdate(solicitudRespondida); // Sólo actualizamos
-        NotificacionDto respuestaNueva = new NotificacionDto(UtilHelper.TIPO_NOTIFICACION_RESPUESTA, true, respuesta.getEstado(), 
+        NotificacionDto respuestaNueva = new NotificacionDto(UtilHelper.TIPO_NOTIFICACION_RESPUESTA, false, respuesta.getEstado(), 
         													respuesta.getFrom(), respuesta.getTo(), respuesta.getToLocal(), 
         													respuesta.getDetalleNotificacion());
         NotificacionDto respuestaGuardada = notificacionService.insertOrUpdate(respuestaNueva);        
