@@ -57,7 +57,7 @@ public class SueldoController {
 		modelAndView.addObject("currentUser", userDto);
 		List<EmpleadoDto> vendedores = localService.calcularSueldos(userDto.getLocal().getIdLocal(), LocalDate.now());
 		//Mando atributos al modelo
-		modelAndView.addObject("empleados", vendedores );		
+		modelAndView.addObject("empleados", vendedores );
 		//Muestro en pantalla
 		return modelAndView;
 	}
