@@ -1,5 +1,5 @@
 let fechaSeleccionada = document.getElementById("fechaSueldo");
-const MAX_YEAR = 2020;
+const MAX_YEAR = new Date().getFullYear();
 const MIN_YEAR = 2000;
 
 function listarSueldos() {
