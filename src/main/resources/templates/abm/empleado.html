@@ -147,10 +147,10 @@
           </div>
           <!-- LIST -->
           <div class="container-fluid col-12 col-md-11 text-center table-responsive">
-               <table class="table w-100 shadow mb-3 bg-white rounded">
+               <table class="table w-100 shadow mb-3 bg-white rounded table-hover table-bordered">
                     <thead class="thead-dark">
                          <tr>
-                              <th scope="col">ID</th>
+                              <th scope="col">Legajo</th>
                               <th scope="col">DNI</th>
                               <th scope="col">Nombre</th>
                               <th scope="col">Apellido</th>
@@ -158,13 +158,13 @@
                               <th scope="col">Horario de entrada</th>
                               <th scope="col">Horario de salida</th>
                               <th scope="col">Sueldo básico</th>
-                              <th scope="col">Legajo</th>
+                              <th scope="col">Local</th>
                               <th scope="col"></th>
                          </tr>
                     </thead>
                     <tbody>
                          <tr th:each="empleado :${empleados}">
-                              <td th:text="${empleado.id}"></td>
+                              <td th:text="${empleado.legajo}"></td>
                               <td th:text="${empleado.dni}"></td>
                               <td th:text="${empleado.nombre}"></td>
                               <td th:text="${empleado.apellido}"></td>
@@ -172,7 +172,7 @@
                               <td th:text="${empleado.horaDesde}"></td>
                               <td th:text="${empleado.horaHasta}"></td>
                               <td th:text="${empleado.sueldoBasico}"></td>
-                              <td th:text="${empleado.legajo}"></td>
+                              <td th:text="${empleado.local.idLocal}"></td>
                               <div th:if="${currentUser.tipoGerente}">
                                    <td class="d-flex justify-content-around">
                                         <div data-toggle="tooltip" data-placement="top" title="Modificar">

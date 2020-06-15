@@ -97,10 +97,10 @@
           </div>
           <!-- LIST -->
           <div class="container-fluid col-12 col-md-11 text-center table-responsive">
-               <table class="table w-100 shadow mb-3 bg-white rounded">
+               <table class="table w-100 shadow mb-3 bg-white rounded table-hover table-bordered">
                     <thead class="thead-dark">
                          <tr>
-                              <th scope="col">ID</th>
+                              
                               <th scope="col">Nombre</th>
                               <th scope="col">Descripción</th>
                               <th scope="col">Precio</th>
@@ -110,7 +110,7 @@
                     </thead>
                     <tbody>
                          <tr th:each="producto :${productos}">
-                              <td th:text="${producto.idProducto}"></td>
+                              
                               <td th:text="${producto.nombre}"></td>
                               <td th:text="${producto.descripcion}"></td>
                               <td th:text="${producto.precio}"></td>

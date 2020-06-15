@@ -117,10 +117,10 @@
           </div>
           <!-- LIST -->
           <div class="container-fluid col-12 col-md-11 text-center table-responsive">
-               <table class="table w-100 shadow mb-3 bg-white rounded">
+               <table class="table w-100 shadow mb-3 bg-white rounded table-hover table-bordered">
                     <thead class="thead-dark">
                          <tr>
-                              <th scope="col">ID</th>
+                             
                               <th scope="col">Nombre</th>
                               <th scope="col">Latitud</th>
                               <th scope="col">Longitud</th>
@@ -132,7 +132,7 @@
                     </thead>
                     <tbody>
                          <tr th:each="local :${locales}">
-                              <td th:text="${local.idLocal}"></td>
+                              
                               <td th:text="${local.nombreLocal}"></td>
                               <td th:text="${local.latitud}"></td>
                               <td th:text="${local.longitud}"></td>

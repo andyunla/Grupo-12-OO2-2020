@@ -108,28 +108,28 @@
           </div>
           <!-- LIST -->
           <div class="container-fluid col-12 col-md-11 text-center table-responsive">
-               <table class="table w-100 shadow mb-3 bg-white rounded">
+               <table class="table w-100 shadow mb-3 bg-white rounded table-hover table-bordered">
                     <thead class="thead-dark">
                          <tr>
-                              <th scope="col">ID</th>
+                              <th scope="col">Nro. Cliente</th>
                               <th scope="col">DNI</th>
                               <th scope="col">Nombre</th>
                               <th scope="col">Apellido</th>
                               <th scope="col">fecha de Nac.</th>
                               <th scope="col">Email</th>
-                              <th scope="col">Nro. Cliente</th>
+                              
                               <th scope="col"></th>
                          </tr>
                     </thead>
                     <tbody>
                          <tr th:each="cliente :${clientes}">
-                              <td th:text="${cliente.id}"></td>
+                              <td th:text="${cliente.nroCliente}"></td>
                               <td th:text="${cliente.dni}"></td>
                               <td th:text="${cliente.nombre}"></td>
                               <td th:text="${cliente.apellido}"></td>
                               <td th:text="${cliente.fechaNacimiento}"></td>
                               <td th:text="${cliente.email}"></td>
-                              <td th:text="${cliente.nroCliente}"></td>
+                              
                               <td class="d-flex justify-content-around">
                                    <div data-toggle="tooltip" data-placement="top" title="Modificar">
                                         <a href="#" data-toggle="modal" data-target="#modifyClient"
