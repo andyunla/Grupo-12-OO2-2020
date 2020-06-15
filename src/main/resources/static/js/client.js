@@ -107,7 +107,7 @@ function renderizarAHTML(obj) {
                     break;
             }
             paraEsteDestinatario = true;
-            var url = `/pedido/ver?id=${obj.id}`;
+            var url = `/pedido/ver?id=${obj.detalleNotificacion.idPedidoStock}`;
         }
     }
     let html = "";
