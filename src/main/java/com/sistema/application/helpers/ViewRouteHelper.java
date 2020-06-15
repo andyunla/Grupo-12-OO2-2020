@@ -23,6 +23,7 @@ public class ViewRouteHelper {
 	public final static String RANKING_REPORTE_PRODUCTOS = "partial/listaProductosRanking";
 	public final static String PRODUCTOS_DISPONIBLES = "partial/productosDisponibles";
 	public final static String LISTA_FACTURAS = "partial/listaFacturas";
+	public final static String LISTA_SUELDOS = "partial/listaSueldos";
   	public final static String ITEMS = "partial/items";
 	public final static String LISTA_NOTIFICACIONES = "partial/notificaciones";
   
