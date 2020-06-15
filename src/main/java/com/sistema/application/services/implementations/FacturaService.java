@@ -22,7 +22,7 @@ import com.sistema.application.models.FacturaModel;
 import com.sistema.application.models.LocalModel;
 import com.sistema.application.models.PedidoStockModel;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,7 +105,7 @@ public class FacturaService implements IFacturaService {
 	}
 
 	@Override
-	public List<FacturaModel> findByFechaFacturaBetweenAndIdLocal(LocalDate fecha1, LocalDate fecha2, long idLocal) {
+	public List<FacturaModel> findByFechaFacturaBetweenAndIdLocal(LocalDateTime fecha1, LocalDateTime fecha2, long idLocal) {
 		List<FacturaModel> lista = new ArrayList<FacturaModel>();// creo una lista de facturas
 		for (Factura fa : facturaRepository.findByFechaFacturaBetweenAndIdLocal(fecha1, fecha2, idLocal)) {// traigo
 																						// la
@@ -132,7 +132,7 @@ public class FacturaService implements IFacturaService {
 	 * } return lista; }
 	 */
 	@Override
-	public List<Factura> findByFechaFacturaBetween(LocalDate fecha1, LocalDate fecha2) {
+	public List<Factura> findByFechaFacturaBetween(LocalDateTime fecha1, LocalDateTime fecha2) {
 		List<Factura> lista = new ArrayList<Factura>();// crei una lista de facturas
 		for (Factura fa : facturaRepository.findByFechaFacturaBetween(fecha1, fecha2)) {// traigo la lista de facturas
 																		// entre fechas d eun local
@@ -183,7 +183,7 @@ public class FacturaService implements IFacturaService {
 		// persisto el chango
 		ChangoModel changoCreado = changoService.insertOrUpdate(changoModel);
 		// creo la factura y la persisto
-		FacturaModel facturaModel = new FacturaModel(clienteModel, changoCreado, LocalDate.now(), costeTotal, empleadoModel, localModel);
+		FacturaModel facturaModel = new FacturaModel(clienteModel, changoCreado, LocalDateTime.now(), costeTotal, empleadoModel, localModel);
 		FacturaModel facturaGuardada = this.insertOrUpdate(facturaModel);
 		if(facturaGuardada != null)pedidoStockService.insertOrUpdate(pedidoStockModel);
 		return facturaGuardada;

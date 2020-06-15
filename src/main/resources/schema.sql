@@ -186,7 +186,7 @@ DROP TABLE IF EXISTS `Grupo-12-BDD-OO2-2020`.`factura` ;
 
 CREATE TABLE IF NOT EXISTS `Grupo-12-BDD-OO2-2020`.`factura` (
   `id_factura` INT(11) NOT NULL AUTO_INCREMENT,
-  `fecha_factura` DATE NOT NULL,
+  `fechahora_factura` DATETIME NOT NULL,
   `coste_total` DOUBLE NOT NULL,
   `id_local` INT(11) NOT NULL,
   `empleado_legajo` INT(11) NOT NULL,

@@ -4,7 +4,7 @@ import com.sistema.application.entities.Factura;
 import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.FacturaModel;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IFacturaService {
@@ -19,9 +19,9 @@ public interface IFacturaService {
 	
 	public boolean remove(long id);	
 	
-	public  List<FacturaModel> findByFechaFacturaBetweenAndIdLocal(LocalDate fecha1, LocalDate fecha2, long idLocal);
+	public  List<FacturaModel> findByFechaFacturaBetweenAndIdLocal(LocalDateTime fecha1, LocalDateTime fecha2, long idLocal);
 	
-	public  List<Factura> findByFechaFacturaBetween(LocalDate fecha1, LocalDate fecha2);
+	public  List<Factura> findByFechaFacturaBetween(LocalDateTime fecha1, LocalDateTime fecha2);
 
 	public FacturaModel findByChango(ChangoModel chango);
 
