@@ -25,7 +25,7 @@
                               <th scope="col">Leg. Vendedor</th>
                               <th scope="col">DNI Cliente </th>
                               <th scope="col">Total ($)</th>
-                              <th scope="col">Fecha</th>
+                              <th scope="col">Emisión</th>
                          </tr>
                     </thead>
                     <tbody>
@@ -34,7 +34,7 @@
                               <td th:text="${factura.getEmpleado().getLegajo()}"></td>
                               <td th:text="${factura.getCliente().getDni()}"></td>
                               <td th:text="${factura.getCosteTotal()}"></td>
-                              <td th:text="${factura.getFechaCorta()}"></td>
+                              <td th:text="${factura.getFechaHoraCorta()}"></td>
                          </tr>
                          <tr th:if="${facturas.size() > 0}">
                               <td><small th:text="${'Total: ' + facturas.size()}"></small></td>

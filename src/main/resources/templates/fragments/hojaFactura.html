@@ -30,8 +30,9 @@
                          <p class="factura-text roboto">Nro. de Factura:
                               <span class="nroFactura" th:text="${' 0000' + factura.getIdFactura()}"></span>
                          </p>
-                         <p class="factura-text roboto">Fecha de emisión: <span
-                                   th:text="${factura.getFechaCorta()}"></span></p>
+                         <p class="factura-text roboto">Emisión: 
+                              <span th:text="${factura.getFechaHoraCorta()}"></span>
+                         </p>
                     </div>
                </div>
           </div>

@@ -95,6 +95,10 @@ public class FacturaModel {
 	public String getFechaCorta() {
 		return fechaHoraFactura.format(DateTimeFormatter.ofPattern("dd/MM/YYYY"));
 	}
+
+	public String getFechaHoraCorta() {
+		return fechaHoraFactura.format(DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm"));
+	}
 	
 	//toString
 	@Override
