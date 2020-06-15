@@ -84,11 +84,12 @@ function cargarNotificaciones(lista) {
 }
 
 function renderizarAHTML(obj) {
-    var paraEsteLocal = false; // Para no cargar respuestas vacías
+    var paraEsteDestinatario = false; // Para no cargar respuestas vacías
     var alert_tipo = "alert-primary";
     if(obj.tipo.toUpperCase() === "SOLICITUD") {
         var msgCorto = `El usuario ${obj.from} ha realizado una solicitud de un producto`;
-        paraEsteLocal = true;
+        paraEsteDestinatario = true;
+        var url = `/notificacion/ver?id=${obj.id}`;
     } else { // Respuestas
         if(obj.to == document.getElementById("current-username").value) { // Si son mensajes para el usuario actual
             switch(obj.estado.toUpperCase()) {
@@ -105,16 +106,17 @@ function renderizarAHTML(obj) {
                     alert_tipo = "alert-danger";
                     break;
             }
-            paraEsteLocal = true;
+            paraEsteDestinatario = true;
+            var url = `/pedido/ver?id=${obj.id}`;
         }
     }
     let html = "";
-    // Si las notificaciones no eran para este empleado(si eran para otro en este mismo local)
-    // no se renderiza el contenido
-    if(paraEsteLocal) {
-        var row = `<a class="dropdown-item alert ${alert_tipo}" role="alert" href="/notificacion/ver?id=${obj.id}"> ${msgCorto}</a>`;
+    // En el caso que sea una respuesta hay que prevenir que no se envíen a todos
+    // los usuarios de el local actual; sólo al que le corresponde
+    if(paraEsteDestinatario) {
+        var row = `<a class="dropdown-item alert ${alert_tipo}" role="alert" href="${url}"> ${msgCorto}</a>`;
     }
-    html += row; 
+    html += row;
     return html;
 }
 
