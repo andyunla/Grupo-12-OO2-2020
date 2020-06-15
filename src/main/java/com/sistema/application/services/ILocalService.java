@@ -31,13 +31,13 @@ public interface ILocalService {
 	
 	public List<ProductoRankingDto> reporte(LocalDate fecha1, LocalDate fecha2, long idLocal);
 	
-	public EmpleadoDto calcularSueldo(EmpleadoModel empleado);
+	public EmpleadoDto calcularSueldo(EmpleadoModel empleado, LocalDate fecha);
 	
 	public List<Factura> traerFacturaMes(LocalDate fecha);
 	
-	public List<EmpleadoDto> calcularSueldos(long idLocal);
+	public List<EmpleadoDto> calcularSueldos(long idLocal, LocalDate fecha);
 	
-	public List<EmpleadoDto> calcularSueldoGlobal();
+	public List<EmpleadoDto> calcularSueldoGlobal(LocalDate fecha);
 	
 	public List<LocalDistanciaDto> localesCercanos(long idProducto, int cantidad, long idLocal);
 	

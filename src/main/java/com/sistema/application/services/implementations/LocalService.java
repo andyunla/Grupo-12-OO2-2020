@@ -183,21 +183,21 @@ public class LocalService implements ILocalService {
 		return facturaService.findByFechaFacturaBetween(fecha1, fecha2);// retorno la lista de facturas
 	}
  	/***********************************************************************************************************************************************************/
- 	public List<EmpleadoDto> calcularSueldos(long idLocal) {
+ 	public List<EmpleadoDto> calcularSueldos(long idLocal, LocalDate fecha) {
  		List<EmpleadoDto> empleadosDto = new ArrayList<EmpleadoDto>();
  		List<EmpleadoModel> empleadosModel = empleadoService.findByIdLocal(idLocal);
  		// a cada empleado del local correspondiente le calculo el sueldo y lo agrego a la lista
  		for (EmpleadoModel e : empleadosModel) {
-			empleadosDto.add(calcularSueldo(e));
+			empleadosDto.add(calcularSueldo(e, fecha));
 		} 		
  		return empleadosDto;
  	} 	
  	/*****************************************************************************************************************************************************************/
- 	public List<EmpleadoDto> calcularSueldoGlobal() { 		
+ 	public List<EmpleadoDto> calcularSueldoGlobal(LocalDate fecha) { 		
  		List<EmpleadoDto> listaEmpleados = new ArrayList<EmpleadoDto>();
  		//calculo el sueldo de todos los empleados en cada local
  		for (LocalModel l : getAllModel()) {
-			for (EmpleadoDto empleadoDto : calcularSueldos(l.getIdLocal())) {
+			for (EmpleadoDto empleadoDto : calcularSueldos(l.getIdLocal(), fecha)) {
 				listaEmpleados.add(empleadoDto);
 			}
 		} 

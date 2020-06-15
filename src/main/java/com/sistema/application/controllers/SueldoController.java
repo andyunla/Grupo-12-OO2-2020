@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class SueldoController {
 		//Chequea que sea un gerente
 		UserDto userDto = userService.getCurrentUser();
 		modelAndView.addObject("currentUser", userDto);
-		List<EmpleadoDto> vendedores = localService.calcularSueldos(userDto.getLocal().getIdLocal(), fecha);
+		List<EmpleadoDto> vendedores = localService.calcularSueldos(userDto.getLocal().getIdLocal(), LocalDate.now());
 		//Mando atributos al modelo
 		modelAndView.addObject("empleados", vendedores );		
 		//Muestro en pantalla
