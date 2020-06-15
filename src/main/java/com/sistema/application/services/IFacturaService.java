@@ -5,6 +5,7 @@ import com.sistema.application.models.ChangoModel;
 import com.sistema.application.models.FacturaModel;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IFacturaService {
@@ -30,4 +31,7 @@ public interface IFacturaService {
 	public List<FacturaModel> findByIdLocalAndByLegajoEmpleado(long idLocal, long legajo);
 	
 	public FacturaModel facturaPedido(long idPedidoStock, long nroCliente);
+
+	public List<FacturaModel> findByLocalAndEmpleadoAndFechas(long idLocal, long legajo, LocalDate fecha1, LocalDate fecha2);
+
 }

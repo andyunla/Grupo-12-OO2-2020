@@ -1,7 +1,7 @@
 package com.sistema.application.entities;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,8 +35,8 @@ public class Factura implements Serializable {
 	@JoinColumn(name="id_chango", nullable=false)
 	private Chango chango;
 
-	@Column(name="fecha_factura", nullable=false)
-	private LocalDate fechaFactura;
+	@Column(name="fechahora_factura", nullable=false)
+	private LocalDateTime fechaHoraFactura;
 
 	@Column(name="coste_total", nullable=false)
 	private double costeTotal;
@@ -51,20 +51,20 @@ public class Factura implements Serializable {
 	
 	public Factura() {}
 
-	public Factura(Cliente cliente, Chango chango, LocalDate fechaFactura, double costeTotal, Empleado empleado, Local local) {
+	public Factura(Cliente cliente, Chango chango, LocalDateTime fechaHoraFactura, double costeTotal, Empleado empleado, Local local) {
 		this.cliente = cliente;
 		this.chango = chango;
-		this.fechaFactura = fechaFactura;
+		this.fechaHoraFactura = fechaHoraFactura;
 		this.costeTotal = costeTotal;
 		this.empleado = empleado;
 		this.local = local;
 	}
 	// constructor de converter
-	public Factura(long idFactura, Cliente cliente, Chango chango, LocalDate fechaFactura, double costeTotal, Empleado empleado, Local local) {
+	public Factura(long idFactura, Cliente cliente, Chango chango, LocalDateTime fechaHoraFactura, double costeTotal, Empleado empleado, Local local) {
 		this.idFactura = idFactura;
 		this.cliente = cliente;
 		this.chango = chango;
-		this.fechaFactura = fechaFactura;
+		this.fechaHoraFactura = fechaHoraFactura;
 		this.costeTotal = costeTotal;
 		this.empleado = empleado;
 		this.local = local;
@@ -95,12 +95,12 @@ public class Factura implements Serializable {
 		this.chango = chango;
 	}
 
-	public LocalDate getFechaFactura() {
-		return fechaFactura;
+	public LocalDateTime getFechaHoraFactura() {
+		return fechaHoraFactura;
 	}
 
-	public void setFechaFactura(LocalDate fechaFactura) {
-		this.fechaFactura = fechaFactura;
+	public void setFechaHoraFactura(LocalDateTime fechaHoraFactura) {
+		this.fechaHoraFactura = fechaHoraFactura;
 	}
 
 	public double getCosteTotal() {
@@ -129,7 +129,7 @@ public class Factura implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Factura [idFactura=" + idFactura + ", cliente=" + cliente + ", chango=" + chango + ", fechaFactura="
-				+ fechaFactura + ", costeTotal=" + costeTotal + ", empleado=" + empleado + ", local=" + local + "]";
+		return "Factura [idFactura=" + idFactura + ", cliente=" + cliente + ", chango=" + chango + ", fechaHoraFactura="
+				+ fechaHoraFactura + ", costeTotal=" + costeTotal + ", empleado=" + empleado + ", local=" + local + "]";
 	}
 }

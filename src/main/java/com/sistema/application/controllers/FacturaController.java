@@ -1,6 +1,6 @@
 package com.sistema.application.controllers;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -79,7 +79,7 @@ public class FacturaController {
           FacturaModel nuevaFactura = new FacturaModel(   
                clienteService.findByNroCliente(cliente.getNroCliente()),
                changoService.findByIdChango(idChango),
-               LocalDate.now(),
+               LocalDateTime.now(),
                changoService.calcularTotal(idChango),
                empleadoService.findByLegajo(userDto.getLegajo()),
                localService.findByIdLocal(userDto.getLocal().getIdLocal())

@@ -1,6 +1,6 @@
 package com.sistema.application.models;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class FacturaModel {
@@ -9,7 +9,7 @@ public class FacturaModel {
 	private long idFactura;
 	private ClienteModel cliente;
 	private ChangoModel chango;
-	private LocalDate fechaFactura;
+	private LocalDateTime fechaHoraFactura;
 	private double costeTotal;
 	private EmpleadoModel empleado;
 	private LocalModel local;
@@ -18,24 +18,24 @@ public class FacturaModel {
 	//Constructores
 	public FacturaModel() {}
 
-	public FacturaModel(long idFactura, ClienteModel cliente, ChangoModel chango, LocalDate fechaFactura,
+	public FacturaModel(long idFactura, ClienteModel cliente, ChangoModel chango, LocalDateTime fechaHoraFactura,
 			double costeTotal, EmpleadoModel empleado, LocalModel local) {
 		super();
 		this.idFactura = idFactura;
 		this.cliente = cliente;
 		this.chango = chango;
-		this.fechaFactura = fechaFactura;
+		this.fechaHoraFactura = fechaHoraFactura;
 		this.costeTotal = costeTotal;
 		this.empleado = empleado;
 		this.local = local;
 	}
 	// conconstructor para crear factura en un local sin ID
-	public FacturaModel(ClienteModel cliente, ChangoModel chango, LocalDate fechaFactura,
+	public FacturaModel(ClienteModel cliente, ChangoModel chango, LocalDateTime fechaHoraFactura,
 			double costeTotal, EmpleadoModel empleado, LocalModel local) {
 		super();		
 		this.cliente = cliente;
 		this.chango = chango;
-		this.fechaFactura = fechaFactura;
+		this.fechaHoraFactura = fechaHoraFactura;
 		this.costeTotal = costeTotal;
 		this.empleado = empleado;
 		this.local = local;
@@ -71,11 +71,11 @@ public class FacturaModel {
 		this.chango = chango;
 	}
 
-	public LocalDate getFechaFactura() {
-		return fechaFactura;
+	public LocalDateTime getFechaHoraFactura() {
+		return fechaHoraFactura;
 	}
-	public void setFechaFactura(LocalDate fechaFactura) {
-		this.fechaFactura = fechaFactura;
+	public void setFechaHoraFactura(LocalDateTime fechaHoraFactura) {
+		this.fechaHoraFactura = fechaHoraFactura;
 	}
 
 	public double getCosteTotal() {
@@ -93,14 +93,18 @@ public class FacturaModel {
 	}
 
 	public String getFechaCorta() {
-		return fechaFactura.format(DateTimeFormatter.ofPattern("dd/MM/YYYY"));
+		return fechaHoraFactura.format(DateTimeFormatter.ofPattern("dd/MM/YYYY"));
+	}
+
+	public String getFechaHoraCorta() {
+		return fechaHoraFactura.format(DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm"));
 	}
 	
 	//toString
 	@Override
 	public String toString() {
 		return "FacturaModel [idFactura=" + idFactura + ", cliente=" + cliente + ", chango=" + chango
-				+ ", fechaFactura=" + fechaFactura + ", costeTotal=" + costeTotal + ", empleado=" + empleado + "Local"+ local+ "]";
+				+ ", fechaHoraFactura=" + fechaHoraFactura + ", costeTotal=" + costeTotal + ", empleado=" + empleado + "Local"+ local+ "]";
 	};
 	
 }

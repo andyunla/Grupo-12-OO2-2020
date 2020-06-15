@@ -436,12 +436,6 @@ public class LocalModel {
 	////////////////////////////////////////////////////////////////////////////////////////////////////// FACTURA/////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	/****************************************************************************************************/
-		
-	public boolean crearFactura(ClienteModel cliente, ChangoModel chango,LocalDate fecha, double costeTotal, EmpleadoModel empleado) {		
-		facturaService.insertOrUpdate(new FacturaModel(cliente, chango, fecha, costeTotal, empleado, this)); //creo la factura
-		if(chango.getPedidoStock() == null) restarChango(chango); // Si no hay pedidoStock, resto todos los productos del chango a este local
-		return true;
-	}
 
 //	public List<Factura> traerFactura (LocalDate fecha1, LocalDate fecha2) {
 //		List<Factura> list = new ArrayList<Factura>();		

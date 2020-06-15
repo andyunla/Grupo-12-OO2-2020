@@ -1,5 +1,6 @@
 package com.sistema.application.services.implementations;
 
+import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -176,13 +177,17 @@ public class LocalService implements ILocalService {
  		emp.setComisionStockCedido(comisionStockCedido); 		
  		return emp;
  	}
-
+	 /* metodo original antes de cambiar LocalDate a LocalDateTime
  	public List<Factura> traerFacturaMesPasado() {
  		LocalDate fecha1 = LocalDate.now().minusMonths(1).withDayOfMonth(1);// mes pasado dia 1
  		LocalDate fecha2 = LocalDate.now().minusMonths(1).withDayOfMonth(fecha1.lengthOfMonth());// último día del mes pasado
  		return facturaService.findByFechaFacturaBetween(fecha1, fecha2);// retorno la lista de facturas
- 	}
- 	
+ 	}*/
+ 	public List<Factura> traerFacturaMesPasado() {
+		LocalDate fecha1 = LocalDate.now().minusMonths(1).withDayOfMonth(1);// mes pasado dia 1
+		LocalDate fecha2 = LocalDate.now().minusMonths(1).withDayOfMonth(fecha1.lengthOfMonth());// último día del mes pasado
+		return facturaService.findByFechaFacturaBetween(fecha1, fecha2);// retorno la lista de facturas
+	}
  	/***********************************************************************************************************************************************************/
  	public List<EmpleadoDto> calcularSueldos(long idLocal) {
  		List<EmpleadoDto> empleadosDto = new ArrayList<EmpleadoDto>();
@@ -215,7 +220,7 @@ public class LocalService implements ILocalService {
  	/****************************************************************************************************/
      public List<ProductoRankingDto> reporte(LocalDate fecha1, LocalDate fecha2, long idLocal){
     	 List<ProductoRankingDto> productoReporte = new ArrayList<ProductoRankingDto>();
-    	 List<FacturaModel> listaFacturas = facturaService.findByFechaFacturaBetweenAndIdLocal(fecha1, fecha2, idLocal);
+	 List<FacturaModel> listaFacturas = facturaService.findByFechaFacturaBetweenAndIdLocal(fecha1, fecha2, idLocal);
     	 List<ProductoModel> productos = productoService.getAllModel();
     	 for (ProductoModel pro : productos ) {
     		int cantidad = cantidadProductoVendido(pro, listaFacturas);

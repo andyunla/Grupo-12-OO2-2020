@@ -23,6 +23,7 @@ import com.sistema.application.models.LocalModel;
 import com.sistema.application.models.PedidoStockModel;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,8 +46,8 @@ public class FacturaService implements IFacturaService {
 	@Autowired
 	@Qualifier("localConverter")
 	private LocalConverter localConverter;
-	
-	//Services
+
+	// Services
 	@Autowired
 	@Qualifier("localService")
 	ILocalService localService;
@@ -62,13 +63,12 @@ public class FacturaService implements IFacturaService {
 	@Autowired
 	@Qualifier("pedidoStockService")
 	IPedidoStockService pedidoStockService;
-	
 
 	// Métodos
 	@Override
 	public FacturaModel findByIdFactura(long idFactura) {
 		Factura factura = facturaRepository.findByIdFactura(idFactura);
-		if(factura == null) {
+		if (factura == null) {
 			return null;
 		}
 		return facturaConverter.entityToModel(factura);
@@ -105,7 +105,8 @@ public class FacturaService implements IFacturaService {
 	}
 
 	@Override
-	public List<FacturaModel> findByFechaFacturaBetweenAndIdLocal(LocalDate fecha1, LocalDate fecha2, long idLocal) {
+	public List<FacturaModel> findByFechaFacturaBetweenAndIdLocal(LocalDate fecha1, LocalDate fecha2,
+			long idLocal) {
 		List<FacturaModel> lista = new ArrayList<FacturaModel>();// creo una lista de facturas
 		for (Factura fa : facturaRepository.findByFechaFacturaBetweenAndIdLocal(fecha1, fecha2, idLocal)) {// traigo
 																						// la
@@ -153,8 +154,8 @@ public class FacturaService implements IFacturaService {
 
 	@Override
 	public List<FacturaModel> findByIdLocal(long idLocal) {
-		List <FacturaModel> facturas = new ArrayList <FacturaModel> ();
-		for(Factura factura: facturaRepository.findByIdLocal(idLocal)) {
+		List<FacturaModel> facturas = new ArrayList<FacturaModel>();
+		for (Factura factura : facturaRepository.findByIdLocal(idLocal)) {
 			facturas.add(facturaConverter.entityToModel(factura));
 		}
 		return facturas;
@@ -162,30 +163,44 @@ public class FacturaService implements IFacturaService {
 
 	@Override
 	public List<FacturaModel> findByIdLocalAndByLegajoEmpleado(long idLocal, long legajo) {
-		List <FacturaModel> facturas = new ArrayList <FacturaModel> ();
-		for(Factura factura: facturaRepository.findByIdLocalAndByLegajoEmpleado(idLocal, legajo)) {
-			facturas.add( facturaConverter.entityToModel(factura));
+		List<FacturaModel> facturas = new ArrayList<FacturaModel>();
+		for (Factura factura : facturaRepository.findByIdLocalAndByLegajoEmpleado(idLocal, legajo)) {
+			facturas.add(facturaConverter.entityToModel(factura));
 		}
 		return facturas;
 	}
+
 	@Override
 	public FacturaModel facturaPedido(long idPedidoStock, long nroCliente) {
-		//creo el pedidoStock y lo seteo facturado
-		PedidoStockModel pedidoStockModel= pedidoStockService.findByIdPedidoStock(idPedidoStock);
+		// creo el pedidoStock y lo seteo facturado
+		PedidoStockModel pedidoStockModel = pedidoStockService.findByIdPedidoStock(idPedidoStock);
 		pedidoStockModel.setFacturado(true);
-		//creo los atributos para poder generar la factura de un chango con PedidoStock
-		ClienteModel clienteModel = clienteService.findByNroCliente(nroCliente);		
-		EmpleadoModel empleadoModel = empleadoService.findByLegajo(pedidoStockModel.getEmpleadoSolicitante().getLegajo());
+		// creo los atributos para poder generar la factura de un chango con PedidoStock
+		ClienteModel clienteModel = clienteService.findByNroCliente(nroCliente);
+		EmpleadoModel empleadoModel = empleadoService
+				.findByLegajo(pedidoStockModel.getEmpleadoSolicitante().getLegajo());
 		LocalModel localModel = localService.findByIdLocal(empleadoModel.getLocal().getIdLocal());
 		ChangoModel changoModel = new ChangoModel(localModel);
 		changoModel.setPedidoStock(pedidoStockModel);
-		double costeTotal = pedidoStockModel.getCantidad()*pedidoStockModel.getProducto().getPrecio();
+		double costeTotal = pedidoStockModel.getCantidad() * pedidoStockModel.getProducto().getPrecio();
 		// persisto el chango
 		ChangoModel changoCreado = changoService.insertOrUpdate(changoModel);
 		// creo la factura y la persisto
-		FacturaModel facturaModel = new FacturaModel(clienteModel, changoCreado, LocalDate.now(), costeTotal, empleadoModel, localModel);
+		FacturaModel facturaModel = new FacturaModel(clienteModel, changoCreado, LocalDateTime.now(), costeTotal,
+				empleadoModel, localModel);
 		FacturaModel facturaGuardada = this.insertOrUpdate(facturaModel);
-		if(facturaGuardada != null)pedidoStockService.insertOrUpdate(pedidoStockModel);
+		if (facturaGuardada != null)
+			pedidoStockService.insertOrUpdate(pedidoStockModel);
 		return facturaGuardada;
+	}
+
+	@Override
+	public List<FacturaModel> findByLocalAndEmpleadoAndFechas(long idLocal, long legajo, LocalDate fecha1,
+			LocalDate fecha2) {
+		List <FacturaModel> facturas = new ArrayList<FacturaModel>();
+		for(Factura factura: facturaRepository.findByLocalAndEmpleadoAndFechas(idLocal, legajo, fecha1.atStartOfDay(), fecha2.atStartOfDay())) {
+			facturas.add( facturaConverter.entityToModel(factura));
+		}
+		return facturas;
 	}
 }

@@ -22,17 +22,17 @@ public class FacturaConverter {
 	@Autowired
 	@Qualifier("changoConverter")
 	private  ChangoConverter changoConverter;
-	@Autowired
-	private LocalModel localModel;
+	
 	@Autowired
 	@Qualifier("localConverter")
+
 	private  LocalConverter localConverter;
 	public FacturaModel entityToModel(Factura factura) {
 		ClienteModel cli = clienteConverter.entityToModel(factura.getCliente());
 		ChangoModel chango =changoConverter.entityToModel(factura.getChango());
 		EmpleadoModel empleado = empleadoConverter.entityToModel(factura.getEmpleado());
 		LocalModel local = localConverter.entityToModel(factura.getLocal());
-		return new FacturaModel(factura.getIdFactura(),cli ,chango, factura.getFechaFactura(), factura.getCosteTotal()
+		return new FacturaModel(factura.getIdFactura(),cli ,chango, factura.getFechaHoraFactura(), factura.getCosteTotal()
 				,empleado,local  );
 	}
 	
@@ -40,7 +40,7 @@ public class FacturaConverter {
 		//return new Factura(clienteConverter.modelToEntity(facturaModel.getCliente()), changoConverter.modelToEntity(facturaModel.getChango()), facturaModel.getFechaFactura(), facturaModel.getCosteTotal(), 
 		//				   clienteConverter.modelToEntity(facturaModel.getEmpleado(), clienteConverter.modelToEntity(facturaModel.getLocal())));
 		return new Factura(facturaModel.getIdFactura(),clienteConverter.modelToEntity(facturaModel.getCliente()),
-				changoConverter.modelToEntity(facturaModel.getChango()), facturaModel.getFechaFactura(), facturaModel.getCosteTotal(),
+				changoConverter.modelToEntity(facturaModel.getChango()), facturaModel.getFechaHoraFactura(), facturaModel.getCosteTotal(),
 				empleadoConverter.modelToEntity(facturaModel.getEmpleado()), localConverter.modelToEntity(facturaModel.getLocal()));
 	}
 	
