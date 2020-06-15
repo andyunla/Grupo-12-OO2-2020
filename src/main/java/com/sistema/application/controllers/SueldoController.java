@@ -3,6 +3,7 @@ package com.sistema.application.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -52,9 +53,7 @@ public class SueldoController {
 	
 	@GetMapping("")
 	public ModelAndView sueldo(Model modelo) {
-		
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.SUELDO_ROOT);		
-		//Chequea que sea un gerente
 		UserDto userDto = userService.getCurrentUser();
 		modelAndView.addObject("currentUser", userDto);
 		List<EmpleadoDto> vendedores = localService.calcularSueldos(userDto.getLocal().getIdLocal(), LocalDate.now());
@@ -64,5 +63,13 @@ public class SueldoController {
 		return modelAndView;
 	}
 	
-	
+	// Trae los sueldos dado una fecha del tipo mm-aaaa
+	@GetMapping("traer/{fecha}")
+	public ModelAndView traer(@PathVariable("fecha") LocalDate fecha) {
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.LISTA_SUELDOS);		
+		UserDto userDto = userService.getCurrentUser();
+		List<EmpleadoDto> vendedores = localService.calcularSueldos(userDto.getLocal().getIdLocal(), fecha);
+		modelAndView.addObject("empleados", vendedores);		
+		return modelAndView;
+	}
 }
