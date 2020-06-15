@@ -33,17 +33,17 @@
                     <a class="nav-link" th:href="@{/distancia}"><i class="fa fa-random" aria-hidden="true"></i> Solicitar Stock</a>
                </li>
                <li class="nav-item" th:classappend="${active=='ranking'} ? active : ''">
-                    <a class="nav-link" th:href="@{/ranking}"><i class="fa fa-line-chart" aria-hidden="true"></i> Ranking</a>
+                    <a class="nav-link" th:href="@{/ranking}"><i class="fas fa-chart-bar"></i> Ranking</a>
                </li>
                
                <li class="nav-item" th:classappend="${active=='reporte'} ? active : ''">
                     <a class="nav-link" th:href="@{/reporte}"><i class="fa fa-line-chart" aria-hidden="true"></i> Reporte</a>
                </li>
                <li class="nav-item" th:classappend="${active=='pedido'} ? active : ''">
-                    <a class="nav-link" th:href="@{/pedido}"><i class="fa fa-line-chart" aria-hidden="true"></i> Pedido</a>
+                    <a class="nav-link" th:href="@{/pedido}"><i class="fas fa-truck"></i> Pedido</a>
                </li>
                <li class="nav-item" th:classappend="${active=='sueldos'} ? active : ''">
-                    <a class="nav-link" th:href="@{/sueldos}"><i class="fa fa-money" aria-hidden="true"></i> Sueldos</a>
+                    <a class="nav-link" th:href="@{/sueldos}"><i class="fas fa-money-check-alt"></i> Sueldos</a>
                </li>
                <li class="nav-item" th:classappend="${active=='factura'} ? active : ''">
                     <a class="nav-link" th:href="@{/factura/todas}"><i class="far fa-file-alt"></i> Facturas</a>
