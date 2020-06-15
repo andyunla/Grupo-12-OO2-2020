@@ -2,7 +2,7 @@ let fechaSeleccionada = document.getElementById("fechaSueldo");
 const MAX_YEAR = 2020;
 const MIN_YEAR = 2000;
 
-function listarMasCercanos() {
+function listarSueldos() {
     if (fechaSeleccionada.value !== "") {
         let fecha = fechaSeleccionada.value; // Del tipo aaaa-mm
         let patt1 = /^(\d{4})\-(\d{1,2})$/; // Patrón
@@ -27,4 +27,4 @@ function listarMasCercanos() {
     }
 }
 
-fechaSeleccionada.addEventListener('change', listarMasCercanos);
+fechaSeleccionada.addEventListener('change', listarSueldos);
