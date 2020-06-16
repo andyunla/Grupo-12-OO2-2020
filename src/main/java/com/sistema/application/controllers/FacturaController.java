@@ -1,5 +1,6 @@
 package com.sistema.application.controllers;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -141,26 +142,12 @@ public class FacturaController {
      public ModelAndView traerFactura() {
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.FACTURAS);
           UserDto userDto = userService.getCurrentUser();
-          List <FacturaModel> facturas = facturaService.findByIdLocal(userDto.getLocal().getIdLocal());
+          List <FacturaModel> facturas = facturaService.findByLocalAndEmpleadoAndFechas(userDto.getLocal().getIdLocal(), 
+               0, LocalDate.now(), LocalDate.now());
           List <EmpleadoModel> empleados = empleadoService.findByIdLocal(userDto.getLocal().getIdLocal());
           mAV.addObject("currentUser", userDto); 
           mAV.addObject("facturas", facturas);
           mAV.addObject("empleados", empleados);
-          return mAV;
-     }
-
-     @GetMapping("empleado/{legajo}")
-     public ModelAndView traerFacturaPorEmpleado(@PathVariable("legajo") long legajo) {
-          ModelAndView mAV = new ModelAndView(ViewRouteHelper.LISTA_FACTURAS);
-          UserDto userDto = userService.getCurrentUser();
-          List <FacturaModel> facturas = new ArrayList<FacturaModel>();
-          // Si el legajo es 0 no se filtrará por empleado
-          if(legajo == 0 ) {
-               facturas = facturaService.findByIdLocal(userDto.getLocal().getIdLocal());
-          } else {
-               facturas = facturaService.findByIdLocalAndByLegajoEmpleado(userDto.getLocal().getIdLocal(), legajo);
-          }
-          mAV.addObject("facturas", facturas);
           return mAV;
      }
 

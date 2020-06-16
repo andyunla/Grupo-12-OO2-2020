@@ -162,15 +162,6 @@ public class FacturaService implements IFacturaService {
 	}
 
 	@Override
-	public List<FacturaModel> findByIdLocalAndByLegajoEmpleado(long idLocal, long legajo) {
-		List<FacturaModel> facturas = new ArrayList<FacturaModel>();
-		for (Factura factura : facturaRepository.findByIdLocalAndByLegajoEmpleado(idLocal, legajo)) {
-			facturas.add(facturaConverter.entityToModel(factura));
-		}
-		return facturas;
-	}
-
-	@Override
 	public FacturaModel facturaPedido(long idPedidoStock, long nroCliente) {
 		// creo el pedidoStock y lo seteo facturado
 		PedidoStockModel pedidoStockModel = pedidoStockService.findByIdPedidoStock(idPedidoStock);

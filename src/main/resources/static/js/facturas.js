@@ -36,8 +36,6 @@ document.getElementById("botonFiltro").addEventListener('click', async (e) => {
                alertContainer.innerHTML = htmlAlert;
                fadeOutEffect(document.getElementById("alert"));
      }
-     
-     
 });
 
 // Efecto de desvanecido
@@ -56,4 +54,13 @@ function fadeOutEffect(fadeTarget) {
                clearInterval(fadeEffect);
           }
      }, 100);
+}
+
+window.onload = () => {
+     // Muestra el mensaje de ayuda y luego de 5 seg. lo deshabilita
+     $('#contenedorBotonFiltro').tooltip('show');
+     setTimeout( () => { 
+          $('#contenedorBotonFiltro').tooltip('hide');
+          $('#contenedorBotonFiltro').tooltip('disable');
+     }, 5000);
 }
