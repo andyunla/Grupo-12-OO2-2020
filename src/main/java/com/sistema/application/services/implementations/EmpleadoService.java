@@ -36,8 +36,10 @@ public class EmpleadoService implements IEmpleadoService {
 	public List<EmpleadoModel> getAllModel() {
 		List <EmpleadoModel> empleados = new ArrayList <EmpleadoModel>();
 		for(Empleado empleado: empleadoRepository.findAll()){
+			if(empleado.getIdPersona() != 19 ) {//filtro para que no traiga al ADMIN
 			EmpleadoModel em = empleadoConverter.entityToModel(empleado);
 			empleados.add(em);
+			}
 		}
 		return empleados;
 	}
@@ -67,12 +69,7 @@ public class EmpleadoService implements IEmpleadoService {
 		}
 	}
 
-	/*
-	@Override
-	public EmpleadoModel findById(int id) {
-		return empleadoConverter.entityToModel(empleadoRepository.findById(id));
-	}
-	*/
+	
 	@Override
 	public EmpleadoModel findByLegajo(long legajo) {
 		return empleadoConverter.entityToModel(empleadoRepository.findByLegajo(legajo));
@@ -91,7 +88,9 @@ public class EmpleadoService implements IEmpleadoService {
 	public List<EmpleadoModel> findByIdLocal(long idLocal) {
 		List<EmpleadoModel> models = new ArrayList<EmpleadoModel>();
 		for (Empleado empleado : empleadoRepository.findByIdLocal(idLocal)) {
+			if(empleado.getIdPersona() !=19) { //filtro para que no traiga al ADMIN
 			models.add(empleadoConverter.entityToModel(empleado));
+			}
 		}
 		return models;
 	}
