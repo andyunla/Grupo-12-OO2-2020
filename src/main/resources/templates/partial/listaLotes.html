@@ -1,7 +1,6 @@
 <tr th:each="lote :${lotes}" class="fila-lote">
      <td class="d-none lote-estado" th:attr="data-activo=${lote.activo}"></td>
      <td th:text="${lote.idLote}"></td>
-     <td th:text="${lote.local.nombreLocal}"></td>
      <td th:text="${lote.productoModel.nombre}"></td>
      <td th:text="${lote.fechaIngreso}"></td>
      <td th:text="${lote.cantidadInicial}"></td>
