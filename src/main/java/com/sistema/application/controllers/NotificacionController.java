@@ -80,10 +80,12 @@ public class NotificacionController {
 			System.out.println(e.getMessage());
 		}
 		if(idNotificacion >= 1) {
-			NotificacionDto notif = notificacionService.findById(idNotificacion);
-			if(notif != null)
-				notif.setLeido(true);
-				lista.add(notif);
+			NotificacionDto notificacion = notificacionService.findById(idNotificacion);
+			if(notificacion != null) {
+				notificacion.setLeido(true);
+				notificacionService.insertOrUpdate(notificacion);
+				lista.add(notificacion);
+			}
 		}
 		mAV.addObject("notificaciones", lista);
 		return mAV;
