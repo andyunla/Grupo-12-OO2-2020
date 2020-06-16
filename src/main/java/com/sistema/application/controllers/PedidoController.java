@@ -94,8 +94,10 @@ public class PedidoController {
 											@PathVariable("userOferente") String userOferente, @PathVariable("aceptado") boolean aceptado,
 											@PathVariable("idProducto") long idProducto, @PathVariable("cantidad") int cantidad) {
 		PedidoStockModel pedido = pedidoStockService.crearPedido(userSolicitante, userOferente, aceptado, idProducto, cantidad);
-		if (pedido != null) { // Para verificar si se creó el pedido			
-			loteService.consumirStock(pedido.getEmpleadoOferente().getLocal().getIdLocal(), pedido.getProducto().getIdProducto(), cantidad);
+		if (pedido != null) { // Para verificar si se creó el pedido
+			if(pedido.isAceptado()) {
+				loteService.consumirStock(pedido.getEmpleadoOferente().getLocal().getIdLocal(), pedido.getProducto().getIdProducto(), cantidad);
+			}
 			// Enviar de datos al cliente(js)
 			DetalleNotificacionDto detalleDto = new DetalleNotificacionDto();
 			detalleDto.setIdPedidoStock(pedido.getIdPedidoStock());
