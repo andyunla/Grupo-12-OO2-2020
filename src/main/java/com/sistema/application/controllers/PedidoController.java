@@ -6,6 +6,7 @@ import java.util.List;
 import com.sistema.application.converters.EmpleadoConverter;
 import com.sistema.application.converters.UserConverter;
 import com.sistema.application.dto.DetalleNotificacionDto;
+import com.sistema.application.dto.NotificacionDto;
 import com.sistema.application.dto.UserDto;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ClienteModel;
@@ -17,6 +18,7 @@ import com.sistema.application.services.IClienteService;
 import com.sistema.application.services.IEmpleadoService;
 import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.ILoteService;
+import com.sistema.application.services.INotificacionService;
 import com.sistema.application.services.IPedidoStockService;
 import com.sistema.application.services.IProductoService;
 import com.sistema.application.services.implementations.UserService;
@@ -69,6 +71,9 @@ public class PedidoController {
 	@Autowired
     @Qualifier("userService")
     private UserService userService;
+	@Autowired
+    @Qualifier("notificacionService")
+    private INotificacionService notificacionService;
 
 	@GetMapping("")
 	public ModelAndView pedidoStock() {
@@ -89,8 +94,10 @@ public class PedidoController {
 											@PathVariable("userOferente") String userOferente, @PathVariable("aceptado") boolean aceptado,
 											@PathVariable("idProducto") long idProducto, @PathVariable("cantidad") int cantidad) {
 		PedidoStockModel pedido = pedidoStockService.crearPedido(userSolicitante, userOferente, aceptado, idProducto, cantidad);
-		if (pedido != null) { // Para verificar si se creó el pedido			
-			loteService.consumirStock(pedido.getEmpleadoOferente().getLocal().getIdLocal(), pedido.getProducto().getIdProducto(), cantidad);
+		if (pedido != null) { // Para verificar si se creó el pedido
+			if(pedido.isAceptado()) {
+				loteService.consumirStock(pedido.getEmpleadoOferente().getLocal().getIdLocal(), pedido.getProducto().getIdProducto(), cantidad);
+			}
 			// Enviar de datos al cliente(js)
 			DetalleNotificacionDto detalleDto = new DetalleNotificacionDto();
 			detalleDto.setIdPedidoStock(pedido.getIdPedidoStock());
@@ -100,9 +107,10 @@ public class PedidoController {
 		return new ResponseEntity<DetalleNotificacionDto>(HttpStatus.BAD_REQUEST);
 	}
 
-	// Ejemplo: HOST/pedido/ver?id=3
+	// Ejemplo: HOST/pedido/ver?id=3&msgid=4
 	@GetMapping("/ver")
-	public ModelAndView verPedido(@RequestParam(name="id", required=true, defaultValue="0") String id) {
+	public ModelAndView verPedido(@RequestParam(name="id", required=true, defaultValue="0") String id,
+								  @RequestParam(name="msgid", required=false, defaultValue="null") String msgId) {
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.PEDIDO_STOCK_VIEW);
 		// Obtenemos el usuario de la sesión
 		UserDto userDto = userService.getCurrentUser();
@@ -118,6 +126,20 @@ public class PedidoController {
 			PedidoStockModel pedido = pedidoStockService.findByIdPedidoStock(idPedidoStock);
 			if(pedido != null)
 				lista.add(pedido);
+		}
+		// Para confirmar el mensaje de respuesta como leída; puede ser opcional
+		Long idNotificacion = 0L;
+		try {
+			idNotificacion = Long.parseLong(msgId);
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		if(idNotificacion >= 1) {
+			NotificacionDto notificacion = notificacionService.findById(idNotificacion);
+			if(notificacion != null) {
+				notificacion.setLeido(true);
+				notificacionService.insertOrUpdate(notificacion);
+			}
 		}
 		modelAndView.addObject("pedidos", lista);
 		modelAndView.addObject("clientes", clienteService.getAllModel());

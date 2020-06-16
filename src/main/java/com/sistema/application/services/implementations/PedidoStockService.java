@@ -116,10 +116,12 @@ public class PedidoStockService implements IPedidoStockService{
 			com.sistema.application.entities.User solicitante = userRepository.findByUsernameAndFetchUserRolesEagerly(userSolicitante);
 			com.sistema.application.entities.User oferente = userRepository.findByUsernameAndFetchUserRolesEagerly(userOferente);
 			EmpleadoModel solicitanteModel = empleadoService.findByLegajo(solicitante.getEmpleado().getLegajo());
-			EmpleadoModel oferenteModel = empleadoService.findByLegajo(oferente.getEmpleado().getLegajo());
-			
+			EmpleadoModel oferenteModel = null;
+			if(aceptado) {
+				if(userOferente != null)
+					oferenteModel = empleadoService.findByLegajo(oferente.getEmpleado().getLegajo());
+			}
 			PedidoStockModel pedido = new PedidoStockModel(producto, cantidad, aceptado, solicitanteModel, oferenteModel, false);
-			
 			return insertOrUpdate(pedido);
 		}
 }
