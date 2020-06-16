@@ -15,9 +15,9 @@
                               <i class="fa fa-bars" aria-hidden="true"></i> ACCIONES
                          </a>
                          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <a class="dropdown-item" th:href="@{/local}">Locales</a>
-                              <a class="dropdown-item" th:href="@{/empleado}">Empleados</a>
-                              <a class="dropdown-item" th:href="@{/cliente}">Clientes</a>
+                              <a class="dropdown-item" th:href="@{/local}" ><i class="fa fa-map-marker" aria-hidden="true"></i> Locales</a>
+                              <a class="dropdown-item" th:href="@{/empleado}"><i class="fa fa-users" aria-hidden="true"></i> Empleados</a>
+                             	<a class="dropdown-item" th:href="@{/cliente}"><i class="fa fa-users" aria-hidden="true"></i> Clientes</a>
                          </div>
                     </li>                    
                </span>
@@ -41,11 +41,11 @@
                               <i class="fa fa-bars" aria-hidden="true"></i> ACCIONES
                          </a>
                          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                         		<a class="dropdown-item" th:href="@{/lote}">Lotes</a>                         		                         
-                             	<a class="dropdown-item" th:href="@{/producto}">Productos</a>
-                            	<a class="dropdown-item" th:href="@{/local}" >Locales</a>
-                              	<a class="dropdown-item" th:href="@{/empleado}">Empleados</a>
-                             	<a class="dropdown-item" th:href="@{/cliente}">Clientes</a>  
+                         		<a class="dropdown-item" th:href="@{/lote}"><i class="fa fa-database" aria-hidden="true"></i> Lotes</a>                         		                         
+                             	<a class="dropdown-item" th:href="@{/producto}"><i class="fa fa-gift" aria-hidden="true"></i> Productos</a>
+                            	<a class="dropdown-item" th:href="@{/local}" ><i class="fa fa-map-marker" aria-hidden="true"></i> Locales</a>
+                              	<a class="dropdown-item" th:href="@{/empleado}"><i class="fa fa-users" aria-hidden="true"></i> Empleados</a>
+                             	<a class="dropdown-item" th:href="@{/cliente}"><i class="fa fa-address-book" aria-hidden="true"></i> Clientes</a>  
                          </div>                         
                     </li>                    
                </span>
@@ -59,13 +59,13 @@
 	                         <a class="dropdown-item" th:href="@{/sueldos}"><i class="fas fa-money-check-alt"></i> Sueldos</a>
 	                         <a class="dropdown-item" th:href="@{/ranking}"><i class="fas fa-chart-bar"></i> Ranking</a>
 	                         <a class="dropdown-item" th:href="@{/reporte}"><i class="fa fa-line-chart" aria-hidden="true"></i> Reporte</a>
-	                         <a class="dropdown-item" th:href="@{/item}">Items</a>
-	                         <a class="dropdown-item" th:href="@{/chango/todos}">Carritos</a>
+	                         <a class="dropdown-item" th:href="@{/item}"><i class="fa fa-cubes" aria-hidden="true"></i> Items</a>
+	                         <a class="dropdown-item" th:href="@{/chango/todos}"><i class="dfa fa-shopping-cart" aria-hidden="true"></i> Carritos</a>
                          </div>
                     </li>
                </span>
                <span th:if="${currentUser.tipoGerente} == false AND  ${currentUser.tipoAdmin} == false ">
-                    <a class="nav-link" th:href="@{/cliente}"><i class="fa fa-bars" aria-hidden="true"></i> Clientes</a>
+                    <a class="nav-link" th:href="@{/cliente}"><i class="fa fa-address-book" aria-hidden="true"></i> Clientes</a>
                     <vr>
                </span>
                <li class="nav-item" th:classappend="${active=='distancia'} ? active : ''">
@@ -78,7 +78,7 @@
                     <a class="nav-link" th:href="@{/factura/todas}"><i class="far fa-file-alt"></i> Facturas</a>
                </li>
                <li class="nav-item" th:classappend="${active=='chango'} ? active : ''">
-                    <a class="nav-link" th:href="@{/chango}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Chango</a>
+                    <a class="nav-link" th:href="@{/chango}"><i class="dfa fa-shopping-cart" aria-hidden="true"></i> Carrito</a>
                </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
