@@ -3,7 +3,7 @@
      <td th:text="${factura.getEmpleado().getLegajo()}"></td>
      <td th:text="${factura.getCliente().getDni()}"></td>
      <td th:text="${factura.getCosteTotal()}"></td>
-     <td th:text="${factura.getFechaCorta()}"></td>
+     <td th:text="${factura.getFechaHoraCorta()}"></td>
 </tr>
 <tr th:if="${facturas.size() > 0}">
      <td><small th:text="${'Total: ' + facturas.size()}"></small></td>

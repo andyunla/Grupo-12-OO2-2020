@@ -1,5 +1,6 @@
 package com.sistema.application.controllers;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import com.sistema.application.converters.LocalConverter;
 import com.sistema.application.dto.UserDto;
+import com.sistema.application.funciones.Funciones;
 import com.sistema.application.models.ClienteModel;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.FacturaModel;
@@ -140,7 +142,8 @@ public class FacturaController {
      public ModelAndView traerFactura() {
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.FACTURAS);
           UserDto userDto = userService.getCurrentUser();
-          List <FacturaModel> facturas = facturaService.findByIdLocal(userDto.getLocal().getIdLocal());
+          List <FacturaModel> facturas = facturaService.findByLocalAndEmpleadoAndFechas(userDto.getLocal().getIdLocal(), 
+               0, LocalDate.now(), LocalDate.now());
           List <EmpleadoModel> empleados = empleadoService.findByIdLocal(userDto.getLocal().getIdLocal());
           mAV.addObject("currentUser", userDto); 
           mAV.addObject("facturas", facturas);
@@ -148,17 +151,13 @@ public class FacturaController {
           return mAV;
      }
 
-     @GetMapping("empleado/{legajo}")
-     public ModelAndView traerFacturaPorEmpleado(@PathVariable("legajo") long legajo) {
+     @GetMapping("filtrar/{legajo}/{fechaDesde}/{fechaHasta}")
+     public ModelAndView traerFacturasPorEmpleadoYFecha(@PathVariable("legajo") long legajo, 
+               @PathVariable("fechaDesde") String fechaDesde, @PathVariable("fechaHasta") String fechaHasta) {
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.LISTA_FACTURAS);
           UserDto userDto = userService.getCurrentUser();
-          List <FacturaModel> facturas = new ArrayList<FacturaModel>();
-          // Si el legajo es 0 no se filtrará por empleado
-          if(legajo == 0 ) {
-               facturas = facturaService.findByIdLocal(userDto.getLocal().getIdLocal());
-          } else {
-               facturas = facturaService.findByIdLocalAndByLegajoEmpleado(userDto.getLocal().getIdLocal(), legajo);
-          }
+          List <FacturaModel> facturas = facturaService.findByLocalAndEmpleadoAndFechas(
+               userDto.getLocal().getIdLocal(), legajo, Funciones.traerFecha(fechaDesde), Funciones.traerFecha(fechaHasta));          
           mAV.addObject("facturas", facturas);
           return mAV;
      }
