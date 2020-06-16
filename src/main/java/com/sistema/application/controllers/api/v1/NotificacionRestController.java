@@ -78,7 +78,7 @@ public class NotificacionRestController {
         while (itr.hasNext()) {
             if(itr.next().isLeido()) {
             	itr.remove();
-            }                
+            }
         }
         if(respuestas != null) {
         	return new ResponseEntity<List<NotificacionDto>>(respuestas, HttpStatus.OK);

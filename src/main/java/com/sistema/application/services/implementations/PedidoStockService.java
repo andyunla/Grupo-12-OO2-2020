@@ -98,7 +98,7 @@ public class PedidoStockService implements IPedidoStockService{
 			List<PedidoStockModel> pedidoStock = new ArrayList<PedidoStockModel>();
 			for(PedidoStock p: pedidoStockRepository.findByEmpleadoSolicitanteNoFacturado(idEmpleadoSolicitante)){
 				pedidoStock.add(pedidoStockConverter.entityToModel(p));
-			}			
+			}
 			return pedidoStock;
 		}
 		@Override
@@ -106,7 +106,7 @@ public class PedidoStockService implements IPedidoStockService{
 			List<PedidoStockModel> pedidoStock = new ArrayList<PedidoStockModel>();
 			for(PedidoStock p: pedidoStockRepository.findByEmpleadoSolicitanteFacturado(idEmpleadoSolicitante)){
 				pedidoStock.add(pedidoStockConverter.entityToModel(p));
-			}			
+			}
 			return pedidoStock;
 		}
 		
