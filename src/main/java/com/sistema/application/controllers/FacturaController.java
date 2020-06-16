@@ -1,5 +1,6 @@
 package com.sistema.application.controllers;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import com.sistema.application.converters.LocalConverter;
 import com.sistema.application.dto.UserDto;
+import com.sistema.application.funciones.Funciones;
 import com.sistema.application.models.ClienteModel;
 import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.FacturaModel;
@@ -159,6 +161,17 @@ public class FacturaController {
           } else {
                facturas = facturaService.findByIdLocalAndByLegajoEmpleado(userDto.getLocal().getIdLocal(), legajo);
           }
+          mAV.addObject("facturas", facturas);
+          return mAV;
+     }
+
+     @GetMapping("filtrar/{legajo}/{fechaDesde}/{fechaHasta}")
+     public ModelAndView traerFacturasPorEmpleadoYFecha(@PathVariable("legajo") long legajo, 
+               @PathVariable("fechaDesde") String fechaDesde, @PathVariable("fechaHasta") String fechaHasta) {
+          ModelAndView mAV = new ModelAndView(ViewRouteHelper.LISTA_FACTURAS);
+          UserDto userDto = userService.getCurrentUser();
+          List <FacturaModel> facturas = facturaService.findByLocalAndEmpleadoAndFechas(
+               userDto.getLocal().getIdLocal(), legajo, Funciones.traerFecha(fechaDesde), Funciones.traerFecha(fechaHasta));          
           mAV.addObject("facturas", facturas);
           return mAV;
      }
