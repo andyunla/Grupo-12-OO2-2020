@@ -29,9 +29,6 @@ public interface IFacturaRepository extends JpaRepository<Factura, Serializable>
 
 	@Query("FROM Factura  WHERE id_local = (:idLocal) ORDER BY fechahora_factura DESC")
 	public abstract List<Factura> findByIdLocal(long idLocal);
-
-	@Query("FROM Factura  WHERE id_local = (:idLocal) AND empleado_legajo = (:legajo) ORDER BY fechahora_factura DESC")
-	public abstract List<Factura> findByIdLocalAndByLegajoEmpleado(long idLocal, long legajo);
 	
 	@Query("FROM Factura WHERE id_local = (:idLocal)" + 
 	" AND empleado_legajo = CASE(:legajo) WHEN 0 THEN empleado_legajo ELSE (:legajo) END" + 

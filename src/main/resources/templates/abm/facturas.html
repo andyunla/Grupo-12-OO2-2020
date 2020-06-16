@@ -9,15 +9,40 @@
           <h1 class="display-4">FACTURAS</h1>
      </header>
      <main class="w-100 d-flex flex-column align-items-center">
-          <div class="form-group col-9 col-md-5 col-lg-3 d-flex flex-row align-items-center">
-               <select class="custom-select" id="filtro-empleado" onchange="filtrarPorEmpleado()">
-                    <option value="0" selected>Todos los empleados</option>
-                    <option th:each="e: ${empleados}" th:value="${e.legajo}"
-                         th:text="${e.getLegajo() + ' - ' +  e.getNombreCompleto()}">
-                    </option>
-               </select>
+          <p data-toggle="tooltip" data-placement="right" title="Puede ver facturas de días previos aplicando un filtro"
+           id="contenedorBotonFiltro">
+               <a class="btn btn-outline-info btn-sm" data-toggle="collapse" href="#filterForm" role="button">
+                    Filtrar
+               </a>
+          </p>
+          <div class="panel-collapse collapse in w-100" id="filterForm">
+               <div class="w-100 d-flex flex-column align-items-center">
+                    <form class="container-fluid row col-12 col-md-11 col-lg-10 col-xl-8 text-center flex-wrap justify-content-center
+                    border border-light rounded m-1">
+                         <div class="form-group col-10 col-sm-5 col-md-4">
+                              <label class="smaller-text m-0" for="empleado">Empleado: </label>
+                              <select class="custom-select" id="empleado">
+                                   <option value="0" selected>Todos los empleados</option>
+                                   <option th:each="e: ${empleados}" th:value="${e.legajo}"
+                                        th:text="${e.getLegajo() + ' - ' +  e.getNombreCompleto()}">
+                                   </option>
+                              </select>
+                         </div>
+                         <div class="form-group mr-1">
+                              <label class="smaller-text m-0" for="fechaDesde">Desde: </label>
+                              <input type="date" class="form-control" id="fechaDesde" />
+                         </div>
+                         <div class="form-group">
+                              <label class="smaller-text m-0" for="fechaHasta">Hasta: </label>
+                              <input type="date" class="form-control" id="fechaHasta" />
+                         </div>
+                         <div class="d-flex align-items-center m-3 justify-content-center">
+                              <button type="button" id="botonFiltro" class="btn btn-info btn-sm">APLICAR</button>
+                         </div>
+                    </form>
+               </div>
           </div>
-          <div class="container-fluid col-12 col-md-9 col-lg-7 col-xl-6 text-center table-responsive">
+          <div class="container-fluid col-12 col-md-9 col-lg-8 col-xl-7 text-center table-responsive">
                <table class="table w-100 shadow mb-3 bg-white table-hover rounded">
                     <thead class="thead-dark">
                          <tr>
@@ -29,7 +54,8 @@
                          </tr>
                     </thead>
                     <tbody>
-                         <tr th:if="${facturas.size() > 0}" th:each="factura : ${facturas}" onclick="abrirFactura(this)" class="factura-row">
+                         <tr th:if="${facturas.size() > 0}" th:each="factura : ${facturas}" onclick="abrirFactura(this)"
+                              class="factura-row">
                               <td th:text="${factura.getIdFactura()}"></td>
                               <td th:text="${factura.getEmpleado().getLegajo()}"></td>
                               <td th:text="${factura.getCliente().getDni()}"></td>
@@ -39,13 +65,14 @@
                          <tr th:if="${facturas.size() > 0}">
                               <td><small th:text="${'Total: ' + facturas.size()}"></small></td>
                          </tr>
-                         <tr th:unless="${facturas.size() > 0}" >
+                         <tr th:unless="${facturas.size() > 0}">
                               <td><small>No hay ventas</small></td>
                          </tr>
                     </tbody>
                </table>
      </main>
      <footer th:replace="fragments/footer :: footer"></footer>
+     <div class="p-1 col-11 col-sm-7 col-md-6 col-lg-4" id="alertContainer"></div>
      <div th:replace="fragments/scripts :: scripts"></div>
      <script th:src="@{/js/facturas.js}"></script>
 </body>
