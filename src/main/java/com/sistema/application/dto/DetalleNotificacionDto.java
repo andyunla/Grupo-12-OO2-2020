@@ -6,6 +6,7 @@ public class DetalleNotificacionDto {
 	private String nombreProducto;
 	private int cantidad;
 	private Long idPedidoStock;
+	private boolean pedidoFacturado = false; // Para evitar que muestre el botón para dirigirse al pedido nuevamente
 	
 	public DetalleNotificacionDto() {}
 	
@@ -15,6 +16,7 @@ public class DetalleNotificacionDto {
 		this.nombreProducto = nombreProducto;
 		this.cantidad = cantidad;
 		this.idPedidoStock = idPedidoStock;
+		pedidoFacturado = false;
 	}
 	
 	public DetalleNotificacionDto(long id, Long idProducto, String nombreProducto, int cantidad, Long idPedidoStock) {
@@ -24,6 +26,7 @@ public class DetalleNotificacionDto {
 		this.nombreProducto = nombreProducto;
 		this.cantidad = cantidad;
 		this.idPedidoStock = idPedidoStock;
+		pedidoFacturado = false;
 	}
 
 	public long getId() {
@@ -64,6 +67,14 @@ public class DetalleNotificacionDto {
 
 	public void setIdPedidoStock(Long idPedidoStock) {
 		this.idPedidoStock = idPedidoStock;
+	}
+
+	public boolean isPedidoFacturado() {
+		return pedidoFacturado;
+	}
+
+	public void setPedidoFacturado(boolean pedidoFacturado) {
+		this.pedidoFacturado = pedidoFacturado;
 	}
 
 	@Override

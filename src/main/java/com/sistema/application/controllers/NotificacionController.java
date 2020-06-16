@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.NumberUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,10 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.sistema.application.dto.NotificacionDto;
 import com.sistema.application.dto.UserDto;
-import com.sistema.application.helpers.UtilHelper;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.INotificacionService;
+import com.sistema.application.services.IPedidoStockService;
 import com.sistema.application.services.implementations.UserService;
 
 @Controller
@@ -32,6 +31,9 @@ public class NotificacionController {
 	@Qualifier("notificacionService")
 	private INotificacionService notificacionService;
 	@Autowired
+	@Qualifier("pedidoStockService")
+	private IPedidoStockService pedidoStockService;
+	@Autowired
 	@Qualifier("userService")
 	private UserService userService;
 	
@@ -42,6 +44,12 @@ public class NotificacionController {
 		modelo.addAttribute("currentUser", userDto);
 		// Le mandamos todas las notificaciones. Sean leídas o no
 		List<NotificacionDto> listaRespuestas = notificacionService.findByUserTo(userDto.getUsername());
+		for(NotificacionDto respuesta : listaRespuestas) {
+			// Para determinar si mostramos el enlace al pedido en caso que no se haya facturado
+			Long idPedido = respuesta.getDetalleNotificacion().getIdPedidoStock();
+			boolean estaFacturado = pedidoStockService.findByIdPedidoStock(idPedido).isFacturado();
+			respuesta.getDetalleNotificacion().setPedidoFacturado(estaFacturado);
+		}
 		List<NotificacionDto> listaSolicitudes = notificacionService.findByIdLocal(userDto.getLocal().getIdLocal());
 		List<NotificacionDto> listaFinal = new ArrayList<NotificacionDto>();
 		listaFinal.addAll(listaRespuestas);
