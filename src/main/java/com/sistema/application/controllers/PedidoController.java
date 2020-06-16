@@ -105,7 +105,7 @@ public class PedidoController {
 		return new ResponseEntity<DetalleNotificacionDto>(HttpStatus.BAD_REQUEST);
 	}
 
-	// Ejemplo: HOST/pedido/ver?id=3
+	// Ejemplo: HOST/pedido/ver?id=3&msgid=4
 	@GetMapping("/ver")
 	public ModelAndView verPedido(@RequestParam(name="id", required=true, defaultValue="0") String id,
 								  @RequestParam(name="msgid", required=false, defaultValue="null") String msgId) {

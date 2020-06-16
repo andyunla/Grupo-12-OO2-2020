@@ -15,6 +15,7 @@ function comprobarSolicitudes() {
     fetch(url, { method: 'GET' })
         .then(response => response.text())
         .then(text => {
+            console.log("response: " + text);
             cargarNotificaciones(JSON.parse(text));
         })
         .catch((e) => {
@@ -107,12 +108,12 @@ function renderizarAHTML(obj) {
                     break;
             }
             paraEsteDestinatario = true;
-            var url = `/pedido/ver?id=${obj.detalleNotificacion.idPedidoStock}`;
+            var url = `/pedido/ver?id=${obj.detalleNotificacion.idPedidoStock}&msgid=${obj.id}`;
         }
     }
     let html = "";
     // En el caso que sea una respuesta hay que prevenir que no se envíen a todos
-    // los usuarios de el local actual; sólo al que le corresponde
+    // los usuarios del local actual; sólo al que le corresponde
     if(paraEsteDestinatario) {
         var row = `<a class="dropdown-item alert ${alert_tipo}" role="alert" href="${url}"> ${msgCorto}</a>`;
     }
