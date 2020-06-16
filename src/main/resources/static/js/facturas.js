@@ -62,5 +62,5 @@ window.onload = () => {
      setTimeout( () => { 
           $('#contenedorBotonFiltro').tooltip('hide');
           $('#contenedorBotonFiltro').tooltip('disable');
-     }, 5000);
+     }, 5500);
 }
