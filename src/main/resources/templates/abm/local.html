@@ -127,12 +127,13 @@
                               <th scope="col">Dirección</th>
                               <th scope="col">Telefono</th>
                               <th scope="col">Leg. Gerente</th>
-                              <th> </th>
+                              <div th:if="${currentUser.tipoAdmin}">
+                                   <th> </th>
+                              </div>
                          </tr>
                     </thead>
                     <tbody>
                          <tr th:each="local :${locales}">
-                              
                               <td th:text="${local.nombreLocal}"></td>
                               <td th:text="${local.latitud}"></td>
                               <td th:text="${local.longitud}"></td>
@@ -142,7 +143,7 @@
                                    <div th:text="${local.gerenteLegajo}"></div>
                               </td>
                               <td th:unless="${local.gerenteLegajo} != 0">Ningún gerente asignado</td>
-                              <div th:if="${currentUser.tipoGerente}">
+                              <div th:if="${currentUser.tipoAdmin}">
                                    <td class="d-flex justify-content-around">
                                         <div data-toggle="tooltip" data-placement="top" title="Modificar">
                                              <a href="#" data-toggle="modal" data-target="#modifyLocal" class="modifyButton">
