@@ -11,6 +11,7 @@ function actualizarBotones() {
 function agregarListenerABotonesAceptar() {
     let botonesAceptar = document.querySelectorAll('.botonAceptar');
     botonesAceptar.forEach(boton => boton.addEventListener('click', (e) => {
+        $("*").addClass("esperando");
         var detalleEnvio = {
             idNotificacion: e.target.dataset.idNotificacion,
             userOferente: document.getElementById("current-username").value,
@@ -27,6 +28,7 @@ function agregarListenerABotonesAceptar() {
 function agregarListenerABotonesRechazar() {
     let botonesRechazar = document.querySelectorAll('.botonRechazar');
     botonesRechazar.forEach(boton => boton.addEventListener('click', (e) => {
+        $("*").addClass("esperando");
         var detalleEnvio = {
             idNotificacion: e.target.dataset.idNotificacion,
             userOferente: null,
@@ -78,7 +80,7 @@ async function realizarSolicitudPedido(detalleEnvio) {
     enviarRespuesta(respuesta);
 
     // Refrescmos la vista
-    listarNotificaciones();
+    setTimeout(listarNotificaciones, 1000);
 }
 
 function listarNotificaciones() {
@@ -104,6 +106,8 @@ function listarNotificaciones() {
         })
         .catch((e) => {
             console.log(e);
+        }).finally( () => {
+            $("*").removeClass("esperando");
         });
 }
 

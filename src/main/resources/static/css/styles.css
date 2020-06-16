@@ -163,3 +163,8 @@ li.dropdown:last-child .dropdown-menu {
     text-decoration: underline;
     color: rgb(8, 8, 71);
 }
+
+/* NOTIFICACION */
+.esperando {
+    cursor: wait !important;
+}
