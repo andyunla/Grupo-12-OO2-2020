@@ -4,8 +4,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.ILoteService;
 import com.sistema.application.repositories.ILoteRepository;
+import com.sistema.application.converters.LocalConverter;
 import com.sistema.application.converters.LoteConverter;
 import com.sistema.application.converters.ProductoConverter;
 import com.sistema.application.entities.Lote;
@@ -34,6 +36,14 @@ public class LoteService implements ILoteService {
 	@Autowired
 	@Qualifier("productoConverter")
 	private ProductoConverter productoConverter;
+
+	@Autowired
+	@Qualifier("localService")
+	private ILocalService localService;
+
+	@Autowired
+	@Qualifier("localConverter")
+	private LocalConverter localConverter;
 
 	// Métodos
 	@Override
@@ -105,15 +115,6 @@ public class LoteService implements ILoteService {
 	}
 
 	@Override
-	public List<LoteModel> findByLocalProductoAndActivo(long idLocal, long idProducto, boolean soloActivos) {
-		List<LoteModel> lotes = new ArrayList<LoteModel>();
-		for (Lote l : loteRepository.findByLocalProductoAndActivo(idLocal, idProducto, soloActivos)) {
-			lotes.add(loteConverter.entityToModel(l));
-		}
-		return lotes;
-	}
-
-	@Override
 	public int calcularStock(ProductoModel producto, LocalModel local) {
 		int total = 0;
 		for (LoteModel lote : findByLoteProductoActivo(producto.getIdProducto(), local.getIdLocal())) {
@@ -166,5 +167,24 @@ public class LoteService implements ILoteService {
 			}
 		}
 		return cantidad == 0; // Si se pudo devolver la cantidad recibida devuelve true
+	}
+
+	@Override
+	public List<LoteModel> findByLocalOrderByFechaingresoDesc(long idLocal) {
+		List<LoteModel> lotes = new ArrayList <LoteModel>();
+		LocalModel local = localService.findByIdLocal(idLocal);
+		for(Lote lote : loteRepository.findByLocalOrderByFechaIngresoDesc(localConverter.modelToEntity(local))){
+			lotes.add(loteConverter.entityToModel(lote));
+		}
+		return lotes;
+	}
+
+	@Override
+	public List<LoteModel> findByALocalProductoAndActivo(long idLocal, long idProducto, boolean soloActivos) {
+		List<LoteModel> lotes = new ArrayList <LoteModel>();
+		for(Lote lote: loteRepository.findByALocalProductoAndActivo(idLocal, idProducto, soloActivos)) {
+			lotes.add( loteConverter.entityToModel(lote));
+		}
+		return lotes;
 	}
 }

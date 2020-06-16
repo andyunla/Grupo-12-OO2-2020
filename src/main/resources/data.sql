@@ -110,8 +110,8 @@ VALUES
 INSERT INTO pedido_stock
 	(cantidad, aceptado, solicitante_id, oferente_id, id_producto)
 VALUES
-	( 2, 1, 7, null, 1),
-	( 5, 1, 7, null, 2),
+	( 2, 0, 7, null, 1),
+	( 5, 0, 7, null, 2),
 	( 7, 0, 8, null, 7),
     ( 3, 0, 10, null, 5);
 

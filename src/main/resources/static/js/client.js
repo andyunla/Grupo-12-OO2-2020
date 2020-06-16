@@ -2,9 +2,11 @@ const TIME_LOOP = 4000; // Cada 4s
 const host = "http://localhost:8080";
 const url_api = host + "/api/v1/notificacion";
 const url_pedido = host + "/pedido";
+var cant = 0; // Para determinar si recibimos notificaciones
 
 /* Comprobar si hay nuevas notificaciones para el usuario */
 function comprobar() {
+    cant = 0; // En cada comprobación reiniciamos
     comprobarSolicitudes();
     comprobarRespuestas();
 }
@@ -15,7 +17,6 @@ function comprobarSolicitudes() {
     fetch(url, { method: 'GET' })
         .then(response => response.text())
         .then(text => {
-            console.log("response: " + text);
             cargarNotificaciones(JSON.parse(text));
         })
         .catch((e) => {
@@ -75,6 +76,11 @@ function cargarNotificaciones(lista) {
             document.getElementById("notificationContainer").innerHTML = html + htmlAnterior;
         }
         console.log("Notificación recibida");
+        if(cant >= 1) {
+            document.getElementById("img-bell").src = "/images/bell-ring.png";
+        } else {
+            document.getElementById("img-bell").src = "/images/bell.png";
+        }
     } else {
         let html = document.getElementById("notificationContainer").innerHTML; // Obtenemos lo anterior
         if(document.getElementById("notificationContainer").childElementCount === 0) {
@@ -116,6 +122,7 @@ function renderizarAHTML(obj) {
     // los usuarios del local actual; sólo al que le corresponde
     if(paraEsteDestinatario) {
         var row = `<a class="dropdown-item alert ${alert_tipo}" role="alert" href="${url}"> ${msgCorto}</a>`;
+        cant += 1;
     }
     html += row;
     return html;
