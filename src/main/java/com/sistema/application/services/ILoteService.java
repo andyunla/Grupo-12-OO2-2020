@@ -25,8 +25,6 @@ public interface ILoteService {
 	
 	public Set<LoteModel> findByLoteProductoBaja(long idProducto, long idLocal);
 	
-	public List<LoteModel> findByLocalProductoAndActivo(long idLocal, long idProducto, boolean soloActivos);
-
 	public List<LoteModel> findByLoteProductoNoNuevo(long idProducto, long idLocal);
 
 	public int calcularStock(ProductoModel Producto, LocalModel local);
@@ -36,5 +34,9 @@ public interface ILoteService {
 	public boolean consumirStock(long idLocal, long idProducto, int cantidad);
 	
 	public boolean devolverStock(long idLocal, long idProducto, int cantidad);
+
+	public List<LoteModel> findByLocalOrderByFechaingresoDesc(long idLocal);
+
+	public List<LoteModel> findByALocalProductoAndActivo (long idLocal, long idProducto, boolean soloActivos);
 
 }

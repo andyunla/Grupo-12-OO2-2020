@@ -1,4 +1,5 @@
 const url = 'http://localhost:8080/lote/';
+var idLocal;
 
 // Modifica el color de las filas de lotes inactivos
 function cambiarColorALotesInactivos() {
@@ -44,13 +45,11 @@ function alertarResultadoDeEliminacion(resultado) {
 // Añade los listener a cada opcion de la lista de lotes
 function agregarListenerAOpciones() {
      // Opciones del DOM
-     let selectDeLocal = document.getElementById("localDeLotes");
      let selectDeProducto = document.getElementById("productoDeLotes");
      let checkboxSoloActivos = document.getElementById("soloLotesActivos");
-     let opcionesDeVisalizacion = [selectDeLocal, selectDeProducto, checkboxSoloActivos];
+     let opcionesDeVisalizacion = [selectDeProducto, checkboxSoloActivos];
      // Agrego los listener al cambio de cada una de las opciones
      opcionesDeVisalizacion.forEach(opcion => opcion.addEventListener('change', () => {
-          let idLocal = selectDeLocal.value;
           let idProducto = selectDeProducto.value;
           let soloActivos = checkboxSoloActivos.checked;
           fetch(url + 'traer/' + idLocal + '/' + idProducto + '/' + soloActivos)
@@ -72,5 +71,5 @@ window.onload = () => {
      cambiarColorALotesInactivos();
      agregarListenerABotonesEliminar();
      agregarListenerAOpciones();
-
+     idLocal = document.getElementById("idLocalLote").value;
 }

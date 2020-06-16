@@ -15,14 +15,6 @@
           <div class="w-100 d-flex flex-column align-items-center">
                <section class="col-12 col-sm-11 pl-1 pr-1 d-flex justify-content-start flex-wrap">
                     <div class="form-group col col-11 col-sm-5 col-md-4 col-lg-3">
-                         <label for="localDeLotes">Local</label>
-                         <select class="custom-select" id="localDeLotes">
-                              <option value="0" selected>Todos</option>
-                              <option th:each="l: ${locales}" th:value="${l.idLocal}" th:text="${l.nombreLocal}">
-                              </option>
-                         </select>
-                    </div>
-                    <div class="form-group col col-11 col-sm-5 col-md-4 col-lg-3">
                          <label for="productoDeLotes">Producto</label>
                          <select class="custom-select " id="productoDeLotes">
                               <option value="0" selected>Todos</option>
@@ -43,8 +35,7 @@
                <table class="table w-100 shadow mb-3 bg-white rounded table-hover table-bordered">
                     <thead class="thead-dark">
                          <tr>
-                              <th scope="col">ID</th>
-                              <th scope="col">Local</th>
+                              <th scope="col">Nro</th>
                               <th scope="col">Producto</th>
                               <th scope="col">Fecha</th>
                               <th scope="col">Cant. inicial</th>
@@ -56,7 +47,6 @@
                          <tr th:each="lote :${lotes}" class="fila-lote">
                               <td class="d-none lote-estado" th:attr="data-activo=${lote.activo}"></td>
                               <td th:text="${lote.idLote}"></td>
-                              <td th:text="${lote.local.nombreLocal}"></td>
                               <td th:text="${lote.productoModel.nombre}"></td>
                               <td th:text="${lote.fechaIngreso}"></td>
                               <td th:text="${lote.cantidadInicial}"></td>
@@ -85,14 +75,8 @@
                     <div class="modal-body">
                          <form class="col-12 m-1 p-2 mx-auto bg-light rounded" th:action="@{/lote/agregar}"
                               th:object="${lote}" method="post" action="#">
-                              <div class="form-group row">
-                                   <label for="nuevoLoteLocal" class="col-sm-3 col-4">Local</label>
-                                   <select th:field="*{local.idLocal}" class="custom-select col-md-8 col-7"
-                                        id="nuevoLoteLocal">
-                                        <option th:each="l: ${locales}" th:value="${l.idLocal}"
-                                             th:text="${l.nombreLocal}"></option>
-                                   </select>
-                              </div>
+                              <input type="text" th:value="${currentUser.getLocal().getIdLocal()}" 
+                                   th:name="local.idLocal" th:errorclass="fieldError" class="d-none" id="idLocalLote"/>
                               <div class="form-group row">
                                    <label for="nuevoLoteProducto" class="col-sm-3 col-4">Producto</label>
                                    <select th:field="*{productoModel.idProducto}" class="custom-select col-md-8 col-7"

@@ -7,7 +7,6 @@ import com.sistema.application.dto.UserDto;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.LoteModel;
 import com.sistema.application.repositories.IUserRepository;
-import com.sistema.application.services.ILocalService;
 import com.sistema.application.services.ILoteService;
 import com.sistema.application.services.IProductoService;
 import com.sistema.application.services.implementations.UserService;
@@ -39,10 +38,6 @@ public class LoteController {
      private ILoteService loteService;
 
      @Autowired
-     @Qualifier("localService")
-     private ILocalService localService;
-
-     @Autowired
      @Qualifier("productoService")
      private IProductoService productoService;
      
@@ -59,12 +54,11 @@ public class LoteController {
           // Obtenemos el usuario de la sesión
           UserDto userDto = userService.getCurrentUser();
           modelo.addAttribute("currentUser", userDto);
-          modelo.addAttribute("lotes", loteService.getAllModel());
+          modelo.addAttribute("lotes", loteService.findByLocalOrderByFechaingresoDesc(userDto.getLocal().getIdLocal()));
           modelo.addAttribute("lote", new LoteModel());
-          modelo.addAttribute("locales", localService.getAll());
           modelo.addAttribute("productos", productoService.getAll());
           return ViewRouteHelper.LOTE_ABM;
-     }
+     }  
 
      @PostMapping("agregar")
      public String agregar(@Valid @ModelAttribute("lote") LoteModel nuevoLote, BindingResult bindingResult) {
@@ -81,9 +75,9 @@ public class LoteController {
      public ModelAndView traer(@PathVariable("idLocal") long idLocal, @PathVariable("idProducto") long idProducto,
                                @PathVariable("soloActivos") boolean soloActivos) {
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.LISTA_LOTES);
-          List<LoteModel> lotes = loteService.findByLocalProductoAndActivo(idLocal, idProducto, soloActivos);
+          List<LoteModel> lotes = loteService.findByALocalProductoAndActivo(idLocal, idProducto, soloActivos);
           mAV.addObject("lotes", lotes);
-          return mAV;
+          return mAV;  
      }
        
      @PostMapping("eliminar/{idLote}")
