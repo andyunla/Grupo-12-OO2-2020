@@ -3,6 +3,7 @@ import java.io.Serializable;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.sistema.application.entities.PedidoStock;
@@ -15,13 +16,12 @@ public interface IPedidoStockRepository extends  JpaRepository<PedidoStock, Seri
 	
 	public abstract PedidoStock findByIdPedidoStock(long idPedidoStock);
 	
-	@Query("FROM PedidoStock WHERE solicitante_id=(:idEmpleadoSolicitante)")
-	public abstract Set<PedidoStock> findByEmpleadoSolicitante(long idEmpleadoSolicitante);
+	@Query("FROM PedidoStock ps WHERE ps.empleadoSolicitante.idPersona = (:idEmpleadoSolicitante)")
+	public abstract Set<PedidoStock> findByEmpleadoSolicitante(@Param("idEmpleadoSolicitante") long idEmpleadoSolicitante);
 	
-	@Query("FROM PedidoStock WHERE solicitante_id=(:idEmpleadoSolicitante )AND facturado = false")
-	public abstract List<PedidoStock> findByEmpleadoSolicitanteNoFacturado(long idEmpleadoSolicitante);
+	@Query("FROM PedidoStock ps WHERE empleadoSolicitante.idPersona = (:idEmpleadoSolicitante) AND ps.facturado = false")
+	public abstract List<PedidoStock> findByEmpleadoSolicitanteNoFacturado(@Param("idEmpleadoSolicitante") long idEmpleadoSolicitante);
 	
-	@Query("FROM PedidoStock WHERE solicitante_id=(:idEmpleadoSolicitante )AND facturado = true")
-	public abstract List<PedidoStock> findByEmpleadoSolicitanteFacturado(long idEmpleadoSolicitante);
-	
+	@Query("FROM PedidoStock ps WHERE ps.empleadoSolicitante.idPersona = (:idEmpleadoSolicitante) AND ps.facturado = true")
+	public abstract List<PedidoStock> findByEmpleadoSolicitanteFacturado(@Param("idEmpleadoSolicitante") long idEmpleadoSolicitante);
 }

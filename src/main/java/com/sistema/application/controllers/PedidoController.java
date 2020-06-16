@@ -9,6 +9,7 @@ import com.sistema.application.dto.DetalleNotificacionDto;
 import com.sistema.application.dto.UserDto;
 import com.sistema.application.helpers.ViewRouteHelper;
 import com.sistema.application.models.ClienteModel;
+import com.sistema.application.models.EmpleadoModel;
 import com.sistema.application.models.PedidoStockModel;
 import com.sistema.application.repositories.IUserRepository;
 import com.sistema.application.services.IChangoService;
@@ -75,14 +76,8 @@ public class PedidoController {
 		// Obtenemos el usuario de la sesión
 		UserDto userDto = userService.getCurrentUser();
 		modelAndView.addObject("currentUser", userDto);
-//		List<PedidoStockModel> todosPedidos = pedidoStockService.findByEmpleadoSolicitanteNoFacturado(userDto.getLegajo());
-		List<PedidoStockModel> listaPedidos = pedidoStockService.findByEmpleadoSolicitanteNoFacturado(userDto.getLegajo());
-//		for(PedidoStockModel pedido : todosPedidos) {
-//			// Si los pedidos son del local del usuario actual
-//			if(pedido.getEmpleadoSolicitante().getLocal().getIdLocal() == userDto.getLocal().getIdLocal()) {
-//				listaPedidos.add(pedido);
-//			}
-//		}
+		EmpleadoModel empleado = empleadoService.findByLegajo(userDto.getLegajo());
+		List<PedidoStockModel> listaPedidos = pedidoStockService.findByEmpleadoSolicitanteNoFacturado(empleado.getId());
 		modelAndView.addObject("pedidos", listaPedidos);
 		modelAndView.addObject("clientes", clienteService.getAllModel());
         modelAndView.addObject("cliente", new ClienteModel());
@@ -93,7 +88,6 @@ public class PedidoController {
 	public ResponseEntity<DetalleNotificacionDto> solicitar(@PathVariable("userSolicitante") String userSolicitante, 
 											@PathVariable("userOferente") String userOferente, @PathVariable("aceptado") boolean aceptado,
 											@PathVariable("idProducto") long idProducto, @PathVariable("cantidad") int cantidad) {
-		
 		PedidoStockModel pedido = pedidoStockService.crearPedido(userSolicitante, userOferente, aceptado, idProducto, cantidad);
 		if (pedido != null) { // Para verificar si se creó el pedido			
 			loteService.consumirStock(pedido.getEmpleadoOferente().getLocal().getIdLocal(), pedido.getProducto().getIdProducto(), cantidad);
