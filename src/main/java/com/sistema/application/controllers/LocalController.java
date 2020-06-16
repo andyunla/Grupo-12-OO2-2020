@@ -44,11 +44,11 @@ public class LocalController {
 	@Qualifier("empleadoService")
 	private IEmpleadoService empleadoService;
 	@Autowired
-    @Qualifier("userRepository")
-    private IUserRepository userRepository;
+	@Qualifier("userRepository")
+	private IUserRepository userRepository;
 	@Autowired
-    @Qualifier("userService")
-    private UserService userService;
+	@Qualifier("userService")
+	private UserService userService;
 
 	@GetMapping("")
 	public String locales(Model modelo) {
@@ -57,7 +57,7 @@ public class LocalController {
 		modelo.addAttribute("currentUser", userDto);
 		List<LocalModel> localesModel = localService.getAllModel();
 		List<LocalDto> locales = new ArrayList<LocalDto>();
-		for(LocalModel model: localesModel) {
+		for (LocalModel model : localesModel) {
 			LocalDto dto = localConverter.modelToDto(model);
 			locales.add(dto);
 		}
@@ -65,47 +65,50 @@ public class LocalController {
 		modelo.addAttribute("local", new LocalModel());
 		return ViewRouteHelper.LOCAL_ABM;
 	}
-	
+
 	@PostMapping("agregar")
 	public String agregar(@Valid @ModelAttribute("local") LocalModel nuevoLocal, BindingResult bindingResult) {
-		if(bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors()) {
 			return ViewRouteHelper.LOCAL_ROOT;
 		} else {
 			localService.insertOrUpdate(nuevoLocal);
 		}
 		return "redirect:/" + ViewRouteHelper.LOCAL_ROOT;
 	}
-	
+
 	@PostMapping("modificar")
 	public String modificar(@Valid @ModelAttribute("local") LocalModel localModificado, BindingResult bindingResult) {
 		// Modifico el empleado gerente anterior si es que se eligió un nuevo gerente
-		if(localModificado.getGerente() != null) {
+		if (localModificado.getGerente() != null) {
 			// Obtengo el local modificado de la bd
 			LocalModel localOriginal = localService.findByIdLocal(localModificado.getIdLocal());
 			// Obtengo el legajo del empleado que era gerente
 			EmpleadoModel gerenteOriginal = localOriginal.getGerente();
-			// Si el local no tiene un gerente asociado 'legajoGerente' vale 0 
-			// y ocacionará una excepción si se lo busca por el método 'empleadoService.findByLegajo'
-			if(gerenteOriginal.getLegajo() != 0) {
+			// Si el local no tiene un gerente asociado 'legajoGerente' vale 0
+			// y ocacionará una excepción si se lo busca por el método
+			// 'empleadoService.findByLegajo'
+			if (gerenteOriginal.getLegajo() != 0) {
 				// Obtengo el empleado que era gerente y lo cambio a empleado común
 				EmpleadoModel gerenteAnterior = empleadoService.findByLegajo(gerenteOriginal.getLegajo());
 				gerenteAnterior.setTipoGerente(false);
 				empleadoService.insertOrUpdate(gerenteAnterior);
 			}
 			// Actualizo el local modificado y al empleado que será gerente
-			EmpleadoModel nuevoGerente = empleadoService.findByLegajo(localModificado.getGerente().getLegajo());
-			nuevoGerente.setTipoGerente(true);
-			empleadoService.insertOrUpdate(nuevoGerente);
+			if (localModificado.getGerente().getLegajo() != 0) {
+				EmpleadoModel nuevoGerente = empleadoService.findByLegajo(localModificado.getGerente().getLegajo());
+				nuevoGerente.setTipoGerente(true);
+				empleadoService.insertOrUpdate(nuevoGerente);
+			} 
 		}
-		
-		if(bindingResult.hasErrors()) {
+
+		if (bindingResult.hasErrors()) {
 			return ViewRouteHelper.LOCAL_ABM;
 		} else {
 			localService.insertOrUpdate(localModificado);
 		}
 		return "redirect:/" + ViewRouteHelper.LOCAL_ROOT;
 	}
-	
+
 	@PostMapping("eliminar/{idLocal}")
 	public String eliminar(@PathVariable("idLocal") long idLocal, RedirectAttributes redirectAttributes) {
 		boolean eliminado = localService.remove(idLocal);
