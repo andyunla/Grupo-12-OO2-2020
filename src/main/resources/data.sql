@@ -18,10 +18,11 @@ VALUES
 	('Elisa', 'Estrada', 20000006, '1990-04-06'),
 	('Gaston', 'Gimenez', 30000001, '1980-03-01'),	-- Gerentes (6)
 	('Gabriel', 'Gimenez', 30000002, '1980-03-02'),
-	('Graciela', 'Garcia', 30000003, '1980-03-03'),
+	('Angela', 'Merkel', 30000003, '1980-03-03'),
     ('Luis', 'Suarez', 30000004, '1977-01-25'),
-    ('Hernan', 'Perez', 30000005, '1983-09-18'),
-    ('Gustavo', 'Micheti', 30000006, '1978-05-17');
+    ('Manuel', 'Lopez', 30000005, '1983-09-18'),
+    ('Gustavo', 'Micheti', 30000006, '1978-05-17'),
+    ('Vladimir', 'Putin', 40000001, '1970-07-04'); -- Admin
 
 -- CLIENTES:
 INSERT INTO cliente 
@@ -62,7 +63,8 @@ VALUES
 	(15, '10:00:00', '18:00:00', 80000, 3, 1),
     (16, '10:00:00', '18:00:00', 80000, 4, 1),
     (17, '10:00:00', '18:00:00', 80000, 5, 1),
-    (18, '10:00:00', '18:00:00', 80000, 6, 1);
+    (18, '10:00:00', '18:00:00', 80000, 6, 1),
+    (19, '10:00:00', '18:00:00', 150000, 1, 0);
 
 -- Definir gerentes de locales
 UPDATE locales SET gerente_legajo = 1 WHERE id_local = 1;
@@ -164,7 +166,8 @@ VALUES
 	(9, 'gerente3@admin.com', '$2a$04$9CW3bFRuXHd8OL5qszw0zejxAMYIYeCNzzXTKXudHVjceyKIxDuv2', 'gerente3'),
     (10, 'gerente4@admin.com', '$2a$08$BFQ5a8SinZUvyDIAEAKlWezbn51SM1UmuVsXpphQIEIL/8rwBrINK', 'gerente4'),
     (11, 'gerente5@admin.com', '$2a$08$ICxjiMaKObhnfHUUEKsIwOBd0dDJV6t9SmoOBE56aTAdpkY/nLPIW', 'gerente5'),
-    (12, 'gerente6@admin.com', '$2a$08$8cSy/583wKmwkJadGlFU7uVZIEXLQoJQFubzj3QJdCQ5w4hZeK9hu', 'gerente6');
+    (12, 'gerente6@admin.com', '$2a$08$8cSy/583wKmwkJadGlFU7uVZIEXLQoJQFubzj3QJdCQ5w4hZeK9hu', 'gerente6'),
+    (13, 'admin1@admin.com', '$2a$08$y6ZQjforP7FE5jngr7Y2jOtBwIEYjd/qZmI7m.WoiY4nKb1TEHy3a', 'admin1');
     
 
 INSERT INTO `user_role` (user_id, role) VALUES ('1', 'EMPLEADO');
@@ -179,18 +182,4 @@ INSERT INTO `user_role` (user_id, role) VALUES ('9', 'GERENTE');
 INSERT INTO `user_role` (user_id, role) VALUES ('10', 'GERENTE');
 INSERT INTO `user_role` (user_id, role) VALUES ('11', 'GERENTE');
 INSERT INTO `user_role` (user_id, role) VALUES ('12', 'GERENTE');
-
-/* Sólo para pruebas
--- NOTIFICACIONES
-INSERT INTO `detalle_notificacion`
-	(producto_id, cantidad)
-VALUES
-	(1, 3),
-	(1, 2);
-
-INSERT INTO `notificacion`
-	(tipo, estado, user_from, user_to, local_to, detalle_id)
-VALUES
-	('solicitud', 0, 1, null, 2, 1),
-    ('respuesta', 0, 3, 1, null, 2);
-*/
+INSERT INTO `user_role` (user_id, role) VALUES ('13', 'ADMIN');
