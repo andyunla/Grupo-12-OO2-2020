@@ -32,14 +32,17 @@
                             <div th:text="${pedido.empleadoOferente.nombre}" ></div>
                         </td>
                         <td th:unless="${pedido.empleadoOferente} != null" align="center"> - </td>
-                        <td th:if="${pedido.aceptado} == true" align="center">
+                        <td th:if="${pedido.aceptado} and not ${pedido.facturado}" align="center">
                             <button class="btn btn-primary m-1" data-toggle="modal" data-target="#facturarPedido" 
                             th:onclick="prepararPedidoId([[${pedido.idPedidoStock}]])">
                          	FACTURAR
                     		</button>                            
                         </td>
-                        <td th:unless="${pedido.aceptado} == true " align="center">
-                            <button  class="btn btn-dark " disabled >FACTURAR</button>                            
+                        <td th:if="${pedido.aceptado} == true and ${pedido.facturado} == true" align="center">
+                            <button class="btn btn-dark" disabled >YA FACTURADO</button>
+                        </td>
+                        <td th:if="${pedido.aceptado} == false" align="center">
+                            <button class="btn btn-dark" disabled >FACTURAR</button>
                         </td>
                     </tr>
                 </tbody>
