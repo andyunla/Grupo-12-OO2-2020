@@ -20,8 +20,9 @@
                     <div class="col-9">
                         <strong>Email: </strong><span span th:text="${currentUser.emailUser}" /><br>
                         <strong>Nro legajo: </strong><span span th:text="${currentUser.legajo}" /><br>
+                        <div th:if="${currentUser.tipoAdmin}"><strong>ROL: </strong><span>ADMIN</span></div>
                         <div th:if="${currentUser.tipoGerente}"><strong>ROL: </strong><span>GERENTE</span></div>
-                        <div th:unless="${currentUser.tipoGerente}"><strong>ROL: </strong><span>EMPLEADO</span></div>
+                        <div th:if="${currentUser.tipoGerente == false} AND ${currentUser.tipoAdmin == false}"><strong>ROL: </strong><span>EMPLEADO</span></div>
                         <br><hr>
                         <div class="card-text">
                             <strong>Local: </strong><span th:text="${currentUser.local.idLocal} + ' - ' + ${currentUser.local.nombreLocal}"></span><br>

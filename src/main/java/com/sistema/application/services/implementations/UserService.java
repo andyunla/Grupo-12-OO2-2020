@@ -59,7 +59,9 @@ public class UserService implements UserDetailsService {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDto userDto = userConverter.entityToDto(userRepository.findByUsername(user.getUsername()));
 		boolean isGerente = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_GERENTE));
+		boolean isAdmin = user.getAuthorities().contains(new SimpleGrantedAuthority(UtilHelper.ROLE_ADMIN));
 		userDto.setTipoGerente(isGerente);
+		userDto.setTipoAdmin(isAdmin);
 		return userDto;
 	}
 }
