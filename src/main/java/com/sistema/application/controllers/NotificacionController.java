@@ -98,6 +98,12 @@ public class NotificacionController {
 		UserDto userDto = userService.getCurrentUser();
 		// Le mandamos todas las notificaciones. Sean leídas o no
 		List<NotificacionDto> listaRespuestas = notificacionService.findByUserTo(userDto.getUsername());
+		for(NotificacionDto respuesta : listaRespuestas) {
+			// Para determinar si mostramos el enlace al pedido en caso que no se haya facturado
+			Long idPedido = respuesta.getDetalleNotificacion().getIdPedidoStock();
+			boolean estaFacturado = pedidoStockService.findByIdPedidoStock(idPedido).isFacturado();
+			respuesta.getDetalleNotificacion().setPedidoFacturado(estaFacturado);
+		}
 		List<NotificacionDto> listaSolicitudes = notificacionService.findByIdLocal(userDto.getLocal().getIdLocal());
 		List<NotificacionDto> listaFinal = new ArrayList<NotificacionDto>();
 		listaFinal.addAll(listaRespuestas);
@@ -122,6 +128,7 @@ public class NotificacionController {
 		// Para establecer como ya leídos
 		for(NotificacionDto notificacion : listaSolicitudes) {
 			if(notificacion.isLeido() == false) { // Si aún no ha sido leído
+				notificacion.setLeido(true);
 				notificacionService.insertOrUpdate(notificacion);
 			}
 			if(estadoNotificacion.equalsIgnoreCase("todos")) {
@@ -144,10 +151,15 @@ public class NotificacionController {
 		UserDto userDto = userService.getCurrentUser();
 		// Le mandamos todas las notificaciones. Sean leídas o no
 		List<NotificacionDto> listaRespuestas = notificacionService.findByUserTo(userDto.getUsername());
-		// Para establecer como ya leídos
-		for(NotificacionDto notificacion : listaRespuestas) {
-			if(notificacion.isLeido() == false) { // Si aún no ha sido leído
-				notificacionService.insertOrUpdate(notificacion);
+		for(NotificacionDto respuesta : listaRespuestas) {
+			// Para determinar si mostramos el enlace al pedido en caso que no se haya facturado
+			Long idPedido = respuesta.getDetalleNotificacion().getIdPedidoStock();
+			boolean estaFacturado = pedidoStockService.findByIdPedidoStock(idPedido).isFacturado();
+			respuesta.getDetalleNotificacion().setPedidoFacturado(estaFacturado);
+			// Para establecer como ya leídos
+			if(respuesta.isLeido() == false) { // Si aún no ha sido leído
+				respuesta.setLeido(true);
+				notificacionService.insertOrUpdate(respuesta);
 			}
 		}
 		mAV.addObject("notificaciones", listaRespuestas);
