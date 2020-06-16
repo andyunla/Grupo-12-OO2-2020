@@ -11,7 +11,7 @@
      <main class="w-100 d-flex flex-column align-items-center">
           <p>
                <a class="btn btn-outline-info btn-sm" data-toggle="collapse" href="#filterForm" role="button">
-                    Filtro
+                    Filtrar
                </a>
           </p>
           <div class="panel-collapse collapse in w-100" id="filterForm">
@@ -41,7 +41,7 @@
                     </form>
                </div>
           </div>
-          <div class="container-fluid col-12 col-md-9 col-lg-7 col-xl-6 text-center table-responsive">
+          <div class="container-fluid col-12 col-md-9 col-lg-8 col-xl-7 text-center table-responsive">
                <table class="table w-100 shadow mb-3 bg-white table-hover rounded">
                     <thead class="thead-dark">
                          <tr>
@@ -71,6 +71,7 @@
                </table>
      </main>
      <footer th:replace="fragments/footer :: footer"></footer>
+     <div class="p-1 col-11 col-sm-7 col-md-6 col-lg-4" id="alertContainer"></div>
      <div th:replace="fragments/scripts :: scripts"></div>
      <script th:src="@{/js/facturas.js}"></script>
 </body>
