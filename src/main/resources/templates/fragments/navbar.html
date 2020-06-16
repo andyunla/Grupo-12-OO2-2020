@@ -7,6 +7,7 @@
                          UNLa Stock - <span th:text="${currentUser.local.nombreLocal}"></span>
                     </a>
                </li>
+               <!-- Si es un ADMINISTRADOR tiene el permiso de realizar los ABMs del resto de las cosas -->
                <span th:if="${currentUser.tipoAdmin}">
                     <li class="nav-item dropdown" th:classappend="${active=='abm'} ? active : ''">
                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -27,8 +28,8 @@
                               <i class="fa fa-bars" aria-hidden="true"></i> INFORMES
                          </a>
                          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                         <a class="nav-link" th:href="@{/sueldos}"><i class="fas fa-money-check-alt"></i> Sueldos</a>
-                         <a class="nav-link" th:href="@{/ranking}"><i class="fas fa-chart-bar"></i> Ranking</a>
+                         <a class="dropdown-item" th:href="@{/sueldos}"><i class="fas fa-money-check-alt"></i> Sueldos</a>
+                         <a class="dropdown-item" th:href="@{/ranking}"><i class="fas fa-chart-bar"></i> Ranking</a>
                          </div>
                     </li>
                </span>
@@ -42,7 +43,7 @@
                          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                          		<a class="dropdown-item" th:href="@{/lote}">Lotes</a>                         		                         
                              	<a class="dropdown-item" th:href="@{/producto}">Productos</a>
-                            <!--  <a class="dropdown-item" th:href="@{/local}" >Locales</a> -->
+                            	<a class="dropdown-item" th:href="@{/local}" >Locales</a>
                               	<a class="dropdown-item" th:href="@{/empleado}">Empleados</a>
                              	<a class="dropdown-item" th:href="@{/cliente}">Clientes</a>  
                          </div>                         
