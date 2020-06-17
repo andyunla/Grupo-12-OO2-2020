@@ -32,7 +32,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -225,7 +224,7 @@ public class ChangoController {
      @PostMapping("cancelar/{idChango}")
      public ModelAndView cancelarChango(@PathVariable("idChango") long idChango,
                RedirectAttributes redirectAttributes, HttpSession session) {
-          ModelAndView mAV = new ModelAndView("redirect:/chango/todos");
+          ModelAndView mAV = new ModelAndView("redirect:/index");
           if (changoService.removeWithItems(idChango)) { 
                redirectAttributes.addFlashAttribute("changoEliminado", true);
                session.removeAttribute("chango");
@@ -235,16 +234,11 @@ public class ChangoController {
 
      /* VISTA DE TODOS LOS CHANGOS CREADOS CON STOCK PROPIO, DIFERENCIANDOLOS POR FACTURADOS O NO */
      @GetMapping("todos")
-     public ModelAndView traerTodos(Model modelo) {
+     public ModelAndView traerTodos() {
           // Devuelve una vista con todos los changos del local actual
           ModelAndView mAV = new ModelAndView(ViewRouteHelper.CHANGOS);
           UserDto userDto = userService.getCurrentUser();
           mAV.addObject("currentUser", userDto); 
-          // Agrega el objeto changoEliminado en caso de ser redireccionado tras cancelar
-          // uno
-          if (modelo.containsAttribute("changoEliminado")) {
-               mAV.addObject("changoEliminado", modelo.getAttribute("changoEliminado"));
-          }
           List<ChangoDetalleDto> changos = new ArrayList<ChangoDetalleDto>();
           for (ChangoModel chango : changoService.findByLocal(getLocal())) {
                // Verifica que no sea un chango de pedido
