@@ -3,6 +3,7 @@ package com.sistema.application.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,8 +31,11 @@ public class HomeController {
 	
 	// GET Example: SERVER/index
 	@GetMapping("/index")
-	public ModelAndView index() {
+	public ModelAndView index(Model modelo) {
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.INDEX);
+		if (modelo.containsAttribute("changoEliminado")) {
+               modelAndView.addObject("changoEliminado", modelo.getAttribute("changoEliminado"));
+          }
 		// Obtenemos el usuario de la sesión
 		UserDto userDto = userService.getCurrentUser();
 		modelAndView.addObject("currentUser", userDto);
