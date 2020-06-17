@@ -52,13 +52,13 @@ VALUES
 INSERT INTO empleado
 	(id_persona, horario_desde, horario_hasta, sueldo_basico, id_local, tipo_gerente)
 VALUES
-	(7, '08:00:00', '16:00:00', 30000, 1, 0),	-- Empleados
+	(7, '08:00:00', '16:00:00', 30000, 1, 0),	-- Empleados (legajo 1)
 	(8, '16:00:00', '20:00:00', 30000, 2, 0),
 	(9, '08:00:00', '16:00:00', 30000, 3, 0),
 	(10, '16:00:00', '20:00:00', 30000, 4, 0),
 	(11, '08:00:00', '16:00:00', 30000, 5, 0),
 	(12, '16:00:00', '20:00:00', 30000, 6, 0),
-	(13, '10:00:00', '18:00:00', 80000, 1, 1),	-- Gerentes
+	(13, '10:00:00', '18:00:00', 80000, 1, 1),	-- Gerentes (legajo 7)
 	(14, '10:00:00', '18:00:00', 80000, 2, 1),
 	(15, '10:00:00', '18:00:00', 80000, 3, 1),
     (16, '10:00:00', '18:00:00', 80000, 4, 1),
@@ -82,10 +82,16 @@ VALUES
 	('producto dos', 'producto dos descripcion', 200, 2),
 	('producto tres', 'producto tres descripcion', 300, 3),
 	('producto cuatro', 'producto cuatro descripcion', 400, 1),
-    ('producto cinco', 'producto cinco descripcion', 500, 4),	
+    	('producto cinco', 'producto cinco descripcion', 500, 4),	
 	('producto seis', 'producto seis descripcion', 600, 3),
 	('producto siete', 'producto siete descripcion', 700, 1),
-	('producto ocho', 'producto ocho descripcion', 800, 2);
+	('producto ocho', 'producto ocho descripcion', 800, 2),
+	('producto nueve', 'producto nueve descripcion', 10, 1),
+	('producto diez', 'producto diez descripcion', 300, 2),
+	('producto once', 'producto once descripcion', 1000, 3),
+	('producto doce', 'producto doce descripcion', 450, 2),
+	('producto trece', 'producto trece descripcion', 100, 4),
+	('producto catorce', 'producto catorce descripcion', 600, 2);
 	
     
 -- LOTE
@@ -100,11 +106,19 @@ VALUES
 	(12, 0, '2020-02-02', 0, 2, 3),	
 	(5, 1, '2020-02-03', 1, 1, 2),	
 	(1, 0, '2020-02-03', 0, 1, 3),
-    (7, 5, '2020-02-04', 1, 3, 1),	
+    	(7, 5, '2020-02-04', 1, 3, 1),	
 	(8, 4, '2020-02-04', 1, 2, 3),	
 	(15, 6, '2020-02-05', 1, 1, 2),	
-	(3, 0, '2020-02-05', 0, 1, 3);	
-    
+	(3, 0, '2020-02-05', 0, 1, 3),
+	(20, 20, '2020-03-05', 1, 4, 1),
+	(20, 20, '2020-03-06', 1, 5, 1),
+	(20, 20, '2020-03-06', 1, 6, 1),	
+	(20, 20, '2020-06-07', 1, 7, 1),	
+	(20, 20, '2020-06-07', 1, 8, 1),	
+	(20, 20, '2020-06-07', 1, 9, 1),	
+	(20, 18, '2020-04-08', 1, 6, 2),
+	(20, 20, '2020-05-08', 1, 2, 4),	
+	(20, 20, '2020-05-08', 1, 1, 4);
 	
 -- PEDIDO STOCK
 INSERT INTO pedido_stock
@@ -120,10 +134,15 @@ VALUES
 INSERT INTO chango 
 	(id_local)
 VALUES 
+	(1),	-- local1
+	(1),	-- chango 2
 	(1),	
+	(1),
+	(2),	-- local2
 	(2),
-	(3),
-    (4);
+     (2),
+     (2),
+     (3);	-- local 3
 	
 -- ITEM
 INSERT INTO item 
@@ -131,25 +150,48 @@ INSERT INTO item
 VALUES
 	(2, 1, 1),
 	(5, 1, 2),
-	(5, 2, 2),
+	(5, 1, 2),
 	(3, 3, 3),
-    (3, 3, 2),
-	(2, 4, 4);
-	
+    	(3, 3, 2),
+	(2, 4, 4),
+    	(2, 5, 1),
+    	(2, 6, 1),
+    	(2, 7, 2),
+    	(2, 8, 2),
+    	(2, 9, 9);
+
+-- PARA LA FACTURA DE DOS PAGINAS
+INSERT INTO item 
+	(cantidad, id_chango, id_producto)
+VALUES
+	(2, 2, 1),
+	(5, 2, 2),
+	(5, 2, 3),
+	(3, 2, 4),
+    	(3, 2, 5),
+	(2, 2, 6),
+	(5, 2, 7),
+	(5, 2, 8),
+	(3, 2, 9),
+    	(3, 2, 10),
+	(2, 2, 11),
+	(5, 2, 12),
+	(5, 2, 13),
+	(3, 2, 14);
     
 -- FACTURA
 INSERT INTO factura 
 	(fechahora_factura, coste_total, id_local, empleado_legajo, nro_cliente, id_chango)
 VALUES
-	('2020-01-30 13:01:00', 200, 3, 3, 1, 1),
-	('2020-01-31 13:02:00', 1000, 3, 3, 2, 2),
-    ('2020-02-01 13:03:00', 900, 1, 1, 6, 3),
-	('2020-02-02 13:04:00', 800, 1, 1, 5, 4), -- Cambios
-    ('2020-05-29 13:05:00', 1000, 2, 2, 1, 1),
-	('2020-05-28 13:06:00', 400, 2, 2, 1, 1),
-    ('2020-05-27 13:07:00', 600, 2, 2, 1, 1),
-    ('2020-05-26 13:08:00', 700, 2, 2, 1, 1),
-    ('2020-05-25 13:09:00', 200, 2, 2, 1, 1);
+	('2020-05-30 13:01:00', 2200, 1, 1, 1, 1),
+	('2020-06-17 13:02:00', 21580, 1, 1, 2, 2),
+    ('2020-06-17 13:03:00', 800, 1, 7, 3, 3),
+	('2020-06-17 13:04:00', 1500, 1, 7, 4, 4), 
+    ('2020-06-17 13:05:00', 200, 2, 2, 5, 5),
+	('2020-06-17 13:06:00', 200, 2, 2, 6, 6),
+    ('2020-05-27 13:07:00', 400, 2, 8, 1, 7),
+    ('2020-05-26 13:08:00', 400, 2, 8, 2, 8),
+    ('2020-06-1 13:09:00', 20, 3, 3, 3, 9);
 
 -- USUARIOS Y ROLES
 INSERT INTO `user`
