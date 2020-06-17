@@ -79,6 +79,7 @@
 }
 
 .datos-empresa {
+     margin-top: 0.3cm;
      display: flex;
      justify-content: left;
      align-items: center;
@@ -93,7 +94,8 @@
 .datos-empresa ul li {
      list-style: none;
      margin-left: 0.3cm;
-     margin-bottom: 0.2cm;
+     margin-bottom: 0.1cm;
+     margin-top: 0.1cm;
 }
 
 /* DETALLES EMPLEADO */
