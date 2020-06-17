@@ -9,8 +9,8 @@
           <h1 class="display-4">LOCALES</h1>
      </header>
      <main class="w-100 d-flex flex-column align-items-center">
-          <!-- Si el usuario es del tipo GERENTE -->
-          <div th:if="${currentUser.tipoGerente}">
+          <!-- Si el usuario es del tipo ADMIN -->
+          <div th:if="${currentUser.tipoAdmin}">
                <!-- ADD MENU -->
                <button class="btn btn-info m-3" type="button" data-toggle="collapse" data-target="#collapseForm"
                     id="buttonAgregar">
