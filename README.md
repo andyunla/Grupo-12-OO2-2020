@@ -5,7 +5,6 @@
 ___Nota:___ Si faltan otras tareas agregarlas en las secciones que parecen pertinentes.
 
 ### **[HIGH]**
-+ Al crear un empleado nuevo generar también su usuario con el que ingresará.
 
 
 ### **[NORMAL]**
