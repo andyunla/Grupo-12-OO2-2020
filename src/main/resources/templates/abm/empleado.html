@@ -17,6 +17,13 @@
                     Agregrar
                </button>
           </div>
+          <div th:if="${currentUser.tipoAdmin}">
+               <!-- ADD MENU -->
+               <button class="btn btn-info m-3" type="button" data-toggle="collapse" data-target="#collapseForm"
+                    id="buttonAgregar">
+                    Agregrar
+               </button>
+          </div>
           <form class="col-11 col-sm-8 col-md-7 m-1 p-2 mx-auto bg-light rounded collapse" id="collapseForm" action="#"
                th:action="@{/empleado/agregar}" th:object="${empleado}" method="post">
                <div class="form-group row">
@@ -173,7 +180,7 @@
                               <td th:text="${empleado.horaHasta}"></td>
                               <td th:text="${empleado.sueldoBasico}"></td>
                               <td th:text="${empleado.local.idLocal}"></td>
-                              <div th:if="${currentUser.tipoGerente}">
+                              <div th:if="${currentUser.tipoGerente || currentUser.tipoAdmin}">
                                    <td class="d-flex justify-content-around">
                                         <div data-toggle="tooltip" data-placement="top" title="Modificar">
                                              <a href="#" data-toggle="modal" data-target="#modifyEmpleado"
