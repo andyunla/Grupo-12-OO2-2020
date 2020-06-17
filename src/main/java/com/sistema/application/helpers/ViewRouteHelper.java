@@ -33,6 +33,7 @@ public class ViewRouteHelper {
 	public final static String REPORTE_ROOT = "cu/reporte";
 	public final static String PEDIDO_STOCK_VIEW = "cu/pedidoStock";
 	public final static String SUELDO_ROOT = "cu/sueldo";
+	public final static String RECIBO = "cu/recibo";
 
 	// OTROS
 	public final static String NOTIFICACION_ROOT = "notificacion/notificacion";

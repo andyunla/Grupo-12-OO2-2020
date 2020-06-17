@@ -138,7 +138,7 @@ td {
 /* LIQUIDACION */
 .liquidacion {
      margin: 0.3cm;
-     height: 9cm;
+     height: 8.9cm;
      border-style: solid;
      border-width: 1px;
      background-color: rgb(241, 241, 241);
@@ -169,8 +169,12 @@ td {
 }
 
 .firma-container hr {
+     border-width: 2px;
      width: 50%;
      border-style: dotted;
+}
+.firma-container small {
+     margin: 0;
 }
 
 .total-container {
@@ -182,7 +186,36 @@ td {
 }
 
 .total-container p {
+     font-size: large;
      padding: 0.5cm;
      border-radius: 5px;
-     background-color: grey;
+     background-color: rgb(163, 162, 162);
+}
+
+@media print {
+     footer, nav, header, button{
+          display: none !important;
+     }
+     
+     .recibo-container {
+          display: block;
+          transform-origin: center top;
+          transform: scale(1);
+          /* EDGE  */
+          -ms-transform-origin: center top;
+          -ms-transform: scale(1);
+          /*CHROME YFIREFOX*/
+          -webkit-transform-origin: center top;
+          -webkit-transform: scale(1.4);
+     }
+     
+     @page {
+          margin: 1cm 0.5cm 0.5cm 0.5cm;
+     }
+     
+     /* ELIMINA EL ESPACIO DEL FOOTER */
+     body::after {
+          content: '';
+          display: inline;
+     }
 }

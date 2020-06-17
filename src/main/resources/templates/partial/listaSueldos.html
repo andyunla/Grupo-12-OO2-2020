@@ -5,6 +5,8 @@
 	<td th:text="${empleado.comisionVentaExterna}"></td>
 	<td th:text="${empleado.comisionStockCedido}"></td>
 	<td th:text="${empleado.sueldoFinal}"></td>
+	<td><button class="btn btn-sm btn-info"
+		th:onclick="abrirRecibo([[${empleado.legajo}]])">Recibo</button></td>
 </tr>
 <tr th:if="${empleados.size() == 0}" >
 	<td><small>No hay sueldos cargados</small></td>

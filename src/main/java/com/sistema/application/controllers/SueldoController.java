@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ import com.sistema.application.dto.EmpleadoDto;
 import com.sistema.application.dto.UserDto;
 import com.sistema.application.funciones.Funciones;
 import com.sistema.application.helpers.ViewRouteHelper;
-import com.sistema.application.models.EmpleadoModel;
+import com.sistema.application.models.LocalModel;
 import com.sistema.application.services.IEmpleadoService;
 import com.sistema.application.services.IFacturaService;
 import com.sistema.application.services.ILocalService;
@@ -65,10 +64,26 @@ public class SueldoController {
 	// Trae los sueldos dado una fecha del tipo aaaa-mm
 	@GetMapping("traer/{fecha}")
 	public ModelAndView traer(@PathVariable("fecha") String fecha) {
-		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.LISTA_SUELDOS);		
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.LISTA_SUELDOS);
 		UserDto userDto = userService.getCurrentUser();
 		List<EmpleadoDto> vendedores = localService.calcularSueldos(userDto.getLocal().getIdLocal(), Funciones.mesAFechaCompleta(fecha));
 		modelAndView.addObject("empleados", vendedores);
 		return modelAndView;
+	}
+
+	// Lleva a la vista del recibo de sueldo segun legajo y mes y año
+	@GetMapping("ver-recibo/{legajo}/{fecha}")
+	public ModelAndView traerRecibo(@PathVariable("legajo") long legajo, @PathVariable("fecha") String fechaString) {
+		ModelAndView mav = new ModelAndView(ViewRouteHelper.RECIBO);	
+		UserDto userDto = userService.getCurrentUser();
+		LocalDate fecha = Funciones.mesAFechaCompleta(fechaString);
+		EmpleadoDto empleado = localService.calcularSueldo(empleadoService.findByLegajo(legajo), fecha);
+		LocalModel local = localService.findByIdLocal(empleado.getIdLocal());
+		mav.addObject("currentUser", userDto);
+		mav.addObject("empleado", empleado);
+		mav.addObject("mes", Funciones.traerMesEnLetrasEsp(fecha));  
+		mav.addObject("anio", fecha.getYear());
+		mav.addObject("local", local);
+		return mav;
 	}
 }

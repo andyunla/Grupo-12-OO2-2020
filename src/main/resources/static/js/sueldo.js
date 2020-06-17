@@ -28,3 +28,22 @@ function listarSueldos() {
 }
 
 fechaSeleccionada.addEventListener('change', listarSueldos);
+
+async function abrirRecibo(legajo) {
+    if (fechaSeleccionada.value !== "") {
+        let fecha = fechaSeleccionada.value; // Del tipo aaaa-mm
+        let patt1 = /^(\d{4})\-(\d{1,2})$/; // Patrón
+        if(fecha.match(patt1) !== null) { // Si se ingresaron los datos correctamente
+            let parts = fecha.split("-");
+            if(parts[1] <= 12 && parts[0] <= MAX_YEAR && parts[0] >= MIN_YEAR) {  
+                let url = host + "/sueldos/ver-recibo/" + legajo + "/" + fecha;
+                window.location.href = url;
+            }
+        }
+    } else {
+        let fecha = new Date();
+        let fechaString = fecha.getFullYear() + '-' + (fecha.getMonth() + 1);
+        let url = host + "/sueldos/ver-recibo/" + legajo + "/" + fechaString;
+        window.location.href = url;
+    }
+}

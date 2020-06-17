@@ -6,19 +6,19 @@
 <body class="container-fluid m-0 p-0">
 
 	<!-- TITULO -->
-	<nav th:replace="fragments/navbar :: navbar(active='Sueldos')"></nav>
+	<nav th:replace="fragments/navbar :: navbar(active='informes')"></nav>
 	<header class="text-center m-3">
-        <h1 class="display-4">Sueldos de los empleados</h1>
-    </header>
-	
-    <div class="w-100 d-flex flex-column align-items-center">
-        <section class="col-12 col-sm-11 pl-1 pr-1 d-flex justify-content-start flex-wrap">
-            <div class="form-group col col-11 col-sm-5 col-md-4 col-lg-3">
-                <label for="fechaSueldo">Fecha</label>
-                <input type="month" id="fechaSueldo" name="fechaSueldo">
-            </div>
-        </section>
-    </div>
+		<h1 class="display-4">Sueldos de los empleados</h1>
+	</header>
+
+	<div class="w-100 d-flex flex-column align-items-center">
+		<section class="col-12 col-sm-11 pl-1 pr-1 d-flex justify-content-start flex-wrap">
+			<div class="form-group col col-11 col-sm-5 col-md-4 col-lg-3">
+				<label for="fechaSueldo">Fecha</label>
+				<input type="month" id="fechaSueldo" name="fechaSueldo">
+			</div>
+		</section>
+	</div>
 	<!-- MUESTRA LOS EMPLEADOS -->
 	<div class="container-fluid col-12 col-md-11 text-center table-responsive">
 		<table class="table w-100 shadow mb-3 bg-white rounded table-hover">
@@ -30,6 +30,7 @@
 					<th scope="col">Bono Venta con Stock externo</th>
 					<th scope="col">Bono por Stock cedido</th>
 					<th scope="col">Sueldo Final</th>
+					<th scope="col"></th>
 				</tr>
 			</thead>
 			<tbody id="tbody">
@@ -40,8 +41,10 @@
 					<td th:text="${empleado.comisionVentaExterna}"></td>
 					<td th:text="${empleado.comisionStockCedido}"></td>
 					<td th:text="${empleado.sueldoFinal}"></td>
+					<td><button class="btn btn-sm btn-info"
+							th:onclick="abrirRecibo([[${empleado.legajo}]])">Recibo</button></td>
 				</tr>
-				<tr th:if="${empleados.size() == 0}" >
+				<tr th:if="${empleados.size() == 0}">
 					<td><small>No hay sueldos cargados</small></td>
 				</tr>
 			</tbody>
@@ -52,4 +55,5 @@
 	<div th:replace="fragments/scripts :: scripts"></div>
 	<script th:src="@{/js/sueldo.js}"></script>
 </body>
+
 </html>

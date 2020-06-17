@@ -60,4 +60,8 @@ public class PersonaDto implements Serializable {
 	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
+
+	public String getFullName() {
+		return nombre + " " + apellido;
+	}
 }
