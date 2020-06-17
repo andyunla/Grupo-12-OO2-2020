@@ -6,7 +6,7 @@
 <body class="container-fluid m-0 p-0">
      <nav th:replace="fragments/navbar :: navbar(active='abm')"></nav>
      <header class="text-center m-3">
-          <h1 class="display-4">CHANGOS</h1>
+          <h1 class="display-4">CARRITOS</h1>
      </header>
      <!-- MAIN CONTENT -->
      <main class="w-100 d-flex flex-column align-items-center">
@@ -22,7 +22,7 @@
                <table class="table table-hover w-100 shadow mb-3 bg-white rounded">
                     <thead class="thead-dark">
                          <tr>
-                              <th scope="col">N° de Chango</th>
+                              <th scope="col">Nro. de Carrito</th>
                               <th scope="col">Cantidad de Items</th>
                               <th scope="col">Total</th>
                               <th scope="col">Estado</th>
@@ -45,14 +45,14 @@
      <div class="p-1 col-11 col-sm-7 col-md-6 col-lg-4" id="alertContainer">
           <div th:if="${changoEliminado}" class="p-4 alert alert-success alert-dismissible fade show" 
                     role="alert" id="alertChangoEliminado">
-               <strong class="quicksand">Chango eliminado correctamente</strong>
+               <strong class="quicksand">Carrito eliminado correctamente</strong>
                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                </button>
           </div>
           <div th:if="${changoEliminado!= null && !changoEliminado}" class="p-4 alert alert-danger alert-dismissible fade show"
                      role="alert" id="alertChangoEliminado">
-               <strong class="quicksand">El chango no pudo ser eliminado</strong>
+               <strong class="quicksand">El carrito no pudo ser eliminado</strong>
                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                </button>
