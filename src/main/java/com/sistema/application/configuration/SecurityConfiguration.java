@@ -48,6 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.GET, "/pedido/**").not().hasAuthority(UtilHelper.ROLE_ADMIN)
             .antMatchers(HttpMethod.GET, "/factura/todas**").not().hasAuthority(UtilHelper.ROLE_ADMIN)
             .antMatchers(HttpMethod.GET, "/chango/**").not().hasAuthority(UtilHelper.ROLE_ADMIN)
+            .antMatchers(HttpMethod.GET, "/notificacion/**").not().hasAuthority(UtilHelper.ROLE_ADMIN)
             .antMatchers(HttpMethod.GET, "/local/**").hasAuthority(UtilHelper.ROLE_ADMIN)
             .antMatchers(HttpMethod.GET, "/lote/**").hasAuthority(UtilHelper.ROLE_GERENTE)
             .antMatchers(HttpMethod.GET, "/reporte/**").hasAuthority(UtilHelper.ROLE_GERENTE)
