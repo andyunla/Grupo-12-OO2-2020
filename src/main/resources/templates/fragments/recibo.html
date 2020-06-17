@@ -1,0 +1,145 @@
+<!--
+	Parametros:
+	 * @param List<ItemModel> items: lista de max 13 items que se mostrarán en la hoja
+	 * @param int hojaNro: numero de hoja
+	 * @param boolean ultimaHoja: indica si es la ultima hoja
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Document</title>
+     <link rel="stylesheet"
+          href="C:\codigo\tpoo2\sistema-de-democratizacion-de-stock\src\main\resources\static\css\recibo.css"
+          type="text/css" media="all" />
+     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Roboto&display=swap" rel="stylesheet" />
+
+</head>
+
+<body>
+
+     <div class="recibo-container">
+          <div class="recibo-exterior">
+               <div class="recibo-interior">
+                    <div class="linea"></div>
+                    <div class="cabecera">
+                         <!-- CABECERA -->
+                         <div class="cabecera-izquierda">
+                              <div class="logo">
+                                   <img src="C:\codigo\tpoo2\sistema-de-democratizacion-de-stock\src\main\resources\static\images\unla.png"
+                                        alt="" />
+                              </div>
+                              <div class="datos-empresa">
+                                   <ul>
+                                        <li>Empresa: UNLa Stock</li>
+                                        <li>CUIT: 20-20999111-2</li>
+                                        <li>Dirección: Av. Local 1 123, Buenos Aires</li>
+                                        <li>Argentina</li>
+                                   </ul>
+                              </div>
+                         </div>
+                         <div class="cabecera-derecha">
+                              <h3>RECIBO DE HABERES</h3>
+                              <p>Ley N° 20.744</p>
+                         </div>
+                    </div>
+                    <!-- INFO DEL EMPLEADO -->
+                    <div class="detalles">
+                         <table>
+                              <caption>Datos del empleado</caption>
+                              <thead>
+                                   <tr>
+                                        <th>Nombre y Apellido</th>
+                                        <th>DNI</th>
+                                        <th>Legajo</th>
+                                   </tr>
+                              </thead>
+                              <tbody>
+                                   <tr>
+                                        <td>Cristian Villafañe</td>
+                                        <td>39177882</td>
+                                        <td>8992</td>
+                                   </tr>
+                              </tbody>
+                         </table>
+                         <table>
+                              <thead>
+                                   <tr>
+                                        <th>Categoría</th>
+                                        <th>División</th>
+                                        <th>Departamento</th>
+                                   </tr>
+                              </thead>
+                              <tbody>
+                                   <tr>
+                                        <td>Comercio</td>
+                                        <td>Atención - Ventas</td>
+                                        <td>Sucursal Local 2</td>
+                                   </tr>
+                              </tbody>
+                         </table>
+                         <table>
+                              <thead>
+                                   <tr>
+                                        <th>Fecha de Ingreso</th>
+                                        <th>Sueldo</th>
+                                        <th>Liquidacion</th>
+                                   </tr>
+                              </thead>
+                              <tbody>
+                                   <tr>
+                                        <td>21/10/2000</td>
+                                        <td>34.000</td>
+                                        <td>Mensual Mayo 2020</td>
+                                   </tr>
+                              </tbody>
+                         </table>
+                    </div>
+                    <!-- LIQUIDACION -->
+                    <div class="liquidacion">
+                         <table>
+                              <thead>
+                                   <tr>
+                                        <th>Detalle</th>
+                                        <th>Cantidad</th>
+                                        <th>Haberes</th>
+                                   </tr>
+                              </thead>
+                              <tbody>
+                                   <tr>
+                                        <td>Sueldo</td>
+                                        <td>1</td>
+                                        <td>35000</td>
+                                   </tr>
+                                   <tr>
+                                        <td>Comisión Ventas</td>
+                                        <td>3</td>
+                                        <td>900</td>
+                                   </tr>
+                                   <tr>
+                                        <td>Comision Pedidos</td>
+                                        <td>1</td>
+                                        <td>500</td>
+                                   </tr>
+                              </tbody>
+                         </table>
+                    </div>
+                    <!-- TOTAL -->
+                    <div class="seccion-final">
+                         <div class="firma-container">
+                              <hr/>
+                              <small>Firma Empleador</small>
+                         </div>
+                         <div class="total-container">
+                              <p>Total Neto: $<span>12.3333</span></p>
+                         </div>
+                    </div>
+                    <div class="linea"></div>
+               </div>
+          </div>
+     </div>
+</body>
+
+</html>
