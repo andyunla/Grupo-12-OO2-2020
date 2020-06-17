@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="fragments/head :: head(title='Recibo')"></head>
+
+<body class="container-fluid m-0 p-0">
+     <nav th:replace="fragments/navbar :: navbar(active='informes')"></nav>
+     <div class="w-100 d-flex justify-content-center p-5" id="spinnerContainer">
+          <div class="spinner-border text-dark" style="width: 3rem; height: 3rem;" role="status">
+               <span class="sr-only m-5">Loading...</span>
+          </div>
+     </div>
+     <main class="w-100 d-flex flex-column align-items-center invisible">
+          <div class="d-flex justify-content-center" style="page-break-after:avoid">
+               <button class="btn btn-secondary m-4" onclick="window.print();return false;">
+                    <i class="fas fa-print"></i><br />IMPRIMIR</button>
+               <button class="btn btn-secondary m-4" onclick="descargar()">
+                    <i class="fas fa-download"></i><br />DESCARGAR</button>
+          </div>
+          <div id="contenedor">
+               <div th:replace="fragments/recibo :: recibo(
+                    empleado = ${empleado}, 
+                    local = ${local},
+                    mes =${mes},
+                    anio = ${anio}
+               )"></div>
+     </div>
+          </div>
+     </main>
+     <footer th:replace="fragments/footer :: footer"></footer>
+     <div th:replace="fragments/scripts :: scripts"></div>
+     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Roboto&display=swap" rel="stylesheet" />
+     <!-- ESTILOS -->
+     <link rel="stylesheet" type="text/css" th:href="@{/css/recibo.css}" media="all" />
+     <!--<link rel="stylesheet" th:href="@{/css/reciboPrint.css}" type="text/css" media="print">-->
+     <!-- SCRIPT PARA GENERAR PDF -->
+     <script th:src="@{/libraries/es6-promise.min.js}"></script>
+     <script th:src="@{/libraries/jspdf.min.js}"></script>
+     <script th:src="@{/libraries/html2canvas.min.js}"></script>
+     <script th:src="@{/libraries/html2pdf.bundle.min.js}"></script>
+     <!--SCRIPT RECIBO-->
+     <script th:src="@{/js/recibo.js}"></script>
+</body>
+
+</html>
