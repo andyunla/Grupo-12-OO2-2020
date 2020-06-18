@@ -4,8 +4,8 @@ const MIN_YEAR = 2000;
 
 function listarSueldos() {
     if (fechaSeleccionada.value !== "") {
-        let fecha = fechaSeleccionada.value; // Del tipo aaaa-mm
-        let patt1 = /^(\d{4})\-(\d{1,2})$/; // Patrón
+        let fecha = fechaSeleccionada.value;
+        let patt1 = /^(\d{4})\-(\d{1,2})$/; // Patrón para fecha del tipo aaaa-mm
         if(fecha.match(patt1) !== null) { // Si se ingresaron los datos correctamente
             let parts = fecha.split("-");
             if(parts[1] <= 12 && parts[0] <= MAX_YEAR && parts[0] >= MIN_YEAR) {
