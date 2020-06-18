@@ -60,18 +60,15 @@ public class SueldoController {
 		UserDto userDto = userService.getCurrentUser();
 		modelAndView.addObject("currentUser", userDto);
 		List<EmpleadoDto> vendedores = new ArrayList<EmpleadoDto>();
-		List<LocalDto> locales = new ArrayList<LocalDto>();
 		if(userDto.isTipoAdmin()) { // Agregamos los vendedores de todos los locales
 			List<LocalModel> localesModel = localService.getAllModel();
 			for(LocalModel local : localesModel) {
 				vendedores.addAll(localService.calcularSueldos(local.getIdLocal(), LocalDate.now()));
-				locales.add(localConverter.modelToDto(local));
 			}
 		} else { // Los vendedores del local actual
 			vendedores = localService.calcularSueldos(userDto.getLocal().getIdLocal(), LocalDate.now());
 		}
 		modelAndView.addObject("empleados", vendedores);
-		modelAndView.addObject("locales", locales);
 		return modelAndView;
 	}
 	
@@ -80,8 +77,17 @@ public class SueldoController {
 	public ModelAndView traer(@PathVariable("fecha") String fecha) {
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.LISTA_SUELDOS);
 		UserDto userDto = userService.getCurrentUser();
-		List<EmpleadoDto> vendedores = localService.calcularSueldos(userDto.getLocal().getIdLocal(), Funciones.mesAFechaCompleta(fecha));
+		List<EmpleadoDto> vendedores = new ArrayList<EmpleadoDto>();
+		if(userDto.isTipoAdmin()) { // Agregamos los vendedores de todos los locales
+			List<LocalModel> localesModel = localService.getAllModel();
+			for(LocalModel local : localesModel) {
+				vendedores.addAll(localService.calcularSueldos(local.getIdLocal(), Funciones.mesAFechaCompleta(fecha)));
+			}
+		} else { // Los vendedores del local actual
+			vendedores = localService.calcularSueldos(userDto.getLocal().getIdLocal(), Funciones.mesAFechaCompleta(fecha));
+		}
 		modelAndView.addObject("empleados", vendedores);
+		modelAndView.addObject("isAdmin", userDto.isTipoAdmin());
 		return modelAndView;
 	}
 
