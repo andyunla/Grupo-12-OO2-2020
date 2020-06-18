@@ -1,5 +1,6 @@
 <tr th:each="empleado :${empleados}">
 	<td th:text="${empleado.nombre}"></td>
+	<td th:if="${currentUser.tipoAdmin}" th:text="${empleado.idLocal}"></td>
 	<td th:text="${empleado.sueldoBasico}"></td>
 	<td th:text="${empleado.comisionVentaCompleta}"></td>
 	<td th:text="${empleado.comisionVentaExterna}"></td>
