@@ -58,7 +58,7 @@ public class ReporteController {
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.RANKING_REPORTE_PRODUCTOS);
 		// Obtenemos el usuario de la sesión
 		UserDto userDto = userService.getCurrentUser();
-		List<ProductoRankingDto> productoReporte = localService.reporte(Funciones.traerFecha(fecha1), Funciones.traerFecha(fecha2), 
+		List<ProductoRankingDto> productoReporte = localService.reporte(Funciones.traerFecha(fecha1), Funciones.traerFecha(fecha2).plusDays(1), 
 																		userDto.getLocal().getIdLocal());
 		modelAndView.addObject("listaProductos", productoReporte);
 		return modelAndView;
