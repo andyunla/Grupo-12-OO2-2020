@@ -218,7 +218,9 @@ public class LocalService implements ILocalService {
     	 List<ProductoModel> productos = productoService.getAllModel();
     	 for (ProductoModel pro : productos ) {
     		int cantidad = cantidadProductoVendido(pro, listaFacturas);
+    		if(cantidad!= 0) {
 			productoReporte.add(productoConverter.modelToDto(pro, cantidad));
+    		}
 		}
     	//orden de mayor a menor
  		Collections.sort(productoReporte, Collections.reverseOrder());	
@@ -236,7 +238,9 @@ public class LocalService implements ILocalService {
     	 List<ProductoModel> productos = productoService.getAllModel();
     	 for (ProductoModel pro : productos ) {
     		int cantidad = cantidadProductoVendido(pro, listaFacturas);
+    		if(cantidad != 0) {
 			productoRanking.add(productoConverter.modelToDto(pro, cantidad));
+    		}
 		}
     	//orden de mayor a menor
  		Collections.sort(productoRanking, Collections.reverseOrder());	
