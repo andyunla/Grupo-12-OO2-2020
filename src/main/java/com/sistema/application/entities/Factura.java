@@ -28,7 +28,7 @@ public class Factura implements Serializable {
 	private long idFactura;
 
 	@ManyToOne(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
-	@JoinColumn(name="nro_cliente", nullable=false)
+	@JoinColumn(name="nro_cliente", nullable=false, referencedColumnName = "nro_cliente")
 	private Cliente cliente;
 
 	@ManyToOne(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
