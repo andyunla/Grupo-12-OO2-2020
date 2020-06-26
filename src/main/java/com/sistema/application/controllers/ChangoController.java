@@ -274,6 +274,7 @@ public class ChangoController {
           chango.setListaItems(new HashSet<ItemModel>(items));
           mAV.addObject("chango", chango);
           mAV.addObject("items", items);
+          mAV.addObject("total", changoService.calcularTotal(idChango));
           return mAV;
      }
 
